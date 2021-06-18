@@ -1,0 +1,39 @@
+syntax = "proto3";
+option java_multiple_files = true;
+option java_package = "io.grpc.bistream";
+option java_outer_classname = "Bistream";
+option objc_class_prefix = "YINGMING";
+package cn.yingming.grpc1;
+
+// define the services
+service Communicate {
+  rpc connect(stream ConnectReq) returns (stream ConnectRep) {
+  }
+  rpc ask(ReqAsk) returns (RepAsk) {
+  }
+}
+
+// used for the bidirectional streaming.
+message ConnectReq {
+  // the default value of string is empty, and that of boolean is false.
+  string source = 1;
+  string name = 2;
+  bool join = 3;
+  string message = 4;
+  string timestamp = 5;
+  bool quit = 6;
+}
+message ConnectRep {
+  string name = 1;
+  string message = 2;
+  string timestamp = 3;
+  string addresses = 4;
+}
+
+// The messages used for the try connection.
+message ReqAsk {
+  string source = 1;
+}
+message RepAsk{
+  bool survival = 1;
+}
