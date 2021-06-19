@@ -1,14 +1,16 @@
 package cn.yingming.grpc1;
 
+import com.google.protobuf.ByteString;
 import io.grpc.jchannelRpc.MessageReq;
 
+import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-public class Test3 {
-
+public class Test3 implements Serializable {
+    public int a;
     public Test3(){
-
+        a = 1;
     }
 
     public void method(){
@@ -29,30 +31,31 @@ public class Test3 {
         l.add(c);
         l.add(d);
         for (int i = 0; i < l.size(); i++) {
-            System.out.println(l.get(i).getClass());
+            //System.out.println(l.get(i).getClass());
         }
+        Test3 t3 = new Test3();
+        byte[] bys = UtilsRJ.serializeObj(t3);
+        ByteString bs = ByteString.copyFrom(bys);
 
-        MessageRJ msg = new MessageRJ("str1", "str2");
-        System.out.println(msg.getBuf());
         MessageReq msgReq1 = MessageReq.newBuilder()
                 .setSource("uuid")
                 .setJchannelAddress("jchannaddr")
-                .setCluster("cluster")
-                .setContent("content")
+                .setContentByte(bs)
                 .setTimestamp("time")
                 .setDestination("dst")
                 .build();
 
-        MessageReq msgReq2 = MessageReq.newBuilder()
-                .setSource("uuid")
-                .setJchannelAddress("jchannaddr")
-                .setCluster("cluster")
-                .setContent("content")
-                .setTimestamp("time")
-                .setDestination(null)
-                .build();
         System.out.println(msgReq1);
-        System.out.println(msgReq1);
+        if (msgReq1.getCluster().equals("")){
+            System.out.println(11);
+        }
+        ByteString bs2 = msgReq1.getContentByte();
+        byte[] by2 = bs2.toByteArray();
+        System.out.println(by2.toString());
 
+        Object obj = UtilsRJ.unserializeObj(by2);
+        System.out.println(obj.getClass());
+        Test3 x = (Test3) obj;
+        System.out.println(x.a);
     }
 }

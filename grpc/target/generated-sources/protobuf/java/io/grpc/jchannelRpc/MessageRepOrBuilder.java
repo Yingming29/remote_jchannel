@@ -38,4 +38,10 @@ public interface MessageRepOrBuilder extends
    */
   com.google.protobuf.ByteString
       getContentBytes();
+
+  /**
+   * <code>bytes contentByte = 3;</code>
+   * @return The contentByte.
+   */
+  com.google.protobuf.ByteString getContentByte();
 }

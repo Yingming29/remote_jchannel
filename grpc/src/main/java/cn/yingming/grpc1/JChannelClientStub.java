@@ -105,8 +105,8 @@ public class JChannelClientStub {
 
         } else if (response.hasViewResponse()){
             ViewRep view = response.getViewResponse();
-            System.out.println("** View:[" + view.getCreator() + "|" + view.getViewNum() +
-                    "] (" + view.getSize() + ")" + view.getJchannelAddresses());
+            //System.out.println("** View:[" + view.getCreator() + "|" + view.getViewNum() +
+              //      "] (" + view.getSize() + ")" + view.getJchannelAddresses());
         } else if (response.hasStateRep()){
             StateRep state = response.getStateRep();
             System.out.println(state.getSize() + " messages in the chat history.");

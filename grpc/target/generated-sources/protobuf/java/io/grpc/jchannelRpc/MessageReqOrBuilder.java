@@ -126,4 +126,10 @@ public interface MessageReqOrBuilder extends
    */
   com.google.protobuf.ByteString
       getDestinationBytes();
+
+  /**
+   * <code>bytes contentByte = 7;</code>
+   * @return The contentByte.
+   */
+  com.google.protobuf.ByteString getContentByte();
 }

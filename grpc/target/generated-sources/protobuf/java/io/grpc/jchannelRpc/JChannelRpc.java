@@ -111,28 +111,29 @@ public final class JChannelRpc {
       "\001(\0132\033.cn.yingming.grpc1.StateRepH\000B\t\n\007on" +
       "eType\"M\n\007ViewRep\022\017\n\007creator\030\001 \001(\t\022\017\n\007vie" +
       "wNum\030\002 \001(\005\022\014\n\004size\030\003 \001(\005\022\022\n\noneAddress\030\004" +
-      " \003(\t\"\036\n\tUpdateRep\022\021\n\taddresses\030\001 \001(\t\"\200\001\n" +
+      " \003(\t\"\036\n\tUpdateRep\022\021\n\taddresses\030\001 \001(\t\"\225\001\n" +
       "\nMessageReq\022\016\n\006source\030\001 \001(\t\022\030\n\020jchannel_" +
       "address\030\002 \001(\t\022\017\n\007cluster\030\003 \001(\t\022\017\n\007conten" +
       "t\030\004 \001(\t\022\021\n\ttimestamp\030\005 \001(\t\022\023\n\013destinatio" +
-      "n\030\006 \001(\t\"7\n\nMessageRep\022\030\n\020jchannel_addres" +
-      "s\030\001 \001(\t\022\017\n\007content\030\002 \001(\t\"Z\n\nConnectReq\022\016" +
-      "\n\006source\030\001 \001(\t\022\030\n\020jchannel_address\030\002 \001(\t" +
-      "\022\017\n\007cluster\030\003 \001(\t\022\021\n\ttimestamp\030\004 \001(\t\"\034\n\n" +
-      "ConnectRep\022\016\n\006result\030\001 \001(\010\"]\n\rDisconnect" +
-      "Req\022\016\n\006source\030\001 \001(\t\022\030\n\020jchannel_address\030" +
-      "\002 \001(\t\022\017\n\007cluster\030\003 \001(\t\022\021\n\ttimestamp\030\004 \001(" +
-      "\t\"\037\n\rDisconnectRep\022\016\n\006result\030\001 \001(\010\"\030\n\006Re" +
-      "qAsk\022\016\n\006source\030\001 \001(\t\"\032\n\006RepAsk\022\020\n\010surviv" +
-      "al\030\001 \001(\010\"E\n\010StateReq\022\016\n\006source\030\001 \001(\t\022\017\n\007" +
-      "cluster\030\002 \001(\t\022\030\n\020jchannel_address\030\003 \001(\t\"" +
-      ".\n\010StateRep\022\014\n\004size\030\001 \001(\005\022\024\n\014oneOfHistor" +
-      "y\030\002 \003(\t2\233\001\n\020JChannelsService\022H\n\007connect\022" +
-      "\032.cn.yingming.grpc1.Request\032\033.cn.yingmin" +
-      "g.grpc1.Response\"\000(\0010\001\022=\n\003ask\022\031.cn.yingm" +
-      "ing.grpc1.ReqAsk\032\031.cn.yingming.grpc1.Rep" +
-      "Ask\"\000B/\n\023io.grpc.jchannelRpcB\013JChannelRp" +
-      "cP\001\242\002\010YINGMINGb\006proto3"
+      "n\030\006 \001(\t\022\023\n\013contentByte\030\007 \001(\014\"L\n\nMessageR" +
+      "ep\022\030\n\020jchannel_address\030\001 \001(\t\022\017\n\007content\030" +
+      "\002 \001(\t\022\023\n\013contentByte\030\003 \001(\014\"Z\n\nConnectReq" +
+      "\022\016\n\006source\030\001 \001(\t\022\030\n\020jchannel_address\030\002 \001" +
+      "(\t\022\017\n\007cluster\030\003 \001(\t\022\021\n\ttimestamp\030\004 \001(\t\"\034" +
+      "\n\nConnectRep\022\016\n\006result\030\001 \001(\010\"]\n\rDisconne" +
+      "ctReq\022\016\n\006source\030\001 \001(\t\022\030\n\020jchannel_addres" +
+      "s\030\002 \001(\t\022\017\n\007cluster\030\003 \001(\t\022\021\n\ttimestamp\030\004 " +
+      "\001(\t\"\037\n\rDisconnectRep\022\016\n\006result\030\001 \001(\010\"\030\n\006" +
+      "ReqAsk\022\016\n\006source\030\001 \001(\t\"\032\n\006RepAsk\022\020\n\010surv" +
+      "ival\030\001 \001(\010\"E\n\010StateReq\022\016\n\006source\030\001 \001(\t\022\017" +
+      "\n\007cluster\030\002 \001(\t\022\030\n\020jchannel_address\030\003 \001(" +
+      "\t\".\n\010StateRep\022\014\n\004size\030\001 \001(\005\022\024\n\014oneOfHist" +
+      "ory\030\002 \003(\t2\233\001\n\020JChannelsService\022H\n\007connec" +
+      "t\022\032.cn.yingming.grpc1.Request\032\033.cn.yingm" +
+      "ing.grpc1.Response\"\000(\0010\001\022=\n\003ask\022\031.cn.yin" +
+      "gming.grpc1.ReqAsk\032\031.cn.yingming.grpc1.R" +
+      "epAsk\"\000B/\n\023io.grpc.jchannelRpcB\013JChannel" +
+      "RpcP\001\242\002\010YINGMINGb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -167,13 +168,13 @@ public final class JChannelRpc {
     internal_static_cn_yingming_grpc1_MessageReq_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_cn_yingming_grpc1_MessageReq_descriptor,
-        new java.lang.String[] { "Source", "JchannelAddress", "Cluster", "Content", "Timestamp", "Destination", });
+        new java.lang.String[] { "Source", "JchannelAddress", "Cluster", "Content", "Timestamp", "Destination", "ContentByte", });
     internal_static_cn_yingming_grpc1_MessageRep_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_cn_yingming_grpc1_MessageRep_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_cn_yingming_grpc1_MessageRep_descriptor,
-        new java.lang.String[] { "JchannelAddress", "Content", });
+        new java.lang.String[] { "JchannelAddress", "Content", "ContentByte", });
     internal_static_cn_yingming_grpc1_ConnectReq_descriptor =
       getDescriptor().getMessageTypes().get(6);
     internal_static_cn_yingming_grpc1_ConnectReq_fieldAccessorTable = new

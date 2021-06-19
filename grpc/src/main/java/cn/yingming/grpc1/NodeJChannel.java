@@ -50,7 +50,7 @@ public class NodeJChannel implements Receiver{
     }
 
     public void receiveByte(Message msg){
-        Object obj =  Utils.unserializeClusterInf(msg.getPayload());
+        Object obj =  UtilsRJ.unserializeObj(msg.getPayload());
 
         if (obj instanceof Map){
             System.out.println("Receive the cluster information from node(coordinator) " + msg.getSrc());
@@ -78,13 +78,12 @@ public class NodeJChannel implements Receiver{
                 disconnectCluster(disReq.getCluster(), disReq.getJchannelAddress(), disReq.getSource());
             } else if (req.hasMessageRequest()){
                 MessageReq msgReq = req.getMessageRequest();
-                if (msgReq.getDestination().equals(null)||msgReq.getDestination().equals("")){
+                if (msgReq.getDestination().equals("")){
                     System.out.println("[JChannel] Receive a shared send() request for broadcast to JChannl-Clients.");
                     lock.lock();
                     try{
                         ClusterMap cm = (ClusterMap) serviceMap.get(msgReq.getCluster());
-                        String line = "[" + msgReq.getJchannelAddress() + "]" + msgReq.getContent();
-                        cm.addHistory(line);
+                        cm.addHistory(msgReq);
                         this.service.broadcast(msgReq);
                     } finally {
                         lock.unlock();
@@ -130,7 +129,7 @@ public class NodeJChannel implements Receiver{
                         "JChannel-client cluster information from a new node member: " + msg.getSrc());
                 lock.lock();
                 try{
-                    byte[] b = Utils.serializeClusterInf(this.serviceMap);
+                    byte[] b = UtilsRJ.serializeObj(this.serviceMap);
                     System.out.println(b);
                     Message msg2 = new ObjectMessage(msg.getSrc(), b);
                     this.channel.send(msg2);

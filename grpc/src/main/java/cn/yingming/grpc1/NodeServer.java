@@ -160,7 +160,8 @@ public class NodeServer {
                          */
                         MessageReq msgReq = req.getMessageRequest();
                         // send() messages for broadcast and unicast in the cluster for clients
-                        System.out.println("[gRPC] " + msgReq.getJchannelAddress() + " sends message: " + msgReq.getContent()
+                        System.out.println("[gRPC] " + msgReq.getJchannelAddress() + " sends message: "
+                                + msgReq.getContent() + "/" + msgReq.getContentByte().toString()
                                 + " at " + msgReq.getTimestamp());
                         // Type1, broadcast
                         if (msgReq.getDestination() == null || msgReq.getDestination().equals("")){
@@ -169,9 +170,7 @@ public class NodeServer {
                             try{
                                 // add to history
                                 ClusterMap cm = (ClusterMap) jchannel.serviceMap.get(msgReq.getCluster());
-                                String line = "[" + msgReq.getJchannelAddress() + "]" + msgReq.getContent();
-                                cm.addHistory(line);
-
+                                cm.addHistory(msgReq);
                                 // forward msg to other nodes
                                 forwardMsg(req);
                                 // send msg to its gRPC clients
@@ -185,12 +184,10 @@ public class NodeServer {
                             System.out.println("[gRPC] Unicast in the cluster " + msgReq.getCluster() + " to " + msgReq.getDestination());
                             lock.lock();
                             try{
-
                                 // forward msg to other JChannels
                                 forwardMsg(req);
                                 // send msg to its gRPC clients
                                 unicast(msgReq);
-
                             }finally {
                                 lock.unlock();
                             }
@@ -289,13 +286,26 @@ public class NodeServer {
         public void broadcast(MessageReq req){
             lock.lock();
             try{
-                MessageRep msgRep = MessageRep.newBuilder()
-                        .setJchannelAddress(req.getJchannelAddress())
-                        .setContent(req.getContent())
-                        .build();
-                Response rep = Response.newBuilder()
-                        .setMessageResponse(msgRep)
-                        .build();
+                Response rep;
+                // Byte message
+                if (req.getContent().equals("")){
+                    MessageRep msgRep = MessageRep.newBuilder()
+                            .setJchannelAddress(req.getJchannelAddress())
+                            .setContentByte(req.getContentByte())
+                            .build();
+                    rep = Response.newBuilder()
+                            .setMessageResponse(msgRep)
+                            .build();
+                } else{
+                    // String  message
+                    MessageRep msgRep = MessageRep.newBuilder()
+                            .setJchannelAddress(req.getJchannelAddress())
+                            .setContent(req.getContent())
+                            .build();
+                    rep = Response.newBuilder()
+                            .setMessageResponse(msgRep)
+                            .build();
+                }
                 ClusterMap clusterObj = (ClusterMap) jchannel.serviceMap.get(req.getCluster());
                 for (String uuid : clients.keySet()){
                     if (clusterObj.getMap().containsKey(uuid)){
@@ -304,7 +314,7 @@ public class NodeServer {
                     }
                 }
                 System.out.println("One broadcast for message successfully.");
-                System.out.println(msgRep.toString());
+                System.out.println(rep.toString());
 
             } finally {
                 lock.unlock();
@@ -333,20 +343,29 @@ public class NodeServer {
         }
 
         public void unicast(MessageReq req){
-            String jchAdd = req.getJchannelAddress();
-            String msgContent = req.getContent();
             String msgCluster = req.getCluster();
             String msgDest = req.getDestination();
             lock.lock();
             try{
-                // build message
-                MessageRep msgRep = MessageRep.newBuilder()
-                        .setJchannelAddress(jchAdd)
-                        .setContent(msgContent)
-                        .build();
-                Response rep = Response.newBuilder()
-                        .setMessageResponse(msgRep)
-                        .build();
+                Response rep;
+                if (req.getContent().equals("")){
+                    MessageRep msgRep = MessageRep.newBuilder()
+                            .setJchannelAddress(req.getJchannelAddress())
+                            .setContentByte(req.getContentByte())
+                            .build();
+                    rep = Response.newBuilder()
+                            .setMessageResponse(msgRep)
+                            .build();
+                } else{
+                    // String  message
+                    MessageRep msgRep = MessageRep.newBuilder()
+                            .setJchannelAddress(req.getJchannelAddress())
+                            .setContent(req.getContent())
+                            .build();
+                    rep = Response.newBuilder()
+                            .setMessageResponse(msgRep)
+                            .build();
+                }
 
                 ClusterMap clusterObj = (ClusterMap) jchannel.serviceMap.get(msgCluster);
                 System.out.println("----------");
@@ -364,7 +383,7 @@ public class NodeServer {
                     }
                 }
                 System.out.println("One unicast for message successfully.");
-                System.out.println(msgRep.toString());
+                System.out.println(rep);
 
             } finally {
                 lock.unlock();

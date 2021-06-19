@@ -1,13 +1,11 @@
 package cn.yingming.grpc1;
 
-import io.grpc.jchannelRpc.StateRep;
-import io.grpc.jchannelRpc.ViewRep;
+import io.grpc.jchannelRpc.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -26,7 +24,7 @@ public class ClusterMap implements Serializable {
         this.creator = creator;
         this.lock = new ReentrantLock();
         this.orderList = new ArrayList<String>();
-        this.history = new LinkedList<String>();
+        this.history = new LinkedList<>();
     }
     public ConcurrentHashMap getMap(){
         return this.map;
@@ -85,10 +83,28 @@ public class ClusterMap implements Serializable {
         }
         return rep;
     }
-    public void addHistory(String line){
+    public void addHistory(MessageReq msg){
+        Response rep = null;
+        if (msg.getContent().equals("")){
+            MessageRep msgRep = MessageRep.newBuilder()
+                    .setJchannelAddress(msg.getJchannelAddress())
+                    .setContentByte(msg.getContentByte())
+                    .build();
+            rep = Response.newBuilder()
+                    .setMessageResponse(msgRep)
+                    .build();
+        } else{
+            MessageRep msgRep = MessageRep.newBuilder()
+                    .setJchannelAddress(msg.getJchannelAddress())
+                    .setContent(msg.getContent())
+                    .build();
+            rep = Response.newBuilder()
+                    .setMessageResponse(msgRep)
+                    .build();
+        }
         lock.lock();
         try{
-            history.add(line);
+            history.add(rep);
         } finally {
             lock.unlock();
         }

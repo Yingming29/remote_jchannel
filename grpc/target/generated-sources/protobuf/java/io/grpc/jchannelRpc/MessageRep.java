@@ -18,6 +18,7 @@ private static final long serialVersionUID = 0L;
   private MessageRep() {
     jchannelAddress_ = "";
     content_ = "";
+    contentByte_ = com.google.protobuf.ByteString.EMPTY;
   }
 
   @java.lang.Override
@@ -60,6 +61,11 @@ private static final long serialVersionUID = 0L;
             java.lang.String s = input.readStringRequireUtf8();
 
             content_ = s;
+            break;
+          }
+          case 26: {
+
+            contentByte_ = input.readBytes();
             break;
           }
           default: {
@@ -178,6 +184,17 @@ private static final long serialVersionUID = 0L;
     }
   }
 
+  public static final int CONTENTBYTE_FIELD_NUMBER = 3;
+  private com.google.protobuf.ByteString contentByte_;
+  /**
+   * <code>bytes contentByte = 3;</code>
+   * @return The contentByte.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString getContentByte() {
+    return contentByte_;
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -198,6 +215,9 @@ private static final long serialVersionUID = 0L;
     if (!getContentBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, content_);
     }
+    if (!contentByte_.isEmpty()) {
+      output.writeBytes(3, contentByte_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -212,6 +232,10 @@ private static final long serialVersionUID = 0L;
     }
     if (!getContentBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, content_);
+    }
+    if (!contentByte_.isEmpty()) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeBytesSize(3, contentByte_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -232,6 +256,8 @@ private static final long serialVersionUID = 0L;
         .equals(other.getJchannelAddress())) return false;
     if (!getContent()
         .equals(other.getContent())) return false;
+    if (!getContentByte()
+        .equals(other.getContentByte())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -247,6 +273,8 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getJchannelAddress().hashCode();
     hash = (37 * hash) + CONTENT_FIELD_NUMBER;
     hash = (53 * hash) + getContent().hashCode();
+    hash = (37 * hash) + CONTENTBYTE_FIELD_NUMBER;
+    hash = (53 * hash) + getContentByte().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -384,6 +412,8 @@ private static final long serialVersionUID = 0L;
 
       content_ = "";
 
+      contentByte_ = com.google.protobuf.ByteString.EMPTY;
+
       return this;
     }
 
@@ -412,6 +442,7 @@ private static final long serialVersionUID = 0L;
       io.grpc.jchannelRpc.MessageRep result = new io.grpc.jchannelRpc.MessageRep(this);
       result.jchannelAddress_ = jchannelAddress_;
       result.content_ = content_;
+      result.contentByte_ = contentByte_;
       onBuilt();
       return result;
     }
@@ -467,6 +498,9 @@ private static final long serialVersionUID = 0L;
       if (!other.getContent().isEmpty()) {
         content_ = other.content_;
         onChanged();
+      }
+      if (other.getContentByte() != com.google.protobuf.ByteString.EMPTY) {
+        setContentByte(other.getContentByte());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -665,6 +699,40 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       
       content_ = value;
+      onChanged();
+      return this;
+    }
+
+    private com.google.protobuf.ByteString contentByte_ = com.google.protobuf.ByteString.EMPTY;
+    /**
+     * <code>bytes contentByte = 3;</code>
+     * @return The contentByte.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString getContentByte() {
+      return contentByte_;
+    }
+    /**
+     * <code>bytes contentByte = 3;</code>
+     * @param value The contentByte to set.
+     * @return This builder for chaining.
+     */
+    public Builder setContentByte(com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      contentByte_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>bytes contentByte = 3;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearContentByte() {
+      
+      contentByte_ = getDefaultInstance().getContentByte();
       onChanged();
       return this;
     }

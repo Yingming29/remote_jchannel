@@ -432,8 +432,8 @@ public class RemoteJChannel extends JChannel {
     }
     @Override
     public JChannel send(Message msg) throws Exception {
-        throw new UnsupportedOperationException("RemoteJChannel does not support this method." +
-                " Please use other send().");
+        throw new UnsupportedOperationException("RemoteJChannel does not support this method and Message object." +
+                " Please use other send() and MessageRJ object.");
     }
     @Override
     public JChannel send(Address dst, Object obj) throws Exception {
@@ -452,7 +452,7 @@ public class RemoteJChannel extends JChannel {
     }
 
 
-    // the send() just for broadcast in cluster
+    // the send() without dst
     public JChannel send(String msg){
         if (msg == null){
             throw new IllegalArgumentException("The msg argument cannot be null.");
@@ -468,7 +468,7 @@ public class RemoteJChannel extends JChannel {
         return this;
     }
 
-    // for unicast
+    // for unicast with dst
     public JChannel send(String msg, String dst){
         if (msg == null || dst == null || msg.equals("") || dst.equals("")){
             throw new IllegalArgumentException("The msg or dst argument cannot be null.");

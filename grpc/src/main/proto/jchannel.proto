@@ -46,10 +46,12 @@ message MessageReq{
   string content = 4;     // content of message
   string timestamp = 5;   // time
   string destination = 6;  // "" means the broadcast in this cluster, receivers
+  bytes contentByte = 7;
 }
 message MessageRep{
   string jchannel_address = 1; // sender
   string content = 2;
+  bytes contentByte = 3;
 }
 // connect() of JChannel, create a bidirectional streaming of grpc
 message ConnectReq {
@@ -85,6 +87,8 @@ message StateReq{
   string cluster = 2;
   string jchannel_address = 3;
 }
+
+// change
 message StateRep{
   int32 size = 1;
   repeated string oneOfHistory = 2;
