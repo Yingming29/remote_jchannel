@@ -57,7 +57,6 @@ public class ClusterMap implements Serializable {
                     .setCreator(getCreator())
                     .setViewNum(getViewNum())
                     .setSize(this.orderList.size())
-                    // changed.
                     .addAllOneAddress(this.orderList)
                     .build();
             addViewNum();
@@ -70,6 +69,19 @@ public class ClusterMap implements Serializable {
         return this.orderList;
     }
 
+    public void addMember(String address){
+        lock.lock();
+        try{
+            if (!this.orderList.contains(address)){
+                this.orderList.add(address);
+            } else{
+                System.out.println("The jchannel address of remote jchannel is existing in the cluster information." +
+                        " Because it reconnects to this cluster.");
+            }
+        } finally {
+            lock.unlock();
+        }
+    }
     public StateRep generateState(){
         StateRep rep;
         lock.lock();

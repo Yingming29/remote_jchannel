@@ -280,14 +280,6 @@ public class RemoteJChannelStub{
             }
         }
     }
-    /*
-    public void printMsg(MessageRep response){
-        System.out.println("[JChannel] "
-                + response.getJchannelAddress() + ":" + response.getContent());
-    }
-
-     */
-
 
     private StreamObserver startGrpc(AtomicBoolean isWork) {
 
@@ -297,7 +289,7 @@ public class RemoteJChannelStub{
 
             @Override
             public void onNext(Response response) {
-                System.out.println(response);
+                // System.out.println(response);
                 judgeResponse(response);
             }
 
@@ -374,10 +366,7 @@ public class RemoteJChannelStub{
         Request req = Request.newBuilder()
                 .setConnectRequest(joinReq)
                 .build();
-        // System.out.println(client.name + " calls connect() request to Jgroups cluster: " + client.cluster);
-        requestStreamObserver.onNext(req);
-        // change: add a timer and throw and
-
+       requestStreamObserver.onNext(req);
         stubLock.lock();
         try {
             client.isWork.set(true);
@@ -458,17 +447,23 @@ public class RemoteJChannelStub{
         @Override
         public void run() {
             while (true) {
-                // 4.1 start gRPC client and call connect() request.
-                // change: remove the argument isWork
+                // start gRPC client and call connect() request.
                 stub.observer = startGrpc(this.isWork);
                 // change
                 connectCluster(stub.observer);
-                // 4.2 getState() of JChannel
-                // change
-                 // getState(requestSender);
-                // 4.3 check loop for connection problem and input content, and send request.
+
+                // check loop for connection problem and input content, and send request.
                 this.checkLoop(this.stub.observer);
-                // 4.4 reconnect part.
+                System.out.println("222" + client.down.get());
+                // reconnect part.
+                if (!client.down.get()){
+                    try{
+                        System.out.println("exit 0 on control thread.");
+                        System.exit(0);
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
                 boolean result = reconnect();
                 if (!result) {
                     System.out.println("End the control loop of stub.");
@@ -481,6 +476,16 @@ public class RemoteJChannelStub{
         // check input and state of streaming, and send messsage
         private void checkLoop(StreamObserver requestSender) {
             while (true) {
+
+                if (!client.down.get()){
+                    try{
+
+                        System.out.println("exit 0 on control thread.");
+                        System.exit(0);
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
                 // the if statement is for inputLoop thread and state of bidirectional streaming.
                 // If the channel
                 if (client.msgList.size() != 0 && client.isWork.get()) {
@@ -491,22 +496,13 @@ public class RemoteJChannelStub{
                     requestSender.onNext(msgReq);
                     stubLock.lock();
                     try {
-                        // requestSender.onNext(client.msgList.get(0));
                         client.msgList.remove(0);
                     } finally {
                         stubLock.unlock();
                     }
 
-
-
                 } else if (!client.isWork.get()) {
                     break;
-                } else if (!client.down.get()){
-                    try{
-                        System.exit(0);
-                    } catch (Exception e){
-                        e.printStackTrace();
-                    }
                 }
             }
         }

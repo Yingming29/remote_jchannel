@@ -248,13 +248,13 @@ public class NodeJChannel implements Receiver{
                 System.out.println(JChannel_address + " connects to the existing cluster: " + cluster);
                 ClusterMap clusterObj = (ClusterMap) serviceMap.get(cluster);
                 clusterObj.getMap().put(uuid, JChannel_address);
-                clusterObj.getList().add(JChannel_address);
+                clusterObj.addMember(JChannel_address);
             } else{
                 System.out.println(JChannel_address + " connects to a new cluster: " + cluster);
                 // create new cluster object and set it as the creator
                 ClusterMap clusterObj = new ClusterMap(JChannel_address);
                 clusterObj.getMap().put(uuid, JChannel_address);
-                clusterObj.getList().add(JChannel_address);
+                clusterObj.addMember(JChannel_address);
                 // put into serviceMap
                 serviceMap.put(cluster, clusterObj);
             }

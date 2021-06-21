@@ -13,8 +13,7 @@ public class SimpleChatRJ {
 
     private void start() throws Exception{
         receiver = new ReceiverRJ();
-        remoteJChannel = new RemoteJChannel("user2", "127.0.0.1:50052");
-
+        remoteJChannel = new RemoteJChannel("user3", "127.0.0.1:50051");
         remoteJChannel.setReceiverRJ(receiver);
         remoteJChannel.connect("ChatCluster");
         remoteJChannel.getStateRJ(null);
