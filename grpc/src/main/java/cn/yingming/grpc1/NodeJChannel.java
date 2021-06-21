@@ -95,6 +95,9 @@ public class NodeJChannel implements Receiver{
             } else if (req.hasStateMsg1()){
                 System.out.println("[JChannel] Receive a shared getState(Target) request for unicast to a JChannl-Client.");
                 this.service.unicast_stateMsg1(req.getStateMsg1());
+            } else if (req.hasStateMsg2()) {
+                System.out.println("[JChannel] Receive a shared getState(Target) result for unicast to a JChannl-Client.");
+                this.service.unicast_stateMsg2(req.getStateMsg2());
             }
         }
     }

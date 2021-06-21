@@ -1,13 +1,12 @@
 package cn.yingming.grpc1;
 
 import io.grpc.jchannelRpc.MessageRep;
-import io.grpc.jchannelRpc.Response;
 import io.grpc.jchannelRpc.ViewRep;
 import org.jgroups.Message;
 import org.jgroups.Receiver;
 import org.jgroups.View;
 import org.jgroups.util.MessageBatch;
-import org.jgroups.util.MessageIterator;
+
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -28,14 +27,19 @@ public class ReceiverRJ implements Receiver {
         throw new UnsupportedOperationException("Not support.");
     }
 
-    public LinkedList getStateRJ() throws Exception {
+    public LinkedList getStateRJ(){
         synchronized (state){
             return this.state;
         }
     }
 
-    public void setStateRJ() throws Exception {
-        throw new UnsupportedOperationException("Not support.");
+    public void setStateRJ(List states){
+        synchronized (this.state){
+            this.state.clear();
+            this.state.addAll(states);
+        }
+        System.out.println(this.state.size() + " messages in chat history.");
+        this.state.forEach(System.out::println);
     }
 
 

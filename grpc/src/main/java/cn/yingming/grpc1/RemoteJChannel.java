@@ -65,8 +65,7 @@ public class RemoteJChannel extends JChannel {
         return this.receiver;
     }
 
-    @Override
-    public JChannel setReceiver(Receiver r) {
+    public JChannel setReceiverRJ(ReceiverRJ r) {
         if (this.isWork.get()){
             System.out.println("The RemoteJChannel is working.");
         } else{

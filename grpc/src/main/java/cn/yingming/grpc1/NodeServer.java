@@ -153,7 +153,22 @@ public class NodeServer {
                         } finally {
                             lock.unlock();
                         }
-                    } else if (req.hasStateMsg1()){
+                    } else if (req.hasStateMsg2()){
+                        StateMsg_withTarget_2 msg = req.getStateMsg2();
+                        System.out.println("[gRPC] Receive the getState(target) result for message history from a client.");
+                        System.out.println(msg.getJchannelAddress() + "(" +
+                                msg.getSource() + ") returns getState() result for cluster, " +
+                                msg.getCluster() + " for remote jchannel " + msg.getTarget());
+                        lock.lock();
+                        try{
+                            // forward msg to other JChannels
+                            forwardMsg(req);
+                            // send msg to its gRPC clients
+                            unicast_stateMsg2(msg);
+                        }finally {
+                            lock.unlock();
+                        }
+                    }else if (req.hasStateMsg1()){
                         StateMsg_withTarget_1 msg = req.getStateMsg1();
                         System.out.println("[gRPC] Receive the getState(target) request for message history from a client.");
                         System.out.println(msg.getJchannelAddress() + "(" +
@@ -356,6 +371,30 @@ public class NodeServer {
                 lock.unlock();
             }
         }
+        public void unicast_stateMsg2(StateMsg_withTarget_2 req){
+            String msgCluster = req.getCluster();
+            String msgDest = req.getTarget();
+            lock.lock();
+            try{
+                ClusterMap clusterObj = (ClusterMap) jchannel.serviceMap.get(msgCluster);
+                Response msg = Response.newBuilder().setStateMsg2(req).build();
+                for (String uuid : clients.keySet()){
+                    if (clusterObj.getMap().containsKey(uuid)){
+                        if (clusterObj.getMap().get(uuid).equals(msgDest)){
+                            clients.get(uuid).onNext(msg);
+                            System.out.println("[gRPC] Send a message for getState(target) result to a JChannel-Client, " + clusterObj.getMap().get(uuid));
+                        } else{
+                            System.out.println("Unicast error.");
+                        }
+                    }
+                }
+                System.out.println("One unicast for state msg2.");
+
+            } finally {
+                lock.unlock();
+            }
+
+        }
         public void unicast_stateMsg1(StateMsg_withTarget_1 req){
             String msgCluster = req.getCluster();
             String msgDest = req.getTarget();
@@ -373,12 +412,11 @@ public class NodeServer {
                         }
                     }
                 }
-                System.out.println("One unicast for state.");
+                System.out.println("One unicast for state msg1.");
 
             } finally {
                 lock.unlock();
             }
-
         }
 
         public void unicast(MessageReq req){

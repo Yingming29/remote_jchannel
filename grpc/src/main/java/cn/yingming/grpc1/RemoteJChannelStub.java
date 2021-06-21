@@ -21,6 +21,7 @@ public class RemoteJChannelStub{
     public ManagedChannel channel;
     private JChannelsServiceGrpc.JChannelsServiceBlockingStub blockingStub;
     private JChannelsServiceGrpc.JChannelsServiceStub asynStub;
+    private StreamObserver observer;
 
     RemoteJChannelStub(RemoteJChannel client) {
         this.client = client;
@@ -29,6 +30,7 @@ public class RemoteJChannelStub{
         this.channel = ManagedChannelBuilder.forTarget(client.address).usePlaintext().build();
         this.asynStub = JChannelsServiceGrpc.newStub(this.channel);
         this.blockingStub = JChannelsServiceGrpc.newBlockingStub(this.channel);
+        this.observer = null;
     }
     public Request judgeRequest(Object obj) {
         Date d = new Date();
@@ -228,21 +230,40 @@ public class RemoteJChannelStub{
                                 .setJchannelAddress(this.client.jchannel_address)
                                 .setSource(this.client.uuid)
                                 .setTarget(msg1.getJchannelAddress())
-                                .setOneOfHistory(this.client.receiver.getStateRJ())
+                                .addAllOneOfHistory(this.client.receiver.getStateRJ())
                                 .build();
+                        Request req = Request.newBuilder()
+                                .setStateMsg2(msg2)
+                                .build();
+                        this.observer.onNext(req);
                     }finally {
                         stubLock.unlock();
                     }
+                }else{
+                    System.out.println("The RemoteJChannel does not have receiver.");
                 }
 
             }
+        } else if (response.hasStateMsg2()){
+            StateMsg_withTarget_2 msg = response.getStateMsg2();
+            if (this.client.receiver != null){
+                try {
+                    this.client.receiver.setStateRJ(msg.getOneOfHistoryList());
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            } else{
+                System.out.println("The RemoteJChannel does not have receiver.");
+            }
         }
     }
-
+    /*
     public void printMsg(MessageRep response){
         System.out.println("[JChannel] "
                 + response.getJchannelAddress() + ":" + response.getContent());
     }
+    
+     */
 
 
     private StreamObserver startGrpc(AtomicBoolean isWork) {
@@ -315,7 +336,7 @@ public class RemoteJChannelStub{
         return false;
     }
 
-    private void connectCluster(StreamObserver requestStreamObserver, long timeout) {
+    private void connectCluster(StreamObserver requestStreamObserver) {
         // Generated time
         Date d = new Date();
         SimpleDateFormat dft = new SimpleDateFormat("hh:mm:ss");
@@ -402,10 +423,12 @@ public class RemoteJChannelStub{
         ReentrantLock inputLock;
         ArrayList sharedList;
         AtomicBoolean isWork;
-        public Control(ArrayList sharedList, AtomicBoolean isWork) {
+        RemoteJChannelStub stub;
+        public Control(ArrayList sharedList, AtomicBoolean isWork, RemoteJChannelStub stub) {
             this.sharedList = sharedList;
             this.isWork = isWork;
             this.inputLock = new ReentrantLock();
+            this.stub = stub;
         }
 
         @Override
@@ -413,14 +436,14 @@ public class RemoteJChannelStub{
             while (true) {
                 // 4.1 start gRPC client and call connect() request.
                 // change: remove the argument isWork
-                StreamObserver requestSender = startGrpc(this.isWork);
+                stub.observer = startGrpc(this.isWork);
                 // change
-                // connectCluster(requestSender);
+                connectCluster(stub.observer);
                 // 4.2 getState() of JChannel
                 // change
                  // getState(requestSender);
                 // 4.3 check loop for connection problem and input content, and send request.
-                this.checkLoop(requestSender);
+                this.checkLoop(this.stub.observer);
                 // 4.4 reconnect part.
                 boolean result = reconnect();
                 if (!result) {
@@ -467,7 +490,7 @@ public class RemoteJChannelStub{
     }
 
     public void startStub(){
-        Control control = new Control(client.msgList, client.isWork);
+        Control control = new Control(client.msgList, client.isWork, this);
         Thread thread1 = new Thread(control);
         thread1.start();
     }
