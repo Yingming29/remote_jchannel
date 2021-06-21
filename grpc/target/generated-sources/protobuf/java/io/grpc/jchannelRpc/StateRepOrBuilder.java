@@ -14,27 +14,26 @@ public interface StateRepOrBuilder extends
   int getSize();
 
   /**
-   * <code>repeated string oneOfHistory = 2;</code>
-   * @return A list containing the oneOfHistory.
+   * <code>repeated .cn.yingming.grpc1.MessageReq oneOfHistory = 2;</code>
    */
-  java.util.List<java.lang.String>
+  java.util.List<io.grpc.jchannelRpc.MessageReq> 
       getOneOfHistoryList();
   /**
-   * <code>repeated string oneOfHistory = 2;</code>
-   * @return The count of oneOfHistory.
+   * <code>repeated .cn.yingming.grpc1.MessageReq oneOfHistory = 2;</code>
+   */
+  io.grpc.jchannelRpc.MessageReq getOneOfHistory(int index);
+  /**
+   * <code>repeated .cn.yingming.grpc1.MessageReq oneOfHistory = 2;</code>
    */
   int getOneOfHistoryCount();
   /**
-   * <code>repeated string oneOfHistory = 2;</code>
-   * @param index The index of the element to return.
-   * @return The oneOfHistory at the given index.
+   * <code>repeated .cn.yingming.grpc1.MessageReq oneOfHistory = 2;</code>
    */
-  java.lang.String getOneOfHistory(int index);
+  java.util.List<? extends io.grpc.jchannelRpc.MessageReqOrBuilder> 
+      getOneOfHistoryOrBuilderList();
   /**
-   * <code>repeated string oneOfHistory = 2;</code>
-   * @param index The index of the value to return.
-   * @return The bytes of the oneOfHistory at the given index.
+   * <code>repeated .cn.yingming.grpc1.MessageReq oneOfHistory = 2;</code>
    */
-  com.google.protobuf.ByteString
-      getOneOfHistoryBytes(int index);
+  io.grpc.jchannelRpc.MessageReqOrBuilder getOneOfHistoryOrBuilder(
+      int index);
 }

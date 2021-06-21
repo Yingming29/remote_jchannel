@@ -67,5 +67,35 @@ public interface RequestOrBuilder extends
    */
   io.grpc.jchannelRpc.StateReqOrBuilder getStateReqOrBuilder();
 
+  /**
+   * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 5;</code>
+   * @return Whether the stateMsg1 field is set.
+   */
+  boolean hasStateMsg1();
+  /**
+   * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 5;</code>
+   * @return The stateMsg1.
+   */
+  io.grpc.jchannelRpc.StateMsg_withTarget_1 getStateMsg1();
+  /**
+   * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 5;</code>
+   */
+  io.grpc.jchannelRpc.StateMsg_withTarget_1OrBuilder getStateMsg1OrBuilder();
+
+  /**
+   * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 6;</code>
+   * @return Whether the stateMsg2 field is set.
+   */
+  boolean hasStateMsg2();
+  /**
+   * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 6;</code>
+   * @return The stateMsg2.
+   */
+  io.grpc.jchannelRpc.StateMsg_withTarget_2 getStateMsg2();
+  /**
+   * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 6;</code>
+   */
+  io.grpc.jchannelRpc.StateMsg_withTarget_2OrBuilder getStateMsg2OrBuilder();
+
   public io.grpc.jchannelRpc.Request.OneTypeCase getOneTypeCase();
 }

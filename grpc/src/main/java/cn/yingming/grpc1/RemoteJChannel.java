@@ -33,6 +33,7 @@ public class RemoteJChannel extends JChannel {
     public boolean stats;
     // record for stats of remote jchannel
     public StatsRJ stats_obj;
+    public ReceiverRJ receiver;
 
     public RemoteJChannel(String name, String address) throws Exception {
         this.address = address;
@@ -56,18 +57,22 @@ public class RemoteJChannel extends JChannel {
         this.stats = false;
         // change: create class for stats obj record
         this.stats_obj = null;
+        this.receiver = null;
     }
 
     @Override
     public Receiver getReceiver() {
-        throw new UnsupportedOperationException("RemoteJChannel does not have Receiver. " +
-                "getReceiver() does not return anything.");
+        return this.receiver;
     }
 
     @Override
     public JChannel setReceiver(Receiver r) {
-        throw new UnsupportedOperationException("RemoteJChannel does not have Receiver. " +
-                "setReceiver() does not return anything.");
+        if (this.isWork.get()){
+            System.out.println("The RemoteJChannel is working.");
+        } else{
+            this.receiver = r;
+        }
+        return this;
     }
 
     @Override
@@ -251,7 +256,15 @@ public class RemoteJChannel extends JChannel {
     @Override
     public String getState() {
         if(this.clientStub != null && this.clientStub.channel != null){
-            return this.clientStub.channel.getState(true).toString();
+            if (this.down.get()){
+                if (this.isWork.get()){
+                    return "grpc connection works";
+                } else{
+                    return "grpc connection does not work";
+                }
+            } else{
+                return "stub down";
+            }
         } else{
             throw new IllegalStateException("The stub or channel of stub does not work.");
         }
@@ -576,7 +589,7 @@ public class RemoteJChannel extends JChannel {
         ReentrantLock lock = new ReentrantLock();
         lock.lock();
         try{
-            System.out.println("Give a getStateRJ() to stub.");
+            System.out.println("Give a getStateRJ() cmd to stub.");
             this.msgList.add(cmd);
         } finally {
             lock.unlock();

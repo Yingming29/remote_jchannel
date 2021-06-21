@@ -153,6 +153,21 @@ public class NodeServer {
                         } finally {
                             lock.unlock();
                         }
+                    } else if (req.hasStateMsg1()){
+                        StateMsg_withTarget_1 msg = req.getStateMsg1();
+                        System.out.println("[gRPC] Receive the getState(target) request for message history from a client.");
+                        System.out.println(msg.getJchannelAddress() + "(" +
+                                msg.getSource() + ") calls getState() for cluster, " +
+                                msg.getCluster() + " with target " + msg.getTarget());
+                        lock.lock();
+                        try{
+                            // forward msg to other JChannels
+                            forwardMsg(req);
+                            // send msg to its gRPC clients
+                            unicast_stateMsg1(msg);
+                        }finally {
+                            lock.unlock();
+                        }
                     } else{
                         /* Condition3
                            Receive the common message, send() request.
@@ -341,6 +356,30 @@ public class NodeServer {
                 lock.unlock();
             }
         }
+        public void unicast_stateMsg1(StateMsg_withTarget_1 req){
+            String msgCluster = req.getCluster();
+            String msgDest = req.getTarget();
+            lock.lock();
+            try{
+                ClusterMap clusterObj = (ClusterMap) jchannel.serviceMap.get(msgCluster);
+                Response msg = Response.newBuilder().setStateMsg1(req).build();
+                for (String uuid : clients.keySet()){
+                    if (clusterObj.getMap().containsKey(uuid)){
+                        if (clusterObj.getMap().get(uuid).equals(msgDest)){
+                            clients.get(uuid).onNext(msg);
+                            System.out.println("[gRPC] Send a message for getState(target) to a JChannel-Client, " + clusterObj.getMap().get(uuid));
+                        } else{
+                            System.out.println("Unicast error.");
+                        }
+                    }
+                }
+                System.out.println("One unicast for state.");
+
+            } finally {
+                lock.unlock();
+            }
+
+        }
 
         public void unicast(MessageReq req){
             String msgCluster = req.getCluster();
@@ -348,6 +387,7 @@ public class NodeServer {
             lock.lock();
             try{
                 Response rep;
+                // byte conent message
                 if (req.getContent().equals("")){
                     MessageRep msgRep = MessageRep.newBuilder()
                             .setJchannelAddress(req.getJchannelAddress())
@@ -357,7 +397,7 @@ public class NodeServer {
                             .setMessageResponse(msgRep)
                             .build();
                 } else{
-                    // String  message
+                    // String content message
                     MessageRep msgRep = MessageRep.newBuilder()
                             .setJchannelAddress(req.getJchannelAddress())
                             .setContent(req.getContent())
@@ -378,7 +418,7 @@ public class NodeServer {
                             clients.get(uuid).onNext(rep);
                             System.out.println("[gRPC] Send message to a JChannel-Client, " + clusterObj.getMap().get(uuid));
                         } else{
-                            System.out.println("error");
+                            System.out.println("Unicast error.");
                         }
                     }
                 }

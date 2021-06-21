@@ -51,7 +51,7 @@ public class StatsRJ {
     }
 
     // how many views the remote jchannel receive
-    // change at receive view 
+    // change at receive view
     public void addViewSize(){
         lock.lock();
         try{
@@ -75,15 +75,20 @@ public class StatsRJ {
 
     @Override
     public String toString(){
+        double average = 0.0;
         StringBuilder sb = new StringBuilder();
         sb.append("Received ").append(this.view_size).append(" views.").append("\n");
         sb.append("Number of sender: ").append(this.senders.size()).append("\n");
-        for (int i = 0; i < this.record.size(); i++) {
-            sb.append(this.record.get(i).toString()).append("\n");
+        if (this.record.size() != 0){
+            for (int i = 0; i < this.record.size(); i++) {
+                sb.append(this.record.get(i).toString()).append("\n");
+            }
+            average = (this.total_receivedBytes * 1.0) / (this.senders.size() * 1.0);
         }
         sb.append("Result:").append("\n");
         sb.append("Total received: ").append(this.total_receivedBytes).append(" bytes.").append("\n");
         sb.append("Total sent: ").append(this.total_sentBytes).append(" bytes.").append("\n");
+        sb.append("Average node: ").append(average).append(" bytes").append("\n");
         return sb.toString();
     }
 }

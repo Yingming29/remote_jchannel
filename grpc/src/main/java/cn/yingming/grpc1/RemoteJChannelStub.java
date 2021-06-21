@@ -46,6 +46,29 @@ public class RemoteJChannelStub{
                         .build();
                 return Request.newBuilder()
                         .setDisconnectRequest(msgReq).build();
+            } else if (input.startsWith("getState()")){
+                String[] strs = input.split(" ");
+                if (strs.length > 2){
+                    throw new IllegalArgumentException("getState() error.");
+                } else{
+                    if (strs[1].equals("null")){
+                        StateReq stateReq = StateReq.newBuilder()
+                                .setSource(client.uuid)
+                                .setCluster(client.cluster)
+                                .setJchannelAddress(client.jchannel_address)
+                                .build();
+
+                        return Request.newBuilder().setStateReq(stateReq).build();
+                    } else{
+                        StateMsg_withTarget_1 msg = StateMsg_withTarget_1.newBuilder()
+                                .setSource(this.client.uuid)
+                                .setCluster(this.client.cluster)
+                                .setJchannelAddress(this.client.jchannel_address)
+                                .setTarget(strs[1])
+                                .build();
+                        return Request.newBuilder().setStateMsg1(msg).build();
+                    }
+                }
             }
         }  else if(obj instanceof MessageRJ){
             MessageRJ msg = (MessageRJ) obj;
@@ -192,8 +215,28 @@ public class RemoteJChannelStub{
                     System.out.println(l.get(i));
                 }
             }
-        }
+        } else if (response.hasStateMsg1()){
+            StateMsg_withTarget_1 msg1 = response.getStateMsg1();
+            if (this.client.jchannel_address != msg1.getTarget()){
+                System.out.println("error getState(target) message.");
+            } else{
+                if (this.client.receiver != null){
+                    stubLock.lock();
+                    try{
+                        StateMsg_withTarget_2 msg2 = StateMsg_withTarget_2.newBuilder()
+                                .setCluster(this.client.cluster)
+                                .setJchannelAddress(this.client.jchannel_address)
+                                .setSource(this.client.uuid)
+                                .setTarget(msg1.getJchannelAddress())
+                                .setOneOfHistory(this.client.receiver.getStateRJ())
+                                .build();
+                    }finally {
+                        stubLock.unlock();
+                    }
+                }
 
+            }
+        }
     }
 
     public void printMsg(MessageRep response){
@@ -337,7 +380,7 @@ public class RemoteJChannelStub{
         System.out.println("[Reconnection]: Reconnect many times, end the reconnection loop.");
         return false;
     }
-
+    /*
     private void getState(StreamObserver requestStreamObserver) {
         // state request
         StateReq stateReq = StateReq.newBuilder()
@@ -352,12 +395,13 @@ public class RemoteJChannelStub{
         requestStreamObserver.onNext(req);
     }
 
+     */
+
 
     class Control implements Runnable {
         ReentrantLock inputLock;
         ArrayList sharedList;
         AtomicBoolean isWork;
-
         public Control(ArrayList sharedList, AtomicBoolean isWork) {
             this.sharedList = sharedList;
             this.isWork = isWork;
@@ -406,6 +450,8 @@ public class RemoteJChannelStub{
                         stubLock.unlock();
                     }
 
+
+
                 } else if (!client.isWork.get()) {
                     break;
                 } else if (!client.down.get()){
@@ -419,8 +465,6 @@ public class RemoteJChannelStub{
         }
 
     }
-
-
 
     public void startStub(){
         Control control = new Control(client.msgList, client.isWork);
