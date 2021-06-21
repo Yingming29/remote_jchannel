@@ -162,12 +162,24 @@ public class RemoteJChannel extends JChannel {
     }
 
     public JChannel setStats(boolean stats) {
-        this.stats = stats;
+        ReentrantLock lock = new ReentrantLock();
+        lock.lock();
+        try{
+            this.stats = stats;
+        }finally {
+            lock.unlock();
+        }
         return this;
     }
 
     public JChannel stats(boolean stats) {
-        this.stats = stats;
+        ReentrantLock lock = new ReentrantLock();
+        lock.lock();
+        try{
+            this.stats = stats;
+        }finally {
+            lock.unlock();
+        }
         return this;
     }
 
@@ -176,7 +188,14 @@ public class RemoteJChannel extends JChannel {
     }
 
     public JChannel setDiscardOwnMessages(boolean flag) {
-        this.discard_own_messages = flag;
+        ReentrantLock lock = new ReentrantLock();
+        lock.lock();
+        try{
+            this.discard_own_messages = flag;
+        }finally {
+            lock.unlock();
+        }
+
         return this;
     }
 

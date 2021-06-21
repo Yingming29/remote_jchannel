@@ -131,13 +131,37 @@ public class RemoteJChannelStub{
     }
 
     public void judgeResponse(Response response){
+        // whether discard message of itself
+        if (this.client.discard_own_messages && response.hasMessageResponse()){
+            if (response.getMessageResponse().getJchannelAddress().equals(this.client.jchannel_address)){
+                return;
+            }
+        }
 
+        // other
         if (response.hasConnectResponse()){
              System.out.println("Get Connect() response.");
+             if (!response.getConnectResponse().getResult()){
+                throw new IllegalStateException("connect failed.Please check jchannel address set.");
+             } else{
+                 this.stubLock.lock();
+                 try {
+                     this.client.isWork.set(true);
+
+                 }finally {
+                     this.stubLock.unlock();
+                 }
+             }
         } else if (response.hasMessageResponse()){
             // get message from server
-            printMsg(response.getMessageResponse());
+            // add the message response to stats object
+            if (this.client.stats){
+                this.client.stats_obj.addRecord(response);
+            }
+            // change to receiver, remove printMsg
+            // printMsg(response.getMessageResponse());
         } else if (response.hasUpdateResponse()){
+            // update the available server addresses
             update(response.getUpdateResponse().getAddresses());
         } else if (response.hasDisconnectResponse()){
             stubLock.lock();
@@ -149,15 +173,17 @@ public class RemoteJChannelStub{
 
         } else if (response.hasViewResponse()){
             ViewRep view = response.getViewResponse();
-            // System.out.println("** View:[" + view.getCreator() + "|" + view.getViewNum() +
-            //        "] (" + view.getSize() + ")" + view.getJchannelAddresses());
-            // changed
-            this.client.view.updateView(view);
 
-            // change:  call receiver of remote jchannel
+            this.client.view.updateView(view);
+            // add 1 view num in the record stats
+            if (this.client.stats){
+                this.client.stats_obj.addViewSize();
+            }
+            // change:  add receiver of remote// viewAccepted
 
         } else if (response.hasStateRep()){
             StateRep state = response.getStateRep();
+            // change, move it to receiver.
             System.out.println(state.getSize() + " messages in the chat history.");
             if (state.getSize() != 0){
                 LinkedList l = new LinkedList();
@@ -167,6 +193,7 @@ public class RemoteJChannelStub{
                 }
             }
         }
+
     }
 
     public void printMsg(MessageRep response){
@@ -190,7 +217,7 @@ public class RemoteJChannelStub{
             public void onError(Throwable throwable) {
                 System.out.println(throwable.getMessage());
                 System.out.println("[gRPC]: onError() of gRPC connection, the client needs to reconnect to the next server.");
-                // change the state of the bi-directional streaming.
+
                 lock.lock();
                 try {
                     isWork.set(false);
@@ -245,7 +272,7 @@ public class RemoteJChannelStub{
         return false;
     }
 
-    private void connectCluster(StreamObserver requestStreamObserver) {
+    private void connectCluster(StreamObserver requestStreamObserver, long timeout) {
         // Generated time
         Date d = new Date();
         SimpleDateFormat dft = new SimpleDateFormat("hh:mm:ss");
@@ -261,7 +288,8 @@ public class RemoteJChannelStub{
                 .build();
         // System.out.println(client.name + " calls connect() request to Jgroups cluster: " + client.cluster);
         requestStreamObserver.onNext(req);
-        // change the state of client
+        // change: add a timer and throw and
+
         stubLock.lock();
         try {
             client.isWork.set(true);

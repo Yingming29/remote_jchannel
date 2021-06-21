@@ -6,6 +6,7 @@ import io.grpc.jchannelRpc.MessageReq;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Test3 implements Serializable {
     public int a;
@@ -57,5 +58,10 @@ public class Test3 implements Serializable {
         System.out.println(obj.getClass());
         Test3 x = (Test3) obj;
         System.out.println(x.a);
+
+        HashSet test_set = new HashSet();
+        test_set.add(1);
+        test_set.add(1);
+        System.out.println("test_set:" + test_set);
     }
 }
