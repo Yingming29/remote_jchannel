@@ -145,7 +145,7 @@ public final class JChannelRpc {
       "urce\030\001 \001(\t\022\017\n\007cluster\030\002 \001(\t\022\030\n\020jchannel_" +
       "address\030\003 \001(\t\"M\n\010StateRep\022\014\n\004size\030\001 \001(\005\022" +
       "3\n\014oneOfHistory\030\002 \003(\0132\035.cn.yingming.grpc" +
-      "1.MessageReq\"b\n\025StateMsg_withTarget_1\022\016\n" +
+      "1.MessageRep\"b\n\025StateMsg_withTarget_1\022\016\n" +
       "\006source\030\001 \001(\t\022\017\n\007cluster\030\002 \001(\t\022\030\n\020jchann" +
       "el_address\030\003 \001(\t\022\016\n\006target\030\004 \001(\t\"\227\001\n\025Sta" +
       "teMsg_withTarget_2\022\016\n\006source\030\001 \001(\t\022\017\n\007cl" +

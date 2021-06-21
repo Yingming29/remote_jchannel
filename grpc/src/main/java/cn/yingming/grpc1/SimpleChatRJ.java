@@ -5,7 +5,6 @@ import org.jgroups.Receiver;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Locale;
 
 public class SimpleChatRJ {
 
@@ -14,7 +13,7 @@ public class SimpleChatRJ {
 
     private void start() throws Exception{
         receiver = new ReceiverRJ();
-        remoteJChannel = new RemoteJChannel("user2", "127.0.0.1:50051");
+        remoteJChannel = new RemoteJChannel("user2", "127.0.0.1:50052");
 
         remoteJChannel.setReceiverRJ(receiver);
         remoteJChannel.connect("ChatCluster");
@@ -34,6 +33,8 @@ public class SimpleChatRJ {
                 }
                 // MessageRJ msg = new MessageRJ(line);
                 remoteJChannel.send(line);
+                System.out.println(line);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

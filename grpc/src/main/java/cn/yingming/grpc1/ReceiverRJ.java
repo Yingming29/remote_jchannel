@@ -2,6 +2,7 @@ package cn.yingming.grpc1;
 
 import io.grpc.jchannelRpc.MessageRep;
 import io.grpc.jchannelRpc.Response;
+import io.grpc.jchannelRpc.StateRep;
 import io.grpc.jchannelRpc.ViewRep;
 import org.jgroups.Message;
 import org.jgroups.Receiver;
@@ -15,7 +16,6 @@ import java.util.List;
 
 public class ReceiverRJ implements Receiver {
     final LinkedList state;
-
     public ReceiverRJ(){
         this.state = new LinkedList<MessageRep>();
     }
@@ -43,13 +43,20 @@ public class ReceiverRJ implements Receiver {
         }
     }
 
-    public void setStateRJ(List states){
+    public void setStateRJ(List new_states){
         synchronized (this.state){
             this.state.clear();
-            this.state.addAll(states);
+            this.state.addAll(new_states);
         }
         System.out.println(this.state.size() + " messages in chat history.");
-        this.state.forEach(System.out::println);
+        for (int i = 0; i < this.state.size(); i++) {
+            MessageRep msg = (MessageRep) this.state.get(i);
+            if (!msg.getContent().equals("")){
+                System.out.println(msg.getJchannelAddress() + ": " + msg.getContent());
+            } else{
+                System.out.println(msg.getJchannelAddress() + ": " + msg.getContentByte());
+            }
+        }
     }
 
 

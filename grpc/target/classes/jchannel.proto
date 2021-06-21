@@ -95,7 +95,7 @@ message StateReq{
 // change
 message StateRep{
   int32 size = 1;
-  repeated MessageReq oneOfHistory = 2;
+  repeated MessageRep oneOfHistory = 2;
 }
 
 // new change

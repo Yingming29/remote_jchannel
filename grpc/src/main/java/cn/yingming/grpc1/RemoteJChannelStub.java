@@ -93,6 +93,7 @@ public class RemoteJChannelStub{
                             .setTimestamp(dft.format(d))
                             .setDestination(msg.getDst())
                             .build();
+                    System.out.println("1");
                     return Request.newBuilder().setMessageRequest(msgReq).build();
                     // broadcast
                 } else{
@@ -103,6 +104,7 @@ public class RemoteJChannelStub{
                             .setContent(msg.getMsg())
                             .setTimestamp(dft.format(d))
                             .build();
+                    System.out.println("2");
                     return Request.newBuilder().setMessageRequest(msgReq).build();
                 }
 
@@ -118,6 +120,7 @@ public class RemoteJChannelStub{
                                 .setTimestamp(dft.format(d))
                                 .setDestination(msg.getDst())
                                 .build();
+                        System.out.println("3");
                         return Request.newBuilder().setMessageRequest(msgReq).build();
                     } else{
                         msgReq = MessageReq.newBuilder()
@@ -127,6 +130,8 @@ public class RemoteJChannelStub{
                                 .setContent(msg.getMsg())
                                 .setTimestamp(dft.format(d))
                                 .build();
+                        System.out.println("4");
+                        System.out.println(msgReq);
                         return Request.newBuilder().setMessageRequest(msgReq).build();
                     }
                 } else{
@@ -224,6 +229,8 @@ public class RemoteJChannelStub{
             }
         } else if (response.hasStateRep()){
             StateRep state = response.getStateRep();
+            // System.out.println("JudgeResponse 0 conect:" + msg_obj.getContent()
+            //  + " jchannel address: " + msg_obj.getJchannelAddress());
             if (this.client.receiver != null){
                 try {
                     this.client.receiver.setStateRJ(state.getOneOfHistoryList());
@@ -290,6 +297,7 @@ public class RemoteJChannelStub{
 
             @Override
             public void onNext(Response response) {
+                System.out.println(response);
                 judgeResponse(response);
             }
 

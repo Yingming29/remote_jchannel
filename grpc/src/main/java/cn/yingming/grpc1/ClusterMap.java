@@ -24,7 +24,7 @@ public class ClusterMap implements Serializable {
         this.creator = creator;
         this.lock = new ReentrantLock();
         this.orderList = new ArrayList<String>();
-        this.history = new LinkedList<>();
+        this.history = new LinkedList<MessageRep>();
     }
     public ConcurrentHashMap getMap(){
         return this.map;
@@ -84,23 +84,19 @@ public class ClusterMap implements Serializable {
         return rep;
     }
     public void addHistory(MessageReq msg){
-        Response rep = null;
+        MessageRep rep = null;
         if (msg.getContent().equals("")){
-            MessageRep msgRep = MessageRep.newBuilder()
+            rep = MessageRep.newBuilder()
                     .setJchannelAddress(msg.getJchannelAddress())
                     .setContentByte(msg.getContentByte())
                     .build();
-            rep = Response.newBuilder()
-                    .setMessageResponse(msgRep)
-                    .build();
+            System.out.println("add history for byte msg.");
         } else{
-            MessageRep msgRep = MessageRep.newBuilder()
+            rep = MessageRep.newBuilder()
                     .setJchannelAddress(msg.getJchannelAddress())
                     .setContent(msg.getContent())
                     .build();
-            rep = Response.newBuilder()
-                    .setMessageResponse(msgRep)
-                    .build();
+            System.out.println("add history for string msg.");
         }
         lock.lock();
         try{

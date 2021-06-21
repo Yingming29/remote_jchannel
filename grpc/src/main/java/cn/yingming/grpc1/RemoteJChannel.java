@@ -589,7 +589,7 @@ public class RemoteJChannel extends JChannel {
         ReentrantLock lock = new ReentrantLock();
         lock.lock();
         try{
-            System.out.println("Give a getStateRJ() cmd to stub.");
+             // System.out.println("Give a getStateRJ() cmd to stub.");
             this.msgList.add(cmd);
         } finally {
             lock.unlock();

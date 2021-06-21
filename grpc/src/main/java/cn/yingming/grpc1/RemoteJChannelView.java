@@ -31,7 +31,7 @@ public class RemoteJChannelView {
             this.setMembers(l);
             this.setCoordinator(view.getCreator());
             this.setNum(view.getViewNum());
-            System.out.println("updateView() of RemoteJChannelView.");
+            // System.out.println("updateView() of RemoteJChannelView.");
         } finally {
             lock.unlock();
         }

@@ -1,12 +1,16 @@
 package cn.yingming.grpc1;
 
 import com.google.protobuf.ByteString;
+import io.grpc.jchannelRpc.MessageRep;
 import io.grpc.jchannelRpc.MessageReq;
+import io.grpc.jchannelRpc.Response;
+import io.grpc.jchannelRpc.StateRep;
 
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class Test3 implements Serializable {
     public int a;
@@ -59,14 +63,27 @@ public class Test3 implements Serializable {
         Test3 x = (Test3) obj;
         System.out.println(x.a);
 
-        HashSet test_set = new HashSet();
-        test_set.add(1);
-        test_set.add(1);
-        System.out.println("test_set:" + test_set);
+        List msg_list = new ArrayList<MessageRep>();
 
-        int inta = 1;
-        StringBuilder sb = new StringBuilder();
-        sb.append("111").append(inta);
-        System.out.println(sb);
+        MessageRep msg1 = MessageRep.newBuilder()
+                .setContent("1")
+                .setJchannelAddress("1")
+                .build();
+        MessageRep msg2 = MessageRep.newBuilder()
+                .setContent("2")
+                .setJchannelAddress("2")
+                .build();
+        List total = new ArrayList<MessageRep>();
+        total.add(msg1);
+        total.add(msg2);
+        StateRep stateRep = StateRep.newBuilder()
+                .setSize(2)
+                .addAllOneOfHistory(total)
+                .build();
+        Response rep = Response.newBuilder().setStateRep(stateRep).build();
+        System.out.println(rep);
+        for (int i = 0; i < rep.getStateRep().getOneOfHistoryList().size(); i++) {
+            System.out.println(rep.getStateRep().getOneOfHistoryList().get(i));
+        }
     }
 }

@@ -6,6 +6,7 @@ import io.grpc.stub.StreamObserver;
 import org.jgroups.Message;
 import org.jgroups.ObjectMessage;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -144,15 +145,23 @@ public class NodeServer {
                             Response rep = Response.newBuilder()
                                     .setStateRep(stateRep)
                                     .build();
+                            List l = rep.getStateRep().getOneOfHistoryList();
+                            for (int i = 0; i < rep.getStateRep().getOneOfHistoryList().size(); i++) {
+                                System.out.println(l.get(i).getClass());
+                                MessageRep mp = (MessageRep) l.get(i);
+                                System.out.println(mp.getJchannelAddress() + ":" + mp.getContent());
+                            }
                             // send to this client
                             for (String uuid : clients.keySet()) {
                                 if (uuid.equals(req.getStateReq().getSource())){
                                     clients.get(uuid).onNext(rep);
+                                    System.out.println("rep: " + rep);
                                 }
                             }
                         } finally {
                             lock.unlock();
                         }
+
                     } else if (req.hasStateMsg2()){
                         StateMsg_withTarget_2 msg = req.getStateMsg2();
                         System.out.println("[gRPC] Receive the getState(target) result for message history from a client.");
