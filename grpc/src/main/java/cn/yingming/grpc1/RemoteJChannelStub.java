@@ -242,30 +242,25 @@ public class RemoteJChannelStub{
             }
         } else if (response.hasStateMsg1()){
             StateMsg_withTarget_1 msg1 = response.getStateMsg1();
-            if (this.client.jchannel_address != msg1.getTarget()){
-                System.out.println("error getState(target) message.");
-            } else{
-                if (this.client.receiver != null){
-                    stubLock.lock();
-                    try{
-                        StateMsg_withTarget_2 msg2 = StateMsg_withTarget_2.newBuilder()
-                                .setCluster(this.client.cluster)
-                                .setJchannelAddress(this.client.jchannel_address)
-                                .setSource(this.client.uuid)
-                                .setTarget(msg1.getJchannelAddress())
-                                .addAllOneOfHistory(this.client.receiver.getStateRJ())
-                                .build();
-                        Request req = Request.newBuilder()
-                                .setStateMsg2(msg2)
-                                .build();
-                        this.observer.onNext(req);
-                    }finally {
-                        stubLock.unlock();
-                    }
-                }else{
-                    System.out.println("The RemoteJChannel does not have receiver.");
+            if (this.client.receiver != null){
+                stubLock.lock();
+                try{
+                    StateMsg_withTarget_2 msg2 = StateMsg_withTarget_2.newBuilder()
+                            .setCluster(this.client.cluster)
+                            .setJchannelAddress(this.client.jchannel_address)
+                            .setSource(this.client.uuid)
+                            .setTarget(msg1.getJchannelAddress())
+                            .addAllOneOfHistory(this.client.receiver.getStateRJ())
+                            .build();
+                    Request req = Request.newBuilder()
+                            .setStateMsg2(msg2)
+                            .build();
+                    this.observer.onNext(req);
+                }finally {
+                    stubLock.unlock();
                 }
-
+            }else{
+                System.out.println("The RemoteJChannel does not have receiver.");
             }
         } else if (response.hasStateMsg2()){
             StateMsg_withTarget_2 msg = response.getStateMsg2();

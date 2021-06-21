@@ -392,8 +392,6 @@ public class NodeServer {
                         if (clusterObj.getMap().get(uuid).equals(msgDest)){
                             clients.get(uuid).onNext(msg);
                             System.out.println("[gRPC] Send a message for getState(target) result to a JChannel-Client, " + clusterObj.getMap().get(uuid));
-                        } else{
-                            System.out.println("Unicast error.");
                         }
                     }
                 }

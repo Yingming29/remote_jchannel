@@ -16,7 +16,7 @@ public class SimpleChatRJ {
         remoteJChannel = new RemoteJChannel("user3", "127.0.0.1:50051");
         remoteJChannel.setReceiverRJ(receiver);
         remoteJChannel.connect("ChatCluster");
-        remoteJChannel.getStateRJ(null);
+        remoteJChannel.getStateRJ("JChannel-user1");
         eventLoop();
         remoteJChannel.close();
     }
@@ -38,7 +38,6 @@ public class SimpleChatRJ {
                 e.printStackTrace();
             }
         }
-
     }
 
     public static void main(String[] args) throws Exception {
