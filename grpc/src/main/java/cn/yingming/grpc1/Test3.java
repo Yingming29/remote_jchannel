@@ -63,5 +63,10 @@ public class Test3 implements Serializable {
         test_set.add(1);
         test_set.add(1);
         System.out.println("test_set:" + test_set);
+
+        int inta = 1;
+        StringBuilder sb = new StringBuilder();
+        sb.append("111").append(inta);
+        System.out.println(sb);
     }
 }

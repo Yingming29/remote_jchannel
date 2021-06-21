@@ -184,7 +184,15 @@ public class RemoteJChannelStub{
                 this.client.stats_obj.addRecord(response);
             }
             // change to receiver, remove printMsg
-            // printMsg(response.getMessageResponse());
+            if (this.client.receiver != null){
+                try {
+                    this.client.receiver.receiveRJ(response.getMessageResponse());
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            } else{
+                System.out.println("Receive message, but RemoteJChannel does not have receiver.");
+            }
         } else if (response.hasUpdateResponse()){
             // update the available server addresses
             update(response.getUpdateResponse().getAddresses());
@@ -205,17 +213,25 @@ public class RemoteJChannelStub{
                 this.client.stats_obj.addViewSize();
             }
             // change:  add receiver of remote// viewAccepted
-
+            if (this.client.receiver != null){
+                try {
+                    this.client.receiver.viewAcceptedRJ(view);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            } else{
+                System.out.println("Receive view, but RemoteJChannel does not have receiver.");
+            }
         } else if (response.hasStateRep()){
             StateRep state = response.getStateRep();
-            // change, move it to receiver.
-            System.out.println(state.getSize() + " messages in the chat history.");
-            if (state.getSize() != 0){
-                LinkedList l = new LinkedList();
-                l.addAll(state.getOneOfHistoryList());
-                for (int i = 0; i < l.size(); i++) {
-                    System.out.println(l.get(i));
+            if (this.client.receiver != null){
+                try {
+                    this.client.receiver.setStateRJ(state.getOneOfHistoryList());
+                } catch (Exception e){
+                    e.printStackTrace();
                 }
+            } else{
+                System.out.println("Receive state without target, but RemoteJChannel does not have receiver.");
             }
         } else if (response.hasStateMsg1()){
             StateMsg_withTarget_1 msg1 = response.getStateMsg1();
@@ -253,7 +269,7 @@ public class RemoteJChannelStub{
                     e.printStackTrace();
                 }
             } else{
-                System.out.println("The RemoteJChannel does not have receiver.");
+                System.out.println("Receive state, but RemoteJChannel does not have receiver.");
             }
         }
     }
@@ -262,7 +278,7 @@ public class RemoteJChannelStub{
         System.out.println("[JChannel] "
                 + response.getJchannelAddress() + ":" + response.getContent());
     }
-    
+
      */
 
 

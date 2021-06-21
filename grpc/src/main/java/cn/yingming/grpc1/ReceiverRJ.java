@@ -1,12 +1,12 @@
 package cn.yingming.grpc1;
 
 import io.grpc.jchannelRpc.MessageRep;
+import io.grpc.jchannelRpc.Response;
 import io.grpc.jchannelRpc.ViewRep;
 import org.jgroups.Message;
 import org.jgroups.Receiver;
 import org.jgroups.View;
 import org.jgroups.util.MessageBatch;
-
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -14,17 +14,27 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ReceiverRJ implements Receiver {
-    LinkedList state;
+    final LinkedList state;
 
     public ReceiverRJ(){
-        this.state = new LinkedList();
+        this.state = new LinkedList<MessageRep>();
     }
     public void receiveRJ(MessageRep msg) {
-        throw new UnsupportedOperationException("Not support.");
+        if (!msg.getContent().equals("")){
+            System.out.println(msg.getJchannelAddress() + ": " + msg.getContent());
+        } else{
+            System.out.println(msg.getJchannelAddress() + ": " + msg.getContentByte());
+        }
+        synchronized (this.state){
+            this.state.add(msg);
+        }
     }
 
     public void viewAcceptedRJ(ViewRep view) {
-        throw new UnsupportedOperationException("Not support.");
+        StringBuilder sb = new StringBuilder();
+        sb.append("** view: [").append(view.getCreator()).append("|").append(view.getViewNum())
+                .append("] (").append(view.getSize()).append(")").append(view.getOneAddressList());
+        System.out.println(sb);
     }
 
     public LinkedList getStateRJ(){
