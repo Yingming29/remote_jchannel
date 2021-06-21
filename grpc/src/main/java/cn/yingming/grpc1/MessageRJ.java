@@ -9,7 +9,7 @@ public class MessageRJ {
         this.dst = null;
         this.msg = null;
     }
-    public MessageRJ(byte[] buf, String dst){
+    public MessageRJ(String dst, byte[] buf){
         this.buf = buf;
         this.dst = dst;
     }
@@ -21,7 +21,7 @@ public class MessageRJ {
         this.msg = msg;
         this.dst = null;
     }
-    public MessageRJ(String msg, String dst){
+    public MessageRJ(String dst, String msg){
         this.dst = dst;
         this.msg = msg;
     }

@@ -35,7 +35,8 @@ public class RemoteJChannel extends JChannel {
     public StatsRJ stats_obj;
     public ReceiverRJ receiver;
 
-    public RemoteJChannel(String name, String address) throws Exception {
+
+    public RemoteJChannel(String name, String address) throws Exception{
         this.address = address;
         // as the source of the RemoteJChannel
         this.uuid = UUID.randomUUID().toString();
@@ -504,7 +505,7 @@ public class RemoteJChannel extends JChannel {
         if (msg == null || dst == null || msg.equals("") || dst.equals("")){
             throw new IllegalArgumentException("The msg or dst argument cannot be null.");
         }
-        MessageRJ message = new MessageRJ(msg, dst);
+        MessageRJ message = new MessageRJ(dst, msg);
         ReentrantLock lock = new ReentrantLock();
         lock.lock();
         try{
@@ -535,7 +536,7 @@ public class RemoteJChannel extends JChannel {
         if (buf == null || dst == null || dst.equals("")){
             throw new IllegalArgumentException("The byte[] or dst argument cannot be null.");
         }
-        MessageRJ msg = new MessageRJ(buf, dst);
+        MessageRJ msg = new MessageRJ(dst, buf);
         ReentrantLock lock = new ReentrantLock();
         lock.lock();
         try{
@@ -627,8 +628,9 @@ public class RemoteJChannel extends JChannel {
     }
     @Override
     public Object up(Event evt) {
-        throw new UnsupportedOperationException("RemoteJChannel does not support this method, it does not" +
-                "have Event object.");
+        //throw new UnsupportedOperationException("RemoteJChannel does not support this method, it does not" +
+          //      "have Event object.");
+        return null;
     }
     @Override
     public Object up(Message msg) {
