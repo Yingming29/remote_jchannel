@@ -16,12 +16,14 @@ public class SimpleChatRJ {
         receiver = new ReceiverRJ();
         remoteJChannel = new RemoteJChannel(name, server_address);
         remoteJChannel.setReceiverRJ(receiver);
+        //
         remoteJChannel.setDiscardOwnMessages(true);
-        // remoteJChannel.setStats(true);
+        remoteJChannel.setStats(true);
         remoteJChannel.connect(cluster);
         remoteJChannel.getStateRJ(state_target);
         eventLoop();
         remoteJChannel.close();
+        System.out.println(remoteJChannel.remoteJChannelDumpStats());
     }
 
     private void eventLoop(){
@@ -29,22 +31,20 @@ public class SimpleChatRJ {
         while (true){
             try{
                 System.out.println(">");System.out.flush();
-                String line = in.readLine().toLowerCase();
+                String line = in.readLine();
                 if (line.startsWith("quit") || line.startsWith("exit")){
                     break;
                 }
-                // Unicast
                 if (line.startsWith("unicast")) {
                     String[] strs = line.split(" ");
                     remoteJChannel.send(strs[1], strs[2]);
                 } else if (line.startsWith("byte")){
-                    byte[] buf = "byte".getBytes();
+                    byte[] buf = line.getBytes();
                     remoteJChannel.send(buf);
                 } else{
                     // MessageRJ msg = new MessageRJ(line);
                     remoteJChannel.send(line);
                 }
-
 
             } catch (IOException e) {
                 e.printStackTrace();

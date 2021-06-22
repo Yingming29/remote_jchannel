@@ -54,7 +54,7 @@ public class RemoteJChannel extends JChannel {
         // whether record the stats of the RemoteJChannel
         this.stats = false;
         // change: create class for stats obj record
-        this.stats_obj = null;
+        this.stats_obj = new StatsRJ();
         this.receiver = null;
     }
 

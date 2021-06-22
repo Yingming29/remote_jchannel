@@ -17,22 +17,23 @@ public class StatsRJ {
     int total_receivedBytes;
     int total_sentBytes;
     public StatsRJ(){
-        this.record = new LinkedList();
+        this.record = new LinkedList<Response>();
         this.lock = new ReentrantLock();
         this.view_size = 0;
-        this.senders = new HashSet();
+        this.senders = new HashSet<String>();
         this.total_receivedBytes = 0;
         this.total_sentBytes = 0;
     }
     // add message request or response record.
     public void addRecord(Object obj){
+        System.out.println(obj.getClass());
         if (obj instanceof Response){
             lock.lock();
             try{
                 // add record, sender set, and total received bytes
                 String str = "-- received 1 msg (" + ((Response) obj).toByteArray().length + " bytes)";
                 this.record.add(str);
-                MessageRep rep = (MessageRep) obj;
+                MessageRep rep = ((Response) obj).getMessageResponse();
                 this.senders.add(rep.getJchannelAddress());
                 this.total_receivedBytes = this.total_receivedBytes + ((Response) obj).toByteArray().length;
             }finally {

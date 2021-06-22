@@ -84,7 +84,7 @@ public class RemoteJChannelStub{
                     e.printStackTrace();
                 }
                 // unicast
-                if (msg.getDst() != null){
+                if (msg.getDst() != null || msg.getDst() != ""){
                     msgReq = MessageReq.newBuilder()
                             .setSource(this.client.uuid)
                             .setJchannelAddress(this.client.jchannel_address)
@@ -177,9 +177,14 @@ public class RemoteJChannelStub{
         } else if (response.hasMessageResponse()){
             // get message from server
             // add the message response to stats object
-            if (this.client.stats){
-                this.client.stats_obj.addRecord(response);
+            try{
+                if (this.client.stats){
+                    this.client.stats_obj.addRecord(response);
+                }
+            } catch (Exception e){
+                e.printStackTrace();
             }
+
             // change to receiver, remove printMsg
             if (this.client.receiver != null){
                 try {
@@ -491,6 +496,14 @@ public class RemoteJChannelStub{
                     Object obj = client.msgList.get(0);
                     Request msgReq = judgeRequest(obj);
                     requestSender.onNext(msgReq);
+
+                    try{
+                        if (this.stub.client.stats){
+                            this.stub.client.stats_obj.addRecord(msgReq);
+                        }
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
                     stubLock.lock();
                     try {
                         client.msgList.remove(0);
