@@ -93,7 +93,7 @@ public class RemoteJChannelStub{
                             .setTimestamp(dft.format(d))
                             .setDestination(msg.getDst())
                             .build();
-                    System.out.println("1");
+                    //System.out.println("1");
                     return Request.newBuilder().setMessageRequest(msgReq).build();
                     // broadcast
                 } else{
@@ -104,7 +104,7 @@ public class RemoteJChannelStub{
                             .setContent(msg.getMsg())
                             .setTimestamp(dft.format(d))
                             .build();
-                    System.out.println("2");
+                   // System.out.println("2");
                     return Request.newBuilder().setMessageRequest(msgReq).build();
                 }
 
@@ -120,7 +120,7 @@ public class RemoteJChannelStub{
                                 .setTimestamp(dft.format(d))
                                 .setDestination(msg.getDst())
                                 .build();
-                        System.out.println("3");
+                       // System.out.println("3");
                         return Request.newBuilder().setMessageRequest(msgReq).build();
                     } else{
                         msgReq = MessageReq.newBuilder()
@@ -130,8 +130,8 @@ public class RemoteJChannelStub{
                                 .setContent(msg.getMsg())
                                 .setTimestamp(dft.format(d))
                                 .build();
-                        System.out.println("4");
-                        System.out.println(msgReq);
+                       // System.out.println("4");
+                       // System.out.println(msgReq);
                         return Request.newBuilder().setMessageRequest(msgReq).build();
                     }
                 } else{
@@ -161,23 +161,15 @@ public class RemoteJChannelStub{
     }
 
     public void judgeResponse(Response response){
-        // whether discard message of itself
-        if (this.client.discard_own_messages && response.hasMessageResponse()){
-            if (response.getMessageResponse().getJchannelAddress().equals(this.client.jchannel_address)){
-                return;
-            }
-        }
 
         // other
         if (response.hasConnectResponse()){
-             System.out.println("Get Connect() response.");
              if (!response.getConnectResponse().getResult()){
                 throw new IllegalStateException("connect failed.Please check jchannel address set.");
              } else{
                  this.stubLock.lock();
                  try {
                      this.client.isWork.set(true);
-
                  }finally {
                      this.stubLock.unlock();
                  }
@@ -242,25 +234,30 @@ public class RemoteJChannelStub{
             }
         } else if (response.hasStateMsg1()){
             StateMsg_withTarget_1 msg1 = response.getStateMsg1();
-            if (this.client.receiver != null){
-                stubLock.lock();
-                try{
-                    StateMsg_withTarget_2 msg2 = StateMsg_withTarget_2.newBuilder()
-                            .setCluster(this.client.cluster)
-                            .setJchannelAddress(this.client.jchannel_address)
-                            .setSource(this.client.uuid)
-                            .setTarget(msg1.getJchannelAddress())
-                            .addAllOneOfHistory(this.client.receiver.getStateRJ())
-                            .build();
-                    Request req = Request.newBuilder()
-                            .setStateMsg2(msg2)
-                            .build();
-                    this.observer.onNext(req);
-                }finally {
-                    stubLock.unlock();
+            if (!this.client.jchannel_address.equals(msg1.getTarget())){
+                System.out.println("error getState(target) message.");
+            } else{
+                if (this.client.receiver != null){
+                    stubLock.lock();
+                    try{
+                        StateMsg_withTarget_2 msg2 = StateMsg_withTarget_2.newBuilder()
+                                .setCluster(this.client.cluster)
+                                .setJchannelAddress(this.client.jchannel_address)
+                                .setSource(this.client.uuid)
+                                .setTarget(msg1.getJchannelAddress())
+                                .addAllOneOfHistory(this.client.receiver.getStateRJ())
+                                .build();
+                        Request req = Request.newBuilder()
+                                .setStateMsg2(msg2)
+                                .build();
+                        this.observer.onNext(req);
+                    }finally {
+                        stubLock.unlock();
+                    }
+                }else{
+                    System.out.println("The RemoteJChannel does not have receiver.");
                 }
-            }else{
-                System.out.println("The RemoteJChannel does not have receiver.");
+
             }
         } else if (response.hasStateMsg2()){
             StateMsg_withTarget_2 msg = response.getStateMsg2();
@@ -276,7 +273,7 @@ public class RemoteJChannelStub{
         }
     }
 
-    private StreamObserver startGrpc(AtomicBoolean isWork) {
+    private StreamObserver startGrpc(AtomicBoolean isWork, RemoteJChannel client) {
 
         ReentrantLock lock = new ReentrantLock();
         // Service 1
@@ -284,8 +281,13 @@ public class RemoteJChannelStub{
 
             @Override
             public void onNext(Response response) {
-                // System.out.println(response);
-                judgeResponse(response);
+                // whether discard message of itself
+                String add = response.getMessageResponse().getJchannelAddress();
+                if (client.discard_own_messages && response.hasMessageResponse() && add.equals(client.jchannel_address)){
+
+                } else{
+                    judgeResponse(response);
+                }
             }
 
             @Override
@@ -443,17 +445,17 @@ public class RemoteJChannelStub{
         public void run() {
             while (true) {
                 // start gRPC client and call connect() request.
-                stub.observer = startGrpc(this.isWork);
+                stub.observer = startGrpc(this.isWork, this.stub.client);
                 // change
                 connectCluster(stub.observer);
 
                 // check loop for connection problem and input content, and send request.
                 this.checkLoop(this.stub.observer);
-                System.out.println("222" + client.down.get());
+                // System.out.println("222" + client.down.get());
                 // reconnect part.
                 if (!client.down.get()){
                     try{
-                        System.out.println("exit 0 on control thread.");
+                        // System.out.println("exit 0 on control thread.");
                         System.exit(0);
                     } catch (Exception e){
                         e.printStackTrace();
@@ -461,7 +463,7 @@ public class RemoteJChannelStub{
                 }
                 boolean result = reconnect();
                 if (!result) {
-                    System.out.println("End the control loop of stub.");
+                    //System.out.println("End the control loop of stub.");
                     break;
                 }
             }
@@ -475,7 +477,7 @@ public class RemoteJChannelStub{
                 if (!client.down.get()){
                     try{
 
-                        System.out.println("exit 0 on control thread.");
+                        //System.out.println("exit 0 on control thread.");
                         System.exit(0);
                     } catch (Exception e){
                         e.printStackTrace();

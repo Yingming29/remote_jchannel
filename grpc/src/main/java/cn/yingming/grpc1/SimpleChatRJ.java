@@ -11,12 +11,15 @@ public class SimpleChatRJ {
     RemoteJChannel remoteJChannel;
     ReceiverRJ receiver;
 
-    private void start() throws Exception{
+    private void start(String name, String server_address, String cluster, String state_target) throws Exception{
+
         receiver = new ReceiverRJ();
-        remoteJChannel = new RemoteJChannel("user3", "127.0.0.1:50051");
+        remoteJChannel = new RemoteJChannel(name, server_address);
         remoteJChannel.setReceiverRJ(receiver);
-        remoteJChannel.connect("ChatCluster");
-        remoteJChannel.getStateRJ("JChannel-user1");
+        remoteJChannel.setDiscardOwnMessages(true);
+        // remoteJChannel.setStats(true);
+        remoteJChannel.connect(cluster);
+        remoteJChannel.getStateRJ(state_target);
         eventLoop();
         remoteJChannel.close();
     }
@@ -30,9 +33,18 @@ public class SimpleChatRJ {
                 if (line.startsWith("quit") || line.startsWith("exit")){
                     break;
                 }
-                // MessageRJ msg = new MessageRJ(line);
-                remoteJChannel.send(line);
-                System.out.println(line);
+                // Unicast
+                if (line.startsWith("unicast")) {
+                    String[] strs = line.split(" ");
+                    remoteJChannel.send(strs[1], strs[2]);
+                } else if (line.startsWith("byte")){
+                    byte[] buf = "byte".getBytes();
+                    remoteJChannel.send(buf);
+                } else{
+                    // MessageRJ msg = new MessageRJ(line);
+                    remoteJChannel.send(line);
+                }
+
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -41,6 +53,6 @@ public class SimpleChatRJ {
     }
 
     public static void main(String[] args) throws Exception {
-        new SimpleChatRJ().start();
+        new SimpleChatRJ().start(args[0], args[1], args[2], args[3]);
     }
 }

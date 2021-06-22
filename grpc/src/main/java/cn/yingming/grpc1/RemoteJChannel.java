@@ -21,8 +21,6 @@ public class RemoteJChannel extends JChannel {
 
     public AtomicBoolean isWork;
     public ArrayList msgList;
-
-    // change from JChannelClientStub to RemoteJChannelStub
     public RemoteJChannelStub clientStub;
     public AtomicBoolean down;
     public RemoteJChannelView view;
@@ -34,7 +32,6 @@ public class RemoteJChannel extends JChannel {
     // record for stats of remote jchannel
     public StatsRJ stats_obj;
     public ReceiverRJ receiver;
-
 
     public RemoteJChannel(String name, String address) throws Exception{
         this.address = address;
@@ -64,6 +61,12 @@ public class RemoteJChannel extends JChannel {
     @Override
     public Receiver getReceiver() {
         return this.receiver;
+    }
+
+    @Override
+    public JChannel setReceiver(Receiver r) {
+        throw new UnsupportedOperationException("RemoteJChannel does not have Receiver. " +
+                "receiver() does not return anything.");
     }
 
     public JChannel setReceiverRJ(ReceiverRJ r) {
@@ -107,8 +110,6 @@ public class RemoteJChannel extends JChannel {
         return this.setName(name);
     }
 
-    @Override
-    // getClusterName
     public String clusterName() {
         return this.getClusterName();
     }
@@ -166,25 +167,14 @@ public class RemoteJChannel extends JChannel {
         return this.stats;
     }
 
+
     public JChannel setStats(boolean stats) {
-        ReentrantLock lock = new ReentrantLock();
-        lock.lock();
-        try{
-            this.stats = stats;
-        }finally {
-            lock.unlock();
-        }
+        this.stats = stats;
         return this;
     }
 
     public JChannel stats(boolean stats) {
-        ReentrantLock lock = new ReentrantLock();
-        lock.lock();
-        try{
-            this.stats = stats;
-        }finally {
-            lock.unlock();
-        }
+        this.stats = stats;
         return this;
     }
 
@@ -192,15 +182,9 @@ public class RemoteJChannel extends JChannel {
         return this.discard_own_messages;
     }
 
-    public JChannel setDiscardOwnMessages(boolean flag) {
-        ReentrantLock lock = new ReentrantLock();
-        lock.lock();
-        try{
-            this.discard_own_messages = flag;
-        }finally {
-            lock.unlock();
-        }
 
+    public JChannel setDiscardOwnMessages(boolean flag) {
+        this.discard_own_messages = flag;
         return this;
     }
 
@@ -282,6 +266,7 @@ public class RemoteJChannel extends JChannel {
     }
 
     @Override
+    // change
     public boolean isConnected() {
         throw new UnsupportedOperationException("RemoteJChannel does not have CONNECTED state." +
                 "Please use isOpen() or getState().");
@@ -306,7 +291,7 @@ public class RemoteJChannel extends JChannel {
     }
 
     public static String getVersion() {
-        return "RemoteJChannel v0.5";
+        return "RemoteJChannel v0.5 >.<" ;
     }
 
     @Override
@@ -501,7 +486,7 @@ public class RemoteJChannel extends JChannel {
     }
 
     // for unicast with dst
-    public JChannel send(String msg, String dst){
+    public JChannel send(String dst, String msg){
         if (msg == null || dst == null || msg.equals("") || dst.equals("")){
             throw new IllegalArgumentException("The msg or dst argument cannot be null.");
         }

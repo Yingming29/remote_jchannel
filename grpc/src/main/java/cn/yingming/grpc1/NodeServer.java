@@ -155,7 +155,7 @@ public class NodeServer {
                             for (String uuid : clients.keySet()) {
                                 if (uuid.equals(req.getStateReq().getSource())){
                                     clients.get(uuid).onNext(rep);
-                                    System.out.println("rep: " + rep);
+                                    // System.out.println("rep: " + rep);
                                 }
                             }
                         } finally {
@@ -414,8 +414,6 @@ public class NodeServer {
                         if (clusterObj.getMap().get(uuid).equals(msgDest)){
                             clients.get(uuid).onNext(msg);
                             System.out.println("[gRPC] Send a message for getState(target) to a JChannel-Client, " + clusterObj.getMap().get(uuid));
-                        } else{
-                            System.out.println("Unicast error.");
                         }
                     }
                 }
@@ -462,13 +460,10 @@ public class NodeServer {
                         if (clusterObj.getMap().get(uuid).equals(msgDest)){
                             clients.get(uuid).onNext(rep);
                             System.out.println("[gRPC] Send message to a JChannel-Client, " + clusterObj.getMap().get(uuid));
-                        } else{
-                            System.out.println("Unicast error.");
                         }
                     }
                 }
                 System.out.println("One unicast for message successfully.");
-                System.out.println(rep);
 
             } finally {
                 lock.unlock();
