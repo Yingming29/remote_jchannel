@@ -1,7 +1,5 @@
 package cn.yingming.grpc1;
 
-import org.jgroups.Receiver;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,7 +14,6 @@ public class SimpleChatRJ {
         receiver = new ReceiverRJ();
         remoteJChannel = new RemoteJChannel(name, server_address);
         remoteJChannel.setReceiverRJ(receiver);
-        //
         remoteJChannel.setDiscardOwnMessages(true);
         remoteJChannel.setStats(true);
         remoteJChannel.connect(cluster);

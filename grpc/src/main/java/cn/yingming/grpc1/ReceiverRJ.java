@@ -15,7 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ReceiverRJ implements Receiver {
-    final LinkedList state;
+    final LinkedList<MessageRep> state;
     public ReceiverRJ(){
         this.state = new LinkedList<MessageRep>();
     }

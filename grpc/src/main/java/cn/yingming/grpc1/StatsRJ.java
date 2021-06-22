@@ -26,7 +26,7 @@ public class StatsRJ {
     }
     // add message request or response record.
     public void addRecord(Object obj){
-        System.out.println(obj.getClass());
+        // System.out.println(obj.getClass());
         if (obj instanceof Response){
             lock.lock();
             try{
