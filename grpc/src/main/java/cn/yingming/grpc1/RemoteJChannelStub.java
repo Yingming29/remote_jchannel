@@ -361,7 +361,7 @@ public class RemoteJChannelStub{
         // connect() request
         ConnectReq joinReq = ConnectReq.newBuilder()
                 .setSource(client.uuid)
-                .setJchannelAddress(client.jchannel_address)
+                //.setJchannelAddress(client.jchannel_address)
                 .setCluster(client.cluster)
                 .setTimestamp(dft.format(d))
                 .build();

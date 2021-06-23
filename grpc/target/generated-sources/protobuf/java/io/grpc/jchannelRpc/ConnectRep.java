@@ -16,6 +16,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private ConnectRep() {
+    address_ = com.google.protobuf.ByteString.EMPTY;
   }
 
   @java.lang.Override
@@ -51,6 +52,11 @@ private static final long serialVersionUID = 0L;
           case 8: {
 
             result_ = input.readBool();
+            break;
+          }
+          case 18: {
+
+            address_ = input.readBytes();
             break;
           }
           default: {
@@ -96,6 +102,17 @@ private static final long serialVersionUID = 0L;
     return result_;
   }
 
+  public static final int ADDRESS_FIELD_NUMBER = 2;
+  private com.google.protobuf.ByteString address_;
+  /**
+   * <code>bytes address = 2;</code>
+   * @return The address.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString getAddress() {
+    return address_;
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -113,6 +130,9 @@ private static final long serialVersionUID = 0L;
     if (result_ != false) {
       output.writeBool(1, result_);
     }
+    if (!address_.isEmpty()) {
+      output.writeBytes(2, address_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -125,6 +145,10 @@ private static final long serialVersionUID = 0L;
     if (result_ != false) {
       size += com.google.protobuf.CodedOutputStream
         .computeBoolSize(1, result_);
+    }
+    if (!address_.isEmpty()) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeBytesSize(2, address_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -143,6 +167,8 @@ private static final long serialVersionUID = 0L;
 
     if (getResult()
         != other.getResult()) return false;
+    if (!getAddress()
+        .equals(other.getAddress())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -157,6 +183,8 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + RESULT_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
         getResult());
+    hash = (37 * hash) + ADDRESS_FIELD_NUMBER;
+    hash = (53 * hash) + getAddress().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -292,6 +320,8 @@ private static final long serialVersionUID = 0L;
       super.clear();
       result_ = false;
 
+      address_ = com.google.protobuf.ByteString.EMPTY;
+
       return this;
     }
 
@@ -319,6 +349,7 @@ private static final long serialVersionUID = 0L;
     public io.grpc.jchannelRpc.ConnectRep buildPartial() {
       io.grpc.jchannelRpc.ConnectRep result = new io.grpc.jchannelRpc.ConnectRep(this);
       result.result_ = result_;
+      result.address_ = address_;
       onBuilt();
       return result;
     }
@@ -369,6 +400,9 @@ private static final long serialVersionUID = 0L;
       if (other == io.grpc.jchannelRpc.ConnectRep.getDefaultInstance()) return this;
       if (other.getResult() != false) {
         setResult(other.getResult());
+      }
+      if (other.getAddress() != com.google.protobuf.ByteString.EMPTY) {
+        setAddress(other.getAddress());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -426,6 +460,40 @@ private static final long serialVersionUID = 0L;
     public Builder clearResult() {
       
       result_ = false;
+      onChanged();
+      return this;
+    }
+
+    private com.google.protobuf.ByteString address_ = com.google.protobuf.ByteString.EMPTY;
+    /**
+     * <code>bytes address = 2;</code>
+     * @return The address.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString getAddress() {
+      return address_;
+    }
+    /**
+     * <code>bytes address = 2;</code>
+     * @param value The address to set.
+     * @return This builder for chaining.
+     */
+    public Builder setAddress(com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      address_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>bytes address = 2;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearAddress() {
+      
+      address_ = getDefaultInstance().getAddress();
       onChanged();
       return this;
     }

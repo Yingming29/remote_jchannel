@@ -7,7 +7,7 @@ import io.grpc.jchannelRpc.Response;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.concurrent.locks.ReentrantLock;
-
+// delete the class
 public class StatsRJ {
 
     LinkedList record;

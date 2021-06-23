@@ -41,7 +41,7 @@ public class RemoteJChannel extends JChannel {
         this.cluster = null;
         this.msgList = new ArrayList();
         // generated fake address.
-        this.jchannel_address = "JChannel-" + this.name;
+        this.jchannel_address = null;
         this.clientStub = null;
         this.view = new RemoteJChannelView();
 

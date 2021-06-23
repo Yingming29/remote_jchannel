@@ -4,10 +4,6 @@
 package io.grpc.jchannelRpc;
 
 /**
- * <pre>
- * new change
- * </pre>
- *
  * Protobuf type {@code cn.yingming.grpc1.StateMsg_withTarget_1}
  */
 public final class StateMsg_withTarget_1 extends
@@ -449,10 +445,6 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * <pre>
-   * new change
-   * </pre>
-   *
    * Protobuf type {@code cn.yingming.grpc1.StateMsg_withTarget_1}
    */
   public static final class Builder extends

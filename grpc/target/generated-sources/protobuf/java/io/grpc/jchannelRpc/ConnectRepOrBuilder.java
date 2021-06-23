@@ -12,4 +12,10 @@ public interface ConnectRepOrBuilder extends
    * @return The result.
    */
   boolean getResult();
+
+  /**
+   * <code>bytes address = 2;</code>
+   * @return The address.
+   */
+  com.google.protobuf.ByteString getAddress();
 }

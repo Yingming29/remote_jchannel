@@ -1,6 +1,8 @@
 package cn.yingming.grpc1;
 
-public class MessageRJ {
+import java.io.Serializable;
+
+public class MessageRJ implements Serializable {
     byte[] buf;
     String dst;
     String msg;

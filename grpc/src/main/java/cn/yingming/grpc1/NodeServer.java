@@ -3,8 +3,10 @@ package cn.yingming.grpc1;
 import io.grpc.*;
 import io.grpc.jchannelRpc.*;
 import io.grpc.stub.StreamObserver;
+import org.jgroups.Address;
 import org.jgroups.Message;
 import org.jgroups.ObjectMessage;
+import org.jgroups.util.UUID;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -96,12 +98,14 @@ public class NodeServer {
                      */
                     if (req.hasConnectRequest()){
                         System.out.println("[gRPC] Receive the connect() request from a client.");
-                        System.out.println(req.getConnectRequest().getJchannelAddress() + "(" +
-                                req.getConnectRequest().getSource() + ") joins the cluster, " +
+                        System.out.println("(" + req.getConnectRequest().getSource() + ") joins the cluster, " +
                                 req.getConnectRequest().getCluster());
-                        forwardMsg(req);
+                        // Description: connect(String cluster) request:
+                        // 1.The server generates the Address for the requester.
+                        Address generated_address = UUID.randomUUID();
                         // Store the responseObserver of the client.
                         join(req.getConnectRequest(), responseObserver);
+
 
 
                     /*  Condition2
@@ -296,7 +300,8 @@ public class NodeServer {
                 clients.put(req.getSource(), responseObserver);
                 // String cluster, String JChannel_address, String uuid
                 // <cluster, <uuid, JChanner_address>>
-                jchannel.connectCluster(req.getCluster(), req.getJchannelAddress(), req.getSource());
+                // !!!!!!!!!!!!!!!!!!!!!!!!!!
+                // jchannel.connectCluster(req.getCluster(), req.getJchannelAddress(), req.getSource());
                 // return response for result.
                 ConnectRep joinResponse = ConnectRep.newBuilder()
                         .setResult(true)

@@ -71,7 +71,8 @@ public class NodeJChannel implements Receiver{
             if (req.hasConnectRequest()){
                 ConnectReq conReq = req.getConnectRequest();
                 System.out.println("[JChannel] Receive a shared connect() request for updating th cluster information.");
-                connectCluster(conReq.getCluster(), conReq.getJchannelAddress(), conReq.getSource());
+                // change: After the server receive the connect() result, it generate a
+                // !!!!connectCluster(conReq.getCluster(), conReq.getJchannelAddress(), conReq.getSource());
             } else if (req.hasDisconnectRequest()){
                 DisconnectReq disReq = req.getDisconnectRequest();
                 System.out.println("[JChannel] Receive a shared disconnect() request for updating th cluster information.");
