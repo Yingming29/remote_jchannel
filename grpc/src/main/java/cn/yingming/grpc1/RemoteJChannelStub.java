@@ -556,7 +556,6 @@ public class RemoteJChannelStub {
                     // tag, add a client stub treatment.
                     Object obj = client.msgList.get(0);
                     System.out.println("2"+ Thread.currentThread());
-                    System.out.println(2);
                     Request msgReq = judgeRequest(obj);
                     requestSender.onNext(msgReq);
                     try{

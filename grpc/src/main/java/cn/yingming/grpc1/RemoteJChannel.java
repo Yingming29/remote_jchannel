@@ -92,7 +92,7 @@ public class RemoteJChannel extends JChannel {
         this.clientStub.add_save("getAddress()");
         synchronized (obj){
             try{
-                obj.wait();
+                obj.wait(5000);
             } catch (Exception e){
                 e.printStackTrace();
             }
