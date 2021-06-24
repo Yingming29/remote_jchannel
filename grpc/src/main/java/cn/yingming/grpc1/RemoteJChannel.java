@@ -89,8 +89,15 @@ public class RemoteJChannel extends JChannel {
     @Override
     // grpc call for real jchannel
     public Address getAddress() {
-        this.clientStub.addCmd_blocking("getAddress");
-        return this.address();
+        this.clientStub.add_save("getAddress()");
+        synchronized (obj){
+            try{
+                obj.wait();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return this.real_jchannel_address;
     }
 
     public Address getLocalAddress(){

@@ -132,6 +132,20 @@ private static final long serialVersionUID = 0L;
             oneTypeCase_ = 6;
             break;
           }
+          case 58: {
+            io.grpc.jchannelRpc.GetAddressReq.Builder subBuilder = null;
+            if (oneTypeCase_ == 7) {
+              subBuilder = ((io.grpc.jchannelRpc.GetAddressReq) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.GetAddressReq.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.GetAddressReq) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 7;
+            break;
+          }
           default: {
             if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -175,6 +189,7 @@ private static final long serialVersionUID = 0L;
     STATEREQ(4),
     STATEMSG1(5),
     STATEMSG2(6),
+    GETADDRESSREQ(7),
     ONETYPE_NOT_SET(0);
     private final int value;
     private OneTypeCase(int value) {
@@ -198,6 +213,7 @@ private static final long serialVersionUID = 0L;
         case 4: return STATEREQ;
         case 5: return STATEMSG1;
         case 6: return STATEMSG2;
+        case 7: return GETADDRESSREQ;
         case 0: return ONETYPE_NOT_SET;
         default: return null;
       }
@@ -399,6 +415,37 @@ private static final long serialVersionUID = 0L;
     return io.grpc.jchannelRpc.StateMsg_withTarget_2.getDefaultInstance();
   }
 
+  public static final int GETADDRESSREQ_FIELD_NUMBER = 7;
+  /**
+   * <code>.cn.yingming.grpc1.GetAddressReq getAddressReq = 7;</code>
+   * @return Whether the getAddressReq field is set.
+   */
+  @java.lang.Override
+  public boolean hasGetAddressReq() {
+    return oneTypeCase_ == 7;
+  }
+  /**
+   * <code>.cn.yingming.grpc1.GetAddressReq getAddressReq = 7;</code>
+   * @return The getAddressReq.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.GetAddressReq getGetAddressReq() {
+    if (oneTypeCase_ == 7) {
+       return (io.grpc.jchannelRpc.GetAddressReq) oneType_;
+    }
+    return io.grpc.jchannelRpc.GetAddressReq.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.GetAddressReq getAddressReq = 7;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.GetAddressReqOrBuilder getGetAddressReqOrBuilder() {
+    if (oneTypeCase_ == 7) {
+       return (io.grpc.jchannelRpc.GetAddressReq) oneType_;
+    }
+    return io.grpc.jchannelRpc.GetAddressReq.getDefaultInstance();
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -430,6 +477,9 @@ private static final long serialVersionUID = 0L;
     }
     if (oneTypeCase_ == 6) {
       output.writeMessage(6, (io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_);
+    }
+    if (oneTypeCase_ == 7) {
+      output.writeMessage(7, (io.grpc.jchannelRpc.GetAddressReq) oneType_);
     }
     unknownFields.writeTo(output);
   }
@@ -463,6 +513,10 @@ private static final long serialVersionUID = 0L;
     if (oneTypeCase_ == 6) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(6, (io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_);
+    }
+    if (oneTypeCase_ == 7) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(7, (io.grpc.jchannelRpc.GetAddressReq) oneType_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -505,6 +559,10 @@ private static final long serialVersionUID = 0L;
         if (!getStateMsg2()
             .equals(other.getStateMsg2())) return false;
         break;
+      case 7:
+        if (!getGetAddressReq()
+            .equals(other.getGetAddressReq())) return false;
+        break;
       case 0:
       default:
     }
@@ -543,6 +601,10 @@ private static final long serialVersionUID = 0L;
       case 6:
         hash = (37 * hash) + STATEMSG2_FIELD_NUMBER;
         hash = (53 * hash) + getStateMsg2().hashCode();
+        break;
+      case 7:
+        hash = (37 * hash) + GETADDRESSREQ_FIELD_NUMBER;
+        hash = (53 * hash) + getGetAddressReq().hashCode();
         break;
       case 0:
       default:
@@ -750,6 +812,13 @@ private static final long serialVersionUID = 0L;
           result.oneType_ = stateMsg2Builder_.build();
         }
       }
+      if (oneTypeCase_ == 7) {
+        if (getAddressReqBuilder_ == null) {
+          result.oneType_ = oneType_;
+        } else {
+          result.oneType_ = getAddressReqBuilder_.build();
+        }
+      }
       result.oneTypeCase_ = oneTypeCase_;
       onBuilt();
       return result;
@@ -822,6 +891,10 @@ private static final long serialVersionUID = 0L;
         }
         case STATEMSG2: {
           mergeStateMsg2(other.getStateMsg2());
+          break;
+        }
+        case GETADDRESSREQ: {
+          mergeGetAddressReq(other.getGetAddressReq());
           break;
         }
         case ONETYPE_NOT_SET: {
@@ -1716,6 +1789,147 @@ private static final long serialVersionUID = 0L;
       oneTypeCase_ = 6;
       onChanged();;
       return stateMsg2Builder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.GetAddressReq, io.grpc.jchannelRpc.GetAddressReq.Builder, io.grpc.jchannelRpc.GetAddressReqOrBuilder> getAddressReqBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.GetAddressReq getAddressReq = 7;</code>
+     * @return Whether the getAddressReq field is set.
+     */
+    @java.lang.Override
+    public boolean hasGetAddressReq() {
+      return oneTypeCase_ == 7;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetAddressReq getAddressReq = 7;</code>
+     * @return The getAddressReq.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.GetAddressReq getGetAddressReq() {
+      if (getAddressReqBuilder_ == null) {
+        if (oneTypeCase_ == 7) {
+          return (io.grpc.jchannelRpc.GetAddressReq) oneType_;
+        }
+        return io.grpc.jchannelRpc.GetAddressReq.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 7) {
+          return getAddressReqBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.GetAddressReq.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetAddressReq getAddressReq = 7;</code>
+     */
+    public Builder setGetAddressReq(io.grpc.jchannelRpc.GetAddressReq value) {
+      if (getAddressReqBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        getAddressReqBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 7;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetAddressReq getAddressReq = 7;</code>
+     */
+    public Builder setGetAddressReq(
+        io.grpc.jchannelRpc.GetAddressReq.Builder builderForValue) {
+      if (getAddressReqBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        getAddressReqBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 7;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetAddressReq getAddressReq = 7;</code>
+     */
+    public Builder mergeGetAddressReq(io.grpc.jchannelRpc.GetAddressReq value) {
+      if (getAddressReqBuilder_ == null) {
+        if (oneTypeCase_ == 7 &&
+            oneType_ != io.grpc.jchannelRpc.GetAddressReq.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.GetAddressReq.newBuilder((io.grpc.jchannelRpc.GetAddressReq) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 7) {
+          getAddressReqBuilder_.mergeFrom(value);
+        }
+        getAddressReqBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 7;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetAddressReq getAddressReq = 7;</code>
+     */
+    public Builder clearGetAddressReq() {
+      if (getAddressReqBuilder_ == null) {
+        if (oneTypeCase_ == 7) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 7) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        getAddressReqBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetAddressReq getAddressReq = 7;</code>
+     */
+    public io.grpc.jchannelRpc.GetAddressReq.Builder getGetAddressReqBuilder() {
+      return getGetAddressReqFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetAddressReq getAddressReq = 7;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.GetAddressReqOrBuilder getGetAddressReqOrBuilder() {
+      if ((oneTypeCase_ == 7) && (getAddressReqBuilder_ != null)) {
+        return getAddressReqBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 7) {
+          return (io.grpc.jchannelRpc.GetAddressReq) oneType_;
+        }
+        return io.grpc.jchannelRpc.GetAddressReq.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetAddressReq getAddressReq = 7;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.GetAddressReq, io.grpc.jchannelRpc.GetAddressReq.Builder, io.grpc.jchannelRpc.GetAddressReqOrBuilder> 
+        getGetAddressReqFieldBuilder() {
+      if (getAddressReqBuilder_ == null) {
+        if (!(oneTypeCase_ == 7)) {
+          oneType_ = io.grpc.jchannelRpc.GetAddressReq.getDefaultInstance();
+        }
+        getAddressReqBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.GetAddressReq, io.grpc.jchannelRpc.GetAddressReq.Builder, io.grpc.jchannelRpc.GetAddressReqOrBuilder>(
+                (io.grpc.jchannelRpc.GetAddressReq) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 7;
+      onChanged();;
+      return getAddressReqBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

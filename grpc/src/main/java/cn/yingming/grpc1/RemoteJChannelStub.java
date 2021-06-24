@@ -5,6 +5,7 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.jchannelRpc.*;
 import io.grpc.stub.StreamObserver;
+import org.jgroups.util.ByteArrayDataInputStream;
 import org.jgroups.util.UUID;
 
 import java.text.SimpleDateFormat;
@@ -13,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class RemoteJChannelStub{
+public class RemoteJChannelStub {
 
     public RemoteJChannel client;
 
@@ -23,6 +24,8 @@ public class RemoteJChannelStub{
     private JChannelsServiceGrpc.JChannelsServiceBlockingStub blockingStub;
     private JChannelsServiceGrpc.JChannelsServiceStub asynStub;
     private StreamObserver observer;
+    private Object obj;
+
 
     RemoteJChannelStub(RemoteJChannel client) {
         this.client = client;
@@ -32,11 +35,14 @@ public class RemoteJChannelStub{
         this.asynStub = JChannelsServiceGrpc.newStub(this.channel);
         this.blockingStub = JChannelsServiceGrpc.newBlockingStub(this.channel);
         this.observer = null;
+        this.obj = new Object();
     }
+
     public Request judgeRequest(Object obj) {
+        System.out.println("judgeRequest"+ Thread.currentThread());
         Date d = new Date();
         SimpleDateFormat dft = new SimpleDateFormat("hh:mm:ss");
-        if (obj instanceof String){
+        if (obj instanceof String) {
             String input = (String) obj;
             // single send request
             if (input.equals("disconnect")) {
@@ -49,12 +55,18 @@ public class RemoteJChannelStub{
                         .build();
                 return Request.newBuilder()
                         .setDisconnectRequest(msgReq).build();
-            } else if (input.startsWith("getState()")){
+            } else if(input.equals("getAddress()")){
+                GetAddressReq getAddressReq = GetAddressReq.newBuilder()
+                        .setJchannelAddress(this.client.jchannel_address.toString())
+                        .setSource(this.client.uuid)
+                        .build();
+                return Request.newBuilder().setGetAddressReq(getAddressReq).build();
+            }else if (input.startsWith("getState()")) {
                 String[] strs = input.split(" ");
-                if (strs.length > 2){
+                if (strs.length > 2) {
                     throw new IllegalArgumentException("getState() error.");
-                } else{
-                    if (strs[1].equals("null")){
+                } else {
+                    if (strs[1].equals("null")) {
                         StateReq stateReq = StateReq.newBuilder()
                                 .setSource(client.uuid)
                                 .setCluster(client.cluster)
@@ -62,7 +74,7 @@ public class RemoteJChannelStub{
                                 .build();
 
                         return Request.newBuilder().setStateReq(stateReq).build();
-                    } else{
+                    } else {
                         StateMsg_withTarget_1 msg = StateMsg_withTarget_1.newBuilder()
                                 .setSource(this.client.uuid)
                                 .setCluster(this.client.cluster)
@@ -73,19 +85,19 @@ public class RemoteJChannelStub{
                     }
                 }
             }
-        }  else if(obj instanceof MessageRJ){
+        } else if (obj instanceof MessageRJ) {
             MessageRJ msg = (MessageRJ) obj;
             boolean checkResult = msg.check();
             MessageReq msgReq;
-            if (!checkResult){
+            if (!checkResult) {
                 // if the message has both of byte[] buf and String msg property, drop the byte[].
-                try{
+                try {
                     throw new IllegalArgumentException("The MessageRJ has both of buf and msg property.");
-                } catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 // unicast
-                if (msg.getDst() != null || msg.getDst() != ""){
+                if (msg.getDst() != null || msg.getDst() != "") {
                     msgReq = MessageReq.newBuilder()
                             .setSource(this.client.uuid)
                             .setJchannelAddress(this.client.jchannel_address.toString())
@@ -97,7 +109,7 @@ public class RemoteJChannelStub{
                     //System.out.println("1");
                     return Request.newBuilder().setMessageRequest(msgReq).build();
                     // broadcast
-                } else{
+                } else {
                     msgReq = MessageReq.newBuilder()
                             .setSource(this.client.uuid)
                             .setJchannelAddress(this.client.jchannel_address.toString())
@@ -105,14 +117,14 @@ public class RemoteJChannelStub{
                             .setContent(msg.getMsg())
                             .setTimestamp(dft.format(d))
                             .build();
-                   // System.out.println("2");
+                    // System.out.println("2");
                     return Request.newBuilder().setMessageRequest(msgReq).build();
                 }
 
-            } else{
+            } else {
                 // send message with String
-                if (msg.getBuf() == null){
-                    if (msg.getDst() != null){
+                if (msg.getBuf() == null) {
+                    if (msg.getDst() != null) {
                         msgReq = MessageReq.newBuilder()
                                 .setSource(this.client.uuid)
                                 .setJchannelAddress(this.client.jchannel_address.toString())
@@ -121,9 +133,9 @@ public class RemoteJChannelStub{
                                 .setTimestamp(dft.format(d))
                                 .setDestination(msg.getDst())
                                 .build();
-                       // System.out.println("3");
+                        // System.out.println("3");
                         return Request.newBuilder().setMessageRequest(msgReq).build();
-                    } else{
+                    } else {
                         msgReq = MessageReq.newBuilder()
                                 .setSource(this.client.uuid)
                                 .setJchannelAddress(this.client.jchannel_address.toString())
@@ -131,12 +143,12 @@ public class RemoteJChannelStub{
                                 .setContent(msg.getMsg())
                                 .setTimestamp(dft.format(d))
                                 .build();
-                       // System.out.println("4");
-                       // System.out.println(msgReq);
+                        // System.out.println("4");
+                        // System.out.println(msgReq);
                         return Request.newBuilder().setMessageRequest(msgReq).build();
                     }
-                } else{
-                    if (msg.getDst() != null){
+                } else {
+                    if (msg.getDst() != null) {
                         msgReq = MessageReq.newBuilder()
                                 .setSource(this.client.uuid)
                                 .setJchannelAddress(this.client.jchannel_address.toString())
@@ -145,7 +157,7 @@ public class RemoteJChannelStub{
                                 .setTimestamp(dft.format(d))
                                 .setDestination(msg.getDst())
                                 .build();
-                    } else{
+                    } else {
                         msgReq = MessageReq.newBuilder()
                                 .setSource(this.client.uuid)
                                 .setJchannelAddress(this.client.jchannel_address.toString())
@@ -160,105 +172,125 @@ public class RemoteJChannelStub{
         }
         return null;
     }
-    public void setGeneratedAddress(ConnectRep connectRep){
-        if (connectRep.getAddress().equals("")){
+
+    public void setGeneratedAddress(ConnectRep connectRep) {
+        if (connectRep.getAddress().equals("")) {
             throw new IllegalArgumentException("The ConnectResponse does not have generated Address.");
-        } else{
+        } else {
             this.stubLock.lock();
             try {
                 this.client.jchannel_address = UUID.fromString(connectRep.getAddress());
                 client.isWork.set(true);
                 client.down.set(true);
-            }finally {
+            } finally {
                 this.stubLock.unlock();
             }
             System.out.println("[Stub]: Receive the connect response with generated Address, Address = " +
                     this.client.jchannel_address);
-            synchronized (this.client.down){
+            synchronized (this.client.down) {
                 this.client.down.notify();
             }
         }
     }
-    public void judgeResponse(Response response){
 
+    public void judgeResponse(Response response) {
+       //  System.out.println("Test print all response:" + response);
         // other
-        if (response.hasConnectResponse()){
-             if (!response.getConnectResponse().getResult()){
+        if (response.hasConnectResponse()) {
+            if (!response.getConnectResponse().getResult()) {
                 throw new IllegalStateException("connect failed.Please check jchannel address set.");
-             } else{
-                 setGeneratedAddress(response.getConnectResponse());
-             }
-        } else if (response.hasMessageResponse()){
+            } else {
+                setGeneratedAddress(response.getConnectResponse());
+            }
+        } else if(response.hasGetAddressRep()){
+            GetAddressRep getAddressRep = response.getGetAddressRep();
+            System.out.println("getAddress() response:" + getAddressRep);
+            if (!getAddressRep.getIsWork()){
+                this.client.real_jchannel_address = null;
+            } else{
+                ByteArrayDataInputStream inStream = new ByteArrayDataInputStream(getAddressRep.getAddress().toByteArray());
+                UUID u = new UUID();
+                try {
+                    u.readFrom(inStream);
+                    this.client.real_jchannel_address = u;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            synchronized (this.client.obj) {
+                this.client.obj.notify();
+            }
+        }else if (response.hasMessageResponse()) {
             // get message from server
             // add the message response to stats object
-            try{
-                if (this.client.stats){
+            try {
+                if (this.client.stats) {
                     this.client.stats_obj.addRecord(response);
                 }
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
             // change to receiver, remove printMsg
-            if (this.client.receiver != null){
+            if (this.client.receiver != null) {
                 try {
                     this.client.receiver.receiveRJ(response.getMessageResponse());
-                } catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-            } else{
+            } else {
                 System.out.println("Receive message, but RemoteJChannel does not have receiver.");
             }
-        } else if (response.hasUpdateResponse()){
+        } else if (response.hasUpdateResponse()) {
             // update the available server addresses
             update(response.getUpdateResponse().getAddresses());
-        } else if (response.hasDisconnectResponse()){
+        } else if (response.hasDisconnectResponse()) {
             stubLock.lock();
-            try{
+            try {
                 client.down.set(false);
             } finally {
                 stubLock.unlock();
             }
 
-        } else if (response.hasViewResponse()){
+        } else if (response.hasViewResponse()) {
             ViewRep view = response.getViewResponse();
 
             this.client.view.updateView(view);
             // add 1 view num in the record stats
-            if (this.client.stats){
+            if (this.client.stats) {
                 this.client.stats_obj.addViewSize();
             }
             // change:  add receiver of remote// viewAccepted
-            if (this.client.receiver != null){
+            if (this.client.receiver != null) {
                 try {
                     this.client.receiver.viewAcceptedRJ(view);
-                } catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-            } else{
+            } else {
                 System.out.println("Receive view, but RemoteJChannel does not have receiver.");
             }
-        } else if (response.hasStateRep()){
+        } else if (response.hasStateRep()) {
             StateRep state = response.getStateRep();
             // System.out.println("JudgeResponse 0 conect:" + msg_obj.getContent()
             //  + " jchannel address: " + msg_obj.getJchannelAddress());
-            if (this.client.receiver != null){
+            if (this.client.receiver != null) {
                 try {
                     this.client.receiver.setStateRJ(state.getOneOfHistoryList());
-                } catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-            } else{
+            } else {
                 System.out.println("Receive state without target, but RemoteJChannel does not have receiver.");
             }
-        } else if (response.hasStateMsg1()){
+        } else if (response.hasStateMsg1()) {
             StateMsg_withTarget_1 msg1 = response.getStateMsg1();
-            if (!this.client.jchannel_address.equals(msg1.getTarget())){
+            if (!this.client.jchannel_address.equals(msg1.getTarget())) {
                 System.out.println("error getState(target) message.");
-            } else{
-                if (this.client.receiver != null){
+            } else {
+                if (this.client.receiver != null) {
                     stubLock.lock();
-                    try{
+                    try {
                         StateMsg_withTarget_2 msg2 = StateMsg_withTarget_2.newBuilder()
                                 .setCluster(this.client.cluster)
                                 .setJchannelAddress(this.client.jchannel_address.toString())
@@ -270,26 +302,26 @@ public class RemoteJChannelStub{
                                 .setStateMsg2(msg2)
                                 .build();
                         this.observer.onNext(req);
-                    }finally {
+                    } finally {
                         stubLock.unlock();
                     }
-                }else{
+                } else {
                     System.out.println("The RemoteJChannel does not have receiver.");
                 }
 
             }
-        } else if (response.hasStateMsg2()){
+        } else if (response.hasStateMsg2()) {
             StateMsg_withTarget_2 msg = response.getStateMsg2();
-            if (this.client.receiver != null){
+            if (this.client.receiver != null) {
                 try {
                     this.client.receiver.setStateRJ(msg.getOneOfHistoryList());
-                } catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-            } else{
+            } else {
                 System.out.println("Receive state, but RemoteJChannel does not have receiver.");
             }
-        }
+        } // else if ()
     }
 
     private StreamObserver startGrpc(AtomicBoolean isWork, RemoteJChannel client) {
@@ -302,9 +334,9 @@ public class RemoteJChannelStub{
             public void onNext(Response response) {
                 // whether discard message of itself
                 String add = response.getMessageResponse().getJchannelAddress();
-                if (client.discard_own_messages && response.hasMessageResponse() && add.equals(client.jchannel_address)){
+                if (client.discard_own_messages && response.hasMessageResponse() && add.equals(client.jchannel_address)) {
 
-                } else{
+                } else {
                     judgeResponse(response);
                 }
             }
@@ -333,27 +365,6 @@ public class RemoteJChannelStub{
 
     }
 
-    public void request_blocking(Object obj){
-        ReentrantLock lock = new ReentrantLock();
-        if (obj instanceof String){
-            if (obj.toString().equals("getAddress()")){
-                lock.lock();
-                try {
-                    this.client.msgList.add(obj);
-                } finally {
-                    lock.unlock();
-                }
-                synchronized (this.client.obj){
-                    try {
-                        obj.wait();
-                    } catch (Exception e){
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-
-    }
 
     public void update(String addresses){
         String[] add = addresses.split(" ");
@@ -365,6 +376,15 @@ public class RemoteJChannelStub{
             System.out.println("Update addresses of servers: " + serverList);
         } finally {
             stubLock.unlock();
+        }
+    }
+    public void add_save(Object input){
+        ReentrantLock lock = new ReentrantLock();
+        lock.lock();
+        try {
+            this.client.msgList.add(input);
+        } finally {
+            lock.unlock();
         }
     }
 
@@ -491,6 +511,7 @@ public class RemoteJChannelStub{
                 // wait for result
                 synchronized (down){
                     try {
+                        System.out.println("generate address request"+ Thread.currentThread());
                         down.wait();
                     } catch (Exception e){
                         e.printStackTrace();
@@ -534,6 +555,8 @@ public class RemoteJChannelStub{
                     // treat a input.
                     // tag, add a client stub treatment.
                     Object obj = client.msgList.get(0);
+                    System.out.println("2"+ Thread.currentThread());
+                    System.out.println(2);
                     Request msgReq = judgeRequest(obj);
                     requestSender.onNext(msgReq);
                     try{
@@ -549,6 +572,7 @@ public class RemoteJChannelStub{
                     } finally {
                         stubLock.unlock();
                     }
+
 
                 } else if (!client.isWork.get()) {
                     break;

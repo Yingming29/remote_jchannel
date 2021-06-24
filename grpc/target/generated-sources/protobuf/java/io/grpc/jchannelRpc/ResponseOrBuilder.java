@@ -127,5 +127,20 @@ public interface ResponseOrBuilder extends
    */
   io.grpc.jchannelRpc.StateMsg_withTarget_2OrBuilder getStateMsg2OrBuilder();
 
+  /**
+   * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 9;</code>
+   * @return Whether the getAddressRep field is set.
+   */
+  boolean hasGetAddressRep();
+  /**
+   * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 9;</code>
+   * @return The getAddressRep.
+   */
+  io.grpc.jchannelRpc.GetAddressRep getGetAddressRep();
+  /**
+   * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 9;</code>
+   */
+  io.grpc.jchannelRpc.GetAddressRepOrBuilder getGetAddressRepOrBuilder();
+
   public io.grpc.jchannelRpc.Response.OneTypeCase getOneTypeCase();
 }

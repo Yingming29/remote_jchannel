@@ -97,5 +97,20 @@ public interface RequestOrBuilder extends
    */
   io.grpc.jchannelRpc.StateMsg_withTarget_2OrBuilder getStateMsg2OrBuilder();
 
+  /**
+   * <code>.cn.yingming.grpc1.GetAddressReq getAddressReq = 7;</code>
+   * @return Whether the getAddressReq field is set.
+   */
+  boolean hasGetAddressReq();
+  /**
+   * <code>.cn.yingming.grpc1.GetAddressReq getAddressReq = 7;</code>
+   * @return The getAddressReq.
+   */
+  io.grpc.jchannelRpc.GetAddressReq getGetAddressReq();
+  /**
+   * <code>.cn.yingming.grpc1.GetAddressReq getAddressReq = 7;</code>
+   */
+  io.grpc.jchannelRpc.GetAddressReqOrBuilder getGetAddressReqOrBuilder();
+
   public io.grpc.jchannelRpc.Request.OneTypeCase getOneTypeCase();
 }

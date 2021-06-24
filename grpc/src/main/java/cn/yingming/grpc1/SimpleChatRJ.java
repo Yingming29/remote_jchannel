@@ -32,10 +32,11 @@ public class SimpleChatRJ {
                 if (line.startsWith("quit") || line.startsWith("exit")){
                     break;
                 }
-                if (line.startsWith("print-address")){
-                    System.out.println(remoteJChannel.jchannel_address);
-                }
-                if (line.startsWith("unicast")) {
+                if (line.startsWith("getLocalAddress")){
+                    System.out.println(remoteJChannel.getLocalAddress());
+                } else if(line.startsWith("getRemoteAddress")){
+                    System.out.println("Real JChannel Address (JChannel Server):" + remoteJChannel.getAddress());
+                } else if (line.startsWith("unicast")) {
                     String[] strs = line.split(" ");
                     remoteJChannel.send(strs[1], strs[2]);
                 } else if (line.startsWith("byte")){

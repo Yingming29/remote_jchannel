@@ -1,13 +1,17 @@
 package cn.yingming.grpc1;
 
+import com.google.protobuf.ByteString;
 import io.grpc.*;
 import io.grpc.jchannelRpc.*;
 import io.grpc.stub.StreamObserver;
 import org.jgroups.Address;
 import org.jgroups.Message;
 import org.jgroups.ObjectMessage;
+import org.jgroups.util.ByteArrayDataInputStream;
+import org.jgroups.util.ByteArrayDataOutputStream;
 import org.jgroups.util.UUID;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
@@ -209,7 +213,38 @@ public class NodeServer {
                         }finally {
                             lock.unlock();
                         }
-                    } else{
+                    } else if (req.hasGetAddressReq()){
+                        /*
+                        Receive the getAddress() request for getting the real JChannel-Server's Address
+                        If the real JChannel of node does not work, return a response with isWork "false".
+                        */
+                        GetAddressReq getAddressReq = req.getGetAddressReq();
+                        System.out.println("[grpc] Receive the getAddress() request for the JChannel-server Address from JChannel-Client:"
+                                + getAddressReq.getJchannelAddress() + "(" + getAddressReq.getSource() + ")");
+                        if (jchannel.channel.getAddress() != null){
+                            // convert the Address of real JChannel to bytes and put in the message
+                            ByteArrayDataOutputStream outputStream = new ByteArrayDataOutputStream();
+                            try {
+                                jchannel.channel.getAddress().writeTo(outputStream);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            byte[] add_byte = outputStream.buffer();
+                            GetAddressRep getAddressRep = GetAddressRep.newBuilder()
+                                    .setAddress(ByteString.copyFrom(add_byte))
+                                    .setIsWork(true)
+                                    .build();
+                            Response rep = Response.newBuilder().setGetAddressRep(getAddressRep).build();
+                            System.out.println(rep);
+                            responseObserver.onNext(rep);
+                        } else{
+                            GetAddressRep getAddressRep = GetAddressRep.newBuilder()
+                                    .setIsWork(false)
+                                    .build();
+                            Response rep = Response.newBuilder().setGetAddressRep(getAddressRep).build();
+                            responseObserver.onNext(rep);
+                        }
+                    }else{
                         /* Condition3
                            Receive the common message, send() request.
                            Two types: broadcast ot unicast
