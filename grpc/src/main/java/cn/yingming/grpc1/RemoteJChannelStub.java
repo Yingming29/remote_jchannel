@@ -552,10 +552,8 @@ public class RemoteJChannelStub {
                 // the if statement is for inputLoop thread and state of bidirectional streaming.
                 // If the channel
                 if (client.msgList.size() != 0 && client.isWork.get()) {
-                    // treat a input.
-                    // tag, add a client stub treatment.
                     Object obj = client.msgList.get(0);
-                    System.out.println("2"+ Thread.currentThread());
+                    // System.out.println("2"+ Thread.currentThread());
                     Request msgReq = judgeRequest(obj);
                     requestSender.onNext(msgReq);
                     try{

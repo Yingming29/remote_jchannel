@@ -87,8 +87,14 @@ public class RemoteJChannel extends JChannel {
     }
 
     @Override
-    // grpc call for real jchannel
+    // getAddress() -> address()
     public Address getAddress() {
+        return address();
+    }
+
+    @Override
+    // grpc call for real jchannel  -> return result by grpc
+    public Address address() {
         this.clientStub.add_save("getAddress()");
         synchronized (obj){
             try{
@@ -105,12 +111,6 @@ public class RemoteJChannel extends JChannel {
             throw new IllegalArgumentException("Client and client stub does not work.");
         }
         return this.jchannel_address;
-    }
-
-    @Override
-    public Address address() {
-        throw new UnsupportedOperationException("RemoteJChannel does not have Address. " +
-                "Please use getAddressAsString() and getAddressAsUUID().");
     }
 
     public String getName() {
