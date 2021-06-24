@@ -29,7 +29,7 @@ public interface ConnectReqOrBuilder extends
 
   /**
    * <pre>
-   * string jchannel_address = 2;   // fake addresss of jchannel client
+   * cluster
    * </pre>
    *
    * <code>string cluster = 2;</code>
@@ -38,7 +38,7 @@ public interface ConnectReqOrBuilder extends
   java.lang.String getCluster();
   /**
    * <pre>
-   * string jchannel_address = 2;   // fake addresss of jchannel client
+   * cluster
    * </pre>
    *
    * <code>string cluster = 2;</code>
@@ -58,4 +58,26 @@ public interface ConnectReqOrBuilder extends
    */
   com.google.protobuf.ByteString
       getTimestampBytes();
+
+  /**
+   * <pre>
+   * reconnect and jchannel_address will be used in the reconnection part.
+   * </pre>
+   *
+   * <code>bool reconnect = 4;</code>
+   * @return The reconnect.
+   */
+  boolean getReconnect();
+
+  /**
+   * <code>string jchannel_address = 5;</code>
+   * @return The jchannelAddress.
+   */
+  java.lang.String getJchannelAddress();
+  /**
+   * <code>string jchannel_address = 5;</code>
+   * @return The bytes for jchannelAddress.
+   */
+  com.google.protobuf.ByteString
+      getJchannelAddressBytes();
 }

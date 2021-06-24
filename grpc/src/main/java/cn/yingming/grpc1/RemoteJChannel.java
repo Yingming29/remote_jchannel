@@ -17,7 +17,7 @@ public class RemoteJChannel extends JChannel {
     public String uuid;
     public String name;
     public String cluster;
-    public String jchannel_address;
+    public Address jchannel_address;
 
     public AtomicBoolean isWork;
     public ArrayList msgList;
@@ -198,7 +198,7 @@ public class RemoteJChannel extends JChannel {
     The methods returns the generated FAKE jchannel address. eg. JChannel-xxx
      */
     public String getAddressAsString() {
-        return this.jchannel_address != null ? this.jchannel_address : "n/a";
+        return this.jchannel_address != null ? this.jchannel_address.toString() : "n/a";
     }
 
     @Override
@@ -394,8 +394,6 @@ public class RemoteJChannel extends JChannel {
             throw new IllegalStateException("The name of RemoteJChannel is null.");
         } else if (this.address == null || this.address.equals("")){
             throw new IllegalStateException("The address (for grpc server) of RemoteJChannel is null.");
-        } else if (this.jchannel_address == null || this.jchannel_address.equals("")){
-            throw new IllegalStateException("The jchannel_address of RemoteJChannel is null.");
         } else if (this.view == null){
             throw new IllegalStateException("The view of RemoteJChannel is null.");
         } else if (this.cluster == null || this.cluster.equals("")){

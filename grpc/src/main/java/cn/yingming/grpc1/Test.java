@@ -7,6 +7,7 @@ import org.jgroups.util.ByteArrayDataOutputStream;
 import org.jgroups.util.UUID;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Test {
@@ -25,6 +26,10 @@ public class Test {
         ViewId id = new ViewId(a, 2);
 
         View v = new View(id, list);
+        String str_d = c.toString();
+        Address d = UUID.fromString(str_d);
+        System.out.println(list.contains(d));
+        /*
         System.out.println(v.getCoord());
         System.out.println(UUID.fromString(v.getCoord().toString()));
         System.out.println("----------");
@@ -59,6 +64,8 @@ public class Test {
         View new_view = new View();
         new_view.readFrom(v_in);
         System.out.println(new_view);
+
+         */
 
     }
 }

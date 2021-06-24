@@ -72,7 +72,7 @@ public class NodeJChannel implements Receiver{
                 ConnectReq conReq = req.getConnectRequest();
                 System.out.println("[JChannel] Receive a shared connect() request for updating th cluster information.");
                 // change: After the server receive the connect() result, it generate a
-                // !!!!connectCluster(conReq.getCluster(), conReq.getJchannelAddress(), conReq.getSource());
+                connectCluster(conReq.getCluster(), conReq.getJchannelAddress(), conReq.getSource());
             } else if (req.hasDisconnectRequest()){
                 DisconnectReq disReq = req.getDisconnectRequest();
                 System.out.println("[JChannel] Receive a shared disconnect() request for updating th cluster information.");
@@ -241,7 +241,7 @@ public class NodeJChannel implements Receiver{
         }
     }
     // add view action and forward
-    public void connectCluster(String cluster, String JChannel_address, String uuid){
+    public void connectCluster(String cluster, String uuid, String JChannel_address){
         lock.lock();
         try{
             // create the cluster or connect an existing cluster.

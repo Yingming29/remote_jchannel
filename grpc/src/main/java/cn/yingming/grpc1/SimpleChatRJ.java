@@ -14,13 +14,13 @@ public class SimpleChatRJ {
         receiver = new ReceiverRJ();
         remoteJChannel = new RemoteJChannel(name, server_address);
         remoteJChannel.setReceiverRJ(receiver);
-        remoteJChannel.setDiscardOwnMessages(true);
-        remoteJChannel.setStats(true);
+        //remoteJChannel.setDiscardOwnMessages(true);
+        //remoteJChannel.setStats(true);
         remoteJChannel.connect(cluster);
-        remoteJChannel.getStateRJ(state_target);
+        //remoteJChannel.getStateRJ(state_target);
         eventLoop();
-        remoteJChannel.close();
-        System.out.println(remoteJChannel.remoteJChannelDumpStats());
+        //remoteJChannel.close();
+        //System.out.println(remoteJChannel.remoteJChannelDumpStats());
     }
 
     private void eventLoop(){
@@ -31,6 +31,9 @@ public class SimpleChatRJ {
                 String line = in.readLine();
                 if (line.startsWith("quit") || line.startsWith("exit")){
                     break;
+                }
+                if (line.startsWith("print-address")){
+                    System.out.println(remoteJChannel.jchannel_address);
                 }
                 if (line.startsWith("unicast")) {
                     String[] strs = line.split(" ");

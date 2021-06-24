@@ -16,7 +16,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private ConnectRep() {
-    address_ = com.google.protobuf.ByteString.EMPTY;
+    address_ = "";
   }
 
   @java.lang.Override
@@ -55,8 +55,9 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 18: {
+            java.lang.String s = input.readStringRequireUtf8();
 
-            address_ = input.readBytes();
+            address_ = s;
             break;
           }
           default: {
@@ -103,14 +104,41 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int ADDRESS_FIELD_NUMBER = 2;
-  private com.google.protobuf.ByteString address_;
+  private volatile java.lang.Object address_;
   /**
-   * <code>bytes address = 2;</code>
+   * <code>string address = 2;</code>
    * @return The address.
    */
   @java.lang.Override
-  public com.google.protobuf.ByteString getAddress() {
-    return address_;
+  public java.lang.String getAddress() {
+    java.lang.Object ref = address_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      address_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string address = 2;</code>
+   * @return The bytes for address.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getAddressBytes() {
+    java.lang.Object ref = address_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      address_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
   }
 
   private byte memoizedIsInitialized = -1;
@@ -130,8 +158,8 @@ private static final long serialVersionUID = 0L;
     if (result_ != false) {
       output.writeBool(1, result_);
     }
-    if (!address_.isEmpty()) {
-      output.writeBytes(2, address_);
+    if (!getAddressBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, address_);
     }
     unknownFields.writeTo(output);
   }
@@ -146,9 +174,8 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeBoolSize(1, result_);
     }
-    if (!address_.isEmpty()) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeBytesSize(2, address_);
+    if (!getAddressBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, address_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -320,7 +347,7 @@ private static final long serialVersionUID = 0L;
       super.clear();
       result_ = false;
 
-      address_ = com.google.protobuf.ByteString.EMPTY;
+      address_ = "";
 
       return this;
     }
@@ -401,8 +428,9 @@ private static final long serialVersionUID = 0L;
       if (other.getResult() != false) {
         setResult(other.getResult());
       }
-      if (other.getAddress() != com.google.protobuf.ByteString.EMPTY) {
-        setAddress(other.getAddress());
+      if (!other.getAddress().isEmpty()) {
+        address_ = other.address_;
+        onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -464,21 +492,47 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private com.google.protobuf.ByteString address_ = com.google.protobuf.ByteString.EMPTY;
+    private java.lang.Object address_ = "";
     /**
-     * <code>bytes address = 2;</code>
+     * <code>string address = 2;</code>
      * @return The address.
      */
-    @java.lang.Override
-    public com.google.protobuf.ByteString getAddress() {
-      return address_;
+    public java.lang.String getAddress() {
+      java.lang.Object ref = address_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        address_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
     }
     /**
-     * <code>bytes address = 2;</code>
+     * <code>string address = 2;</code>
+     * @return The bytes for address.
+     */
+    public com.google.protobuf.ByteString
+        getAddressBytes() {
+      java.lang.Object ref = address_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        address_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string address = 2;</code>
      * @param value The address to set.
      * @return This builder for chaining.
      */
-    public Builder setAddress(com.google.protobuf.ByteString value) {
+    public Builder setAddress(
+        java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -488,12 +542,28 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>bytes address = 2;</code>
+     * <code>string address = 2;</code>
      * @return This builder for chaining.
      */
     public Builder clearAddress() {
       
       address_ = getDefaultInstance().getAddress();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string address = 2;</code>
+     * @param value The bytes for address to set.
+     * @return This builder for chaining.
+     */
+    public Builder setAddressBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      address_ = value;
       onChanged();
       return this;
     }

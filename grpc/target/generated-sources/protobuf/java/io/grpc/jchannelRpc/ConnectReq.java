@@ -23,6 +23,7 @@ private static final long serialVersionUID = 0L;
     source_ = "";
     cluster_ = "";
     timestamp_ = "";
+    jchannelAddress_ = "";
   }
 
   @java.lang.Override
@@ -71,6 +72,17 @@ private static final long serialVersionUID = 0L;
             java.lang.String s = input.readStringRequireUtf8();
 
             timestamp_ = s;
+            break;
+          }
+          case 32: {
+
+            reconnect_ = input.readBool();
+            break;
+          }
+          case 42: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            jchannelAddress_ = s;
             break;
           }
           default: {
@@ -155,7 +167,7 @@ private static final long serialVersionUID = 0L;
   private volatile java.lang.Object cluster_;
   /**
    * <pre>
-   * string jchannel_address = 2;   // fake addresss of jchannel client
+   * cluster
    * </pre>
    *
    * <code>string cluster = 2;</code>
@@ -176,7 +188,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * string jchannel_address = 2;   // fake addresss of jchannel client
+   * cluster
    * </pre>
    *
    * <code>string cluster = 2;</code>
@@ -235,6 +247,59 @@ private static final long serialVersionUID = 0L;
     }
   }
 
+  public static final int RECONNECT_FIELD_NUMBER = 4;
+  private boolean reconnect_;
+  /**
+   * <pre>
+   * reconnect and jchannel_address will be used in the reconnection part.
+   * </pre>
+   *
+   * <code>bool reconnect = 4;</code>
+   * @return The reconnect.
+   */
+  @java.lang.Override
+  public boolean getReconnect() {
+    return reconnect_;
+  }
+
+  public static final int JCHANNEL_ADDRESS_FIELD_NUMBER = 5;
+  private volatile java.lang.Object jchannelAddress_;
+  /**
+   * <code>string jchannel_address = 5;</code>
+   * @return The jchannelAddress.
+   */
+  @java.lang.Override
+  public java.lang.String getJchannelAddress() {
+    java.lang.Object ref = jchannelAddress_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      jchannelAddress_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string jchannel_address = 5;</code>
+   * @return The bytes for jchannelAddress.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getJchannelAddressBytes() {
+    java.lang.Object ref = jchannelAddress_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      jchannelAddress_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -258,6 +323,12 @@ private static final long serialVersionUID = 0L;
     if (!getTimestampBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 3, timestamp_);
     }
+    if (reconnect_ != false) {
+      output.writeBool(4, reconnect_);
+    }
+    if (!getJchannelAddressBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, jchannelAddress_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -275,6 +346,13 @@ private static final long serialVersionUID = 0L;
     }
     if (!getTimestampBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, timestamp_);
+    }
+    if (reconnect_ != false) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeBoolSize(4, reconnect_);
+    }
+    if (!getJchannelAddressBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, jchannelAddress_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -297,6 +375,10 @@ private static final long serialVersionUID = 0L;
         .equals(other.getCluster())) return false;
     if (!getTimestamp()
         .equals(other.getTimestamp())) return false;
+    if (getReconnect()
+        != other.getReconnect()) return false;
+    if (!getJchannelAddress()
+        .equals(other.getJchannelAddress())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -314,6 +396,11 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getCluster().hashCode();
     hash = (37 * hash) + TIMESTAMP_FIELD_NUMBER;
     hash = (53 * hash) + getTimestamp().hashCode();
+    hash = (37 * hash) + RECONNECT_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+        getReconnect());
+    hash = (37 * hash) + JCHANNEL_ADDRESS_FIELD_NUMBER;
+    hash = (53 * hash) + getJchannelAddress().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -457,6 +544,10 @@ private static final long serialVersionUID = 0L;
 
       timestamp_ = "";
 
+      reconnect_ = false;
+
+      jchannelAddress_ = "";
+
       return this;
     }
 
@@ -486,6 +577,8 @@ private static final long serialVersionUID = 0L;
       result.source_ = source_;
       result.cluster_ = cluster_;
       result.timestamp_ = timestamp_;
+      result.reconnect_ = reconnect_;
+      result.jchannelAddress_ = jchannelAddress_;
       onBuilt();
       return result;
     }
@@ -544,6 +637,13 @@ private static final long serialVersionUID = 0L;
       }
       if (!other.getTimestamp().isEmpty()) {
         timestamp_ = other.timestamp_;
+        onChanged();
+      }
+      if (other.getReconnect() != false) {
+        setReconnect(other.getReconnect());
+      }
+      if (!other.getJchannelAddress().isEmpty()) {
+        jchannelAddress_ = other.jchannelAddress_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -674,7 +774,7 @@ private static final long serialVersionUID = 0L;
     private java.lang.Object cluster_ = "";
     /**
      * <pre>
-     * string jchannel_address = 2;   // fake addresss of jchannel client
+     * cluster
      * </pre>
      *
      * <code>string cluster = 2;</code>
@@ -694,7 +794,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * string jchannel_address = 2;   // fake addresss of jchannel client
+     * cluster
      * </pre>
      *
      * <code>string cluster = 2;</code>
@@ -715,7 +815,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * string jchannel_address = 2;   // fake addresss of jchannel client
+     * cluster
      * </pre>
      *
      * <code>string cluster = 2;</code>
@@ -734,7 +834,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * string jchannel_address = 2;   // fake addresss of jchannel client
+     * cluster
      * </pre>
      *
      * <code>string cluster = 2;</code>
@@ -748,7 +848,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * string jchannel_address = 2;   // fake addresss of jchannel client
+     * cluster
      * </pre>
      *
      * <code>string cluster = 2;</code>
@@ -839,6 +939,125 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       
       timestamp_ = value;
+      onChanged();
+      return this;
+    }
+
+    private boolean reconnect_ ;
+    /**
+     * <pre>
+     * reconnect and jchannel_address will be used in the reconnection part.
+     * </pre>
+     *
+     * <code>bool reconnect = 4;</code>
+     * @return The reconnect.
+     */
+    @java.lang.Override
+    public boolean getReconnect() {
+      return reconnect_;
+    }
+    /**
+     * <pre>
+     * reconnect and jchannel_address will be used in the reconnection part.
+     * </pre>
+     *
+     * <code>bool reconnect = 4;</code>
+     * @param value The reconnect to set.
+     * @return This builder for chaining.
+     */
+    public Builder setReconnect(boolean value) {
+      
+      reconnect_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * reconnect and jchannel_address will be used in the reconnection part.
+     * </pre>
+     *
+     * <code>bool reconnect = 4;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearReconnect() {
+      
+      reconnect_ = false;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object jchannelAddress_ = "";
+    /**
+     * <code>string jchannel_address = 5;</code>
+     * @return The jchannelAddress.
+     */
+    public java.lang.String getJchannelAddress() {
+      java.lang.Object ref = jchannelAddress_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        jchannelAddress_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string jchannel_address = 5;</code>
+     * @return The bytes for jchannelAddress.
+     */
+    public com.google.protobuf.ByteString
+        getJchannelAddressBytes() {
+      java.lang.Object ref = jchannelAddress_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        jchannelAddress_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string jchannel_address = 5;</code>
+     * @param value The jchannelAddress to set.
+     * @return This builder for chaining.
+     */
+    public Builder setJchannelAddress(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      jchannelAddress_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string jchannel_address = 5;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearJchannelAddress() {
+      
+      jchannelAddress_ = getDefaultInstance().getJchannelAddress();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string jchannel_address = 5;</code>
+     * @param value The bytes for jchannelAddress to set.
+     * @return This builder for chaining.
+     */
+    public Builder setJchannelAddressBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      jchannelAddress_ = value;
       onChanged();
       return this;
     }

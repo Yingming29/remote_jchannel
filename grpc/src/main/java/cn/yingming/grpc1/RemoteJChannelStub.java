@@ -5,6 +5,7 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.jchannelRpc.*;
 import io.grpc.stub.StreamObserver;
+import org.jgroups.util.UUID;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -42,7 +43,7 @@ public class RemoteJChannelStub{
                 // disconnect request
                 DisconnectReq msgReq = DisconnectReq.newBuilder()
                         .setSource(this.client.uuid)
-                        .setJchannelAddress(this.client.jchannel_address)
+                        .setJchannelAddress(this.client.jchannel_address.toString())
                         .setCluster(this.client.cluster)
                         .setTimestamp(dft.format(d))
                         .build();
@@ -57,7 +58,7 @@ public class RemoteJChannelStub{
                         StateReq stateReq = StateReq.newBuilder()
                                 .setSource(client.uuid)
                                 .setCluster(client.cluster)
-                                .setJchannelAddress(client.jchannel_address)
+                                .setJchannelAddress(client.jchannel_address.toString())
                                 .build();
 
                         return Request.newBuilder().setStateReq(stateReq).build();
@@ -65,7 +66,7 @@ public class RemoteJChannelStub{
                         StateMsg_withTarget_1 msg = StateMsg_withTarget_1.newBuilder()
                                 .setSource(this.client.uuid)
                                 .setCluster(this.client.cluster)
-                                .setJchannelAddress(this.client.jchannel_address)
+                                .setJchannelAddress(this.client.jchannel_address.toString())
                                 .setTarget(strs[1])
                                 .build();
                         return Request.newBuilder().setStateMsg1(msg).build();
@@ -87,7 +88,7 @@ public class RemoteJChannelStub{
                 if (msg.getDst() != null || msg.getDst() != ""){
                     msgReq = MessageReq.newBuilder()
                             .setSource(this.client.uuid)
-                            .setJchannelAddress(this.client.jchannel_address)
+                            .setJchannelAddress(this.client.jchannel_address.toString())
                             .setCluster(this.client.cluster)
                             .setContent(msg.getMsg())
                             .setTimestamp(dft.format(d))
@@ -99,7 +100,7 @@ public class RemoteJChannelStub{
                 } else{
                     msgReq = MessageReq.newBuilder()
                             .setSource(this.client.uuid)
-                            .setJchannelAddress(this.client.jchannel_address)
+                            .setJchannelAddress(this.client.jchannel_address.toString())
                             .setCluster(this.client.cluster)
                             .setContent(msg.getMsg())
                             .setTimestamp(dft.format(d))
@@ -114,7 +115,7 @@ public class RemoteJChannelStub{
                     if (msg.getDst() != null){
                         msgReq = MessageReq.newBuilder()
                                 .setSource(this.client.uuid)
-                                .setJchannelAddress(this.client.jchannel_address)
+                                .setJchannelAddress(this.client.jchannel_address.toString())
                                 .setCluster(this.client.cluster)
                                 .setContent(msg.getMsg())
                                 .setTimestamp(dft.format(d))
@@ -125,7 +126,7 @@ public class RemoteJChannelStub{
                     } else{
                         msgReq = MessageReq.newBuilder()
                                 .setSource(this.client.uuid)
-                                .setJchannelAddress(this.client.jchannel_address)
+                                .setJchannelAddress(this.client.jchannel_address.toString())
                                 .setCluster(this.client.cluster)
                                 .setContent(msg.getMsg())
                                 .setTimestamp(dft.format(d))
@@ -138,7 +139,7 @@ public class RemoteJChannelStub{
                     if (msg.getDst() != null){
                         msgReq = MessageReq.newBuilder()
                                 .setSource(this.client.uuid)
-                                .setJchannelAddress(this.client.jchannel_address)
+                                .setJchannelAddress(this.client.jchannel_address.toString())
                                 .setCluster(this.client.cluster)
                                 .setContentByte(ByteString.copyFrom(msg.getBuf()))
                                 .setTimestamp(dft.format(d))
@@ -147,7 +148,7 @@ public class RemoteJChannelStub{
                     } else{
                         msgReq = MessageReq.newBuilder()
                                 .setSource(this.client.uuid)
-                                .setJchannelAddress(this.client.jchannel_address)
+                                .setJchannelAddress(this.client.jchannel_address.toString())
                                 .setCluster(this.client.cluster)
                                 .setContentByte(ByteString.copyFrom(msg.getBuf()))
                                 .setTimestamp(dft.format(d))
@@ -159,7 +160,25 @@ public class RemoteJChannelStub{
         }
         return null;
     }
-
+    public void setGeneratedAddress(ConnectRep connectRep){
+        if (connectRep.getAddress().equals("")){
+            throw new IllegalArgumentException("The ConnectResponse does not have generated Address.");
+        } else{
+            this.stubLock.lock();
+            try {
+                this.client.jchannel_address = UUID.fromString(connectRep.getAddress());
+                client.isWork.set(true);
+                client.down.set(true);
+            }finally {
+                this.stubLock.unlock();
+            }
+            System.out.println("[Stub]: Receive the connect response with generated Address, Address = " +
+                    this.client.jchannel_address);
+            synchronized (this.client.down){
+                this.client.down.notify();
+            }
+        }
+    }
     public void judgeResponse(Response response){
 
         // other
@@ -167,12 +186,7 @@ public class RemoteJChannelStub{
              if (!response.getConnectResponse().getResult()){
                 throw new IllegalStateException("connect failed.Please check jchannel address set.");
              } else{
-                 this.stubLock.lock();
-                 try {
-                     this.client.isWork.set(true);
-                 }finally {
-                     this.stubLock.unlock();
-                 }
+                 setGeneratedAddress(response.getConnectResponse());
              }
         } else if (response.hasMessageResponse()){
             // get message from server
@@ -247,7 +261,7 @@ public class RemoteJChannelStub{
                     try{
                         StateMsg_withTarget_2 msg2 = StateMsg_withTarget_2.newBuilder()
                                 .setCluster(this.client.cluster)
-                                .setJchannelAddress(this.client.jchannel_address)
+                                .setJchannelAddress(this.client.jchannel_address.toString())
                                 .setSource(this.client.uuid)
                                 .setTarget(msg1.getJchannelAddress())
                                 .addAllOneOfHistory(this.client.receiver.getStateRJ())
@@ -361,7 +375,6 @@ public class RemoteJChannelStub{
         // connect() request
         ConnectReq joinReq = ConnectReq.newBuilder()
                 .setSource(client.uuid)
-                //.setJchannelAddress(client.jchannel_address)
                 .setCluster(client.cluster)
                 .setTimestamp(dft.format(d))
                 .build();
@@ -369,13 +382,22 @@ public class RemoteJChannelStub{
                 .setConnectRequest(joinReq)
                 .build();
        requestStreamObserver.onNext(req);
-        stubLock.lock();
-        try {
-            client.isWork.set(true);
-            client.down.set(true);
-        } finally {
-            stubLock.unlock();
-        }
+    }
+    private void reconnectCluster(StreamObserver requestStreamObserver) {
+        // Generated time
+        Date d = new Date();
+        SimpleDateFormat dft = new SimpleDateFormat("hh:mm:ss");
+        // connect() request
+        ConnectReq joinReq = ConnectReq.newBuilder()
+                .setSource(client.uuid)
+                .setCluster(client.cluster)
+                .setJchannelAddress(client.jchannel_address.toString())
+                .setTimestamp(dft.format(d))
+                .build();
+        Request req = Request.newBuilder()
+                .setConnectRequest(joinReq)
+                .build();
+        requestStreamObserver.onNext(req);
     }
     // Do a reconnection loop with given times. e.g. 10 times.
     private boolean reconnect() {
@@ -416,34 +438,17 @@ public class RemoteJChannelStub{
         System.out.println("[Reconnection]: Reconnect many times, end the reconnection loop.");
         return false;
     }
-    /*
-    private void getState(StreamObserver requestStreamObserver) {
-        // state request
-        StateReq stateReq = StateReq.newBuilder()
-                .setSource(client.uuid)
-                .setCluster(client.cluster)
-                .setJchannelAddress(client.jchannel_address)
-                .build();
-        Request req = Request.newBuilder()
-                .setStateReq(stateReq)
-                .build();
-        // System.out.println(client.name + " calls getState() request for Jgroups cluster: " + client.cluster);
-        requestStreamObserver.onNext(req);
-    }
-
-     */
-
 
     class Control implements Runnable {
-        ReentrantLock inputLock;
         ArrayList sharedList;
         AtomicBoolean isWork;
         RemoteJChannelStub stub;
-        public Control(ArrayList sharedList, AtomicBoolean isWork, RemoteJChannelStub stub) {
+        AtomicBoolean down;
+        public Control(ArrayList sharedList, AtomicBoolean isWork, AtomicBoolean down,RemoteJChannelStub stub) {
             this.sharedList = sharedList;
             this.isWork = isWork;
-            this.inputLock = new ReentrantLock();
             this.stub = stub;
+            this.down = down;
         }
 
         @Override
@@ -451,9 +456,23 @@ public class RemoteJChannelStub{
             while (true) {
                 // start gRPC client and call connect() request.
                 stub.observer = startGrpc(this.isWork, this.stub.client);
-                // change
-                connectCluster(stub.observer);
-
+                // The first connect
+                if (!down.get() && !isWork.get()){
+                    System.out.println("first connection");
+                    connectCluster(stub.observer);
+                } else{
+                    // reconnection to other server with correct Address
+                    System.out.println("not first connection");
+                    reconnectCluster(stub.observer);
+                }
+                // wait for result
+                synchronized (down){
+                    try {
+                        down.wait();
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
                 // check loop for connection problem and input content, and send request.
                 this.checkLoop(this.stub.observer);
                 // System.out.println("222" + client.down.get());
@@ -478,10 +497,8 @@ public class RemoteJChannelStub{
         // check input and state of streaming, and send messsage
         private void checkLoop(StreamObserver requestSender) {
             while (true) {
-
                 if (!client.down.get()){
                     try{
-
                         //System.out.println("exit 0 on control thread.");
                         System.exit(0);
                     } catch (Exception e){
@@ -496,7 +513,6 @@ public class RemoteJChannelStub{
                     Object obj = client.msgList.get(0);
                     Request msgReq = judgeRequest(obj);
                     requestSender.onNext(msgReq);
-
                     try{
                         if (this.stub.client.stats){
                             this.stub.client.stats_obj.addRecord(msgReq);
@@ -520,7 +536,7 @@ public class RemoteJChannelStub{
     }
 
     public void startStub(){
-        Control control = new Control(client.msgList, client.isWork, this);
+        Control control = new Control(client.msgList, client.isWork, client.down,this);
         Thread thread1 = new Thread(control);
         thread1.start();
     }

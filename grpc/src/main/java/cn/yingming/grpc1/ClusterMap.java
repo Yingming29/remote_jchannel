@@ -31,8 +31,7 @@ public class ClusterMap implements Serializable {
     }
 
     public void removeClient(String uuid){
-        Iterator<String> it = this.orderList.iterator();
-        String target = this.map.get(uuid).trim();
+        String target = this.map.get(uuid);
         int index = orderList.indexOf(target);
         if (index != -1){
             System.out.println("Remove the client from its cluster.");
@@ -48,6 +47,7 @@ public class ClusterMap implements Serializable {
     public void addViewNum(){
         viewNum ++;
     }
+    // change
     public String getCreator(){ return (String) this.orderList.get(0);}
     public ViewRep generateView(){
         ViewRep rep;

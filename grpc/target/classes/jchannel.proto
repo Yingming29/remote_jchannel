@@ -60,14 +60,15 @@ message MessageRep{
 // connect() of JChannel, create a bidirectional streaming of grpc
 message ConnectReq {
   string source = 1;  // uuid
-  // string jchannel_address = 2;   // fake addresss of jchannel client
   string cluster = 2;     // cluster
   string timestamp = 3;
+  bool reconnect = 4;         // reconnect and jchannel_address will be used in the reconnection part.
+  string jchannel_address = 5;
 }
 
 message ConnectRep {
   bool result = 1;
-  bytes address = 2;
+  string address = 2;
 }
 
 // disconnect()
