@@ -112,7 +112,15 @@ public class NodeServer {
                         }
                         // Store the responseObserver of the client.
                         join(req.getConnectRequest(), responseObserver, generated_address.toString());
-                        forwardMsg(req);
+                        // forward the connect request with generated Address to other node
+                        ConnectReq conReqWithAddress = ConnectReq.newBuilder()
+                                .setCluster(req.getConnectRequest().getCluster())
+                                .setSource(req.getConnectRequest().getSource())
+                                .setTimestamp(req.getConnectRequest().getTimestamp())
+                                .setJchannelAddress(generated_address.toString())
+                                .build();
+                        Request reqForward = Request.newBuilder().setConnectRequest(conReqWithAddress).build();
+                        forwardMsg(reqForward);
                     /*  Condition2
                         Receive the disconnect() request.
                      */
@@ -517,6 +525,7 @@ public class NodeServer {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            System.out.println("forwardMsg(Request req): " + req);
         }
     }
 

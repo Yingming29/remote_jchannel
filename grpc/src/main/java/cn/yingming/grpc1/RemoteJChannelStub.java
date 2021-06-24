@@ -392,6 +392,7 @@ public class RemoteJChannelStub{
                 .setSource(client.uuid)
                 .setCluster(client.cluster)
                 .setJchannelAddress(client.jchannel_address.toString())
+                .setReconnect(true)
                 .setTimestamp(dft.format(d))
                 .build();
         Request req = Request.newBuilder()

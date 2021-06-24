@@ -38,6 +38,7 @@ public class NodeJChannel implements Receiver{
         System.out.println("[JChannel] The current nodes in node cluster: " + this.nodesMap);
     }
 
+    // can change the getObject for auto
     @Override
     public void receive(Message msg) {
         if (msg.getObject() instanceof String ){
@@ -71,8 +72,9 @@ public class NodeJChannel implements Receiver{
             if (req.hasConnectRequest()){
                 ConnectReq conReq = req.getConnectRequest();
                 System.out.println("[JChannel] Receive a shared connect() request for updating th cluster information.");
+                System.out.println("here:" + conReq);
                 // change: After the server receive the connect() result, it generate a
-                connectCluster(conReq.getCluster(), conReq.getJchannelAddress(), conReq.getSource());
+                connectCluster(conReq.getCluster(), conReq.getSource(), conReq.getJchannelAddress());
             } else if (req.hasDisconnectRequest()){
                 DisconnectReq disReq = req.getDisconnectRequest();
                 System.out.println("[JChannel] Receive a shared disconnect() request for updating th cluster information.");
