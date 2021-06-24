@@ -18,7 +18,7 @@ public class RemoteJChannel extends JChannel {
     public String name;
     public String cluster;
     public Address jchannel_address;
-
+    public Address real_jchannel_address;
     public AtomicBoolean isWork;
     public ArrayList msgList;
     public RemoteJChannelStub clientStub;
@@ -32,6 +32,7 @@ public class RemoteJChannel extends JChannel {
     // record for stats of remote jchannel
     public StatsRJ stats_obj;
     public ReceiverRJ receiver;
+    public Object obj;
 
     public RemoteJChannel(String name, String address) throws Exception{
         this.address = address;
@@ -39,12 +40,12 @@ public class RemoteJChannel extends JChannel {
         this.uuid = UUID.randomUUID().toString();
         this.name = name;
         this.cluster = null;
-        this.msgList = new ArrayList();
+        this.msgList = new ArrayList<Object>();
         // generated fake address.
         this.jchannel_address = null;
+        this.real_jchannel_address = null;
         this.clientStub = null;
         this.view = new RemoteJChannelView();
-
         // whether the grpc connection work
         this.isWork = new AtomicBoolean(false);
         // whether shutdown the RemoteJChannel
@@ -56,6 +57,7 @@ public class RemoteJChannel extends JChannel {
         // change: create class for stats obj record
         this.stats_obj = new StatsRJ();
         this.receiver = null;
+        this.obj = new Object();
     }
 
     @Override
@@ -85,8 +87,17 @@ public class RemoteJChannel extends JChannel {
     }
 
     @Override
+    // grpc call for real jchannel
     public Address getAddress() {
+        this.clientStub.addCmd_blocking("getAddress");
         return this.address();
+    }
+
+    public Address getLocalAddress(){
+        if (!isWork.get() && !down.get()){
+            throw new IllegalArgumentException("Client and client stub does not work.");
+        }
+        return this.jchannel_address;
     }
 
     @Override

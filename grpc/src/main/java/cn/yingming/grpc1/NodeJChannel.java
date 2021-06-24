@@ -20,14 +20,15 @@ public class NodeJChannel implements Receiver{
     String grpcAddress;
     ConcurrentHashMap nodesMap;
     ConcurrentHashMap serviceMap;
+    Address address;
 
     NodeJChannel(String node_name, String cluster_name, String grpcAddress) throws Exception {
-
         this.channel = new JChannel("grpc/protocols/udp.xml");
         this.user_name = System.getProperty("user.name", "n/a");
         this.node_name = node_name;
         this.cluster_name = cluster_name;
         this.grpcAddress = grpcAddress;
+        this.address = channel.getAddress();
         this.nodesMap = new ConcurrentHashMap<>();
         this.channel.setReceiver(this).connect(cluster_name);
         this.lock = new ReentrantLock();

@@ -19,6 +19,7 @@ message Request{
     StateReq stateReq = 4;
     StateMsg_withTarget_1 stateMsg1 = 5;
     StateMsg_withTarget_2 stateMsg2 = 6;
+
   }
 }
 message Response{
@@ -32,6 +33,18 @@ message Response{
     StateMsg_withTarget_1 stateMsg1 = 7;
     StateMsg_withTarget_2 stateMsg2 = 8;
   }
+}
+message getAddressReq{
+  string source = 1;
+}
+message getAddressRep{
+  string address_str = 1;
+  bool isWork = 2;
+  string other = 3;
+}
+message ViewRep_server{
+  string sender = 1; // string of Address of real JChannel server who sends this View message
+  bytes view_byte = 2;
 }
 message ViewRep{
   string creator = 1;

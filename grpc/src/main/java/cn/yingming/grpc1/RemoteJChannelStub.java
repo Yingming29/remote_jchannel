@@ -333,6 +333,28 @@ public class RemoteJChannelStub{
 
     }
 
+    public void request_blocking(Object obj){
+        ReentrantLock lock = new ReentrantLock();
+        if (obj instanceof String){
+            if (obj.toString().equals("getAddress()")){
+                lock.lock();
+                try {
+                    this.client.msgList.add(obj);
+                } finally {
+                    lock.unlock();
+                }
+                synchronized (this.client.obj){
+                    try {
+                        obj.wait();
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+    }
+
     public void update(String addresses){
         String[] add = addresses.split(" ");
         List<String> newList = Arrays.asList(add);
