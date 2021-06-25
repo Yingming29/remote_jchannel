@@ -10,6 +10,7 @@ import org.jgroups.ObjectMessage;
 import org.jgroups.util.ByteArrayDataInputStream;
 import org.jgroups.util.ByteArrayDataOutputStream;
 import org.jgroups.util.UUID;
+import org.jgroups.util.Util;
 
 import java.io.IOException;
 import java.util.List;
@@ -221,30 +222,45 @@ public class NodeServer {
                         GetAddressReq getAddressReq = req.getGetAddressReq();
                         System.out.println("[grpc] Receive the getAddress() request for the JChannel-server Address from JChannel-Client:"
                                 + getAddressReq.getJchannelAddress() + "(" + getAddressReq.getSource() + ")");
+                        GetAddressRep getAddressRep;
                         if (jchannel.channel.getAddress() != null){
                             // convert the Address of real JChannel to bytes and put in the message
                             ByteArrayDataOutputStream outputStream = new ByteArrayDataOutputStream();
                             try {
                                 jchannel.channel.getAddress().writeTo(outputStream);
+                                // Util.createRandomAddress().writeTo(outputStream);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                             byte[] add_byte = outputStream.buffer();
-                            GetAddressRep getAddressRep = GetAddressRep.newBuilder()
+                            getAddressRep = GetAddressRep.newBuilder()
                                     .setAddress(ByteString.copyFrom(add_byte))
                                     .setIsWork(true)
                                     .build();
-                            Response rep = Response.newBuilder().setGetAddressRep(getAddressRep).build();
-                            System.out.println(rep);
-                            responseObserver.onNext(rep);
                         } else{
-                            GetAddressRep getAddressRep = GetAddressRep.newBuilder()
+                            getAddressRep = GetAddressRep.newBuilder()
                                     .setIsWork(false)
                                     .build();
-                            Response rep = Response.newBuilder().setGetAddressRep(getAddressRep).build();
-                            responseObserver.onNext(rep);
                         }
-                    }else{
+                        Response rep = Response.newBuilder().setGetAddressRep(getAddressRep).build();
+                        System.out.println(rep);
+                        responseObserver.onNext(rep);
+                    } else if(req.hasGetNameReq()){
+                        // getName() request
+                        GetNameReq getNameReq = req.getGetNameReq();
+                        System.out.println("[grpc] Receive the getName() request for the JChannel-server name from JChannel-Client:"
+                                + getNameReq.getJchannelAddress() + "(" + getNameReq.getSource() + ")");
+                        GetNameRep getNameRep;
+                        if (jchannel.channel.getName() != null){
+                            getNameRep = GetNameRep.newBuilder().setName(jchannel.channel.getName()).build();
+                        } else{
+                            getNameRep = GetNameRep.newBuilder().build();
+                        }
+                        Response rep = Response.newBuilder().setGetNameRep(getNameRep).build();
+                        System.out.println(rep);
+                        responseObserver.onNext(rep);
+
+                    } else{
                         /* Condition3
                            Receive the common message, send() request.
                            Two types: broadcast ot unicast

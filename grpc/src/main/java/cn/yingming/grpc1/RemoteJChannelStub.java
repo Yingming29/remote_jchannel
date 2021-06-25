@@ -61,7 +61,13 @@ public class RemoteJChannelStub {
                         .setSource(this.client.uuid)
                         .build();
                 return Request.newBuilder().setGetAddressReq(getAddressReq).build();
-            }else if (input.startsWith("getState()")) {
+            } else if(input.equals("getName()")){
+                GetNameReq getNameReq = GetNameReq.newBuilder()
+                        .setJchannelAddress(this.client.jchannel_address.toString())
+                        .setSource(this.client.uuid)
+                        .build();
+                return Request.newBuilder().setGetNameReq(getNameReq).build();
+            } else if (input.startsWith("getState()")) {
                 String[] strs = input.split(" ");
                 if (strs.length > 2) {
                     throw new IllegalArgumentException("getState() error.");
@@ -220,7 +226,14 @@ public class RemoteJChannelStub {
             synchronized (this.client.obj) {
                 this.client.obj.notify();
             }
-        }else if (response.hasMessageResponse()) {
+        } else if(response.hasGetNameRep()){
+            GetNameRep getNameRep = response.getGetNameRep();
+            System.out.println("getName() response:" + getNameRep);
+            this.client.remoteName = getNameRep.getName();
+            synchronized (this.client.obj) {
+                this.client.obj.notify();
+            }
+        } else if (response.hasMessageResponse()) {
             // get message from server
             // add the message response to stats object
             try {

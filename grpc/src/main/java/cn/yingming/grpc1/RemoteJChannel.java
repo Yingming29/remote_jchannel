@@ -24,7 +24,7 @@ public class RemoteJChannel extends JChannel {
     public RemoteJChannelStub clientStub;
     public AtomicBoolean down;
     public RemoteJChannelView view;
-
+    public String remoteName;
     // whether receive message of itself
     public boolean discard_own_messages;
     // whether stats?
@@ -58,6 +58,7 @@ public class RemoteJChannel extends JChannel {
         this.stats_obj = new StatsRJ();
         this.receiver = null;
         this.obj = new Object();
+        this.remoteName = null;
     }
 
     @Override
@@ -103,6 +104,7 @@ public class RemoteJChannel extends JChannel {
                 e.printStackTrace();
             }
         }
+        // System.out.println("utils: "+ Util.createRandomAddress("client"));
         return this.real_jchannel_address;
     }
 
@@ -114,7 +116,15 @@ public class RemoteJChannel extends JChannel {
     }
 
     public String getName() {
-        return this.name;
+        this.clientStub.add_save("getName()");
+        synchronized (obj){
+            try{
+                obj.wait(5000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return this.remoteName;
     }
 
 
@@ -213,18 +223,34 @@ public class RemoteJChannel extends JChannel {
 
     @Override
     /*
-    The methods returns the generated FAKE jchannel address. eg. JChannel-xxx
+    The methods returns the Address String of remote real JChannel.
      */
     public String getAddressAsString() {
-        return this.jchannel_address != null ? this.jchannel_address.toString() : "n/a";
+        this.clientStub.add_save("getAddress()");
+        synchronized (obj){
+            try{
+                obj.wait(5000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return real_jchannel_address != null ? real_jchannel_address.toString() : "n/a";
     }
 
     @Override
     /*
-    The methods returns the generated uuid.
+    The methods returns the Address String of remote real JChannel.
      */
     public String getAddressAsUUID() {
-        return this.uuid != null ? this.uuid : null;
+        this.clientStub.add_save("getAddress()");
+        synchronized (obj){
+            try{
+                obj.wait(5000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return real_jchannel_address instanceof org.jgroups.util.UUID ? ((org.jgroups.util.UUID)real_jchannel_address).toStringLong() : null;
     }
 
     @Override

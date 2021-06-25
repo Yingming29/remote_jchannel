@@ -174,6 +174,20 @@ private static final long serialVersionUID = 0L;
             oneTypeCase_ = 9;
             break;
           }
+          case 82: {
+            io.grpc.jchannelRpc.GetNameRep.Builder subBuilder = null;
+            if (oneTypeCase_ == 10) {
+              subBuilder = ((io.grpc.jchannelRpc.GetNameRep) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.GetNameRep.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.GetNameRep) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 10;
+            break;
+          }
           default: {
             if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -220,6 +234,7 @@ private static final long serialVersionUID = 0L;
     STATEMSG1(7),
     STATEMSG2(8),
     GETADDRESSREP(9),
+    GETNAMEREP(10),
     ONETYPE_NOT_SET(0);
     private final int value;
     private OneTypeCase(int value) {
@@ -246,6 +261,7 @@ private static final long serialVersionUID = 0L;
         case 7: return STATEMSG1;
         case 8: return STATEMSG2;
         case 9: return GETADDRESSREP;
+        case 10: return GETNAMEREP;
         case 0: return ONETYPE_NOT_SET;
         default: return null;
       }
@@ -540,6 +556,37 @@ private static final long serialVersionUID = 0L;
     return io.grpc.jchannelRpc.GetAddressRep.getDefaultInstance();
   }
 
+  public static final int GETNAMEREP_FIELD_NUMBER = 10;
+  /**
+   * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
+   * @return Whether the getNameRep field is set.
+   */
+  @java.lang.Override
+  public boolean hasGetNameRep() {
+    return oneTypeCase_ == 10;
+  }
+  /**
+   * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
+   * @return The getNameRep.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.GetNameRep getGetNameRep() {
+    if (oneTypeCase_ == 10) {
+       return (io.grpc.jchannelRpc.GetNameRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.GetNameRep.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.GetNameRepOrBuilder getGetNameRepOrBuilder() {
+    if (oneTypeCase_ == 10) {
+       return (io.grpc.jchannelRpc.GetNameRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.GetNameRep.getDefaultInstance();
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -580,6 +627,9 @@ private static final long serialVersionUID = 0L;
     }
     if (oneTypeCase_ == 9) {
       output.writeMessage(9, (io.grpc.jchannelRpc.GetAddressRep) oneType_);
+    }
+    if (oneTypeCase_ == 10) {
+      output.writeMessage(10, (io.grpc.jchannelRpc.GetNameRep) oneType_);
     }
     unknownFields.writeTo(output);
   }
@@ -625,6 +675,10 @@ private static final long serialVersionUID = 0L;
     if (oneTypeCase_ == 9) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(9, (io.grpc.jchannelRpc.GetAddressRep) oneType_);
+    }
+    if (oneTypeCase_ == 10) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(10, (io.grpc.jchannelRpc.GetNameRep) oneType_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -679,6 +733,10 @@ private static final long serialVersionUID = 0L;
         if (!getGetAddressRep()
             .equals(other.getGetAddressRep())) return false;
         break;
+      case 10:
+        if (!getGetNameRep()
+            .equals(other.getGetNameRep())) return false;
+        break;
       case 0:
       default:
     }
@@ -729,6 +787,10 @@ private static final long serialVersionUID = 0L;
       case 9:
         hash = (37 * hash) + GETADDRESSREP_FIELD_NUMBER;
         hash = (53 * hash) + getGetAddressRep().hashCode();
+        break;
+      case 10:
+        hash = (37 * hash) + GETNAMEREP_FIELD_NUMBER;
+        hash = (53 * hash) + getGetNameRep().hashCode();
         break;
       case 0:
       default:
@@ -957,6 +1019,13 @@ private static final long serialVersionUID = 0L;
           result.oneType_ = getAddressRepBuilder_.build();
         }
       }
+      if (oneTypeCase_ == 10) {
+        if (getNameRepBuilder_ == null) {
+          result.oneType_ = oneType_;
+        } else {
+          result.oneType_ = getNameRepBuilder_.build();
+        }
+      }
       result.oneTypeCase_ = oneTypeCase_;
       onBuilt();
       return result;
@@ -1041,6 +1110,10 @@ private static final long serialVersionUID = 0L;
         }
         case GETADDRESSREP: {
           mergeGetAddressRep(other.getGetAddressRep());
+          break;
+        }
+        case GETNAMEREP: {
+          mergeGetNameRep(other.getGetNameRep());
           break;
         }
         case ONETYPE_NOT_SET: {
@@ -2358,6 +2431,147 @@ private static final long serialVersionUID = 0L;
       oneTypeCase_ = 9;
       onChanged();;
       return getAddressRepBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.GetNameRep, io.grpc.jchannelRpc.GetNameRep.Builder, io.grpc.jchannelRpc.GetNameRepOrBuilder> getNameRepBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
+     * @return Whether the getNameRep field is set.
+     */
+    @java.lang.Override
+    public boolean hasGetNameRep() {
+      return oneTypeCase_ == 10;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
+     * @return The getNameRep.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.GetNameRep getGetNameRep() {
+      if (getNameRepBuilder_ == null) {
+        if (oneTypeCase_ == 10) {
+          return (io.grpc.jchannelRpc.GetNameRep) oneType_;
+        }
+        return io.grpc.jchannelRpc.GetNameRep.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 10) {
+          return getNameRepBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.GetNameRep.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
+     */
+    public Builder setGetNameRep(io.grpc.jchannelRpc.GetNameRep value) {
+      if (getNameRepBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        getNameRepBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 10;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
+     */
+    public Builder setGetNameRep(
+        io.grpc.jchannelRpc.GetNameRep.Builder builderForValue) {
+      if (getNameRepBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        getNameRepBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 10;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
+     */
+    public Builder mergeGetNameRep(io.grpc.jchannelRpc.GetNameRep value) {
+      if (getNameRepBuilder_ == null) {
+        if (oneTypeCase_ == 10 &&
+            oneType_ != io.grpc.jchannelRpc.GetNameRep.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.GetNameRep.newBuilder((io.grpc.jchannelRpc.GetNameRep) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 10) {
+          getNameRepBuilder_.mergeFrom(value);
+        }
+        getNameRepBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 10;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
+     */
+    public Builder clearGetNameRep() {
+      if (getNameRepBuilder_ == null) {
+        if (oneTypeCase_ == 10) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 10) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        getNameRepBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
+     */
+    public io.grpc.jchannelRpc.GetNameRep.Builder getGetNameRepBuilder() {
+      return getGetNameRepFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.GetNameRepOrBuilder getGetNameRepOrBuilder() {
+      if ((oneTypeCase_ == 10) && (getNameRepBuilder_ != null)) {
+        return getNameRepBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 10) {
+          return (io.grpc.jchannelRpc.GetNameRep) oneType_;
+        }
+        return io.grpc.jchannelRpc.GetNameRep.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.GetNameRep, io.grpc.jchannelRpc.GetNameRep.Builder, io.grpc.jchannelRpc.GetNameRepOrBuilder> 
+        getGetNameRepFieldBuilder() {
+      if (getNameRepBuilder_ == null) {
+        if (!(oneTypeCase_ == 10)) {
+          oneType_ = io.grpc.jchannelRpc.GetNameRep.getDefaultInstance();
+        }
+        getNameRepBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.GetNameRep, io.grpc.jchannelRpc.GetNameRep.Builder, io.grpc.jchannelRpc.GetNameRepOrBuilder>(
+                (io.grpc.jchannelRpc.GetNameRep) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 10;
+      onChanged();;
+      return getNameRepBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

@@ -20,6 +20,7 @@ message Request{
     StateMsg_withTarget_1 stateMsg1 = 5;
     StateMsg_withTarget_2 stateMsg2 = 6;
     GetAddressReq getAddressReq = 7;
+    GetNameReq getNameReq = 8;
   }
 }
 message Response{
@@ -33,7 +34,16 @@ message Response{
     StateMsg_withTarget_1 stateMsg1 = 7;
     StateMsg_withTarget_2 stateMsg2 = 8;
     GetAddressRep getAddressRep = 9;
+    GetNameRep getNameRep = 10;
   }
+}
+message GetNameReq{
+  string source = 1;
+  string jchannel_address = 2;
+}
+message GetNameRep{
+  string name = 1;
+  string other = 2;
 }
 message GetAddressReq{
   string source = 1;

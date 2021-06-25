@@ -33,9 +33,15 @@ public class SimpleChatRJ {
                     break;
                 }
                 if (line.startsWith("getLocalAddress")){
-                    System.out.println(remoteJChannel.getLocalAddress());
+                    System.out.println("Client Address:" + remoteJChannel.getLocalAddress());
                 } else if(line.startsWith("getRemoteAddress")){
                     System.out.println("Real JChannel Address (JChannel Server):" + remoteJChannel.getAddress());
+                } else if(line.startsWith("getAddressAsString")){
+                    System.out.println("getAddressAsString() for Real JChannel Address:" + remoteJChannel.getAddressAsString());
+                } else if(line.startsWith("getAddressAsUUID")){
+                    System.out.println("getAddressAsUUID() for Real JChannel Address:" + remoteJChannel.getAddressAsUUID());
+                } else if(line.startsWith("getName")){
+                    System.out.println("getName() for Real JChannel Address (JChannel Server):" + remoteJChannel.getName());
                 } else if (line.startsWith("unicast")) {
                     String[] strs = line.split(" ");
                     remoteJChannel.send(strs[1], strs[2]);

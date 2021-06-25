@@ -142,5 +142,20 @@ public interface ResponseOrBuilder extends
    */
   io.grpc.jchannelRpc.GetAddressRepOrBuilder getGetAddressRepOrBuilder();
 
+  /**
+   * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
+   * @return Whether the getNameRep field is set.
+   */
+  boolean hasGetNameRep();
+  /**
+   * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
+   * @return The getNameRep.
+   */
+  io.grpc.jchannelRpc.GetNameRep getGetNameRep();
+  /**
+   * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
+   */
+  io.grpc.jchannelRpc.GetNameRepOrBuilder getGetNameRepOrBuilder();
+
   public io.grpc.jchannelRpc.Response.OneTypeCase getOneTypeCase();
 }

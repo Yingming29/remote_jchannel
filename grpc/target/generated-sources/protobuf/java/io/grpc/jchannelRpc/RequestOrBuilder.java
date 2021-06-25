@@ -112,5 +112,20 @@ public interface RequestOrBuilder extends
    */
   io.grpc.jchannelRpc.GetAddressReqOrBuilder getGetAddressReqOrBuilder();
 
+  /**
+   * <code>.cn.yingming.grpc1.GetNameReq getNameReq = 8;</code>
+   * @return Whether the getNameReq field is set.
+   */
+  boolean hasGetNameReq();
+  /**
+   * <code>.cn.yingming.grpc1.GetNameReq getNameReq = 8;</code>
+   * @return The getNameReq.
+   */
+  io.grpc.jchannelRpc.GetNameReq getGetNameReq();
+  /**
+   * <code>.cn.yingming.grpc1.GetNameReq getNameReq = 8;</code>
+   */
+  io.grpc.jchannelRpc.GetNameReqOrBuilder getGetNameReqOrBuilder();
+
   public io.grpc.jchannelRpc.Request.OneTypeCase getOneTypeCase();
 }
