@@ -39,6 +39,7 @@ message Response{
     GetNameRep getNameRep = 10;
     GetClusterNameRep getClusterNameRep = 11;
     PrintProtocolSpecRep printProtoRep = 12;
+    ViewRep_server viewRep_server = 13;
   }
 }
 message PrintProtocolSpecReq{

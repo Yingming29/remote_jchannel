@@ -1,5 +1,8 @@
 package cn.yingming.grpc1;
 
+import org.jgroups.util.NameCache;
+import org.jgroups.util.UUID;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -25,6 +28,7 @@ public class SimpleChatRJ {
 
     private void eventLoop(){
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+
         while (true){
             try{
                 System.out.println(">");System.out.flush();
@@ -60,9 +64,13 @@ public class SimpleChatRJ {
                 } else if (line.startsWith("byte")){
                     byte[] buf = line.getBytes();
                     remoteJChannel.send(buf);
+                } else if (line.startsWith("tryNameche")){
+                    System.out.println(NameCache.printCache());
+                    System.out.println(NameCache.get(this.remoteJChannel.real_jchannel_address));
                 } else{
                     // MessageRJ msg = new MessageRJ(line);
                     remoteJChannel.send(line);
+
                 }
 
             } catch (IOException e) {

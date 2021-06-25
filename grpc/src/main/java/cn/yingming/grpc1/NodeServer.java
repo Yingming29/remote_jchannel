@@ -7,6 +7,7 @@ import io.grpc.stub.StreamObserver;
 import org.jgroups.Address;
 import org.jgroups.Message;
 import org.jgroups.ObjectMessage;
+import org.jgroups.View;
 import org.jgroups.util.ByteArrayDataInputStream;
 import org.jgroups.util.ByteArrayDataOutputStream;
 import org.jgroups.util.UUID;
@@ -92,7 +93,6 @@ public class NodeServer {
         private JChannelsServiceImpl(NodeJChannel jchannel) throws Exception {
             this.jchannel = jchannel;
         }
-
         // service 1, bi-directional streaming rpc
         public StreamObserver<Request> connect(StreamObserver<Response> responseObserver){
             return new StreamObserver<Request>() {
@@ -403,7 +403,22 @@ public class NodeServer {
                 // <cluster, <uuid, JChanner_address>>
                 jchannel.connectCluster(req.getCluster(), req.getSource(), generated_address);
 
+            /*
                 // change: Add a server view
+                View view = jchannel.channel.getView();
+                ByteArrayDataOutputStream vOutStream = new ByteArrayDataOutputStream();
+                try {
+                    view.writeTo(vOutStream);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                byte[] v_byte = vOutStream.buffer();
+                ViewRep_server view_rep = ViewRep_server.newBuilder().setSender(jchannel.channel.address().toString()).setViewByte(ByteString.copyFrom(v_byte)).build();
+                Response rep_broView = Response.newBuilder().setViewRepServer(view_rep).build();
+                this.broadcastResponse(rep_broView);
+
+             */
+
 
 
                 // return response for updating the available servers
@@ -414,6 +429,20 @@ public class NodeServer {
                         .setUpdateResponse(updateRep)
                         .build();
                 responseObserver.onNext(rep2);
+
+                // change: Add a server view
+                View view = jchannel.channel.getView();
+                ByteArrayDataOutputStream vOutStream = new ByteArrayDataOutputStream();
+                try {
+                    view.writeTo(vOutStream);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                byte[] v_byte = vOutStream.buffer();
+                ViewRep_server view_rep = ViewRep_server.newBuilder().setSender(jchannel.channel.address().toString()).setViewByte(ByteString.copyFrom(v_byte)).build();
+                Response rep_broView = Response.newBuilder().setViewRepServer(view_rep).build();
+                broadcastResponse(rep_broView);
+                System.out.println(rep_broView);
             }
             // 3. run finally, confirm the lock will be unlock.
             finally {
@@ -462,21 +491,13 @@ public class NodeServer {
         }
 
         // Broadcast the messages for updating addresses of servers
-        protected void broadcastServers(String message){
-
-            UpdateRep updateMsg = UpdateRep.newBuilder()
-                    .setAddresses(message)
-                    .build();
-            Response broMsg = Response.newBuilder()
-                    .setUpdateResponse(updateMsg)
-                    .build();
+        protected void broadcastResponse(Response message){
             lock.lock();
             try{
                 // Iteration of StreamObserver for broadcast message.
                 for (String u : clients.keySet()){
-                    clients.get(u).onNext(broMsg);
+                    clients.get(u).onNext(message);
                 }
-
             } finally {
                 lock.unlock();
             }

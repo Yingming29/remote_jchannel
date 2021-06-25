@@ -5,9 +5,11 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.jchannelRpc.*;
 import io.grpc.stub.StreamObserver;
+import org.jgroups.View;
 import org.jgroups.util.ByteArrayDataInputStream;
 import org.jgroups.util.UUID;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -212,7 +214,7 @@ public class RemoteJChannelStub {
         }
     }
 
-    public void judgeResponse(Response response) {
+    public void judgeResponse(Response response){
        //  System.out.println("Test print all response:" + response);
         // other
         if (response.hasConnectResponse()) {
@@ -260,6 +262,22 @@ public class RemoteJChannelStub {
             synchronized (this.client.obj) {
                 this.client.obj.notify();
             }
+        } else if(response.hasViewRepServer()){
+            ViewRep_server view_server = response.getViewRepServer();
+            ByteArrayDataInputStream v_in = new ByteArrayDataInputStream(view_server.getViewByte().toByteArray());
+            View new_view = new View();
+            try {
+                new_view.readFrom(v_in);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            stubLock.lock();
+            try {
+                this.client.remoteView = new_view;
+            } finally {
+                stubLock.unlock();
+            }
+            System.out.println("View of JChannel-node(Receiver of JChannel-client?): " + this.client.remoteView);
         } else if (response.hasMessageResponse()) {
             // get message from server
             // add the message response to stats object
@@ -372,6 +390,7 @@ public class RemoteJChannelStub {
 
             @Override
             public void onNext(Response response) {
+                System.out.println(response);
                 // whether discard message of itself
                 String add = response.getMessageResponse().getJchannelAddress();
                 if (client.discard_own_messages && response.hasMessageResponse() && add.equals(client.jchannel_address)) {
@@ -537,6 +556,7 @@ public class RemoteJChannelStub {
         @Override
         public void run() {
             while (true) {
+
                 // start gRPC client and call connect() request.
                 stub.observer = startGrpc(this.isWork, this.stub.client);
                 // The first connect
@@ -581,6 +601,7 @@ public class RemoteJChannelStub {
         // check input and state of streaming, and send messsage
         private void checkLoop(StreamObserver requestSender) {
             while (true) {
+                // System.out.println(12312);
                 if (!client.down.get()){
                     try{
                         //System.out.println("exit 0 on control thread.");

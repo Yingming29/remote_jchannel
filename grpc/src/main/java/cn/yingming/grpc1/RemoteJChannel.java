@@ -32,7 +32,7 @@ public class RemoteJChannel extends JChannel {
     public RemoteJChannelStub clientStub;
     public AtomicBoolean down;
     public RemoteJChannelView view;
-
+    public View remoteView;
     // whether receive message of itself
     public boolean discard_own_messages;
     // whether stats?
@@ -70,6 +70,7 @@ public class RemoteJChannel extends JChannel {
         this.remoteName = null;
         this.remoteCluster = null;
         this.remoteProtocolStack_string = null;
+        this.remoteView = new View();
     }
 
     @Override
@@ -153,7 +154,7 @@ public class RemoteJChannel extends JChannel {
     @Override
     // setName
     public JChannel name(String name) {
-        return this.setName(name);
+        throw new UnsupportedOperationException("RemoteJChannel cannot set name.");
     }
 
     public String clusterName() {
@@ -273,16 +274,7 @@ public class RemoteJChannel extends JChannel {
 
     @Override
     public JChannel setName(String name) {
-        if (name != null) {
-            if (this.isWork.get()) {
-                throw new IllegalStateException("name cannot be set if channel is connected (should be done before)");
-            }
-            if (this.name != null) {
-                throw new IllegalStateException("name cannot be set if channel has name property. ");
-            }
-            this.name = name;
-        }
-        return this;
+        throw new UnsupportedOperationException("RemoteJChannel cannot set name.");
     }
 
     @Override

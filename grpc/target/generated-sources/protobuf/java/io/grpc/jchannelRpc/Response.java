@@ -216,6 +216,20 @@ private static final long serialVersionUID = 0L;
             oneTypeCase_ = 12;
             break;
           }
+          case 106: {
+            io.grpc.jchannelRpc.ViewRep_server.Builder subBuilder = null;
+            if (oneTypeCase_ == 13) {
+              subBuilder = ((io.grpc.jchannelRpc.ViewRep_server) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.ViewRep_server.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.ViewRep_server) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 13;
+            break;
+          }
           default: {
             if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -265,6 +279,7 @@ private static final long serialVersionUID = 0L;
     GETNAMEREP(10),
     GETCLUSTERNAMEREP(11),
     PRINTPROTOREP(12),
+    VIEWREP_SERVER(13),
     ONETYPE_NOT_SET(0);
     private final int value;
     private OneTypeCase(int value) {
@@ -294,6 +309,7 @@ private static final long serialVersionUID = 0L;
         case 10: return GETNAMEREP;
         case 11: return GETCLUSTERNAMEREP;
         case 12: return PRINTPROTOREP;
+        case 13: return VIEWREP_SERVER;
         case 0: return ONETYPE_NOT_SET;
         default: return null;
       }
@@ -681,6 +697,37 @@ private static final long serialVersionUID = 0L;
     return io.grpc.jchannelRpc.PrintProtocolSpecRep.getDefaultInstance();
   }
 
+  public static final int VIEWREP_SERVER_FIELD_NUMBER = 13;
+  /**
+   * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+   * @return Whether the viewRepServer field is set.
+   */
+  @java.lang.Override
+  public boolean hasViewRepServer() {
+    return oneTypeCase_ == 13;
+  }
+  /**
+   * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+   * @return The viewRepServer.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.ViewRep_server getViewRepServer() {
+    if (oneTypeCase_ == 13) {
+       return (io.grpc.jchannelRpc.ViewRep_server) oneType_;
+    }
+    return io.grpc.jchannelRpc.ViewRep_server.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.ViewRep_serverOrBuilder getViewRepServerOrBuilder() {
+    if (oneTypeCase_ == 13) {
+       return (io.grpc.jchannelRpc.ViewRep_server) oneType_;
+    }
+    return io.grpc.jchannelRpc.ViewRep_server.getDefaultInstance();
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -730,6 +777,9 @@ private static final long serialVersionUID = 0L;
     }
     if (oneTypeCase_ == 12) {
       output.writeMessage(12, (io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_);
+    }
+    if (oneTypeCase_ == 13) {
+      output.writeMessage(13, (io.grpc.jchannelRpc.ViewRep_server) oneType_);
     }
     unknownFields.writeTo(output);
   }
@@ -787,6 +837,10 @@ private static final long serialVersionUID = 0L;
     if (oneTypeCase_ == 12) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(12, (io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_);
+    }
+    if (oneTypeCase_ == 13) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(13, (io.grpc.jchannelRpc.ViewRep_server) oneType_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -853,6 +907,10 @@ private static final long serialVersionUID = 0L;
         if (!getPrintProtoRep()
             .equals(other.getPrintProtoRep())) return false;
         break;
+      case 13:
+        if (!getViewRepServer()
+            .equals(other.getViewRepServer())) return false;
+        break;
       case 0:
       default:
     }
@@ -915,6 +973,10 @@ private static final long serialVersionUID = 0L;
       case 12:
         hash = (37 * hash) + PRINTPROTOREP_FIELD_NUMBER;
         hash = (53 * hash) + getPrintProtoRep().hashCode();
+        break;
+      case 13:
+        hash = (37 * hash) + VIEWREP_SERVER_FIELD_NUMBER;
+        hash = (53 * hash) + getViewRepServer().hashCode();
         break;
       case 0:
       default:
@@ -1164,6 +1226,13 @@ private static final long serialVersionUID = 0L;
           result.oneType_ = printProtoRepBuilder_.build();
         }
       }
+      if (oneTypeCase_ == 13) {
+        if (viewRepServerBuilder_ == null) {
+          result.oneType_ = oneType_;
+        } else {
+          result.oneType_ = viewRepServerBuilder_.build();
+        }
+      }
       result.oneTypeCase_ = oneTypeCase_;
       onBuilt();
       return result;
@@ -1260,6 +1329,10 @@ private static final long serialVersionUID = 0L;
         }
         case PRINTPROTOREP: {
           mergePrintProtoRep(other.getPrintProtoRep());
+          break;
+        }
+        case VIEWREP_SERVER: {
+          mergeViewRepServer(other.getViewRepServer());
           break;
         }
         case ONETYPE_NOT_SET: {
@@ -3000,6 +3073,147 @@ private static final long serialVersionUID = 0L;
       oneTypeCase_ = 12;
       onChanged();;
       return printProtoRepBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.ViewRep_server, io.grpc.jchannelRpc.ViewRep_server.Builder, io.grpc.jchannelRpc.ViewRep_serverOrBuilder> viewRepServerBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+     * @return Whether the viewRepServer field is set.
+     */
+    @java.lang.Override
+    public boolean hasViewRepServer() {
+      return oneTypeCase_ == 13;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+     * @return The viewRepServer.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.ViewRep_server getViewRepServer() {
+      if (viewRepServerBuilder_ == null) {
+        if (oneTypeCase_ == 13) {
+          return (io.grpc.jchannelRpc.ViewRep_server) oneType_;
+        }
+        return io.grpc.jchannelRpc.ViewRep_server.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 13) {
+          return viewRepServerBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.ViewRep_server.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+     */
+    public Builder setViewRepServer(io.grpc.jchannelRpc.ViewRep_server value) {
+      if (viewRepServerBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        viewRepServerBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 13;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+     */
+    public Builder setViewRepServer(
+        io.grpc.jchannelRpc.ViewRep_server.Builder builderForValue) {
+      if (viewRepServerBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        viewRepServerBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 13;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+     */
+    public Builder mergeViewRepServer(io.grpc.jchannelRpc.ViewRep_server value) {
+      if (viewRepServerBuilder_ == null) {
+        if (oneTypeCase_ == 13 &&
+            oneType_ != io.grpc.jchannelRpc.ViewRep_server.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.ViewRep_server.newBuilder((io.grpc.jchannelRpc.ViewRep_server) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 13) {
+          viewRepServerBuilder_.mergeFrom(value);
+        }
+        viewRepServerBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 13;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+     */
+    public Builder clearViewRepServer() {
+      if (viewRepServerBuilder_ == null) {
+        if (oneTypeCase_ == 13) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 13) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        viewRepServerBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+     */
+    public io.grpc.jchannelRpc.ViewRep_server.Builder getViewRepServerBuilder() {
+      return getViewRepServerFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.ViewRep_serverOrBuilder getViewRepServerOrBuilder() {
+      if ((oneTypeCase_ == 13) && (viewRepServerBuilder_ != null)) {
+        return viewRepServerBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 13) {
+          return (io.grpc.jchannelRpc.ViewRep_server) oneType_;
+        }
+        return io.grpc.jchannelRpc.ViewRep_server.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.ViewRep_server, io.grpc.jchannelRpc.ViewRep_server.Builder, io.grpc.jchannelRpc.ViewRep_serverOrBuilder> 
+        getViewRepServerFieldBuilder() {
+      if (viewRepServerBuilder_ == null) {
+        if (!(oneTypeCase_ == 13)) {
+          oneType_ = io.grpc.jchannelRpc.ViewRep_server.getDefaultInstance();
+        }
+        viewRepServerBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.ViewRep_server, io.grpc.jchannelRpc.ViewRep_server.Builder, io.grpc.jchannelRpc.ViewRep_serverOrBuilder>(
+                (io.grpc.jchannelRpc.ViewRep_server) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 13;
+      onChanged();;
+      return viewRepServerBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

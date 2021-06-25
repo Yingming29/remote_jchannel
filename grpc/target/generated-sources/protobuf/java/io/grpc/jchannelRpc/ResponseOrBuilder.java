@@ -187,5 +187,20 @@ public interface ResponseOrBuilder extends
    */
   io.grpc.jchannelRpc.PrintProtocolSpecRepOrBuilder getPrintProtoRepOrBuilder();
 
+  /**
+   * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+   * @return Whether the viewRepServer field is set.
+   */
+  boolean hasViewRepServer();
+  /**
+   * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+   * @return The viewRepServer.
+   */
+  io.grpc.jchannelRpc.ViewRep_server getViewRepServer();
+  /**
+   * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+   */
+  io.grpc.jchannelRpc.ViewRep_serverOrBuilder getViewRepServerOrBuilder();
+
   public io.grpc.jchannelRpc.Response.OneTypeCase getOneTypeCase();
 }

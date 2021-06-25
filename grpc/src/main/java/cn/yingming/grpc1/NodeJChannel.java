@@ -1,5 +1,6 @@
 package cn.yingming.grpc1;
 
+import com.google.protobuf.ByteString;
 import io.grpc.jchannelRpc.*;
 import org.apache.commons.collections.ListUtils;
 import org.jgroups.*;
@@ -24,7 +25,6 @@ public class NodeJChannel implements Receiver{
     String grpcAddress;
     ConcurrentHashMap nodesMap;
     ConcurrentHashMap serviceMap;
-    Address address;
 
     NodeJChannel(String node_name, String cluster_name, String grpcAddress) throws Exception {
         this.channel = new JChannel("grpc/protocols/udp.xml");
@@ -32,7 +32,6 @@ public class NodeJChannel implements Receiver{
         this.node_name = node_name;
         this.cluster_name = cluster_name;
         this.grpcAddress = grpcAddress;
-        this.address = channel.getAddress();
         this.nodesMap = new ConcurrentHashMap<>();
         this.channel.setReceiver(this).connect(cluster_name);
         this.lock = new ReentrantLock();
@@ -40,6 +39,7 @@ public class NodeJChannel implements Receiver{
         this.serviceMap = new ConcurrentHashMap<String, ClusterMap>();
         // put itself into available nodes list
         this.nodesMap.put(this.channel.getAddress(), this.grpcAddress);
+
         System.out.println("[JChannel] The current nodes in node cluster: " + this.nodesMap);
     }
 
@@ -132,9 +132,13 @@ public class NodeJChannel implements Receiver{
                     this.nodesMap.put(msg.getSrc(), strs[1]);
                     System.out.println("[JChannel] Receive a confirmation from a node, update server map.");
                     System.out.println("[JChannel] After updating: " + this.nodesMap);
-                    String str = generateAddMsg();
-                    newMsg = str;
-                    this.service.broadcastServers(newMsg);
+                    UpdateRep updateMsg = UpdateRep.newBuilder()
+                            .setAddresses(generateAddMsg())
+                            .build();
+                    Response broMsg = Response.newBuilder()
+                            .setUpdateResponse(updateMsg)
+                            .build();
+                    this.service.broadcastResponse(broMsg);
                 }
                 // condition 2, connect() request
             } else if (msgStr.equals("ClusterInformation")){
@@ -179,7 +183,7 @@ public class NodeJChannel implements Receiver{
     // update the view of nodes
     @Override
     public void viewAccepted(View new_view) {
-        System.out.println("** view: " + new_view);
+        System.out.println("** JChannel Node view: " + new_view);
         /* When the view is changed by any action, it will send its address to other jchannels
         and update its nodesList.
          */
@@ -188,6 +192,22 @@ public class NodeJChannel implements Receiver{
         List currentNodesList = new ArrayList<>(this.nodesMap.keySet());
         compareNodes(currentView, currentNodesList);
         checkClusterMap(new_view);
+
+        if (this.service != null){
+            // ViewResponse_servers
+            View view = channel.getView();
+            ByteArrayDataOutputStream vOutStream = new ByteArrayDataOutputStream();
+            try {
+                view.writeTo(vOutStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            byte[] v_byte = vOutStream.buffer();
+            ViewRep_server view_rep = ViewRep_server.newBuilder().setSender(this.channel.address().toString()).setViewByte(ByteString.copyFrom(v_byte)).build();
+            Response rep = Response.newBuilder().setViewRepServer(view_rep).build();
+            service.broadcastResponse(rep);
+            System.out.println(rep);
+        }
     }
 
     public void checkClusterMap(View view){
@@ -226,9 +246,13 @@ public class NodeJChannel implements Receiver{
                     this.nodesMap.remove(compare.get(i));
                 }
                 System.out.println("[JChannel] The current nodes in node cluster: " + this.nodesMap);
-                String str = generateAddMsg();
-
-                this.service.broadcastServers(str);
+                UpdateRep updateMsg = UpdateRep.newBuilder()
+                        .setAddresses(generateAddMsg())
+                        .build();
+                Response broMsg = Response.newBuilder()
+                        .setUpdateResponse(updateMsg)
+                        .build();
+                this.service.broadcastResponse(broMsg);
             } else {
                 System.out.println("[JChannel] The current nodes does not change.");
             }

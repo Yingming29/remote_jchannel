@@ -5,13 +5,11 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import org.jgroups.JChannel;
-import org.jgroups.Message;
-import org.jgroups.ObjectMessage;
-import org.jgroups.Receiver;
-import org.jgroups.View;
+import org.jgroups.*;
 import org.jgroups.stack.ProtocolStack;
+import org.jgroups.util.ByteArrayDataInputStream;
 import org.jgroups.util.ByteArrayDataOutputStream;
+import org.jgroups.util.NameCache;
 import org.jgroups.util.UUID;
 
 
@@ -45,11 +43,15 @@ public class SimpleChat extends JChannel implements Receiver{
 		// line = msg.getSrc() + ":" + content;
 		// System.out.println("After decode:" + line);
 		// System.out.println(channel.dumpStats());
+		/*
 		System.out.println("getobject1:" + msg.getObject());
 		System.out.println("getobject2:" + msg.getObject().getClass());
 		System.out.println("getobject3:" + msg.getObject().toString());
 		System.out.println("getpayload:" + msg.getPayload().toString());
 		System.out.println(msg.getSrc().getClass());
+		Address add = this.generateAddress();
+        System.out.println(add);
+		 */
 		// System.out.println(msg.getDest());
 
 		/*
@@ -79,6 +81,19 @@ public class SimpleChat extends JChannel implements Receiver{
 					break;
 				}
 				byte[] b = line.getBytes();
+				Address add = this.generateAddress();
+				System.out.println(add);
+				ByteArrayDataOutputStream d3 = new ByteArrayDataOutputStream();
+				add.writeTo(d3);
+				byte[] b3_byte = d3.buffer();
+				System.out.println(b3_byte);
+
+				ByteArrayDataInputStream in3 = new ByteArrayDataInputStream(b3_byte);
+
+				UUID u3 = new UUID();
+
+				u3.readFrom(in3);
+				System.out.println(u3);
 				/*
 				MessageRJ msgrj = new MessageRJ("1", "1");
 				Message msg = new ObjectMessage(null, msgrj);
