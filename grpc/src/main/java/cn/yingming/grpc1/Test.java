@@ -1,5 +1,6 @@
 package cn.yingming.grpc1;
 
+import io.grpc.jchannelRpc.MessageReq;
 import org.jgroups.*;
 import org.jgroups.util.Base64;
 import org.jgroups.util.ByteArrayDataInputStream;
@@ -66,6 +67,9 @@ public class Test {
         System.out.println(new_view);
 
          */
+
+        MessageReq msg = MessageReq.newBuilder().setContent(null).build();
+        System.out.println(msg);
 
     }
 }

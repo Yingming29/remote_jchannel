@@ -10,6 +10,8 @@ import org.jgroups.Message;
 import org.jgroups.ObjectMessage;
 import org.jgroups.Receiver;
 import org.jgroups.View;
+import org.jgroups.stack.ProtocolStack;
+import org.jgroups.util.ByteArrayDataOutputStream;
 import org.jgroups.util.UUID;
 
 
@@ -77,6 +79,7 @@ public class SimpleChat extends JChannel implements Receiver{
 					break;
 				}
 				byte[] b = line.getBytes();
+				/*
 				MessageRJ msgrj = new MessageRJ("1", "1");
 				Message msg = new ObjectMessage(null, msgrj);
 				// msg.setFlagIfAbsent(Message.TransientFlag.DONT_LOOPBACK);
@@ -89,6 +92,15 @@ public class SimpleChat extends JChannel implements Receiver{
 				// channel.setStats(true);
 				// channel.send(msg);
 				// channel.dumpStats();
+
+				 */
+				//System.out.println(channel.printProtocolSpec(true));
+				// System.out.println(channel.printProtocolSpec(false));
+				// System.out.println(JChannel.getVersion());
+				System.out.println(channel.getProtocolStack());
+				ProtocolStack ps = channel.getProtocolStack();
+
+
 			} catch (Exception e) {
 				// TODO: handle exception
 			}

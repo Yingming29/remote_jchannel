@@ -127,5 +127,35 @@ public interface RequestOrBuilder extends
    */
   io.grpc.jchannelRpc.GetNameReqOrBuilder getGetNameReqOrBuilder();
 
+  /**
+   * <code>.cn.yingming.grpc1.GetClusterNameReq getClusterNameReq = 9;</code>
+   * @return Whether the getClusterNameReq field is set.
+   */
+  boolean hasGetClusterNameReq();
+  /**
+   * <code>.cn.yingming.grpc1.GetClusterNameReq getClusterNameReq = 9;</code>
+   * @return The getClusterNameReq.
+   */
+  io.grpc.jchannelRpc.GetClusterNameReq getGetClusterNameReq();
+  /**
+   * <code>.cn.yingming.grpc1.GetClusterNameReq getClusterNameReq = 9;</code>
+   */
+  io.grpc.jchannelRpc.GetClusterNameReqOrBuilder getGetClusterNameReqOrBuilder();
+
+  /**
+   * <code>.cn.yingming.grpc1.PrintProtocolSpecReq printProtoReq = 10;</code>
+   * @return Whether the printProtoReq field is set.
+   */
+  boolean hasPrintProtoReq();
+  /**
+   * <code>.cn.yingming.grpc1.PrintProtocolSpecReq printProtoReq = 10;</code>
+   * @return The printProtoReq.
+   */
+  io.grpc.jchannelRpc.PrintProtocolSpecReq getPrintProtoReq();
+  /**
+   * <code>.cn.yingming.grpc1.PrintProtocolSpecReq printProtoReq = 10;</code>
+   */
+  io.grpc.jchannelRpc.PrintProtocolSpecReqOrBuilder getPrintProtoReqOrBuilder();
+
   public io.grpc.jchannelRpc.Request.OneTypeCase getOneTypeCase();
 }

@@ -64,9 +64,22 @@ public class RemoteJChannelStub {
             } else if(input.equals("getName()")){
                 GetNameReq getNameReq = GetNameReq.newBuilder()
                         .setJchannelAddress(this.client.jchannel_address.toString())
-                        .setSource(this.client.uuid)
-                        .build();
+                        .setSource(this.client.uuid).build();
                 return Request.newBuilder().setGetNameReq(getNameReq).build();
+            } else if(input.equals("getClusterName()")){
+                GetClusterNameReq subReq = GetClusterNameReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString())
+                        .setSource(this.client.uuid).build();
+                return Request.newBuilder().setGetClusterNameReq(subReq).build();
+            } else if(input.startsWith("printProtocolSpec()")){
+                PrintProtocolSpecReq subReq = null;
+                if (input.equals("printProtocolSpec() true")){
+                    subReq = PrintProtocolSpecReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString())
+                            .setSource(this.client.uuid).setIncludeProps(true).build();
+                } else if (input.equals("printProtocolSpec() false")){
+                    subReq = PrintProtocolSpecReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString())
+                            .setSource(this.client.uuid).setIncludeProps(false).build();
+                }
+                return Request.newBuilder().setPrintProtoReq(subReq).build();
             } else if (input.startsWith("getState()")) {
                 String[] strs = input.split(" ");
                 if (strs.length > 2) {
@@ -230,6 +243,20 @@ public class RemoteJChannelStub {
             GetNameRep getNameRep = response.getGetNameRep();
             System.out.println("getName() response:" + getNameRep);
             this.client.remoteName = getNameRep.getName();
+            synchronized (this.client.obj) {
+                this.client.obj.notify();
+            }
+        } else if(response.hasGetClusterNameRep()){
+            GetClusterNameRep rep = response.getGetClusterNameRep();
+            System.out.println("getCluster() response:" + rep);
+            this.client.remoteCluster = rep.getClusterName();
+            synchronized (this.client.obj) {
+                this.client.obj.notify();
+            }
+        } else if(response.hasPrintProtoRep()){
+            PrintProtocolSpecRep rep = response.getPrintProtoRep();
+            System.out.println("printProtocolSpec() response:" + rep);
+            this.client.remoteProtocolStack_string = rep.getProtocolStackSpec();
             synchronized (this.client.obj) {
                 this.client.obj.notify();
             }

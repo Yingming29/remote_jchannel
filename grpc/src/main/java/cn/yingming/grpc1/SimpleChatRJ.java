@@ -32,16 +32,28 @@ public class SimpleChatRJ {
                 if (line.startsWith("quit") || line.startsWith("exit")){
                     break;
                 }
-                if (line.startsWith("getLocalAddress")){
+                if (line.startsWith("getLocalAddress()")){
                     System.out.println("Client Address:" + remoteJChannel.getLocalAddress());
-                } else if(line.startsWith("getRemoteAddress")){
+                } else if(line.startsWith("getRemoteAddress()")){
                     System.out.println("Real JChannel Address (JChannel Server):" + remoteJChannel.getAddress());
-                } else if(line.startsWith("getAddressAsString")){
+                } else if(line.startsWith("getAddressAsString()")){
                     System.out.println("getAddressAsString() for Real JChannel Address:" + remoteJChannel.getAddressAsString());
-                } else if(line.startsWith("getAddressAsUUID")){
+                } else if(line.startsWith("getAddressAsUUID()")){
                     System.out.println("getAddressAsUUID() for Real JChannel Address:" + remoteJChannel.getAddressAsUUID());
-                } else if(line.startsWith("getName")){
+                } else if(line.startsWith("getName()")){
                     System.out.println("getName() for Real JChannel Address (JChannel Server):" + remoteJChannel.getName());
+                } else if(line.startsWith("name()")){
+                    System.out.println("getName() for Real JChannel Address (JChannel Server):" + remoteJChannel.getName());
+                } else if(line.startsWith("getClusterName()") || line.startsWith("clusterName()")){
+                    System.out.println("getClusterName() for Real JChannel Address (JChannel Server):" + remoteJChannel.getClusterName());
+                } else if(line.startsWith("printProtocolSpec()")){
+                    String[] strs = line.split(" ", 2);
+                    if(strs[1].equals("true")){
+                        System.out.println("printProtocolSpec(true) for Real JChannel Address (JChannel Server):" + remoteJChannel.printProtocolSpec(true));
+                    } else if (strs[1].equals("false")){
+                        remoteJChannel.remoteProtocolStack_string = remoteJChannel.printProtocolSpec(false);
+                        System.out.println("printProtocolSpec(false) for Real JChannel Address (JChannel Server):" + remoteJChannel.printProtocolSpec(false));
+                    }
                 } else if (line.startsWith("unicast")) {
                     String[] strs = line.split(" ");
                     remoteJChannel.send(strs[1], strs[2]);

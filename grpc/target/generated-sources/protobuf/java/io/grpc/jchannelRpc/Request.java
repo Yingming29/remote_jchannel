@@ -160,6 +160,34 @@ private static final long serialVersionUID = 0L;
             oneTypeCase_ = 8;
             break;
           }
+          case 74: {
+            io.grpc.jchannelRpc.GetClusterNameReq.Builder subBuilder = null;
+            if (oneTypeCase_ == 9) {
+              subBuilder = ((io.grpc.jchannelRpc.GetClusterNameReq) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.GetClusterNameReq.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.GetClusterNameReq) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 9;
+            break;
+          }
+          case 82: {
+            io.grpc.jchannelRpc.PrintProtocolSpecReq.Builder subBuilder = null;
+            if (oneTypeCase_ == 10) {
+              subBuilder = ((io.grpc.jchannelRpc.PrintProtocolSpecReq) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.PrintProtocolSpecReq.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.PrintProtocolSpecReq) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 10;
+            break;
+          }
           default: {
             if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -205,6 +233,8 @@ private static final long serialVersionUID = 0L;
     STATEMSG2(6),
     GETADDRESSREQ(7),
     GETNAMEREQ(8),
+    GETCLUSTERNAMEREQ(9),
+    PRINTPROTOREQ(10),
     ONETYPE_NOT_SET(0);
     private final int value;
     private OneTypeCase(int value) {
@@ -230,6 +260,8 @@ private static final long serialVersionUID = 0L;
         case 6: return STATEMSG2;
         case 7: return GETADDRESSREQ;
         case 8: return GETNAMEREQ;
+        case 9: return GETCLUSTERNAMEREQ;
+        case 10: return PRINTPROTOREQ;
         case 0: return ONETYPE_NOT_SET;
         default: return null;
       }
@@ -493,6 +525,68 @@ private static final long serialVersionUID = 0L;
     return io.grpc.jchannelRpc.GetNameReq.getDefaultInstance();
   }
 
+  public static final int GETCLUSTERNAMEREQ_FIELD_NUMBER = 9;
+  /**
+   * <code>.cn.yingming.grpc1.GetClusterNameReq getClusterNameReq = 9;</code>
+   * @return Whether the getClusterNameReq field is set.
+   */
+  @java.lang.Override
+  public boolean hasGetClusterNameReq() {
+    return oneTypeCase_ == 9;
+  }
+  /**
+   * <code>.cn.yingming.grpc1.GetClusterNameReq getClusterNameReq = 9;</code>
+   * @return The getClusterNameReq.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.GetClusterNameReq getGetClusterNameReq() {
+    if (oneTypeCase_ == 9) {
+       return (io.grpc.jchannelRpc.GetClusterNameReq) oneType_;
+    }
+    return io.grpc.jchannelRpc.GetClusterNameReq.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.GetClusterNameReq getClusterNameReq = 9;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.GetClusterNameReqOrBuilder getGetClusterNameReqOrBuilder() {
+    if (oneTypeCase_ == 9) {
+       return (io.grpc.jchannelRpc.GetClusterNameReq) oneType_;
+    }
+    return io.grpc.jchannelRpc.GetClusterNameReq.getDefaultInstance();
+  }
+
+  public static final int PRINTPROTOREQ_FIELD_NUMBER = 10;
+  /**
+   * <code>.cn.yingming.grpc1.PrintProtocolSpecReq printProtoReq = 10;</code>
+   * @return Whether the printProtoReq field is set.
+   */
+  @java.lang.Override
+  public boolean hasPrintProtoReq() {
+    return oneTypeCase_ == 10;
+  }
+  /**
+   * <code>.cn.yingming.grpc1.PrintProtocolSpecReq printProtoReq = 10;</code>
+   * @return The printProtoReq.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.PrintProtocolSpecReq getPrintProtoReq() {
+    if (oneTypeCase_ == 10) {
+       return (io.grpc.jchannelRpc.PrintProtocolSpecReq) oneType_;
+    }
+    return io.grpc.jchannelRpc.PrintProtocolSpecReq.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.PrintProtocolSpecReq printProtoReq = 10;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.PrintProtocolSpecReqOrBuilder getPrintProtoReqOrBuilder() {
+    if (oneTypeCase_ == 10) {
+       return (io.grpc.jchannelRpc.PrintProtocolSpecReq) oneType_;
+    }
+    return io.grpc.jchannelRpc.PrintProtocolSpecReq.getDefaultInstance();
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -530,6 +624,12 @@ private static final long serialVersionUID = 0L;
     }
     if (oneTypeCase_ == 8) {
       output.writeMessage(8, (io.grpc.jchannelRpc.GetNameReq) oneType_);
+    }
+    if (oneTypeCase_ == 9) {
+      output.writeMessage(9, (io.grpc.jchannelRpc.GetClusterNameReq) oneType_);
+    }
+    if (oneTypeCase_ == 10) {
+      output.writeMessage(10, (io.grpc.jchannelRpc.PrintProtocolSpecReq) oneType_);
     }
     unknownFields.writeTo(output);
   }
@@ -571,6 +671,14 @@ private static final long serialVersionUID = 0L;
     if (oneTypeCase_ == 8) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(8, (io.grpc.jchannelRpc.GetNameReq) oneType_);
+    }
+    if (oneTypeCase_ == 9) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(9, (io.grpc.jchannelRpc.GetClusterNameReq) oneType_);
+    }
+    if (oneTypeCase_ == 10) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(10, (io.grpc.jchannelRpc.PrintProtocolSpecReq) oneType_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -621,6 +729,14 @@ private static final long serialVersionUID = 0L;
         if (!getGetNameReq()
             .equals(other.getGetNameReq())) return false;
         break;
+      case 9:
+        if (!getGetClusterNameReq()
+            .equals(other.getGetClusterNameReq())) return false;
+        break;
+      case 10:
+        if (!getPrintProtoReq()
+            .equals(other.getPrintProtoReq())) return false;
+        break;
       case 0:
       default:
     }
@@ -667,6 +783,14 @@ private static final long serialVersionUID = 0L;
       case 8:
         hash = (37 * hash) + GETNAMEREQ_FIELD_NUMBER;
         hash = (53 * hash) + getGetNameReq().hashCode();
+        break;
+      case 9:
+        hash = (37 * hash) + GETCLUSTERNAMEREQ_FIELD_NUMBER;
+        hash = (53 * hash) + getGetClusterNameReq().hashCode();
+        break;
+      case 10:
+        hash = (37 * hash) + PRINTPROTOREQ_FIELD_NUMBER;
+        hash = (53 * hash) + getPrintProtoReq().hashCode();
         break;
       case 0:
       default:
@@ -888,6 +1012,20 @@ private static final long serialVersionUID = 0L;
           result.oneType_ = getNameReqBuilder_.build();
         }
       }
+      if (oneTypeCase_ == 9) {
+        if (getClusterNameReqBuilder_ == null) {
+          result.oneType_ = oneType_;
+        } else {
+          result.oneType_ = getClusterNameReqBuilder_.build();
+        }
+      }
+      if (oneTypeCase_ == 10) {
+        if (printProtoReqBuilder_ == null) {
+          result.oneType_ = oneType_;
+        } else {
+          result.oneType_ = printProtoReqBuilder_.build();
+        }
+      }
       result.oneTypeCase_ = oneTypeCase_;
       onBuilt();
       return result;
@@ -968,6 +1106,14 @@ private static final long serialVersionUID = 0L;
         }
         case GETNAMEREQ: {
           mergeGetNameReq(other.getGetNameReq());
+          break;
+        }
+        case GETCLUSTERNAMEREQ: {
+          mergeGetClusterNameReq(other.getGetClusterNameReq());
+          break;
+        }
+        case PRINTPROTOREQ: {
+          mergePrintProtoReq(other.getPrintProtoReq());
           break;
         }
         case ONETYPE_NOT_SET: {
@@ -2144,6 +2290,288 @@ private static final long serialVersionUID = 0L;
       oneTypeCase_ = 8;
       onChanged();;
       return getNameReqBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.GetClusterNameReq, io.grpc.jchannelRpc.GetClusterNameReq.Builder, io.grpc.jchannelRpc.GetClusterNameReqOrBuilder> getClusterNameReqBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.GetClusterNameReq getClusterNameReq = 9;</code>
+     * @return Whether the getClusterNameReq field is set.
+     */
+    @java.lang.Override
+    public boolean hasGetClusterNameReq() {
+      return oneTypeCase_ == 9;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetClusterNameReq getClusterNameReq = 9;</code>
+     * @return The getClusterNameReq.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.GetClusterNameReq getGetClusterNameReq() {
+      if (getClusterNameReqBuilder_ == null) {
+        if (oneTypeCase_ == 9) {
+          return (io.grpc.jchannelRpc.GetClusterNameReq) oneType_;
+        }
+        return io.grpc.jchannelRpc.GetClusterNameReq.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 9) {
+          return getClusterNameReqBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.GetClusterNameReq.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetClusterNameReq getClusterNameReq = 9;</code>
+     */
+    public Builder setGetClusterNameReq(io.grpc.jchannelRpc.GetClusterNameReq value) {
+      if (getClusterNameReqBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        getClusterNameReqBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 9;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetClusterNameReq getClusterNameReq = 9;</code>
+     */
+    public Builder setGetClusterNameReq(
+        io.grpc.jchannelRpc.GetClusterNameReq.Builder builderForValue) {
+      if (getClusterNameReqBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        getClusterNameReqBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 9;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetClusterNameReq getClusterNameReq = 9;</code>
+     */
+    public Builder mergeGetClusterNameReq(io.grpc.jchannelRpc.GetClusterNameReq value) {
+      if (getClusterNameReqBuilder_ == null) {
+        if (oneTypeCase_ == 9 &&
+            oneType_ != io.grpc.jchannelRpc.GetClusterNameReq.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.GetClusterNameReq.newBuilder((io.grpc.jchannelRpc.GetClusterNameReq) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 9) {
+          getClusterNameReqBuilder_.mergeFrom(value);
+        }
+        getClusterNameReqBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 9;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetClusterNameReq getClusterNameReq = 9;</code>
+     */
+    public Builder clearGetClusterNameReq() {
+      if (getClusterNameReqBuilder_ == null) {
+        if (oneTypeCase_ == 9) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 9) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        getClusterNameReqBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetClusterNameReq getClusterNameReq = 9;</code>
+     */
+    public io.grpc.jchannelRpc.GetClusterNameReq.Builder getGetClusterNameReqBuilder() {
+      return getGetClusterNameReqFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetClusterNameReq getClusterNameReq = 9;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.GetClusterNameReqOrBuilder getGetClusterNameReqOrBuilder() {
+      if ((oneTypeCase_ == 9) && (getClusterNameReqBuilder_ != null)) {
+        return getClusterNameReqBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 9) {
+          return (io.grpc.jchannelRpc.GetClusterNameReq) oneType_;
+        }
+        return io.grpc.jchannelRpc.GetClusterNameReq.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetClusterNameReq getClusterNameReq = 9;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.GetClusterNameReq, io.grpc.jchannelRpc.GetClusterNameReq.Builder, io.grpc.jchannelRpc.GetClusterNameReqOrBuilder> 
+        getGetClusterNameReqFieldBuilder() {
+      if (getClusterNameReqBuilder_ == null) {
+        if (!(oneTypeCase_ == 9)) {
+          oneType_ = io.grpc.jchannelRpc.GetClusterNameReq.getDefaultInstance();
+        }
+        getClusterNameReqBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.GetClusterNameReq, io.grpc.jchannelRpc.GetClusterNameReq.Builder, io.grpc.jchannelRpc.GetClusterNameReqOrBuilder>(
+                (io.grpc.jchannelRpc.GetClusterNameReq) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 9;
+      onChanged();;
+      return getClusterNameReqBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.PrintProtocolSpecReq, io.grpc.jchannelRpc.PrintProtocolSpecReq.Builder, io.grpc.jchannelRpc.PrintProtocolSpecReqOrBuilder> printProtoReqBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.PrintProtocolSpecReq printProtoReq = 10;</code>
+     * @return Whether the printProtoReq field is set.
+     */
+    @java.lang.Override
+    public boolean hasPrintProtoReq() {
+      return oneTypeCase_ == 10;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.PrintProtocolSpecReq printProtoReq = 10;</code>
+     * @return The printProtoReq.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.PrintProtocolSpecReq getPrintProtoReq() {
+      if (printProtoReqBuilder_ == null) {
+        if (oneTypeCase_ == 10) {
+          return (io.grpc.jchannelRpc.PrintProtocolSpecReq) oneType_;
+        }
+        return io.grpc.jchannelRpc.PrintProtocolSpecReq.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 10) {
+          return printProtoReqBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.PrintProtocolSpecReq.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.PrintProtocolSpecReq printProtoReq = 10;</code>
+     */
+    public Builder setPrintProtoReq(io.grpc.jchannelRpc.PrintProtocolSpecReq value) {
+      if (printProtoReqBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        printProtoReqBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 10;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.PrintProtocolSpecReq printProtoReq = 10;</code>
+     */
+    public Builder setPrintProtoReq(
+        io.grpc.jchannelRpc.PrintProtocolSpecReq.Builder builderForValue) {
+      if (printProtoReqBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        printProtoReqBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 10;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.PrintProtocolSpecReq printProtoReq = 10;</code>
+     */
+    public Builder mergePrintProtoReq(io.grpc.jchannelRpc.PrintProtocolSpecReq value) {
+      if (printProtoReqBuilder_ == null) {
+        if (oneTypeCase_ == 10 &&
+            oneType_ != io.grpc.jchannelRpc.PrintProtocolSpecReq.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.PrintProtocolSpecReq.newBuilder((io.grpc.jchannelRpc.PrintProtocolSpecReq) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 10) {
+          printProtoReqBuilder_.mergeFrom(value);
+        }
+        printProtoReqBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 10;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.PrintProtocolSpecReq printProtoReq = 10;</code>
+     */
+    public Builder clearPrintProtoReq() {
+      if (printProtoReqBuilder_ == null) {
+        if (oneTypeCase_ == 10) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 10) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        printProtoReqBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.PrintProtocolSpecReq printProtoReq = 10;</code>
+     */
+    public io.grpc.jchannelRpc.PrintProtocolSpecReq.Builder getPrintProtoReqBuilder() {
+      return getPrintProtoReqFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.PrintProtocolSpecReq printProtoReq = 10;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.PrintProtocolSpecReqOrBuilder getPrintProtoReqOrBuilder() {
+      if ((oneTypeCase_ == 10) && (printProtoReqBuilder_ != null)) {
+        return printProtoReqBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 10) {
+          return (io.grpc.jchannelRpc.PrintProtocolSpecReq) oneType_;
+        }
+        return io.grpc.jchannelRpc.PrintProtocolSpecReq.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.PrintProtocolSpecReq printProtoReq = 10;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.PrintProtocolSpecReq, io.grpc.jchannelRpc.PrintProtocolSpecReq.Builder, io.grpc.jchannelRpc.PrintProtocolSpecReqOrBuilder> 
+        getPrintProtoReqFieldBuilder() {
+      if (printProtoReqBuilder_ == null) {
+        if (!(oneTypeCase_ == 10)) {
+          oneType_ = io.grpc.jchannelRpc.PrintProtocolSpecReq.getDefaultInstance();
+        }
+        printProtoReqBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.PrintProtocolSpecReq, io.grpc.jchannelRpc.PrintProtocolSpecReq.Builder, io.grpc.jchannelRpc.PrintProtocolSpecReqOrBuilder>(
+                (io.grpc.jchannelRpc.PrintProtocolSpecReq) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 10;
+      onChanged();;
+      return printProtoReqBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

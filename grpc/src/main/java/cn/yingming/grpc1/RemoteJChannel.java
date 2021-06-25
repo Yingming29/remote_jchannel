@@ -13,10 +13,18 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
 
 public class RemoteJChannel extends JChannel {
+    // address is the grpc server target
     public String address;
+    // means the grpc client
     public String uuid;
+    // name and remote name
+    // name can be removed?
     public String name;
+    public String remoteName;
+    // client cluster and remote cluster
     public String cluster;
+    public String remoteCluster;
+    // client and remote JChannel Address
     public Address jchannel_address;
     public Address real_jchannel_address;
     public AtomicBoolean isWork;
@@ -24,7 +32,7 @@ public class RemoteJChannel extends JChannel {
     public RemoteJChannelStub clientStub;
     public AtomicBoolean down;
     public RemoteJChannelView view;
-    public String remoteName;
+
     // whether receive message of itself
     public boolean discard_own_messages;
     // whether stats?
@@ -33,6 +41,7 @@ public class RemoteJChannel extends JChannel {
     public StatsRJ stats_obj;
     public ReceiverRJ receiver;
     public Object obj;
+    public String remoteProtocolStack_string;
 
     public RemoteJChannel(String name, String address) throws Exception{
         this.address = address;
@@ -59,6 +68,8 @@ public class RemoteJChannel extends JChannel {
         this.receiver = null;
         this.obj = new Object();
         this.remoteName = null;
+        this.remoteCluster = null;
+        this.remoteProtocolStack_string = null;
     }
 
     @Override
@@ -127,9 +138,16 @@ public class RemoteJChannel extends JChannel {
         return this.remoteName;
     }
 
-
     public String name() {
-        return this.name;
+        this.clientStub.add_save("getName()");
+        synchronized (obj){
+            try{
+                obj.wait(5000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return this.remoteName;
     }
 
     @Override
@@ -269,7 +287,20 @@ public class RemoteJChannel extends JChannel {
 
     @Override
     public String getClusterName() {
-        return this.isWork.get() ? this.cluster : null;
+        this.clientStub.add_save("getClusterName()");
+        synchronized (obj){
+            try{
+                obj.wait(5000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return this.remoteCluster;
+    }
+
+    // get the ClientCluster name
+    public String getLocalClusterName(){
+        return this.isWork.get() != false ? this.cluster : null;
     }
 
     @Override
@@ -335,7 +366,7 @@ public class RemoteJChannel extends JChannel {
     }
 
     public static String getVersion() {
-        return "RemoteJChannel v0.5 >.<" ;
+        return Version.printDescription();
     }
 
     @Override
@@ -370,7 +401,15 @@ public class RemoteJChannel extends JChannel {
 
     @Override
     public String printProtocolSpec(boolean include_props) {
-        throw new UnsupportedOperationException("RemoteJChannel does not have ProtocolStack.");
+        this.clientStub.add_save("printProtocolSpec() " + include_props);
+        synchronized (obj){
+            try{
+                obj.wait(5000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return this.remoteProtocolStack_string;
     }
 
 
