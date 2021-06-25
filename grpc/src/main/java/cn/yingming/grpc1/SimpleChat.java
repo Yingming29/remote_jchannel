@@ -7,10 +7,7 @@ import java.util.ArrayList;
 
 import org.jgroups.*;
 import org.jgroups.stack.ProtocolStack;
-import org.jgroups.util.ByteArrayDataInputStream;
-import org.jgroups.util.ByteArrayDataOutputStream;
-import org.jgroups.util.NameCache;
-import org.jgroups.util.UUID;
+import org.jgroups.util.*;
 
 
 public class SimpleChat extends JChannel implements Receiver{
@@ -93,7 +90,19 @@ public class SimpleChat extends JChannel implements Receiver{
 				UUID u3 = new UUID();
 
 				u3.readFrom(in3);
+
+				Address u4 = Util.createRandomAddress();
 				System.out.println(u3);
+				System.out.println(u4);
+				System.out.println(channel.address());
+
+				System.out.println("-----------add namecache--------------");
+				NameCache.add(u3, "logical name u3");
+				NameCache.add(u4, "logical name u4");
+
+				System.out.println(u3);
+				System.out.println(u4);
+				System.out.println(channel.address());
 				/*
 				MessageRJ msgrj = new MessageRJ("1", "1");
 				Message msg = new ObjectMessage(null, msgrj);
