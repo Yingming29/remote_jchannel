@@ -57,7 +57,7 @@ public class NodeJChannel implements Receiver{
             receiveProtobufMsg(msg);
         } else if (msg.getObject() instanceof UpdateRepBetweenNodes) {
             System.out.println("Receive the response from the first JChannel-server for updating the previous information of clients.");
-
+            receiveProtobufMsg(msg);
         } if (msg.getObject() instanceof String){
             // System.out.println("call receiveString");
             receiveString(msg);
@@ -89,6 +89,7 @@ public class NodeJChannel implements Receiver{
                             .setNameCache(nameCacheRep).build();
                     Message msgRep = new ObjectMessage(msg.getSrc(), rep);
                     this.channel.send(msgRep);
+                    System.out.println("UpdateRepBetweenNodes: " + rep);
                     System.out.println("The JChannel-server provides updating information for other new JChannel-server.");
                 } else{
                     throw new IllegalArgumentException("The JChannel does not exist in the NameCache.");
@@ -100,6 +101,7 @@ public class NodeJChannel implements Receiver{
             }
 
         } else if (msg.getObject() instanceof UpdateRepBetweenNodes) {
+            System.out.println("??????????????");
             UpdateRepBetweenNodes rep = msg.getObject();
             ViewRep view_rep = rep.getClientView();
             UpdateNameCacheRep nameCacheRep = rep.getNameCache();
@@ -124,25 +126,31 @@ public class NodeJChannel implements Receiver{
                 } finally {
                     lock.unlock();
                 }
+                System.out.println("Test: " + NameCache.getContents());
+                System.out.println("Test: " + rep);
             }
             // 2.update client view
+            ClusterMap clusterInf = null;
             if (this.serviceMap.size() == 0){
-                lock.lock();
                 try{
                     // the same client cluster
-                    ClusterMap clusterInf = new ClusterMap();
+                    clusterInf = new ClusterMap();
                     this.serviceMap.put("ClientCluster", clusterInf);
-                    View v = new View();
-                    ByteArrayDataInputStream in = new ByteArrayDataInputStream(view_rep.getView().toByteArray());
-                    v.readFrom(in);
-                    clusterInf.setFromView(v);
                 } catch (Exception e){
                     e.printStackTrace();
                 }
             } else{
-                ClusterMap clusterInf = (ClusterMap) this.serviceMap.get("ClientCluster");
+                clusterInf = (ClusterMap) this.serviceMap.get("ClientCluster");
             }
-
+            View v = new View();
+            ByteArrayDataInputStream in = new ByteArrayDataInputStream(view_rep.getView().toByteArray());
+            try {
+                v.readFrom(in);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            clusterInf.setFromView(v);
+            // 3. update state of client
             // clusterInf.history = stateRep; change
 
         }
@@ -287,6 +295,10 @@ public class NodeJChannel implements Receiver{
         checkClusterMap(new_view);
 
         if (this.service != null){
+            UpdateNameCacheRep nameCacheRep = this.service.generateNameCacheMsg();
+            Response rep2 = Response.newBuilder().setUpdateNameCache(nameCacheRep).build();
+            service.broadcastResponse(rep2);
+
             // ViewResponse_servers
             View view = channel.getView();
             ByteArrayDataOutputStream vOutStream = new ByteArrayDataOutputStream();
@@ -296,10 +308,12 @@ public class NodeJChannel implements Receiver{
                 e.printStackTrace();
             }
             byte[] v_byte = vOutStream.buffer();
+
             ViewRep_server view_rep = ViewRep_server.newBuilder().setSender(this.channel.address().toString()).setViewByte(ByteString.copyFrom(v_byte)).build();
             Response rep = Response.newBuilder().setViewRepServer(view_rep).build();
             service.broadcastResponse(rep);
             System.out.println(rep);
+
         }
     }
 
