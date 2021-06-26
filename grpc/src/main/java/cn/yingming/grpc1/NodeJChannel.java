@@ -43,9 +43,15 @@ public class NodeJChannel implements Receiver{
         System.out.println("[JChannel] The current nodes in node cluster: " + this.nodesMap);
     }
 
-    // can change the getObject for auto
+
     @Override
     public void receive(Message msg) {
+        /** two conditions for receiving Message,
+         * 1.receive the Message from other real JChannel. They do not send any Protobuf message type.
+         */
+        if (msg.getObject() instanceof UpdateReqBetweenNodes){
+            System.out.println("Receive the request for updating the previous information of clients.");
+        }
         if (msg.getObject() instanceof String ){
             // System.out.println("call receiveString");
             receiveString(msg);
@@ -67,8 +73,6 @@ public class NodeJChannel implements Receiver{
             } finally {
                 lock.unlock();
             }
-        } else if (){
-            System.out.println();
         } else if (obj == null){
             Request req = null;
             try{
@@ -80,7 +84,6 @@ public class NodeJChannel implements Receiver{
                 ConnectReq conReq = req.getConnectRequest();
                 System.out.println("[JChannel] Receive a shared connect() request for updating th cluster information.");
                 System.out.println("here:" + conReq);
-
                 // change: After the server receive the connect() result, it generate a
                 connectCluster(conReq.getCluster(), UUID.fromString(conReq.getJchannelAddress()), conReq.getLogicalName());
             } else if (req.hasDisconnectRequest()){
@@ -220,6 +223,7 @@ public class NodeJChannel implements Receiver{
             if (view.getMembers().get(0).toString().equals(this.channel.getAddress().toString())){
                 System.out.println("[JChannel] This is the coordinator of the node cluster.");
             } else {
+                /*
                 String msg = "ClusterInformation";
                 try{
                     // send the request to get the current inf of client-jchannel cluster
@@ -227,6 +231,19 @@ public class NodeJChannel implements Receiver{
                 } catch (Exception e){
                     e.printStackTrace();
                 }
+
+                 */
+                try {
+                    UUID u = (UUID) this.channel.getAddress();
+                    ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
+                    u.writeTo(out);
+                    byte[] b = out.buffer();
+                    UpdateReqBetweenNodes req = UpdateReqBetweenNodes.newBuilder().setAddress(ByteString.copyFrom(b)).build();
+                    this.channel.send(view.getCoord(), req);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+
             }
         }
     }

@@ -43,6 +43,14 @@ message Response{
     PrintProtocolSpecRep printProtoRep = 14;
   }
 }
+message UpdateReqBetweenNodes{
+  bytes address = 1;
+}
+message UpdateRepBetweenNodes{
+  UpdateNameCacheRep nameCache = 1;  // update the existing NameChe, contains JChannel-client and JChannel-server?
+  ViewRep clientView = 2;
+  StateRep clientState = 3;  // the state (message history) of clients?
+}
 message UpdateNameCacheRep{
   repeated bytes address = 1;
   repeated string logical_name = 2;
