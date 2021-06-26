@@ -6,6 +6,7 @@ import org.apache.commons.collections.ListUtils;
 import org.jgroups.*;
 import org.jgroups.util.ByteArrayDataInputStream;
 import org.jgroups.util.ByteArrayDataOutputStream;
+import org.jgroups.util.NameCache;
 import org.jgroups.util.UUID;
 
 import java.io.IOException;
@@ -48,16 +49,61 @@ public class NodeJChannel implements Receiver{
     public void receive(Message msg) {
         /** two conditions for receiving Message,
          * 1.receive the Message from other real JChannel. They do not send any Protobuf message type.
+         * 2.receive the Message from other JChannel-server. They can send message, which contains Protobuf message object.
+         *
          */
         if (msg.getObject() instanceof UpdateReqBetweenNodes){
-            System.out.println("Receive the request for updating the previous information of clients.");
-        }
-        if (msg.getObject() instanceof String ){
+            System.out.println("Receive the request from other JChannel-server for updating the previous information of clients.");
+            receiveProtobufMsg(msg);
+        } else if (msg.getObject() instanceof UpdateRepBetweenNodes) {
+            System.out.println("Receive the response from the first JChannel-server for updating the previous information of clients.");
+
+        } if (msg.getObject() instanceof String){
             // System.out.println("call receiveString");
             receiveString(msg);
         } else {
             // System.out.println("call receiveByte");
             receiveByte(msg);
+        }
+    }
+
+    private void receiveProtobufMsg(Message msg){
+        // update client information request
+        if (msg.getObject() instanceof UpdateReqBetweenNodes){
+            // check the Address of requester
+            UpdateReqBetweenNodes req = msg.getObject();
+            ByteArrayDataInputStream in = new ByteArrayDataInputStream(req.getAddress().toByteArray());
+            UUID u = new UUID();
+            Address address = (Address) u;
+            lock.lock();
+            try{
+                u.readFrom(in);
+                if (NameCache.getContents().containsKey(address)){
+                    System.out.println("Confirm that the JChannel' Address in the existing NameCache.");
+                    // generate message for the requester, NameCacheRep, ViewRep of clients,
+                    UpdateNameCacheRep nameCacheRep = this.service.generateNameCacheMsg();
+                    ClusterMap clusterInf = (ClusterMap) this.serviceMap.get("ClientCluster");
+                    ViewRep viewRep = clusterInf.generateView();
+                    // StateRep stateRep = clusterInf.generateState(); change
+                    UpdateRepBetweenNodes rep = UpdateRepBetweenNodes.newBuilder().setClientView(viewRep)
+                            .setNameCache(nameCacheRep).build();
+                    Message msgRep = new ObjectMessage(msg.getSrc(), rep);
+                    this.channel.send(msgRep);
+                    System.out.println("The JChannel-server provides updating information for other new JChannel-server.");
+                } else{
+                    throw new IllegalArgumentException("The JChannel does not exist in the NameCache.");
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
+
+        } else if (msg.getObject() instanceof UpdateRepBetweenNodes) {
+            UpdateRepBetweenNodes rep = msg.getObject();
+            ViewRep view_rep = rep.getClientView();
+            StateRep stateRep = rep.getClientState();
+            
         }
     }
 

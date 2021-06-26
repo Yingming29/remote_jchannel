@@ -354,6 +354,34 @@ public class NodeServer {
             };
         }
 
+        protected UpdateNameCacheRep generateNameCacheMsg(){
+            UpdateNameCacheRep nameCacheRep = null;
+            ReentrantLock lock = new ReentrantLock();
+            lock.lock();
+            try{
+                UpdateNameCacheRep.Builder builder = UpdateNameCacheRep.newBuilder();
+                Map<Address, String> m = NameCache.getContents();
+                for (Address oneAddress: m.keySet()) {
+                    ByteArrayDataOutputStream vOutStream = new ByteArrayDataOutputStream();
+                    if (oneAddress instanceof UUID){
+                        UUID u = (UUID) oneAddress;
+                        u.writeTo(vOutStream);
+                    } else{
+                        throw new IllegalArgumentException("It does not belong to UUID Address.");
+                    }
+                    byte[] v_byte = vOutStream.buffer();
+                    builder.addAddress(ByteString.copyFrom(v_byte));
+                    builder.addLogicalName(oneAddress.toString());
+                }
+                nameCacheRep = builder.build();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
+            return nameCacheRep;
+        }
+
         protected Address removeClient(StreamObserver responseObserver){
 
             this.lock.lock();
@@ -486,34 +514,6 @@ public class NodeServer {
             } finally {
                 lock.unlock();
             }
-        }
-
-        protected UpdateNameCacheRep generateNameCacheMsg(){
-            UpdateNameCacheRep nameCacheRep = null;
-            lock.lock();
-            try{
-                UpdateNameCacheRep.Builder builder = UpdateNameCacheRep.newBuilder();
-                Map<Address, String> m = NameCache.getContents();
-
-                for (Address oneAddress: m.keySet()) {
-                    ByteArrayDataOutputStream vOutStream = new ByteArrayDataOutputStream();
-                    if (oneAddress instanceof UUID){
-                        UUID u = (UUID) oneAddress;
-                        u.writeTo(vOutStream);
-                    } else{
-                        throw new IllegalArgumentException("It does not belong to UUID Address.");
-                    }
-                    byte[] v_byte = vOutStream.buffer();
-                    builder.addAddress(ByteString.copyFrom(v_byte));
-                    builder.addLogicalName(oneAddress.toString());
-                }
-                nameCacheRep = builder.build();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                lock.unlock();
-            }
-            return nameCacheRep;
         }
 
         // Broadcast the messages for updating addresses of servers
