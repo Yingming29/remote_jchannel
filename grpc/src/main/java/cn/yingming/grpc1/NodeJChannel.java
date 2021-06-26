@@ -102,8 +102,49 @@ public class NodeJChannel implements Receiver{
         } else if (msg.getObject() instanceof UpdateRepBetweenNodes) {
             UpdateRepBetweenNodes rep = msg.getObject();
             ViewRep view_rep = rep.getClientView();
+            UpdateNameCacheRep nameCacheRep = rep.getNameCache();
             StateRep stateRep = rep.getClientState();
-            
+            // 1. update NameCache
+            List<ByteString> addressList = nameCacheRep.getAddressList();
+            List<String> nameList = nameCacheRep.getLogicalNameList();
+            for (int i = 0; i < addressList.size(); i++) {
+                ByteString bs = addressList.get(i);
+                byte[] byte_address = bs.toByteArray();
+                UUID u = new UUID();
+                ByteArrayDataInputStream in = new ByteArrayDataInputStream(byte_address);
+                try {
+                    u.readFrom(in);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                System.out.println("A pair of Address and logical name: " + u + ", " + nameList.get(i));
+                lock.lock();
+                try {
+                    NameCache.add(u, nameList.get(i));
+                } finally {
+                    lock.unlock();
+                }
+            }
+            // 2.update client view
+            if (this.serviceMap.size() == 0){
+                lock.lock();
+                try{
+                    // the same client cluster
+                    ClusterMap clusterInf = new ClusterMap();
+                    this.serviceMap.put("ClientCluster", clusterInf);
+                    View v = new View();
+                    ByteArrayDataInputStream in = new ByteArrayDataInputStream(view_rep.getView().toByteArray());
+                    v.readFrom(in);
+                    clusterInf.setFromView(v);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            } else{
+                ClusterMap clusterInf = (ClusterMap) this.serviceMap.get("ClientCluster");
+            }
+
+            // clusterInf.history = stateRep; change
+
         }
     }
 

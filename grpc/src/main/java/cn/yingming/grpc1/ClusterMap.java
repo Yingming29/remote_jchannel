@@ -20,7 +20,7 @@ public class ClusterMap implements Serializable {
     public Address creator;
     public ReentrantLock lock;
     // the members list with join order.
-    public ArrayList orderList;
+    public LinkedList orderList;
     // message history
     public LinkedList history;
     public ClusterMap(Address creator){
@@ -28,7 +28,15 @@ public class ClusterMap implements Serializable {
         this.viewNum = 0;
         this.creator = creator;
         this.lock = new ReentrantLock();
-        this.orderList = new ArrayList<Address>();
+        this.orderList = new LinkedList<Address>();
+        this.history = new LinkedList<MessageRep>();
+    }
+    public ClusterMap(){
+        this.map = new ConcurrentHashMap<>();
+        this.viewNum = 0;
+        this.creator = null;
+        this.lock = new ReentrantLock();
+        this.orderList = new LinkedList<Address>();
         this.history = new LinkedList<MessageRep>();
     }
     public ConcurrentHashMap getMap(){
@@ -73,10 +81,20 @@ public class ClusterMap implements Serializable {
         }
         return view_rep;
     }
-    public ArrayList getList(){
+    public LinkedList getList(){
         return this.orderList;
     }
 
+    public void setFromView(View view){
+        lock.lock();
+        try{
+            this.creator = view.getCoord();
+            this.viewNum = (int) view.getViewId().getId();
+            this.orderList = (LinkedList) view.getMembers();
+        } finally {
+            lock.unlock();
+        }
+    }
     public void addMember(Address address){
         lock.lock();
         try{
