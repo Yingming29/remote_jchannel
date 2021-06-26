@@ -92,17 +92,22 @@ public class SimpleChat extends JChannel implements Receiver{
 				u3.readFrom(in3);
 
 				Address u4 = Util.createRandomAddress();
+				Address u5 = Util.createRandomAddress();
+				NameCache.add(u3,"u3");
 				System.out.println(u3);
 				System.out.println(u4);
+				System.out.println(u5);
+				System.out.println(NameCache.getContents());
 				System.out.println(channel.address());
 
 				System.out.println("-----------add namecache--------------");
-				NameCache.add(u3, "logical name u3");
-				NameCache.add(u4, "logical name u4");
 
-				System.out.println(u3);
-				System.out.println(u4);
-				System.out.println(channel.address());
+				System.out.println("u3: " + u3);
+				System.out.println("u4: " + u4);
+				System.out.println("address: " + channel.address());
+
+				System.out.println(NameCache.getContents());
+
 				/*
 				MessageRJ msgrj = new MessageRJ("1", "1");
 				Message msg = new ObjectMessage(null, msgrj);

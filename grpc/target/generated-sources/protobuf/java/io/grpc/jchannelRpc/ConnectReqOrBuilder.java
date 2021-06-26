@@ -9,30 +9,10 @@ public interface ConnectReqOrBuilder extends
 
   /**
    * <pre>
-   * uuid
-   * </pre>
-   *
-   * <code>string source = 1;</code>
-   * @return The source.
-   */
-  java.lang.String getSource();
-  /**
-   * <pre>
-   * uuid
-   * </pre>
-   *
-   * <code>string source = 1;</code>
-   * @return The bytes for source.
-   */
-  com.google.protobuf.ByteString
-      getSourceBytes();
-
-  /**
-   * <pre>
    * cluster
    * </pre>
    *
-   * <code>string cluster = 2;</code>
+   * <code>string cluster = 1;</code>
    * @return The cluster.
    */
   java.lang.String getCluster();
@@ -41,19 +21,19 @@ public interface ConnectReqOrBuilder extends
    * cluster
    * </pre>
    *
-   * <code>string cluster = 2;</code>
+   * <code>string cluster = 1;</code>
    * @return The bytes for cluster.
    */
   com.google.protobuf.ByteString
       getClusterBytes();
 
   /**
-   * <code>string timestamp = 3;</code>
+   * <code>string timestamp = 2;</code>
    * @return The timestamp.
    */
   java.lang.String getTimestamp();
   /**
-   * <code>string timestamp = 3;</code>
+   * <code>string timestamp = 2;</code>
    * @return The bytes for timestamp.
    */
   com.google.protobuf.ByteString
@@ -64,20 +44,32 @@ public interface ConnectReqOrBuilder extends
    * reconnect and jchannel_address will be used in the reconnection part.
    * </pre>
    *
-   * <code>bool reconnect = 4;</code>
+   * <code>bool reconnect = 3;</code>
    * @return The reconnect.
    */
   boolean getReconnect();
 
   /**
-   * <code>string jchannel_address = 5;</code>
+   * <code>string jchannel_address = 4;</code>
    * @return The jchannelAddress.
    */
   java.lang.String getJchannelAddress();
   /**
-   * <code>string jchannel_address = 5;</code>
+   * <code>string jchannel_address = 4;</code>
    * @return The bytes for jchannelAddress.
    */
   com.google.protobuf.ByteString
       getJchannelAddressBytes();
+
+  /**
+   * <code>string logical_name = 5;</code>
+   * @return The logicalName.
+   */
+  java.lang.String getLogicalName();
+  /**
+   * <code>string logical_name = 5;</code>
+   * @return The bytes for logicalName.
+   */
+  com.google.protobuf.ByteString
+      getLogicalNameBytes();
 }

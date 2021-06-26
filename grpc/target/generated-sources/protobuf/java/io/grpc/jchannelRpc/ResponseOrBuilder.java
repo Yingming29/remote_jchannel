@@ -68,16 +68,28 @@ public interface ResponseOrBuilder extends
   io.grpc.jchannelRpc.UpdateRepOrBuilder getUpdateResponseOrBuilder();
 
   /**
+   * <pre>
+   *  client view
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
    * @return Whether the viewResponse field is set.
    */
   boolean hasViewResponse();
   /**
+   * <pre>
+   *  client view
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
    * @return The viewResponse.
    */
   io.grpc.jchannelRpc.ViewRep getViewResponse();
   /**
+   * <pre>
+   *  client view
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
    */
   io.grpc.jchannelRpc.ViewRepOrBuilder getViewResponseOrBuilder();
@@ -188,16 +200,28 @@ public interface ResponseOrBuilder extends
   io.grpc.jchannelRpc.PrintProtocolSpecRepOrBuilder getPrintProtoRepOrBuilder();
 
   /**
+   * <pre>
+   * server view
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
    * @return Whether the viewRepServer field is set.
    */
   boolean hasViewRepServer();
   /**
+   * <pre>
+   * server view
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
    * @return The viewRepServer.
    */
   io.grpc.jchannelRpc.ViewRep_server getViewRepServer();
   /**
+   * <pre>
+   * server view
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
    */
   io.grpc.jchannelRpc.ViewRep_serverOrBuilder getViewRepServerOrBuilder();

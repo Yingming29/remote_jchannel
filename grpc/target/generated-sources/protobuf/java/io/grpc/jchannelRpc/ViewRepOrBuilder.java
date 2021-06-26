@@ -8,51 +8,8 @@ public interface ViewRepOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string creator = 1;</code>
-   * @return The creator.
+   * <code>bytes view = 1;</code>
+   * @return The view.
    */
-  java.lang.String getCreator();
-  /**
-   * <code>string creator = 1;</code>
-   * @return The bytes for creator.
-   */
-  com.google.protobuf.ByteString
-      getCreatorBytes();
-
-  /**
-   * <code>int32 viewNum = 2;</code>
-   * @return The viewNum.
-   */
-  int getViewNum();
-
-  /**
-   * <code>int32 size = 3;</code>
-   * @return The size.
-   */
-  int getSize();
-
-  /**
-   * <code>repeated string oneAddress = 4;</code>
-   * @return A list containing the oneAddress.
-   */
-  java.util.List<java.lang.String>
-      getOneAddressList();
-  /**
-   * <code>repeated string oneAddress = 4;</code>
-   * @return The count of oneAddress.
-   */
-  int getOneAddressCount();
-  /**
-   * <code>repeated string oneAddress = 4;</code>
-   * @param index The index of the element to return.
-   * @return The oneAddress at the given index.
-   */
-  java.lang.String getOneAddress(int index);
-  /**
-   * <code>repeated string oneAddress = 4;</code>
-   * @param index The index of the value to return.
-   * @return The bytes of the oneAddress at the given index.
-   */
-  com.google.protobuf.ByteString
-      getOneAddressBytes(int index);
+  com.google.protobuf.ByteString getView();
 }

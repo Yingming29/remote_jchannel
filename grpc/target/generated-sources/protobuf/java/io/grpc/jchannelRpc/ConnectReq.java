@@ -20,10 +20,10 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private ConnectReq() {
-    source_ = "";
     cluster_ = "";
     timestamp_ = "";
     jchannelAddress_ = "";
+    logicalName_ = "";
   }
 
   @java.lang.Override
@@ -59,30 +59,30 @@ private static final long serialVersionUID = 0L;
           case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            source_ = s;
+            cluster_ = s;
             break;
           }
           case 18: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            cluster_ = s;
-            break;
-          }
-          case 26: {
-            java.lang.String s = input.readStringRequireUtf8();
-
             timestamp_ = s;
             break;
           }
-          case 32: {
+          case 24: {
 
             reconnect_ = input.readBool();
+            break;
+          }
+          case 34: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            jchannelAddress_ = s;
             break;
           }
           case 42: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            jchannelAddress_ = s;
+            logicalName_ = s;
             break;
           }
           default: {
@@ -117,60 +117,14 @@ private static final long serialVersionUID = 0L;
             io.grpc.jchannelRpc.ConnectReq.class, io.grpc.jchannelRpc.ConnectReq.Builder.class);
   }
 
-  public static final int SOURCE_FIELD_NUMBER = 1;
-  private volatile java.lang.Object source_;
-  /**
-   * <pre>
-   * uuid
-   * </pre>
-   *
-   * <code>string source = 1;</code>
-   * @return The source.
-   */
-  @java.lang.Override
-  public java.lang.String getSource() {
-    java.lang.Object ref = source_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      source_ = s;
-      return s;
-    }
-  }
-  /**
-   * <pre>
-   * uuid
-   * </pre>
-   *
-   * <code>string source = 1;</code>
-   * @return The bytes for source.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getSourceBytes() {
-    java.lang.Object ref = source_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      source_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int CLUSTER_FIELD_NUMBER = 2;
+  public static final int CLUSTER_FIELD_NUMBER = 1;
   private volatile java.lang.Object cluster_;
   /**
    * <pre>
    * cluster
    * </pre>
    *
-   * <code>string cluster = 2;</code>
+   * <code>string cluster = 1;</code>
    * @return The cluster.
    */
   @java.lang.Override
@@ -191,7 +145,7 @@ private static final long serialVersionUID = 0L;
    * cluster
    * </pre>
    *
-   * <code>string cluster = 2;</code>
+   * <code>string cluster = 1;</code>
    * @return The bytes for cluster.
    */
   @java.lang.Override
@@ -209,10 +163,10 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int TIMESTAMP_FIELD_NUMBER = 3;
+  public static final int TIMESTAMP_FIELD_NUMBER = 2;
   private volatile java.lang.Object timestamp_;
   /**
-   * <code>string timestamp = 3;</code>
+   * <code>string timestamp = 2;</code>
    * @return The timestamp.
    */
   @java.lang.Override
@@ -229,7 +183,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string timestamp = 3;</code>
+   * <code>string timestamp = 2;</code>
    * @return The bytes for timestamp.
    */
   @java.lang.Override
@@ -247,14 +201,14 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int RECONNECT_FIELD_NUMBER = 4;
+  public static final int RECONNECT_FIELD_NUMBER = 3;
   private boolean reconnect_;
   /**
    * <pre>
    * reconnect and jchannel_address will be used in the reconnection part.
    * </pre>
    *
-   * <code>bool reconnect = 4;</code>
+   * <code>bool reconnect = 3;</code>
    * @return The reconnect.
    */
   @java.lang.Override
@@ -262,10 +216,10 @@ private static final long serialVersionUID = 0L;
     return reconnect_;
   }
 
-  public static final int JCHANNEL_ADDRESS_FIELD_NUMBER = 5;
+  public static final int JCHANNEL_ADDRESS_FIELD_NUMBER = 4;
   private volatile java.lang.Object jchannelAddress_;
   /**
-   * <code>string jchannel_address = 5;</code>
+   * <code>string jchannel_address = 4;</code>
    * @return The jchannelAddress.
    */
   @java.lang.Override
@@ -282,7 +236,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string jchannel_address = 5;</code>
+   * <code>string jchannel_address = 4;</code>
    * @return The bytes for jchannelAddress.
    */
   @java.lang.Override
@@ -294,6 +248,44 @@ private static final long serialVersionUID = 0L;
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
       jchannelAddress_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int LOGICAL_NAME_FIELD_NUMBER = 5;
+  private volatile java.lang.Object logicalName_;
+  /**
+   * <code>string logical_name = 5;</code>
+   * @return The logicalName.
+   */
+  @java.lang.Override
+  public java.lang.String getLogicalName() {
+    java.lang.Object ref = logicalName_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      logicalName_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string logical_name = 5;</code>
+   * @return The bytes for logicalName.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getLogicalNameBytes() {
+    java.lang.Object ref = logicalName_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      logicalName_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -314,20 +306,20 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getSourceBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, source_);
-    }
     if (!getClusterBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, cluster_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, cluster_);
     }
     if (!getTimestampBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, timestamp_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, timestamp_);
     }
     if (reconnect_ != false) {
-      output.writeBool(4, reconnect_);
+      output.writeBool(3, reconnect_);
     }
     if (!getJchannelAddressBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, jchannelAddress_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, jchannelAddress_);
+    }
+    if (!getLogicalNameBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, logicalName_);
     }
     unknownFields.writeTo(output);
   }
@@ -338,21 +330,21 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getSourceBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, source_);
-    }
     if (!getClusterBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, cluster_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, cluster_);
     }
     if (!getTimestampBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, timestamp_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, timestamp_);
     }
     if (reconnect_ != false) {
       size += com.google.protobuf.CodedOutputStream
-        .computeBoolSize(4, reconnect_);
+        .computeBoolSize(3, reconnect_);
     }
     if (!getJchannelAddressBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, jchannelAddress_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, jchannelAddress_);
+    }
+    if (!getLogicalNameBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, logicalName_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -369,8 +361,6 @@ private static final long serialVersionUID = 0L;
     }
     io.grpc.jchannelRpc.ConnectReq other = (io.grpc.jchannelRpc.ConnectReq) obj;
 
-    if (!getSource()
-        .equals(other.getSource())) return false;
     if (!getCluster()
         .equals(other.getCluster())) return false;
     if (!getTimestamp()
@@ -379,6 +369,8 @@ private static final long serialVersionUID = 0L;
         != other.getReconnect()) return false;
     if (!getJchannelAddress()
         .equals(other.getJchannelAddress())) return false;
+    if (!getLogicalName()
+        .equals(other.getLogicalName())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -390,8 +382,6 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + SOURCE_FIELD_NUMBER;
-    hash = (53 * hash) + getSource().hashCode();
     hash = (37 * hash) + CLUSTER_FIELD_NUMBER;
     hash = (53 * hash) + getCluster().hashCode();
     hash = (37 * hash) + TIMESTAMP_FIELD_NUMBER;
@@ -401,6 +391,8 @@ private static final long serialVersionUID = 0L;
         getReconnect());
     hash = (37 * hash) + JCHANNEL_ADDRESS_FIELD_NUMBER;
     hash = (53 * hash) + getJchannelAddress().hashCode();
+    hash = (37 * hash) + LOGICAL_NAME_FIELD_NUMBER;
+    hash = (53 * hash) + getLogicalName().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -538,8 +530,6 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      source_ = "";
-
       cluster_ = "";
 
       timestamp_ = "";
@@ -547,6 +537,8 @@ private static final long serialVersionUID = 0L;
       reconnect_ = false;
 
       jchannelAddress_ = "";
+
+      logicalName_ = "";
 
       return this;
     }
@@ -574,11 +566,11 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public io.grpc.jchannelRpc.ConnectReq buildPartial() {
       io.grpc.jchannelRpc.ConnectReq result = new io.grpc.jchannelRpc.ConnectReq(this);
-      result.source_ = source_;
       result.cluster_ = cluster_;
       result.timestamp_ = timestamp_;
       result.reconnect_ = reconnect_;
       result.jchannelAddress_ = jchannelAddress_;
+      result.logicalName_ = logicalName_;
       onBuilt();
       return result;
     }
@@ -627,10 +619,6 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(io.grpc.jchannelRpc.ConnectReq other) {
       if (other == io.grpc.jchannelRpc.ConnectReq.getDefaultInstance()) return this;
-      if (!other.getSource().isEmpty()) {
-        source_ = other.source_;
-        onChanged();
-      }
       if (!other.getCluster().isEmpty()) {
         cluster_ = other.cluster_;
         onChanged();
@@ -644,6 +632,10 @@ private static final long serialVersionUID = 0L;
       }
       if (!other.getJchannelAddress().isEmpty()) {
         jchannelAddress_ = other.jchannelAddress_;
+        onChanged();
+      }
+      if (!other.getLogicalName().isEmpty()) {
+        logicalName_ = other.logicalName_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -675,109 +667,13 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object source_ = "";
-    /**
-     * <pre>
-     * uuid
-     * </pre>
-     *
-     * <code>string source = 1;</code>
-     * @return The source.
-     */
-    public java.lang.String getSource() {
-      java.lang.Object ref = source_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        source_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <pre>
-     * uuid
-     * </pre>
-     *
-     * <code>string source = 1;</code>
-     * @return The bytes for source.
-     */
-    public com.google.protobuf.ByteString
-        getSourceBytes() {
-      java.lang.Object ref = source_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        source_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <pre>
-     * uuid
-     * </pre>
-     *
-     * <code>string source = 1;</code>
-     * @param value The source to set.
-     * @return This builder for chaining.
-     */
-    public Builder setSource(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      source_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <pre>
-     * uuid
-     * </pre>
-     *
-     * <code>string source = 1;</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearSource() {
-      
-      source_ = getDefaultInstance().getSource();
-      onChanged();
-      return this;
-    }
-    /**
-     * <pre>
-     * uuid
-     * </pre>
-     *
-     * <code>string source = 1;</code>
-     * @param value The bytes for source to set.
-     * @return This builder for chaining.
-     */
-    public Builder setSourceBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      source_ = value;
-      onChanged();
-      return this;
-    }
-
     private java.lang.Object cluster_ = "";
     /**
      * <pre>
      * cluster
      * </pre>
      *
-     * <code>string cluster = 2;</code>
+     * <code>string cluster = 1;</code>
      * @return The cluster.
      */
     public java.lang.String getCluster() {
@@ -797,7 +693,7 @@ private static final long serialVersionUID = 0L;
      * cluster
      * </pre>
      *
-     * <code>string cluster = 2;</code>
+     * <code>string cluster = 1;</code>
      * @return The bytes for cluster.
      */
     public com.google.protobuf.ByteString
@@ -818,7 +714,7 @@ private static final long serialVersionUID = 0L;
      * cluster
      * </pre>
      *
-     * <code>string cluster = 2;</code>
+     * <code>string cluster = 1;</code>
      * @param value The cluster to set.
      * @return This builder for chaining.
      */
@@ -837,7 +733,7 @@ private static final long serialVersionUID = 0L;
      * cluster
      * </pre>
      *
-     * <code>string cluster = 2;</code>
+     * <code>string cluster = 1;</code>
      * @return This builder for chaining.
      */
     public Builder clearCluster() {
@@ -851,7 +747,7 @@ private static final long serialVersionUID = 0L;
      * cluster
      * </pre>
      *
-     * <code>string cluster = 2;</code>
+     * <code>string cluster = 1;</code>
      * @param value The bytes for cluster to set.
      * @return This builder for chaining.
      */
@@ -869,7 +765,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object timestamp_ = "";
     /**
-     * <code>string timestamp = 3;</code>
+     * <code>string timestamp = 2;</code>
      * @return The timestamp.
      */
     public java.lang.String getTimestamp() {
@@ -885,7 +781,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string timestamp = 3;</code>
+     * <code>string timestamp = 2;</code>
      * @return The bytes for timestamp.
      */
     public com.google.protobuf.ByteString
@@ -902,7 +798,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string timestamp = 3;</code>
+     * <code>string timestamp = 2;</code>
      * @param value The timestamp to set.
      * @return This builder for chaining.
      */
@@ -917,7 +813,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string timestamp = 3;</code>
+     * <code>string timestamp = 2;</code>
      * @return This builder for chaining.
      */
     public Builder clearTimestamp() {
@@ -927,7 +823,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string timestamp = 3;</code>
+     * <code>string timestamp = 2;</code>
      * @param value The bytes for timestamp to set.
      * @return This builder for chaining.
      */
@@ -949,7 +845,7 @@ private static final long serialVersionUID = 0L;
      * reconnect and jchannel_address will be used in the reconnection part.
      * </pre>
      *
-     * <code>bool reconnect = 4;</code>
+     * <code>bool reconnect = 3;</code>
      * @return The reconnect.
      */
     @java.lang.Override
@@ -961,7 +857,7 @@ private static final long serialVersionUID = 0L;
      * reconnect and jchannel_address will be used in the reconnection part.
      * </pre>
      *
-     * <code>bool reconnect = 4;</code>
+     * <code>bool reconnect = 3;</code>
      * @param value The reconnect to set.
      * @return This builder for chaining.
      */
@@ -976,7 +872,7 @@ private static final long serialVersionUID = 0L;
      * reconnect and jchannel_address will be used in the reconnection part.
      * </pre>
      *
-     * <code>bool reconnect = 4;</code>
+     * <code>bool reconnect = 3;</code>
      * @return This builder for chaining.
      */
     public Builder clearReconnect() {
@@ -988,7 +884,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object jchannelAddress_ = "";
     /**
-     * <code>string jchannel_address = 5;</code>
+     * <code>string jchannel_address = 4;</code>
      * @return The jchannelAddress.
      */
     public java.lang.String getJchannelAddress() {
@@ -1004,7 +900,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string jchannel_address = 5;</code>
+     * <code>string jchannel_address = 4;</code>
      * @return The bytes for jchannelAddress.
      */
     public com.google.protobuf.ByteString
@@ -1021,7 +917,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string jchannel_address = 5;</code>
+     * <code>string jchannel_address = 4;</code>
      * @param value The jchannelAddress to set.
      * @return This builder for chaining.
      */
@@ -1036,7 +932,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string jchannel_address = 5;</code>
+     * <code>string jchannel_address = 4;</code>
      * @return This builder for chaining.
      */
     public Builder clearJchannelAddress() {
@@ -1046,7 +942,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string jchannel_address = 5;</code>
+     * <code>string jchannel_address = 4;</code>
      * @param value The bytes for jchannelAddress to set.
      * @return This builder for chaining.
      */
@@ -1058,6 +954,82 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       
       jchannelAddress_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object logicalName_ = "";
+    /**
+     * <code>string logical_name = 5;</code>
+     * @return The logicalName.
+     */
+    public java.lang.String getLogicalName() {
+      java.lang.Object ref = logicalName_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        logicalName_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string logical_name = 5;</code>
+     * @return The bytes for logicalName.
+     */
+    public com.google.protobuf.ByteString
+        getLogicalNameBytes() {
+      java.lang.Object ref = logicalName_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        logicalName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string logical_name = 5;</code>
+     * @param value The logicalName to set.
+     * @return This builder for chaining.
+     */
+    public Builder setLogicalName(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      logicalName_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string logical_name = 5;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearLogicalName() {
+      
+      logicalName_ = getDefaultInstance().getLogicalName();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string logical_name = 5;</code>
+     * @param value The bytes for logicalName to set.
+     * @return This builder for chaining.
+     */
+    public Builder setLogicalNameBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      logicalName_ = value;
       onChanged();
       return this;
     }

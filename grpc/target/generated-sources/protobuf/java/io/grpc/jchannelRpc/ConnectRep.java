@@ -4,6 +4,10 @@
 package io.grpc.jchannelRpc;
 
 /**
+ * <pre>
+ * the first time the client connects to the JChannel-server, the server will create an Address and a logical name for it.
+ * </pre>
+ *
  * Protobuf type {@code cn.yingming.grpc1.ConnectRep}
  */
 public final class ConnectRep extends
@@ -16,7 +20,8 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private ConnectRep() {
-    address_ = "";
+    address_ = com.google.protobuf.ByteString.EMPTY;
+    logicalName_ = "";
   }
 
   @java.lang.Override
@@ -55,9 +60,14 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 18: {
+
+            address_ = input.readBytes();
+            break;
+          }
+          case 26: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            address_ = s;
+            logicalName_ = s;
             break;
           }
           default: {
@@ -104,37 +114,60 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int ADDRESS_FIELD_NUMBER = 2;
-  private volatile java.lang.Object address_;
+  private com.google.protobuf.ByteString address_;
   /**
-   * <code>string address = 2;</code>
+   * <pre>
+   * generated Address object's byte
+   * </pre>
+   *
+   * <code>bytes address = 2;</code>
    * @return The address.
    */
   @java.lang.Override
-  public java.lang.String getAddress() {
-    java.lang.Object ref = address_;
+  public com.google.protobuf.ByteString getAddress() {
+    return address_;
+  }
+
+  public static final int LOGICAL_NAME_FIELD_NUMBER = 3;
+  private volatile java.lang.Object logicalName_;
+  /**
+   * <pre>
+   * generated Address 'logical name
+   * </pre>
+   *
+   * <code>string logical_name = 3;</code>
+   * @return The logicalName.
+   */
+  @java.lang.Override
+  public java.lang.String getLogicalName() {
+    java.lang.Object ref = logicalName_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      address_ = s;
+      logicalName_ = s;
       return s;
     }
   }
   /**
-   * <code>string address = 2;</code>
-   * @return The bytes for address.
+   * <pre>
+   * generated Address 'logical name
+   * </pre>
+   *
+   * <code>string logical_name = 3;</code>
+   * @return The bytes for logicalName.
    */
   @java.lang.Override
   public com.google.protobuf.ByteString
-      getAddressBytes() {
-    java.lang.Object ref = address_;
+      getLogicalNameBytes() {
+    java.lang.Object ref = logicalName_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      address_ = b;
+      logicalName_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -158,8 +191,11 @@ private static final long serialVersionUID = 0L;
     if (result_ != false) {
       output.writeBool(1, result_);
     }
-    if (!getAddressBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, address_);
+    if (!address_.isEmpty()) {
+      output.writeBytes(2, address_);
+    }
+    if (!getLogicalNameBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, logicalName_);
     }
     unknownFields.writeTo(output);
   }
@@ -174,8 +210,12 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeBoolSize(1, result_);
     }
-    if (!getAddressBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, address_);
+    if (!address_.isEmpty()) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeBytesSize(2, address_);
+    }
+    if (!getLogicalNameBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, logicalName_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -196,6 +236,8 @@ private static final long serialVersionUID = 0L;
         != other.getResult()) return false;
     if (!getAddress()
         .equals(other.getAddress())) return false;
+    if (!getLogicalName()
+        .equals(other.getLogicalName())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -212,6 +254,8 @@ private static final long serialVersionUID = 0L;
         getResult());
     hash = (37 * hash) + ADDRESS_FIELD_NUMBER;
     hash = (53 * hash) + getAddress().hashCode();
+    hash = (37 * hash) + LOGICAL_NAME_FIELD_NUMBER;
+    hash = (53 * hash) + getLogicalName().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -308,6 +352,10 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
+   * <pre>
+   * the first time the client connects to the JChannel-server, the server will create an Address and a logical name for it.
+   * </pre>
+   *
    * Protobuf type {@code cn.yingming.grpc1.ConnectRep}
    */
   public static final class Builder extends
@@ -347,7 +395,9 @@ private static final long serialVersionUID = 0L;
       super.clear();
       result_ = false;
 
-      address_ = "";
+      address_ = com.google.protobuf.ByteString.EMPTY;
+
+      logicalName_ = "";
 
       return this;
     }
@@ -377,6 +427,7 @@ private static final long serialVersionUID = 0L;
       io.grpc.jchannelRpc.ConnectRep result = new io.grpc.jchannelRpc.ConnectRep(this);
       result.result_ = result_;
       result.address_ = address_;
+      result.logicalName_ = logicalName_;
       onBuilt();
       return result;
     }
@@ -428,8 +479,11 @@ private static final long serialVersionUID = 0L;
       if (other.getResult() != false) {
         setResult(other.getResult());
       }
-      if (!other.getAddress().isEmpty()) {
-        address_ = other.address_;
+      if (other.getAddress() != com.google.protobuf.ByteString.EMPTY) {
+        setAddress(other.getAddress());
+      }
+      if (!other.getLogicalName().isEmpty()) {
+        logicalName_ = other.logicalName_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -492,47 +546,29 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object address_ = "";
+    private com.google.protobuf.ByteString address_ = com.google.protobuf.ByteString.EMPTY;
     /**
-     * <code>string address = 2;</code>
+     * <pre>
+     * generated Address object's byte
+     * </pre>
+     *
+     * <code>bytes address = 2;</code>
      * @return The address.
      */
-    public java.lang.String getAddress() {
-      java.lang.Object ref = address_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        address_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    @java.lang.Override
+    public com.google.protobuf.ByteString getAddress() {
+      return address_;
     }
     /**
-     * <code>string address = 2;</code>
-     * @return The bytes for address.
-     */
-    public com.google.protobuf.ByteString
-        getAddressBytes() {
-      java.lang.Object ref = address_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        address_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string address = 2;</code>
+     * <pre>
+     * generated Address object's byte
+     * </pre>
+     *
+     * <code>bytes address = 2;</code>
      * @param value The address to set.
      * @return This builder for chaining.
      */
-    public Builder setAddress(
-        java.lang.String value) {
+    public Builder setAddress(com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -542,7 +578,11 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string address = 2;</code>
+     * <pre>
+     * generated Address object's byte
+     * </pre>
+     *
+     * <code>bytes address = 2;</code>
      * @return This builder for chaining.
      */
     public Builder clearAddress() {
@@ -551,19 +591,99 @@ private static final long serialVersionUID = 0L;
       onChanged();
       return this;
     }
+
+    private java.lang.Object logicalName_ = "";
     /**
-     * <code>string address = 2;</code>
-     * @param value The bytes for address to set.
+     * <pre>
+     * generated Address 'logical name
+     * </pre>
+     *
+     * <code>string logical_name = 3;</code>
+     * @return The logicalName.
+     */
+    public java.lang.String getLogicalName() {
+      java.lang.Object ref = logicalName_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        logicalName_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <pre>
+     * generated Address 'logical name
+     * </pre>
+     *
+     * <code>string logical_name = 3;</code>
+     * @return The bytes for logicalName.
+     */
+    public com.google.protobuf.ByteString
+        getLogicalNameBytes() {
+      java.lang.Object ref = logicalName_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        logicalName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <pre>
+     * generated Address 'logical name
+     * </pre>
+     *
+     * <code>string logical_name = 3;</code>
+     * @param value The logicalName to set.
      * @return This builder for chaining.
      */
-    public Builder setAddressBytes(
+    public Builder setLogicalName(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      logicalName_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * generated Address 'logical name
+     * </pre>
+     *
+     * <code>string logical_name = 3;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearLogicalName() {
+      
+      logicalName_ = getDefaultInstance().getLogicalName();
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * generated Address 'logical name
+     * </pre>
+     *
+     * <code>string logical_name = 3;</code>
+     * @param value The bytes for logicalName to set.
+     * @return This builder for chaining.
+     */
+    public Builder setLogicalNameBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      address_ = value;
+      logicalName_ = value;
       onChanged();
       return this;
     }

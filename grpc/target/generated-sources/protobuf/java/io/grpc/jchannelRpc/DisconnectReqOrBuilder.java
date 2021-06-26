@@ -8,48 +8,36 @@ public interface DisconnectReqOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string source = 1;</code>
-   * @return The source.
-   */
-  java.lang.String getSource();
-  /**
-   * <code>string source = 1;</code>
-   * @return The bytes for source.
-   */
-  com.google.protobuf.ByteString
-      getSourceBytes();
-
-  /**
-   * <code>string jchannel_address = 2;</code>
+   * <code>string jchannel_address = 1;</code>
    * @return The jchannelAddress.
    */
   java.lang.String getJchannelAddress();
   /**
-   * <code>string jchannel_address = 2;</code>
+   * <code>string jchannel_address = 1;</code>
    * @return The bytes for jchannelAddress.
    */
   com.google.protobuf.ByteString
       getJchannelAddressBytes();
 
   /**
-   * <code>string cluster = 3;</code>
+   * <code>string cluster = 2;</code>
    * @return The cluster.
    */
   java.lang.String getCluster();
   /**
-   * <code>string cluster = 3;</code>
+   * <code>string cluster = 2;</code>
    * @return The bytes for cluster.
    */
   com.google.protobuf.ByteString
       getClusterBytes();
 
   /**
-   * <code>string timestamp = 4;</code>
+   * <code>string timestamp = 3;</code>
    * @return The timestamp.
    */
   java.lang.String getTimestamp();
   /**
-   * <code>string timestamp = 4;</code>
+   * <code>string timestamp = 3;</code>
    * @return The bytes for timestamp.
    */
   com.google.protobuf.ByteString

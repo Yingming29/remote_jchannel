@@ -2,10 +2,7 @@ package cn.yingming.grpc1;
 
 import io.grpc.jchannelRpc.MessageReq;
 import org.jgroups.*;
-import org.jgroups.util.Base64;
-import org.jgroups.util.ByteArrayDataInputStream;
-import org.jgroups.util.ByteArrayDataOutputStream;
-import org.jgroups.util.UUID;
+import org.jgroups.util.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -68,8 +65,18 @@ public class Test {
 
          */
 
+        View v2 = new View();
+
         MessageReq msg = MessageReq.newBuilder().setContent(null).build();
         System.out.println(msg);
+
+        Address add1 = UUID.randomUUID();
+        String add1_str = add1.toString();
+        NameCache.add(add1 , "add1 string");
+        Address add2 = UUID.fromString(add1_str);
+        if (add1.equals(add2)){
+            System.out.println(true);
+        }
 
     }
 }

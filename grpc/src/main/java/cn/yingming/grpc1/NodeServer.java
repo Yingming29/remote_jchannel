@@ -8,10 +8,7 @@ import org.jgroups.Address;
 import org.jgroups.Message;
 import org.jgroups.ObjectMessage;
 import org.jgroups.View;
-import org.jgroups.util.ByteArrayDataInputStream;
-import org.jgroups.util.ByteArrayDataOutputStream;
-import org.jgroups.util.UUID;
-import org.jgroups.util.Util;
+import org.jgroups.util.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -85,7 +82,7 @@ public class NodeServer {
     // gRPC service
     class JChannelsServiceImpl extends JChannelsServiceGrpc.JChannelsServiceImplBase {
         // HashMap for storing the clients, includes uuid and StreamObserver.
-        private final ConcurrentHashMap<String, StreamObserver<Response>> clients = new ConcurrentHashMap<String, StreamObserver<Response>>();
+        private final ConcurrentHashMap<Address, StreamObserver<Response>> clients = new ConcurrentHashMap<>();
         protected final ReentrantLock lock = new ReentrantLock();
         NodeJChannel jchannel;
 
@@ -103,51 +100,55 @@ public class NodeServer {
                      */
                     if (req.hasConnectRequest()){
                         System.out.println("[gRPC] Receive the connect() request from a client.");
-                        System.out.println("(" + req.getConnectRequest().getSource() + ") joins the cluster, " +
+                        System.out.println("A new JChannel-client connects to this JChannel-node (JChannel-server), " +
                                 req.getConnectRequest().getCluster());
                         // Description: connect(String cluster) request:
                         Address generated_address = null;
+                        String generated_name = null;
                         if (!req.getConnectRequest().getReconnect()){
-                            // 1.The server generates the Address for the requester.
+                            // 1.The server generates the Address and the logical name
+                            // for the requester with the first connect to JChannel-node.
                             generated_address = UUID.randomUUID();
+                            generated_name = Util.generateLocalName();
                             System.out.println("New connected JChannel-Client, the server generates an Address for it: " +
-                                    generated_address);
+                                    generated_address + ", and logical name : " + generated_name);
                         } else{
+                            // 1. if it is not first connect, it will contain a JChannelAddress property.
                             generated_address = UUID.fromString(req.getConnectRequest().getJchannelAddress());
+                            generated_name = req.getConnectRequest().getLogicalName();
                         }
-                        // Store the responseObserver of the client.
-                        join(req.getConnectRequest(), responseObserver, generated_address.toString());
-                        // forward the connect request with generated Address to other node
+                        // 2. Store the responseObserver of the client. Map<Address, streamObserver>
+                        join(req.getConnectRequest(), responseObserver, generated_address, generated_name);
+                        // 3. forward the connect request with generated Address and generated logical name to other nodes for storing
                         ConnectReq conReqWithAddress = ConnectReq.newBuilder()
                                 .setCluster(req.getConnectRequest().getCluster())
-                                .setSource(req.getConnectRequest().getSource())
                                 .setTimestamp(req.getConnectRequest().getTimestamp())
                                 .setJchannelAddress(generated_address.toString())
+                                .setLogicalName(generated_name)
                                 .build();
-
                         Request reqForward = Request.newBuilder().setConnectRequest(conReqWithAddress).build();
                         forwardMsg(reqForward);
+                        // 4. stor the generated Address and logcial to this node's NameCache
+                        NameCache.add(generated_address, generated_name);
                     /*  Condition2
                         Receive the disconnect() request.
                      */
                     } else if (req.hasDisconnectRequest()){
                         System.out.println("[gRPC] Receive the disconnect() request from a client.");
-                        System.out.println(req.getDisconnectRequest().getJchannelAddress() + "(" +
-                                req.getDisconnectRequest().getSource() + ") quits the cluster, " +
+                        System.out.println(req.getDisconnectRequest().getJchannelAddress() + " quits the cluster, " +
                                 req.getDisconnectRequest().getCluster());
                         // remove responseObserver for the disconnect()
                         lock.lock();
                         try {
                             // 1. remove the client responseObserver
-                            for (String uuid : clients.keySet()) {
-                                if (uuid.equals(req.getDisconnectRequest().getSource())){
-                                    clients.remove(uuid);
+                            for (Address add : clients.keySet()) {
+                                if (add.equals(UUID.fromString(req.getDisconnectRequest().getJchannelAddress()))){
+                                    clients.remove(add);
                                 }
                             }
                             // 2. remove the client from its cluster information
                             jchannel.disconnectCluster(req.getDisconnectRequest().getCluster(),
-                                    req.getDisconnectRequest().getJchannelAddress(),
-                                    req.getDisconnectRequest().getSource());
+                                    UUID.fromString(req.getDisconnectRequest().getJchannelAddress()));
                         } finally {
                             lock.unlock();
                         }
@@ -175,7 +176,7 @@ public class NodeServer {
                                 System.out.println(mp.getJchannelAddress() + ":" + mp.getContent());
                             }
                             // send to this client
-                            for (String uuid : clients.keySet()) {
+                            for (Address uuid : clients.keySet()) {
                                 if (uuid.equals(req.getStateReq().getSource())){
                                     clients.get(uuid).onNext(rep);
                                     // System.out.println("rep: " + rep);
@@ -334,8 +335,8 @@ public class NodeServer {
 
                     System.out.println("[gRPC] onError:" + throwable.getMessage() + " Remove it from the node.");
                     System.out.println(responseObserver);
-                    String uuid = removeClient(responseObserver);
-                    String line = "[DisconnectNotGrace] " + uuid;
+                    Address add = removeClient(responseObserver);
+                    String line = "[DisconnectNotGrace] " + add;
                     Message msg = new ObjectMessage(null, line);
                     msg.setFlagIfAbsent(Message.TransientFlag.DONT_LOOPBACK);
                     try {
@@ -352,16 +353,16 @@ public class NodeServer {
             };
         }
 
-        protected String removeClient(StreamObserver responseObserver){
+        protected Address removeClient(StreamObserver responseObserver){
 
             this.lock.lock();
             try{
-                for (String uuid:clients.keySet()) {
-                    if (clients.get(uuid) == responseObserver){
-                        clients.remove(uuid);
+                for (Address add:clients.keySet()) {
+                    if (clients.get(add) == responseObserver){
+                        clients.remove(add);
                         System.out.println("[gRPC] Found the error client, remove it from clients Map.");
-                        jchannel.disconnectClusterNoGraceful(uuid);
-                        return uuid;
+                        jchannel.disconnectClusterNoGraceful(add);
+                        return add;
                     }
 
                 }
@@ -379,8 +380,8 @@ public class NodeServer {
             responseObserver.onNext(askMsg);
             responseObserver.onCompleted();
         }
-        // add view
-        protected void join(ConnectReq req, StreamObserver<Response> responseObserver, String generated_address){
+
+        protected void join(ConnectReq req, StreamObserver<Response> responseObserver, Address generated_address, String generated_name){
             // 1. get lock
             lock.lock();
             // 2. critical section,
@@ -388,38 +389,31 @@ public class NodeServer {
                 /* add a new client to Map<uuid, responseObserver>
                  return a connect response
                  */
-                // using the uuid generated by client itself as key, responseObserver as server
-                clients.put(req.getSource(), responseObserver);
-                // Return connectRep to client
+                // using the generated Address by this JChannel-server as key, responseObserver as value
+                clients.put(generated_address, responseObserver);
+                // convert generated Address to byte and generate ConnectResponse
+                ByteArrayDataOutputStream outputStream = new ByteArrayDataOutputStream();
+                byte[] address_byte = null;
+                try {
+                    UUID u = (UUID) generated_address;
+                    u.writeTo(outputStream);
+                    address_byte = outputStream.buffer();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
                 ConnectRep joinResponse = ConnectRep.newBuilder()
                         .setResult(true)
-                        .setAddress(generated_address)
+                        .setAddress(ByteString.copyFrom(address_byte))
+                        .setLogicalName(generated_name)
                         .build();
                 Response rep = Response.newBuilder()
                         .setConnectResponse(joinResponse)
                         .build();
+                // return (send) the ConnectResponse to that JChannel-client
                 responseObserver.onNext(rep);
-                // String cluster, String JChannel_address, Address generated_address
+                // String cluster, Address JChannel_address, String generated_name
                 // <cluster, <uuid, JChanner_address>>
-                jchannel.connectCluster(req.getCluster(), req.getSource(), generated_address);
-
-            /*
-                // change: Add a server view
-                View view = jchannel.channel.getView();
-                ByteArrayDataOutputStream vOutStream = new ByteArrayDataOutputStream();
-                try {
-                    view.writeTo(vOutStream);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                byte[] v_byte = vOutStream.buffer();
-                ViewRep_server view_rep = ViewRep_server.newBuilder().setSender(jchannel.channel.address().toString()).setViewByte(ByteString.copyFrom(v_byte)).build();
-                Response rep_broView = Response.newBuilder().setViewRepServer(view_rep).build();
-                this.broadcastResponse(rep_broView);
-
-             */
-
-
+                jchannel.connectCluster(req.getCluster(), generated_address, generated_name);
 
                 // return response for updating the available servers
                 UpdateRep updateRep = UpdateRep.newBuilder()
@@ -430,7 +424,7 @@ public class NodeServer {
                         .build();
                 responseObserver.onNext(rep2);
 
-                // change: Add a server view
+                // Copy and send a JChannel-server View to the client
                 View view = jchannel.channel.getView();
                 ByteArrayDataOutputStream vOutStream = new ByteArrayDataOutputStream();
                 try {
@@ -476,10 +470,10 @@ public class NodeServer {
                             .build();
                 }
                 ClusterMap clusterObj = (ClusterMap) jchannel.serviceMap.get(req.getCluster());
-                for (String uuid : clients.keySet()){
-                    if (clusterObj.getMap().containsKey(uuid)){
-                        clients.get(uuid).onNext(rep);
-                        System.out.println("[gRPC] Send message to a JChannel-Client, " + clusterObj.getMap().get(uuid));
+                for (Address add : clients.keySet()){
+                    if (clusterObj.getMap().containsKey(add)){
+                        clients.get(add).onNext(rep);
+                        System.out.println("[gRPC] Send message to a JChannel-Client, " + clusterObj.getMap().get(add));
                     }
                 }
                 System.out.println("One broadcast for message successfully.");
@@ -495,7 +489,7 @@ public class NodeServer {
             lock.lock();
             try{
                 // Iteration of StreamObserver for broadcast message.
-                for (String u : clients.keySet()){
+                for (Address u : clients.keySet()){
                     clients.get(u).onNext(message);
                 }
             } finally {
@@ -509,11 +503,11 @@ public class NodeServer {
             try{
                 ClusterMap clusterObj = (ClusterMap) jchannel.serviceMap.get(msgCluster);
                 Response msg = Response.newBuilder().setStateMsg2(req).build();
-                for (String uuid : clients.keySet()){
-                    if (clusterObj.getMap().containsKey(uuid)){
-                        if (clusterObj.getMap().get(uuid).equals(msgDest)){
-                            clients.get(uuid).onNext(msg);
-                            System.out.println("[gRPC] Send a message for getState(target) result to a JChannel-Client, " + clusterObj.getMap().get(uuid));
+                for (Address add : clients.keySet()){
+                    if (clusterObj.getMap().containsKey(add)){
+                        if (clusterObj.getMap().get(add).equals(msgDest)){
+                            clients.get(add).onNext(msg);
+                            System.out.println("[gRPC] Send a message for getState(target) result to a JChannel-Client, " + clusterObj.getMap().get(add));
                         }
                     }
                 }
@@ -531,11 +525,11 @@ public class NodeServer {
             try{
                 ClusterMap clusterObj = (ClusterMap) jchannel.serviceMap.get(msgCluster);
                 Response msg = Response.newBuilder().setStateMsg1(req).build();
-                for (String uuid : clients.keySet()){
-                    if (clusterObj.getMap().containsKey(uuid)){
-                        if (clusterObj.getMap().get(uuid).equals(msgDest)){
-                            clients.get(uuid).onNext(msg);
-                            System.out.println("[gRPC] Send a message for getState(target) to a JChannel-Client, " + clusterObj.getMap().get(uuid));
+                for (Address add : clients.keySet()){
+                    if (clusterObj.getMap().containsKey(add)){
+                        if (clusterObj.getMap().get(add).equals(msgDest)){
+                            clients.get(add).onNext(msg);
+                            System.out.println("[gRPC] Send a message for getState(target) to a JChannel-Client, " + clusterObj.getMap().get(add));
                         }
                     }
                 }
@@ -577,11 +571,11 @@ public class NodeServer {
                 System.out.println(clusterObj.getMap());
                 System.out.println(msgDest);
                 System.out.println("----------");
-                for (String uuid : clients.keySet()){
-                    if (clusterObj.getMap().containsKey(uuid)){
-                        if (clusterObj.getMap().get(uuid).equals(msgDest)){
-                            clients.get(uuid).onNext(rep);
-                            System.out.println("[gRPC] Send message to a JChannel-Client, " + clusterObj.getMap().get(uuid));
+                for (Address add : clients.keySet()){
+                    if (clusterObj.getMap().containsKey(add)){
+                        if (clusterObj.getMap().get(add).equals(msgDest)){
+                            clients.get(add).onNext(rep);
+                            System.out.println("[gRPC] Send message to a JChannel-Client, " + clusterObj.getMap().get(add));
                         }
                     }
                 }
@@ -600,10 +594,10 @@ public class NodeServer {
                         .setViewResponse(videRep)
                         .build();
                 ClusterMap clusterObj = (ClusterMap) jchannel.serviceMap.get(cluster);
-                for (String uuid : clients.keySet()){
-                    if (clusterObj.getMap().containsKey(uuid)){
-                        clients.get(uuid).onNext(rep);
-                        System.out.println("Send view to a JChannel-Client, " + clusterObj.getMap().get(uuid));
+                for (Address add : clients.keySet()){
+                    if (clusterObj.getMap().containsKey(add)){
+                        clients.get(add).onNext(rep);
+                        System.out.println("Send view to a JChannel-Client, " + clusterObj.getMap().get(add));
                     }
                 }
                 System.out.println("One broadcast for view successfully.");

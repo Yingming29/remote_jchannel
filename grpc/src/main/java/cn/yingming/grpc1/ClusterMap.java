@@ -1,7 +1,13 @@
 package cn.yingming.grpc1;
 
+import com.google.protobuf.ByteString;
 import io.grpc.jchannelRpc.*;
+import org.jgroups.Address;
+import org.jgroups.View;
+import org.jgroups.ViewId;
+import org.jgroups.util.ByteArrayDataOutputStream;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,27 +16,27 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ClusterMap implements Serializable {
-    public ConcurrentHashMap<String, String> map;
+    public ConcurrentHashMap<Address, String> map;
     public int viewNum;
-    public String creator;
+    public Address creator;
     public ReentrantLock lock;
     // the members list with join order.
     public ArrayList orderList;
     // message history
     public LinkedList history;
-    public ClusterMap(String creator){
-        this.map = new ConcurrentHashMap<String, String>();
+    public ClusterMap(Address creator){
+        this.map = new ConcurrentHashMap<>();
         this.viewNum = 0;
         this.creator = creator;
         this.lock = new ReentrantLock();
-        this.orderList = new ArrayList<String>();
+        this.orderList = new ArrayList<Address>();
         this.history = new LinkedList<MessageRep>();
     }
     public ConcurrentHashMap getMap(){
         return this.map;
     }
 
-    public void removeClient(String uuid){
+    public void removeClient(Address uuid){
         String target = this.map.get(uuid);
         int index = orderList.indexOf(target);
         if (index != -1){
@@ -48,28 +54,31 @@ public class ClusterMap implements Serializable {
         viewNum ++;
     }
     // change
-    public String getCreator(){ return (String) this.orderList.get(0);}
+    public Address getCreator(){ return (Address) this.orderList.get(0);}
+    // generate a client view.
     public ViewRep generateView(){
-        ViewRep rep;
+        ViewRep view_rep = null;
         this.lock.lock();
         try{
-            rep = ViewRep.newBuilder()
-                    .setCreator(getCreator())
-                    .setViewNum(getViewNum())
-                    .setSize(this.orderList.size())
-                    .addAllOneAddress(this.orderList)
-                    .build();
+            ViewId viewId = new ViewId(getCreator(), getViewNum());
+            View view = new View(viewId, orderList);
+            ByteArrayDataOutputStream vOutStream = new ByteArrayDataOutputStream();
+            view.writeTo(vOutStream);
+            byte[] v_byte = vOutStream.buffer();
+            view_rep = ViewRep.newBuilder().setView(ByteString.copyFrom(v_byte)).build();
             addViewNum();
+        } catch (IOException e) {
+            e.printStackTrace();
         } finally {
             this.lock.unlock();
         }
-        return rep;
+        return view_rep;
     }
     public ArrayList getList(){
         return this.orderList;
     }
 
-    public void addMember(String address){
+    public void addMember(Address address){
         lock.lock();
         try{
             if (!this.orderList.contains(address)){

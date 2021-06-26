@@ -14,14 +14,32 @@ public interface ConnectRepOrBuilder extends
   boolean getResult();
 
   /**
-   * <code>string address = 2;</code>
+   * <pre>
+   * generated Address object's byte
+   * </pre>
+   *
+   * <code>bytes address = 2;</code>
    * @return The address.
    */
-  java.lang.String getAddress();
+  com.google.protobuf.ByteString getAddress();
+
   /**
-   * <code>string address = 2;</code>
-   * @return The bytes for address.
+   * <pre>
+   * generated Address 'logical name
+   * </pre>
+   *
+   * <code>string logical_name = 3;</code>
+   * @return The logicalName.
+   */
+  java.lang.String getLogicalName();
+  /**
+   * <pre>
+   * generated Address 'logical name
+   * </pre>
+   *
+   * <code>string logical_name = 3;</code>
+   * @return The bytes for logicalName.
    */
   com.google.protobuf.ByteString
-      getAddressBytes();
+      getLogicalNameBytes();
 }

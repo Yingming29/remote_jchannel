@@ -78,12 +78,13 @@ public class NodeJChannel implements Receiver{
                 ConnectReq conReq = req.getConnectRequest();
                 System.out.println("[JChannel] Receive a shared connect() request for updating th cluster information.");
                 System.out.println("here:" + conReq);
+
                 // change: After the server receive the connect() result, it generate a
-                connectCluster(conReq.getCluster(), conReq.getSource(), conReq.getJchannelAddress());
+                connectCluster(conReq.getCluster(), UUID.fromString(conReq.getJchannelAddress()), conReq.getLogicalName());
             } else if (req.hasDisconnectRequest()){
                 DisconnectReq disReq = req.getDisconnectRequest();
                 System.out.println("[JChannel] Receive a shared disconnect() request for updating th cluster information.");
-                disconnectCluster(disReq.getCluster(), disReq.getJchannelAddress(), disReq.getSource());
+                disconnectCluster(disReq.getCluster(), UUID.fromString(disReq.getJchannelAddress()));
             } else if (req.hasMessageRequest()){
                 MessageReq msgReq = req.getMessageRequest();
                 if (msgReq.getDestination().equals("")){
@@ -159,7 +160,7 @@ public class NodeJChannel implements Receiver{
             } else if (msgStr.startsWith("[DisconnectNotGrace]")){
                 String[] strs = msgStr.split(" ");
                 System.out.println("[JChannel] Receive a shared not graceful disconnect() request for updating th cluster information.");
-                disconnectClusterNoGraceful(strs[1]);
+                disconnectClusterNoGraceful(UUID.fromString(strs[1]));
             }
         }
     }
@@ -272,21 +273,21 @@ public class NodeJChannel implements Receiver{
         }
     }
     // add view action and forward
-    public void connectCluster(String cluster, String uuid, String JChannel_address){
+    public void connectCluster(String cluster, Address address, String name){
         lock.lock();
         try{
             // create the cluster or connect an existing cluster.
             if (serviceMap.containsKey(cluster)){
-                System.out.println(JChannel_address + " connects to the existing cluster: " + cluster);
+                System.out.println(address + "(" +  name + ") connects to the existing cluster: " + cluster);
                 ClusterMap clusterObj = (ClusterMap) serviceMap.get(cluster);
-                clusterObj.getMap().put(uuid, JChannel_address);
-                clusterObj.addMember(JChannel_address);
+                clusterObj.getMap().put(address, name);
+                clusterObj.addMember(address);
             } else{
-                System.out.println(JChannel_address + " connects to a new cluster: " + cluster);
+                System.out.println(address + "(" +  name + ") connects to a new cluster: " + cluster);
                 // create new cluster object and set it as the creator
-                ClusterMap clusterObj = new ClusterMap(JChannel_address);
-                clusterObj.getMap().put(uuid, JChannel_address);
-                clusterObj.addMember(JChannel_address);
+                ClusterMap clusterObj = new ClusterMap(address);
+                clusterObj.getMap().put(address, name);
+                clusterObj.addMember(address);
                 // put into serviceMap
                 serviceMap.put(cluster, clusterObj);
             }
@@ -300,17 +301,18 @@ public class NodeJChannel implements Receiver{
         }
     }
     // add view action and forward
-    public void disconnectCluster(String cluster, String JChannel_address, String uuid){
+    public void disconnectCluster(String cluster, Address address){
         lock.lock();
         try{
             ClusterMap m = (ClusterMap) serviceMap.get(cluster);
-            if (m.getMap().size() == 1 && m.getMap().get(uuid).equals(JChannel_address)){
+            if (m.getMap().size() == 1 && m.getMap().get(address) != null){
                 serviceMap.remove(cluster);
                 System.out.println("The last JChannel-Client quits and deletes the cluster, " + cluster);
             } else if (m.getMap().size() > 1){
-                m.removeClient(uuid);
-                m.getMap().remove(uuid);
-                System.out.println(JChannel_address + " quits " + cluster);
+                m.removeClient(address);
+                // change?
+                m.getMap().remove(address);
+                System.out.println(address + " quits " + cluster);
                 ClusterMap clusterObj = (ClusterMap) serviceMap.get(cluster);
                 ViewRep viewRep= clusterObj.generateView();
                 this.service.broadcastView(viewRep, cluster);
@@ -321,7 +323,7 @@ public class NodeJChannel implements Receiver{
         }
     }
 
-    public void disconnectClusterNoGraceful(String uuid){
+    public void disconnectClusterNoGraceful(Address uuid){
         this.lock.lock();
         try{
             for (Object cluster: serviceMap.keySet()) {

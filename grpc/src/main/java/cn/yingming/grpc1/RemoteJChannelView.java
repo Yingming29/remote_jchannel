@@ -22,20 +22,6 @@ public class RemoteJChannelView {
         return this.coordinator;
     }
     // update the local view, members, num and coordinator
-    public void updateView(ViewRep view){
-        LinkedList l = new LinkedList();
-        l.addAll(view.getOneAddressList());
-        ReentrantLock lock = new ReentrantLock();
-        lock.lock();
-        try{
-            this.setMembers(l);
-            this.setCoordinator(view.getCreator());
-            this.setNum(view.getViewNum());
-            // System.out.println("updateView() of RemoteJChannelView.");
-        } finally {
-            lock.unlock();
-        }
-    }
 
     public void setMembers(LinkedList new_members){
         this.members = new_members;

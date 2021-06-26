@@ -50,8 +50,7 @@ public class RemoteJChannelStub {
             if (input.equals("disconnect")) {
                 // disconnect request
                 DisconnectReq msgReq = DisconnectReq.newBuilder()
-                        .setSource(this.client.uuid)
-                        .setJchannelAddress(this.client.jchannel_address.toString())
+                        .setJchannelAddress(this.client.uuid)
                         .setCluster(this.client.cluster)
                         .setTimestamp(dft.format(d))
                         .build();
@@ -200,9 +199,15 @@ public class RemoteJChannelStub {
         } else {
             this.stubLock.lock();
             try {
-                this.client.jchannel_address = UUID.fromString(connectRep.getAddress());
+                UUID u = new UUID();
+                ByteArrayDataInputStream in = new ByteArrayDataInputStream(connectRep.getAddress().toByteArray());
+                u.readFrom(in);
+                this.client.jchannel_address = u;
+                this.client.uuid = u.toString();
                 client.isWork.set(true);
                 client.down.set(true);
+            } catch (IOException e) {
+                e.printStackTrace();
             } finally {
                 this.stubLock.unlock();
             }
@@ -312,16 +317,25 @@ public class RemoteJChannelStub {
 
         } else if (response.hasViewResponse()) {
             ViewRep view = response.getViewResponse();
-
-            this.client.view.updateView(view);
-            // add 1 view num in the record stats
+            ByteArrayDataInputStream v_in = new ByteArrayDataInputStream(view.getView().toByteArray());
+            View new_view = new View();
+            stubLock.lock();
+            try {
+                new_view.readFrom(v_in);
+            } catch (Exception e){
+                this.client.view = new_view;
+                e.printStackTrace();
+            } finally {
+                stubLock.unlock();
+            }
+            // cheng :  remove the stats and discardOwnMessage on the JChannel Client //////////add 1 view num in the record stats
             if (this.client.stats) {
                 this.client.stats_obj.addViewSize();
             }
             // change:  add receiver of remote// viewAccepted
             if (this.client.receiver != null) {
                 try {
-                    this.client.receiver.viewAcceptedRJ(view);
+                    this.client.receiver.viewAcceptedRJ(new_view);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -475,7 +489,6 @@ public class RemoteJChannelStub {
         SimpleDateFormat dft = new SimpleDateFormat("hh:mm:ss");
         // connect() request
         ConnectReq joinReq = ConnectReq.newBuilder()
-                .setSource(client.uuid)
                 .setCluster(client.cluster)
                 .setTimestamp(dft.format(d))
                 .build();
@@ -490,9 +503,8 @@ public class RemoteJChannelStub {
         SimpleDateFormat dft = new SimpleDateFormat("hh:mm:ss");
         // connect() request
         ConnectReq joinReq = ConnectReq.newBuilder()
-                .setSource(client.uuid)
                 .setCluster(client.cluster)
-                .setJchannelAddress(client.jchannel_address.toString())
+                .setJchannelAddress(client.uuid)
                 .setReconnect(true)
                 .setTimestamp(dft.format(d))
                 .build();

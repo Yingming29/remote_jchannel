@@ -30,11 +30,9 @@ public class ReceiverRJ implements Receiver {
         }
     }
 
-    public void viewAcceptedRJ(ViewRep view) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("** view: [").append(view.getCreator()).append("|").append(view.getViewNum())
-                .append("] (").append(view.getSize()).append(")").append(view.getOneAddressList());
-        System.out.println(sb);
+    public void viewAcceptedRJ(View new_view) {
+        System.out.println("** Client View: " + new_view);
+
     }
 
     public LinkedList getStateRJ(){

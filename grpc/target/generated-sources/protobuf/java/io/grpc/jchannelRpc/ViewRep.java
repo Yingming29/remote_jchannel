@@ -16,8 +16,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private ViewRep() {
-    creator_ = "";
-    oneAddress_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    view_ = com.google.protobuf.ByteString.EMPTY;
   }
 
   @java.lang.Override
@@ -40,7 +39,6 @@ private static final long serialVersionUID = 0L;
     if (extensionRegistry == null) {
       throw new java.lang.NullPointerException();
     }
-    int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
         com.google.protobuf.UnknownFieldSet.newBuilder();
     try {
@@ -52,28 +50,8 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
 
-            creator_ = s;
-            break;
-          }
-          case 16: {
-
-            viewNum_ = input.readInt32();
-            break;
-          }
-          case 24: {
-
-            size_ = input.readInt32();
-            break;
-          }
-          case 34: {
-            java.lang.String s = input.readStringRequireUtf8();
-            if (!((mutable_bitField0_ & 0x00000001) != 0)) {
-              oneAddress_ = new com.google.protobuf.LazyStringArrayList();
-              mutable_bitField0_ |= 0x00000001;
-            }
-            oneAddress_.add(s);
+            view_ = input.readBytes();
             break;
           }
           default: {
@@ -91,9 +69,6 @@ private static final long serialVersionUID = 0L;
       throw new com.google.protobuf.InvalidProtocolBufferException(
           e).setUnfinishedMessage(this);
     } finally {
-      if (((mutable_bitField0_ & 0x00000001) != 0)) {
-        oneAddress_ = oneAddress_.getUnmodifiableView();
-      }
       this.unknownFields = unknownFields.build();
       makeExtensionsImmutable();
     }
@@ -111,99 +86,15 @@ private static final long serialVersionUID = 0L;
             io.grpc.jchannelRpc.ViewRep.class, io.grpc.jchannelRpc.ViewRep.Builder.class);
   }
 
-  public static final int CREATOR_FIELD_NUMBER = 1;
-  private volatile java.lang.Object creator_;
+  public static final int VIEW_FIELD_NUMBER = 1;
+  private com.google.protobuf.ByteString view_;
   /**
-   * <code>string creator = 1;</code>
-   * @return The creator.
+   * <code>bytes view = 1;</code>
+   * @return The view.
    */
   @java.lang.Override
-  public java.lang.String getCreator() {
-    java.lang.Object ref = creator_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      creator_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string creator = 1;</code>
-   * @return The bytes for creator.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getCreatorBytes() {
-    java.lang.Object ref = creator_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      creator_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int VIEWNUM_FIELD_NUMBER = 2;
-  private int viewNum_;
-  /**
-   * <code>int32 viewNum = 2;</code>
-   * @return The viewNum.
-   */
-  @java.lang.Override
-  public int getViewNum() {
-    return viewNum_;
-  }
-
-  public static final int SIZE_FIELD_NUMBER = 3;
-  private int size_;
-  /**
-   * <code>int32 size = 3;</code>
-   * @return The size.
-   */
-  @java.lang.Override
-  public int getSize() {
-    return size_;
-  }
-
-  public static final int ONEADDRESS_FIELD_NUMBER = 4;
-  private com.google.protobuf.LazyStringList oneAddress_;
-  /**
-   * <code>repeated string oneAddress = 4;</code>
-   * @return A list containing the oneAddress.
-   */
-  public com.google.protobuf.ProtocolStringList
-      getOneAddressList() {
-    return oneAddress_;
-  }
-  /**
-   * <code>repeated string oneAddress = 4;</code>
-   * @return The count of oneAddress.
-   */
-  public int getOneAddressCount() {
-    return oneAddress_.size();
-  }
-  /**
-   * <code>repeated string oneAddress = 4;</code>
-   * @param index The index of the element to return.
-   * @return The oneAddress at the given index.
-   */
-  public java.lang.String getOneAddress(int index) {
-    return oneAddress_.get(index);
-  }
-  /**
-   * <code>repeated string oneAddress = 4;</code>
-   * @param index The index of the value to return.
-   * @return The bytes of the oneAddress at the given index.
-   */
-  public com.google.protobuf.ByteString
-      getOneAddressBytes(int index) {
-    return oneAddress_.getByteString(index);
+  public com.google.protobuf.ByteString getView() {
+    return view_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -220,17 +111,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getCreatorBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, creator_);
-    }
-    if (viewNum_ != 0) {
-      output.writeInt32(2, viewNum_);
-    }
-    if (size_ != 0) {
-      output.writeInt32(3, size_);
-    }
-    for (int i = 0; i < oneAddress_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, oneAddress_.getRaw(i));
+    if (!view_.isEmpty()) {
+      output.writeBytes(1, view_);
     }
     unknownFields.writeTo(output);
   }
@@ -241,24 +123,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getCreatorBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, creator_);
-    }
-    if (viewNum_ != 0) {
+    if (!view_.isEmpty()) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(2, viewNum_);
-    }
-    if (size_ != 0) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(3, size_);
-    }
-    {
-      int dataSize = 0;
-      for (int i = 0; i < oneAddress_.size(); i++) {
-        dataSize += computeStringSizeNoTag(oneAddress_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getOneAddressList().size();
+        .computeBytesSize(1, view_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -275,14 +142,8 @@ private static final long serialVersionUID = 0L;
     }
     io.grpc.jchannelRpc.ViewRep other = (io.grpc.jchannelRpc.ViewRep) obj;
 
-    if (!getCreator()
-        .equals(other.getCreator())) return false;
-    if (getViewNum()
-        != other.getViewNum()) return false;
-    if (getSize()
-        != other.getSize()) return false;
-    if (!getOneAddressList()
-        .equals(other.getOneAddressList())) return false;
+    if (!getView()
+        .equals(other.getView())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -294,16 +155,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + CREATOR_FIELD_NUMBER;
-    hash = (53 * hash) + getCreator().hashCode();
-    hash = (37 * hash) + VIEWNUM_FIELD_NUMBER;
-    hash = (53 * hash) + getViewNum();
-    hash = (37 * hash) + SIZE_FIELD_NUMBER;
-    hash = (53 * hash) + getSize();
-    if (getOneAddressCount() > 0) {
-      hash = (37 * hash) + ONEADDRESS_FIELD_NUMBER;
-      hash = (53 * hash) + getOneAddressList().hashCode();
-    }
+    hash = (37 * hash) + VIEW_FIELD_NUMBER;
+    hash = (53 * hash) + getView().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -437,14 +290,8 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      creator_ = "";
+      view_ = com.google.protobuf.ByteString.EMPTY;
 
-      viewNum_ = 0;
-
-      size_ = 0;
-
-      oneAddress_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000001);
       return this;
     }
 
@@ -471,15 +318,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public io.grpc.jchannelRpc.ViewRep buildPartial() {
       io.grpc.jchannelRpc.ViewRep result = new io.grpc.jchannelRpc.ViewRep(this);
-      int from_bitField0_ = bitField0_;
-      result.creator_ = creator_;
-      result.viewNum_ = viewNum_;
-      result.size_ = size_;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        oneAddress_ = oneAddress_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000001);
-      }
-      result.oneAddress_ = oneAddress_;
+      result.view_ = view_;
       onBuilt();
       return result;
     }
@@ -528,25 +367,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(io.grpc.jchannelRpc.ViewRep other) {
       if (other == io.grpc.jchannelRpc.ViewRep.getDefaultInstance()) return this;
-      if (!other.getCreator().isEmpty()) {
-        creator_ = other.creator_;
-        onChanged();
-      }
-      if (other.getViewNum() != 0) {
-        setViewNum(other.getViewNum());
-      }
-      if (other.getSize() != 0) {
-        setSize(other.getSize());
-      }
-      if (!other.oneAddress_.isEmpty()) {
-        if (oneAddress_.isEmpty()) {
-          oneAddress_ = other.oneAddress_;
-          bitField0_ = (bitField0_ & ~0x00000001);
-        } else {
-          ensureOneAddressIsMutable();
-          oneAddress_.addAll(other.oneAddress_);
-        }
-        onChanged();
+      if (other.getView() != com.google.protobuf.ByteString.EMPTY) {
+        setView(other.getView());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -576,252 +398,37 @@ private static final long serialVersionUID = 0L;
       }
       return this;
     }
-    private int bitField0_;
 
-    private java.lang.Object creator_ = "";
+    private com.google.protobuf.ByteString view_ = com.google.protobuf.ByteString.EMPTY;
     /**
-     * <code>string creator = 1;</code>
-     * @return The creator.
+     * <code>bytes view = 1;</code>
+     * @return The view.
      */
-    public java.lang.String getCreator() {
-      java.lang.Object ref = creator_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        creator_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    @java.lang.Override
+    public com.google.protobuf.ByteString getView() {
+      return view_;
     }
     /**
-     * <code>string creator = 1;</code>
-     * @return The bytes for creator.
-     */
-    public com.google.protobuf.ByteString
-        getCreatorBytes() {
-      java.lang.Object ref = creator_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        creator_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string creator = 1;</code>
-     * @param value The creator to set.
+     * <code>bytes view = 1;</code>
+     * @param value The view to set.
      * @return This builder for chaining.
      */
-    public Builder setCreator(
-        java.lang.String value) {
+    public Builder setView(com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      creator_ = value;
+      view_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string creator = 1;</code>
+     * <code>bytes view = 1;</code>
      * @return This builder for chaining.
      */
-    public Builder clearCreator() {
+    public Builder clearView() {
       
-      creator_ = getDefaultInstance().getCreator();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string creator = 1;</code>
-     * @param value The bytes for creator to set.
-     * @return This builder for chaining.
-     */
-    public Builder setCreatorBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      creator_ = value;
-      onChanged();
-      return this;
-    }
-
-    private int viewNum_ ;
-    /**
-     * <code>int32 viewNum = 2;</code>
-     * @return The viewNum.
-     */
-    @java.lang.Override
-    public int getViewNum() {
-      return viewNum_;
-    }
-    /**
-     * <code>int32 viewNum = 2;</code>
-     * @param value The viewNum to set.
-     * @return This builder for chaining.
-     */
-    public Builder setViewNum(int value) {
-      
-      viewNum_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>int32 viewNum = 2;</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearViewNum() {
-      
-      viewNum_ = 0;
-      onChanged();
-      return this;
-    }
-
-    private int size_ ;
-    /**
-     * <code>int32 size = 3;</code>
-     * @return The size.
-     */
-    @java.lang.Override
-    public int getSize() {
-      return size_;
-    }
-    /**
-     * <code>int32 size = 3;</code>
-     * @param value The size to set.
-     * @return This builder for chaining.
-     */
-    public Builder setSize(int value) {
-      
-      size_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>int32 size = 3;</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearSize() {
-      
-      size_ = 0;
-      onChanged();
-      return this;
-    }
-
-    private com.google.protobuf.LazyStringList oneAddress_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-    private void ensureOneAddressIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
-        oneAddress_ = new com.google.protobuf.LazyStringArrayList(oneAddress_);
-        bitField0_ |= 0x00000001;
-       }
-    }
-    /**
-     * <code>repeated string oneAddress = 4;</code>
-     * @return A list containing the oneAddress.
-     */
-    public com.google.protobuf.ProtocolStringList
-        getOneAddressList() {
-      return oneAddress_.getUnmodifiableView();
-    }
-    /**
-     * <code>repeated string oneAddress = 4;</code>
-     * @return The count of oneAddress.
-     */
-    public int getOneAddressCount() {
-      return oneAddress_.size();
-    }
-    /**
-     * <code>repeated string oneAddress = 4;</code>
-     * @param index The index of the element to return.
-     * @return The oneAddress at the given index.
-     */
-    public java.lang.String getOneAddress(int index) {
-      return oneAddress_.get(index);
-    }
-    /**
-     * <code>repeated string oneAddress = 4;</code>
-     * @param index The index of the value to return.
-     * @return The bytes of the oneAddress at the given index.
-     */
-    public com.google.protobuf.ByteString
-        getOneAddressBytes(int index) {
-      return oneAddress_.getByteString(index);
-    }
-    /**
-     * <code>repeated string oneAddress = 4;</code>
-     * @param index The index to set the value at.
-     * @param value The oneAddress to set.
-     * @return This builder for chaining.
-     */
-    public Builder setOneAddress(
-        int index, java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureOneAddressIsMutable();
-      oneAddress_.set(index, value);
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>repeated string oneAddress = 4;</code>
-     * @param value The oneAddress to add.
-     * @return This builder for chaining.
-     */
-    public Builder addOneAddress(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureOneAddressIsMutable();
-      oneAddress_.add(value);
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>repeated string oneAddress = 4;</code>
-     * @param values The oneAddress to add.
-     * @return This builder for chaining.
-     */
-    public Builder addAllOneAddress(
-        java.lang.Iterable<java.lang.String> values) {
-      ensureOneAddressIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(
-          values, oneAddress_);
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>repeated string oneAddress = 4;</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearOneAddress() {
-      oneAddress_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>repeated string oneAddress = 4;</code>
-     * @param value The bytes of the oneAddress to add.
-     * @return This builder for chaining.
-     */
-    public Builder addOneAddressBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      ensureOneAddressIsMutable();
-      oneAddress_.add(value);
+      view_ = getDefaultInstance().getView();
       onChanged();
       return this;
     }

@@ -31,7 +31,7 @@ public class RemoteJChannel extends JChannel {
     public ArrayList msgList;
     public RemoteJChannelStub clientStub;
     public AtomicBoolean down;
-    public RemoteJChannelView view;
+    public View view;
     public View remoteView;
     // whether receive message of itself
     public boolean discard_own_messages;
@@ -46,7 +46,7 @@ public class RemoteJChannel extends JChannel {
     public RemoteJChannel(String name, String address) throws Exception{
         this.address = address;
         // as the source of the RemoteJChannel
-        this.uuid = UUID.randomUUID().toString();
+        this.uuid = null;
         this.name = name;
         this.cluster = null;
         this.msgList = new ArrayList<Object>();
@@ -54,7 +54,7 @@ public class RemoteJChannel extends JChannel {
         this.jchannel_address = null;
         this.real_jchannel_address = null;
         this.clientStub = null;
-        this.view = new RemoteJChannelView();
+        this.view = null;
         // whether the grpc connection work
         this.isWork = new AtomicBoolean(false);
         // whether shutdown the RemoteJChannel
@@ -173,11 +173,11 @@ public class RemoteJChannel extends JChannel {
                 "Please use new method remoteJChannelView().");
     }
 
-    public RemoteJChannelView getRemoteJChannelView(){
+    public View getRemoteJChannelView(){
         return this.remoteJChannelView();
     }
 
-    public RemoteJChannelView remoteJChannelView(){
+    public View remoteJChannelView(){
         return this.isWork.get() ? this.view : null;
     }
 
@@ -796,8 +796,8 @@ public class RemoteJChannel extends JChannel {
         throw new UnsupportedOperationException("RemoteJChannel does not support this method. " +
                 "Please use determineCoordinatorRJ().");
     }
-    protected String determineCoordinatorRJ() {
-        return this.view != null ? this.view.getCoordinator() : null;
+    protected Address determineCoordinatorRJ() {
+        return this.view != null ? this.view.getCoord() : null;
     }
     @Override
     protected JChannel notifyChannelConnected(JChannel c) {

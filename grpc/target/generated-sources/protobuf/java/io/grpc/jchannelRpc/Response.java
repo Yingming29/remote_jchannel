@@ -451,6 +451,10 @@ private static final long serialVersionUID = 0L;
 
   public static final int VIEWRESPONSE_FIELD_NUMBER = 5;
   /**
+   * <pre>
+   *  client view
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
    * @return Whether the viewResponse field is set.
    */
@@ -459,6 +463,10 @@ private static final long serialVersionUID = 0L;
     return oneTypeCase_ == 5;
   }
   /**
+   * <pre>
+   *  client view
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
    * @return The viewResponse.
    */
@@ -470,6 +478,10 @@ private static final long serialVersionUID = 0L;
     return io.grpc.jchannelRpc.ViewRep.getDefaultInstance();
   }
   /**
+   * <pre>
+   *  client view
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
    */
   @java.lang.Override
@@ -699,6 +711,10 @@ private static final long serialVersionUID = 0L;
 
   public static final int VIEWREP_SERVER_FIELD_NUMBER = 13;
   /**
+   * <pre>
+   * server view
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
    * @return Whether the viewRepServer field is set.
    */
@@ -707,6 +723,10 @@ private static final long serialVersionUID = 0L;
     return oneTypeCase_ == 13;
   }
   /**
+   * <pre>
+   * server view
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
    * @return The viewRepServer.
    */
@@ -718,6 +738,10 @@ private static final long serialVersionUID = 0L;
     return io.grpc.jchannelRpc.ViewRep_server.getDefaultInstance();
   }
   /**
+   * <pre>
+   * server view
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
    */
   @java.lang.Override
@@ -1950,6 +1974,10 @@ private static final long serialVersionUID = 0L;
     private com.google.protobuf.SingleFieldBuilderV3<
         io.grpc.jchannelRpc.ViewRep, io.grpc.jchannelRpc.ViewRep.Builder, io.grpc.jchannelRpc.ViewRepOrBuilder> viewResponseBuilder_;
     /**
+     * <pre>
+     *  client view
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
      * @return Whether the viewResponse field is set.
      */
@@ -1958,6 +1986,10 @@ private static final long serialVersionUID = 0L;
       return oneTypeCase_ == 5;
     }
     /**
+     * <pre>
+     *  client view
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
      * @return The viewResponse.
      */
@@ -1976,6 +2008,10 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
+     * <pre>
+     *  client view
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
      */
     public Builder setViewResponse(io.grpc.jchannelRpc.ViewRep value) {
@@ -1992,6 +2028,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     *  client view
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
      */
     public Builder setViewResponse(
@@ -2006,6 +2046,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     *  client view
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
      */
     public Builder mergeViewResponse(io.grpc.jchannelRpc.ViewRep value) {
@@ -2028,6 +2072,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     *  client view
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
      */
     public Builder clearViewResponse() {
@@ -2047,12 +2095,20 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     *  client view
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
      */
     public io.grpc.jchannelRpc.ViewRep.Builder getViewResponseBuilder() {
       return getViewResponseFieldBuilder().getBuilder();
     }
     /**
+     * <pre>
+     *  client view
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
      */
     @java.lang.Override
@@ -2067,6 +2123,10 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
+     * <pre>
+     *  client view
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
@@ -3078,6 +3138,10 @@ private static final long serialVersionUID = 0L;
     private com.google.protobuf.SingleFieldBuilderV3<
         io.grpc.jchannelRpc.ViewRep_server, io.grpc.jchannelRpc.ViewRep_server.Builder, io.grpc.jchannelRpc.ViewRep_serverOrBuilder> viewRepServerBuilder_;
     /**
+     * <pre>
+     * server view
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
      * @return Whether the viewRepServer field is set.
      */
@@ -3086,6 +3150,10 @@ private static final long serialVersionUID = 0L;
       return oneTypeCase_ == 13;
     }
     /**
+     * <pre>
+     * server view
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
      * @return The viewRepServer.
      */
@@ -3104,6 +3172,10 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
+     * <pre>
+     * server view
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
      */
     public Builder setViewRepServer(io.grpc.jchannelRpc.ViewRep_server value) {
@@ -3120,6 +3192,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * server view
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
      */
     public Builder setViewRepServer(
@@ -3134,6 +3210,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * server view
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
      */
     public Builder mergeViewRepServer(io.grpc.jchannelRpc.ViewRep_server value) {
@@ -3156,6 +3236,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * server view
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
      */
     public Builder clearViewRepServer() {
@@ -3175,12 +3259,20 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * server view
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
      */
     public io.grpc.jchannelRpc.ViewRep_server.Builder getViewRepServerBuilder() {
       return getViewRepServerFieldBuilder().getBuilder();
     }
     /**
+     * <pre>
+     * server view
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
      */
     @java.lang.Override
@@ -3195,6 +3287,10 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
+     * <pre>
+     * server view
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
