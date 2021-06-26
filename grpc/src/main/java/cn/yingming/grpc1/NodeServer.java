@@ -12,6 +12,7 @@ import org.jgroups.util.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -128,8 +129,10 @@ public class NodeServer {
                                 .build();
                         Request reqForward = Request.newBuilder().setConnectRequest(conReqWithAddress).build();
                         forwardMsg(reqForward);
-                        // 4. stor the generated Address and logcial to this node's NameCache
+                        // 4. store the generated Address and logcial to this node's NameCache
                         NameCache.add(generated_address, generated_name);
+                        // 5. update the current NameCache to the client
+
                     /*  Condition2
                         Receive the disconnect() request.
                      */
@@ -482,6 +485,19 @@ public class NodeServer {
             } finally {
                 lock.unlock();
             }
+        }
+
+        protected void updateNameCache(StreamObserver observer){
+            lock.lock();
+            try{
+                Map m = NameCache.getContents();
+                UpdateNameCacheRep.Builder builder = UpdateNameCacheRep.newBuilder();
+
+
+            } finally {
+                lock.unlock();
+            }
+
         }
 
         // Broadcast the messages for updating addresses of servers

@@ -30,17 +30,22 @@ message Response{
     MessageRep messageResponse = 1;
     ConnectRep connectResponse = 2;
     DisconnectRep disconnectResponse = 3;
-    UpdateRep updateResponse = 4;
-    ViewRep viewResponse = 5;   //  client view
-    StateRep stateRep = 6;
-    StateMsg_withTarget_1 stateMsg1 = 7;
-    StateMsg_withTarget_2 stateMsg2 = 8;
-    GetAddressRep getAddressRep = 9;
-    GetNameRep getNameRep = 10;
-    GetClusterNameRep getClusterNameRep = 11;
-    PrintProtocolSpecRep printProtoRep = 12;
-    ViewRep_server viewRep_server = 13;   // server view
+    UpdateRep updateResponse = 4;  // update available grpc addresses of nodes
+    ViewRep viewResponse = 5;   //  JChannel-client view
+    ViewRep_server viewRep_server = 6;   // JChannel-server view
+    UpdateNameCacheRep updateNameCache = 7;  // update the NameCache of JChannel-server
+    StateRep stateRep = 8;
+    StateMsg_withTarget_1 stateMsg1 = 9;
+    StateMsg_withTarget_2 stateMsg2 = 10;
+    GetAddressRep getAddressRep = 11;
+    GetNameRep getNameRep = 12;
+    GetClusterNameRep getClusterNameRep = 13;
+    PrintProtocolSpecRep printProtoRep = 14;
   }
+}
+message UpdateNameCacheRep{
+  repeated bytes address = 1;
+  repeated string logical_name = 2;
 }
 message PrintProtocolSpecReq{
   string source = 1;

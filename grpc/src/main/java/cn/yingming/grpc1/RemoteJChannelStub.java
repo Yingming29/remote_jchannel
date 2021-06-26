@@ -5,8 +5,10 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.jchannelRpc.*;
 import io.grpc.stub.StreamObserver;
+import org.jgroups.Address;
 import org.jgroups.View;
 import org.jgroups.util.ByteArrayDataInputStream;
+import org.jgroups.util.NameCache;
 import org.jgroups.util.UUID;
 
 import java.io.IOException;
@@ -202,10 +204,14 @@ public class RemoteJChannelStub {
                 UUID u = new UUID();
                 ByteArrayDataInputStream in = new ByteArrayDataInputStream(connectRep.getAddress().toByteArray());
                 u.readFrom(in);
+                // three properties:
                 this.client.jchannel_address = u;
                 this.client.uuid = u.toString();
+                this.client.name = connectRep.getLogicalName();
                 client.isWork.set(true);
                 client.down.set(true);
+                NameCache.add(this.client.jchannel_address, this.client.name);
+                System.out.println("setGeneratedAddress() prints NameCache: " + NameCache.printCache());
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {

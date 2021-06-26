@@ -1,12 +1,15 @@
 package cn.yingming.grpc1;
 
 import io.grpc.jchannelRpc.MessageReq;
+import io.grpc.jchannelRpc.UpdateNameCacheRep;
 import org.jgroups.*;
 import org.jgroups.util.*;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class Test {
 
@@ -67,16 +70,23 @@ public class Test {
 
         View v2 = new View();
 
-        MessageReq msg = MessageReq.newBuilder().setContent(null).build();
-        System.out.println(msg);
 
         Address add1 = UUID.randomUUID();
+        Address add2 = UUID.randomUUID();
+        Address add3 = UUID.randomUUID();
         String add1_str = add1.toString();
         NameCache.add(add1 , "add1 string");
-        Address add2 = UUID.fromString(add1_str);
-        if (add1.equals(add2)){
-            System.out.println(true);
+        NameCache.add(add2 , "add1 string");
+        NameCache.add(add3 , "add1 string");
+        Address add1_compare = UUID.fromString(add1_str);
+        if (add1.equals(add1_compare)){
+            System.out.println("Address equal:? " + true);
         }
+
+        UpdateNameCacheRep.Builder builder = UpdateNameCacheRep.newBuilder();
+        Map m = NameCache.getContents();
+
+
 
     }
 }

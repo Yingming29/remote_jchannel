@@ -119,106 +119,8 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 50: {
-            io.grpc.jchannelRpc.StateRep.Builder subBuilder = null;
-            if (oneTypeCase_ == 6) {
-              subBuilder = ((io.grpc.jchannelRpc.StateRep) oneType_).toBuilder();
-            }
-            oneType_ =
-                input.readMessage(io.grpc.jchannelRpc.StateRep.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom((io.grpc.jchannelRpc.StateRep) oneType_);
-              oneType_ = subBuilder.buildPartial();
-            }
-            oneTypeCase_ = 6;
-            break;
-          }
-          case 58: {
-            io.grpc.jchannelRpc.StateMsg_withTarget_1.Builder subBuilder = null;
-            if (oneTypeCase_ == 7) {
-              subBuilder = ((io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_).toBuilder();
-            }
-            oneType_ =
-                input.readMessage(io.grpc.jchannelRpc.StateMsg_withTarget_1.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom((io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_);
-              oneType_ = subBuilder.buildPartial();
-            }
-            oneTypeCase_ = 7;
-            break;
-          }
-          case 66: {
-            io.grpc.jchannelRpc.StateMsg_withTarget_2.Builder subBuilder = null;
-            if (oneTypeCase_ == 8) {
-              subBuilder = ((io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_).toBuilder();
-            }
-            oneType_ =
-                input.readMessage(io.grpc.jchannelRpc.StateMsg_withTarget_2.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom((io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_);
-              oneType_ = subBuilder.buildPartial();
-            }
-            oneTypeCase_ = 8;
-            break;
-          }
-          case 74: {
-            io.grpc.jchannelRpc.GetAddressRep.Builder subBuilder = null;
-            if (oneTypeCase_ == 9) {
-              subBuilder = ((io.grpc.jchannelRpc.GetAddressRep) oneType_).toBuilder();
-            }
-            oneType_ =
-                input.readMessage(io.grpc.jchannelRpc.GetAddressRep.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom((io.grpc.jchannelRpc.GetAddressRep) oneType_);
-              oneType_ = subBuilder.buildPartial();
-            }
-            oneTypeCase_ = 9;
-            break;
-          }
-          case 82: {
-            io.grpc.jchannelRpc.GetNameRep.Builder subBuilder = null;
-            if (oneTypeCase_ == 10) {
-              subBuilder = ((io.grpc.jchannelRpc.GetNameRep) oneType_).toBuilder();
-            }
-            oneType_ =
-                input.readMessage(io.grpc.jchannelRpc.GetNameRep.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom((io.grpc.jchannelRpc.GetNameRep) oneType_);
-              oneType_ = subBuilder.buildPartial();
-            }
-            oneTypeCase_ = 10;
-            break;
-          }
-          case 90: {
-            io.grpc.jchannelRpc.GetClusterNameRep.Builder subBuilder = null;
-            if (oneTypeCase_ == 11) {
-              subBuilder = ((io.grpc.jchannelRpc.GetClusterNameRep) oneType_).toBuilder();
-            }
-            oneType_ =
-                input.readMessage(io.grpc.jchannelRpc.GetClusterNameRep.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom((io.grpc.jchannelRpc.GetClusterNameRep) oneType_);
-              oneType_ = subBuilder.buildPartial();
-            }
-            oneTypeCase_ = 11;
-            break;
-          }
-          case 98: {
-            io.grpc.jchannelRpc.PrintProtocolSpecRep.Builder subBuilder = null;
-            if (oneTypeCase_ == 12) {
-              subBuilder = ((io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_).toBuilder();
-            }
-            oneType_ =
-                input.readMessage(io.grpc.jchannelRpc.PrintProtocolSpecRep.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom((io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_);
-              oneType_ = subBuilder.buildPartial();
-            }
-            oneTypeCase_ = 12;
-            break;
-          }
-          case 106: {
             io.grpc.jchannelRpc.ViewRep_server.Builder subBuilder = null;
-            if (oneTypeCase_ == 13) {
+            if (oneTypeCase_ == 6) {
               subBuilder = ((io.grpc.jchannelRpc.ViewRep_server) oneType_).toBuilder();
             }
             oneType_ =
@@ -227,7 +129,119 @@ private static final long serialVersionUID = 0L;
               subBuilder.mergeFrom((io.grpc.jchannelRpc.ViewRep_server) oneType_);
               oneType_ = subBuilder.buildPartial();
             }
+            oneTypeCase_ = 6;
+            break;
+          }
+          case 58: {
+            io.grpc.jchannelRpc.UpdateNameCacheRep.Builder subBuilder = null;
+            if (oneTypeCase_ == 7) {
+              subBuilder = ((io.grpc.jchannelRpc.UpdateNameCacheRep) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.UpdateNameCacheRep.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.UpdateNameCacheRep) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 7;
+            break;
+          }
+          case 66: {
+            io.grpc.jchannelRpc.StateRep.Builder subBuilder = null;
+            if (oneTypeCase_ == 8) {
+              subBuilder = ((io.grpc.jchannelRpc.StateRep) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.StateRep.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.StateRep) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 8;
+            break;
+          }
+          case 74: {
+            io.grpc.jchannelRpc.StateMsg_withTarget_1.Builder subBuilder = null;
+            if (oneTypeCase_ == 9) {
+              subBuilder = ((io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.StateMsg_withTarget_1.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 9;
+            break;
+          }
+          case 82: {
+            io.grpc.jchannelRpc.StateMsg_withTarget_2.Builder subBuilder = null;
+            if (oneTypeCase_ == 10) {
+              subBuilder = ((io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.StateMsg_withTarget_2.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 10;
+            break;
+          }
+          case 90: {
+            io.grpc.jchannelRpc.GetAddressRep.Builder subBuilder = null;
+            if (oneTypeCase_ == 11) {
+              subBuilder = ((io.grpc.jchannelRpc.GetAddressRep) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.GetAddressRep.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.GetAddressRep) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 11;
+            break;
+          }
+          case 98: {
+            io.grpc.jchannelRpc.GetNameRep.Builder subBuilder = null;
+            if (oneTypeCase_ == 12) {
+              subBuilder = ((io.grpc.jchannelRpc.GetNameRep) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.GetNameRep.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.GetNameRep) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 12;
+            break;
+          }
+          case 106: {
+            io.grpc.jchannelRpc.GetClusterNameRep.Builder subBuilder = null;
+            if (oneTypeCase_ == 13) {
+              subBuilder = ((io.grpc.jchannelRpc.GetClusterNameRep) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.GetClusterNameRep.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.GetClusterNameRep) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
             oneTypeCase_ = 13;
+            break;
+          }
+          case 114: {
+            io.grpc.jchannelRpc.PrintProtocolSpecRep.Builder subBuilder = null;
+            if (oneTypeCase_ == 14) {
+              subBuilder = ((io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.PrintProtocolSpecRep.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 14;
             break;
           }
           default: {
@@ -272,14 +286,15 @@ private static final long serialVersionUID = 0L;
     DISCONNECTRESPONSE(3),
     UPDATERESPONSE(4),
     VIEWRESPONSE(5),
-    STATEREP(6),
-    STATEMSG1(7),
-    STATEMSG2(8),
-    GETADDRESSREP(9),
-    GETNAMEREP(10),
-    GETCLUSTERNAMEREP(11),
-    PRINTPROTOREP(12),
-    VIEWREP_SERVER(13),
+    VIEWREP_SERVER(6),
+    UPDATENAMECACHE(7),
+    STATEREP(8),
+    STATEMSG1(9),
+    STATEMSG2(10),
+    GETADDRESSREP(11),
+    GETNAMEREP(12),
+    GETCLUSTERNAMEREP(13),
+    PRINTPROTOREP(14),
     ONETYPE_NOT_SET(0);
     private final int value;
     private OneTypeCase(int value) {
@@ -302,14 +317,15 @@ private static final long serialVersionUID = 0L;
         case 3: return DISCONNECTRESPONSE;
         case 4: return UPDATERESPONSE;
         case 5: return VIEWRESPONSE;
-        case 6: return STATEREP;
-        case 7: return STATEMSG1;
-        case 8: return STATEMSG2;
-        case 9: return GETADDRESSREP;
-        case 10: return GETNAMEREP;
-        case 11: return GETCLUSTERNAMEREP;
-        case 12: return PRINTPROTOREP;
-        case 13: return VIEWREP_SERVER;
+        case 6: return VIEWREP_SERVER;
+        case 7: return UPDATENAMECACHE;
+        case 8: return STATEREP;
+        case 9: return STATEMSG1;
+        case 10: return STATEMSG2;
+        case 11: return GETADDRESSREP;
+        case 12: return GETNAMEREP;
+        case 13: return GETCLUSTERNAMEREP;
+        case 14: return PRINTPROTOREP;
         case 0: return ONETYPE_NOT_SET;
         default: return null;
       }
@@ -420,6 +436,10 @@ private static final long serialVersionUID = 0L;
 
   public static final int UPDATERESPONSE_FIELD_NUMBER = 4;
   /**
+   * <pre>
+   * update available grpc addresses of nodes
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.UpdateRep updateResponse = 4;</code>
    * @return Whether the updateResponse field is set.
    */
@@ -428,6 +448,10 @@ private static final long serialVersionUID = 0L;
     return oneTypeCase_ == 4;
   }
   /**
+   * <pre>
+   * update available grpc addresses of nodes
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.UpdateRep updateResponse = 4;</code>
    * @return The updateResponse.
    */
@@ -439,6 +463,10 @@ private static final long serialVersionUID = 0L;
     return io.grpc.jchannelRpc.UpdateRep.getDefaultInstance();
   }
   /**
+   * <pre>
+   * update available grpc addresses of nodes
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.UpdateRep updateResponse = 4;</code>
    */
   @java.lang.Override
@@ -452,7 +480,7 @@ private static final long serialVersionUID = 0L;
   public static final int VIEWRESPONSE_FIELD_NUMBER = 5;
   /**
    * <pre>
-   *  client view
+   *  JChannel-client view
    * </pre>
    *
    * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
@@ -464,7 +492,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   *  client view
+   *  JChannel-client view
    * </pre>
    *
    * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
@@ -479,7 +507,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   *  client view
+   *  JChannel-client view
    * </pre>
    *
    * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
@@ -492,264 +520,307 @@ private static final long serialVersionUID = 0L;
     return io.grpc.jchannelRpc.ViewRep.getDefaultInstance();
   }
 
-  public static final int STATEREP_FIELD_NUMBER = 6;
-  /**
-   * <code>.cn.yingming.grpc1.StateRep stateRep = 6;</code>
-   * @return Whether the stateRep field is set.
-   */
-  @java.lang.Override
-  public boolean hasStateRep() {
-    return oneTypeCase_ == 6;
-  }
-  /**
-   * <code>.cn.yingming.grpc1.StateRep stateRep = 6;</code>
-   * @return The stateRep.
-   */
-  @java.lang.Override
-  public io.grpc.jchannelRpc.StateRep getStateRep() {
-    if (oneTypeCase_ == 6) {
-       return (io.grpc.jchannelRpc.StateRep) oneType_;
-    }
-    return io.grpc.jchannelRpc.StateRep.getDefaultInstance();
-  }
-  /**
-   * <code>.cn.yingming.grpc1.StateRep stateRep = 6;</code>
-   */
-  @java.lang.Override
-  public io.grpc.jchannelRpc.StateRepOrBuilder getStateRepOrBuilder() {
-    if (oneTypeCase_ == 6) {
-       return (io.grpc.jchannelRpc.StateRep) oneType_;
-    }
-    return io.grpc.jchannelRpc.StateRep.getDefaultInstance();
-  }
-
-  public static final int STATEMSG1_FIELD_NUMBER = 7;
-  /**
-   * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 7;</code>
-   * @return Whether the stateMsg1 field is set.
-   */
-  @java.lang.Override
-  public boolean hasStateMsg1() {
-    return oneTypeCase_ == 7;
-  }
-  /**
-   * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 7;</code>
-   * @return The stateMsg1.
-   */
-  @java.lang.Override
-  public io.grpc.jchannelRpc.StateMsg_withTarget_1 getStateMsg1() {
-    if (oneTypeCase_ == 7) {
-       return (io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_;
-    }
-    return io.grpc.jchannelRpc.StateMsg_withTarget_1.getDefaultInstance();
-  }
-  /**
-   * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 7;</code>
-   */
-  @java.lang.Override
-  public io.grpc.jchannelRpc.StateMsg_withTarget_1OrBuilder getStateMsg1OrBuilder() {
-    if (oneTypeCase_ == 7) {
-       return (io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_;
-    }
-    return io.grpc.jchannelRpc.StateMsg_withTarget_1.getDefaultInstance();
-  }
-
-  public static final int STATEMSG2_FIELD_NUMBER = 8;
-  /**
-   * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 8;</code>
-   * @return Whether the stateMsg2 field is set.
-   */
-  @java.lang.Override
-  public boolean hasStateMsg2() {
-    return oneTypeCase_ == 8;
-  }
-  /**
-   * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 8;</code>
-   * @return The stateMsg2.
-   */
-  @java.lang.Override
-  public io.grpc.jchannelRpc.StateMsg_withTarget_2 getStateMsg2() {
-    if (oneTypeCase_ == 8) {
-       return (io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_;
-    }
-    return io.grpc.jchannelRpc.StateMsg_withTarget_2.getDefaultInstance();
-  }
-  /**
-   * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 8;</code>
-   */
-  @java.lang.Override
-  public io.grpc.jchannelRpc.StateMsg_withTarget_2OrBuilder getStateMsg2OrBuilder() {
-    if (oneTypeCase_ == 8) {
-       return (io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_;
-    }
-    return io.grpc.jchannelRpc.StateMsg_withTarget_2.getDefaultInstance();
-  }
-
-  public static final int GETADDRESSREP_FIELD_NUMBER = 9;
-  /**
-   * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 9;</code>
-   * @return Whether the getAddressRep field is set.
-   */
-  @java.lang.Override
-  public boolean hasGetAddressRep() {
-    return oneTypeCase_ == 9;
-  }
-  /**
-   * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 9;</code>
-   * @return The getAddressRep.
-   */
-  @java.lang.Override
-  public io.grpc.jchannelRpc.GetAddressRep getGetAddressRep() {
-    if (oneTypeCase_ == 9) {
-       return (io.grpc.jchannelRpc.GetAddressRep) oneType_;
-    }
-    return io.grpc.jchannelRpc.GetAddressRep.getDefaultInstance();
-  }
-  /**
-   * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 9;</code>
-   */
-  @java.lang.Override
-  public io.grpc.jchannelRpc.GetAddressRepOrBuilder getGetAddressRepOrBuilder() {
-    if (oneTypeCase_ == 9) {
-       return (io.grpc.jchannelRpc.GetAddressRep) oneType_;
-    }
-    return io.grpc.jchannelRpc.GetAddressRep.getDefaultInstance();
-  }
-
-  public static final int GETNAMEREP_FIELD_NUMBER = 10;
-  /**
-   * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
-   * @return Whether the getNameRep field is set.
-   */
-  @java.lang.Override
-  public boolean hasGetNameRep() {
-    return oneTypeCase_ == 10;
-  }
-  /**
-   * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
-   * @return The getNameRep.
-   */
-  @java.lang.Override
-  public io.grpc.jchannelRpc.GetNameRep getGetNameRep() {
-    if (oneTypeCase_ == 10) {
-       return (io.grpc.jchannelRpc.GetNameRep) oneType_;
-    }
-    return io.grpc.jchannelRpc.GetNameRep.getDefaultInstance();
-  }
-  /**
-   * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
-   */
-  @java.lang.Override
-  public io.grpc.jchannelRpc.GetNameRepOrBuilder getGetNameRepOrBuilder() {
-    if (oneTypeCase_ == 10) {
-       return (io.grpc.jchannelRpc.GetNameRep) oneType_;
-    }
-    return io.grpc.jchannelRpc.GetNameRep.getDefaultInstance();
-  }
-
-  public static final int GETCLUSTERNAMEREP_FIELD_NUMBER = 11;
-  /**
-   * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 11;</code>
-   * @return Whether the getClusterNameRep field is set.
-   */
-  @java.lang.Override
-  public boolean hasGetClusterNameRep() {
-    return oneTypeCase_ == 11;
-  }
-  /**
-   * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 11;</code>
-   * @return The getClusterNameRep.
-   */
-  @java.lang.Override
-  public io.grpc.jchannelRpc.GetClusterNameRep getGetClusterNameRep() {
-    if (oneTypeCase_ == 11) {
-       return (io.grpc.jchannelRpc.GetClusterNameRep) oneType_;
-    }
-    return io.grpc.jchannelRpc.GetClusterNameRep.getDefaultInstance();
-  }
-  /**
-   * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 11;</code>
-   */
-  @java.lang.Override
-  public io.grpc.jchannelRpc.GetClusterNameRepOrBuilder getGetClusterNameRepOrBuilder() {
-    if (oneTypeCase_ == 11) {
-       return (io.grpc.jchannelRpc.GetClusterNameRep) oneType_;
-    }
-    return io.grpc.jchannelRpc.GetClusterNameRep.getDefaultInstance();
-  }
-
-  public static final int PRINTPROTOREP_FIELD_NUMBER = 12;
-  /**
-   * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 12;</code>
-   * @return Whether the printProtoRep field is set.
-   */
-  @java.lang.Override
-  public boolean hasPrintProtoRep() {
-    return oneTypeCase_ == 12;
-  }
-  /**
-   * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 12;</code>
-   * @return The printProtoRep.
-   */
-  @java.lang.Override
-  public io.grpc.jchannelRpc.PrintProtocolSpecRep getPrintProtoRep() {
-    if (oneTypeCase_ == 12) {
-       return (io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_;
-    }
-    return io.grpc.jchannelRpc.PrintProtocolSpecRep.getDefaultInstance();
-  }
-  /**
-   * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 12;</code>
-   */
-  @java.lang.Override
-  public io.grpc.jchannelRpc.PrintProtocolSpecRepOrBuilder getPrintProtoRepOrBuilder() {
-    if (oneTypeCase_ == 12) {
-       return (io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_;
-    }
-    return io.grpc.jchannelRpc.PrintProtocolSpecRep.getDefaultInstance();
-  }
-
-  public static final int VIEWREP_SERVER_FIELD_NUMBER = 13;
+  public static final int VIEWREP_SERVER_FIELD_NUMBER = 6;
   /**
    * <pre>
-   * server view
+   * JChannel-server view
    * </pre>
    *
-   * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+   * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 6;</code>
    * @return Whether the viewRepServer field is set.
    */
   @java.lang.Override
   public boolean hasViewRepServer() {
-    return oneTypeCase_ == 13;
+    return oneTypeCase_ == 6;
   }
   /**
    * <pre>
-   * server view
+   * JChannel-server view
    * </pre>
    *
-   * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+   * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 6;</code>
    * @return The viewRepServer.
    */
   @java.lang.Override
   public io.grpc.jchannelRpc.ViewRep_server getViewRepServer() {
-    if (oneTypeCase_ == 13) {
+    if (oneTypeCase_ == 6) {
        return (io.grpc.jchannelRpc.ViewRep_server) oneType_;
     }
     return io.grpc.jchannelRpc.ViewRep_server.getDefaultInstance();
   }
   /**
    * <pre>
-   * server view
+   * JChannel-server view
    * </pre>
    *
-   * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+   * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 6;</code>
    */
   @java.lang.Override
   public io.grpc.jchannelRpc.ViewRep_serverOrBuilder getViewRepServerOrBuilder() {
-    if (oneTypeCase_ == 13) {
+    if (oneTypeCase_ == 6) {
        return (io.grpc.jchannelRpc.ViewRep_server) oneType_;
     }
     return io.grpc.jchannelRpc.ViewRep_server.getDefaultInstance();
+  }
+
+  public static final int UPDATENAMECACHE_FIELD_NUMBER = 7;
+  /**
+   * <pre>
+   * update the NameCache of JChannel-server
+   * </pre>
+   *
+   * <code>.cn.yingming.grpc1.UpdateNameCacheRep updateNameCache = 7;</code>
+   * @return Whether the updateNameCache field is set.
+   */
+  @java.lang.Override
+  public boolean hasUpdateNameCache() {
+    return oneTypeCase_ == 7;
+  }
+  /**
+   * <pre>
+   * update the NameCache of JChannel-server
+   * </pre>
+   *
+   * <code>.cn.yingming.grpc1.UpdateNameCacheRep updateNameCache = 7;</code>
+   * @return The updateNameCache.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.UpdateNameCacheRep getUpdateNameCache() {
+    if (oneTypeCase_ == 7) {
+       return (io.grpc.jchannelRpc.UpdateNameCacheRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.UpdateNameCacheRep.getDefaultInstance();
+  }
+  /**
+   * <pre>
+   * update the NameCache of JChannel-server
+   * </pre>
+   *
+   * <code>.cn.yingming.grpc1.UpdateNameCacheRep updateNameCache = 7;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.UpdateNameCacheRepOrBuilder getUpdateNameCacheOrBuilder() {
+    if (oneTypeCase_ == 7) {
+       return (io.grpc.jchannelRpc.UpdateNameCacheRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.UpdateNameCacheRep.getDefaultInstance();
+  }
+
+  public static final int STATEREP_FIELD_NUMBER = 8;
+  /**
+   * <code>.cn.yingming.grpc1.StateRep stateRep = 8;</code>
+   * @return Whether the stateRep field is set.
+   */
+  @java.lang.Override
+  public boolean hasStateRep() {
+    return oneTypeCase_ == 8;
+  }
+  /**
+   * <code>.cn.yingming.grpc1.StateRep stateRep = 8;</code>
+   * @return The stateRep.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.StateRep getStateRep() {
+    if (oneTypeCase_ == 8) {
+       return (io.grpc.jchannelRpc.StateRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.StateRep.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.StateRep stateRep = 8;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.StateRepOrBuilder getStateRepOrBuilder() {
+    if (oneTypeCase_ == 8) {
+       return (io.grpc.jchannelRpc.StateRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.StateRep.getDefaultInstance();
+  }
+
+  public static final int STATEMSG1_FIELD_NUMBER = 9;
+  /**
+   * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
+   * @return Whether the stateMsg1 field is set.
+   */
+  @java.lang.Override
+  public boolean hasStateMsg1() {
+    return oneTypeCase_ == 9;
+  }
+  /**
+   * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
+   * @return The stateMsg1.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.StateMsg_withTarget_1 getStateMsg1() {
+    if (oneTypeCase_ == 9) {
+       return (io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_;
+    }
+    return io.grpc.jchannelRpc.StateMsg_withTarget_1.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.StateMsg_withTarget_1OrBuilder getStateMsg1OrBuilder() {
+    if (oneTypeCase_ == 9) {
+       return (io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_;
+    }
+    return io.grpc.jchannelRpc.StateMsg_withTarget_1.getDefaultInstance();
+  }
+
+  public static final int STATEMSG2_FIELD_NUMBER = 10;
+  /**
+   * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
+   * @return Whether the stateMsg2 field is set.
+   */
+  @java.lang.Override
+  public boolean hasStateMsg2() {
+    return oneTypeCase_ == 10;
+  }
+  /**
+   * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
+   * @return The stateMsg2.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.StateMsg_withTarget_2 getStateMsg2() {
+    if (oneTypeCase_ == 10) {
+       return (io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_;
+    }
+    return io.grpc.jchannelRpc.StateMsg_withTarget_2.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.StateMsg_withTarget_2OrBuilder getStateMsg2OrBuilder() {
+    if (oneTypeCase_ == 10) {
+       return (io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_;
+    }
+    return io.grpc.jchannelRpc.StateMsg_withTarget_2.getDefaultInstance();
+  }
+
+  public static final int GETADDRESSREP_FIELD_NUMBER = 11;
+  /**
+   * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 11;</code>
+   * @return Whether the getAddressRep field is set.
+   */
+  @java.lang.Override
+  public boolean hasGetAddressRep() {
+    return oneTypeCase_ == 11;
+  }
+  /**
+   * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 11;</code>
+   * @return The getAddressRep.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.GetAddressRep getGetAddressRep() {
+    if (oneTypeCase_ == 11) {
+       return (io.grpc.jchannelRpc.GetAddressRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.GetAddressRep.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 11;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.GetAddressRepOrBuilder getGetAddressRepOrBuilder() {
+    if (oneTypeCase_ == 11) {
+       return (io.grpc.jchannelRpc.GetAddressRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.GetAddressRep.getDefaultInstance();
+  }
+
+  public static final int GETNAMEREP_FIELD_NUMBER = 12;
+  /**
+   * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 12;</code>
+   * @return Whether the getNameRep field is set.
+   */
+  @java.lang.Override
+  public boolean hasGetNameRep() {
+    return oneTypeCase_ == 12;
+  }
+  /**
+   * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 12;</code>
+   * @return The getNameRep.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.GetNameRep getGetNameRep() {
+    if (oneTypeCase_ == 12) {
+       return (io.grpc.jchannelRpc.GetNameRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.GetNameRep.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 12;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.GetNameRepOrBuilder getGetNameRepOrBuilder() {
+    if (oneTypeCase_ == 12) {
+       return (io.grpc.jchannelRpc.GetNameRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.GetNameRep.getDefaultInstance();
+  }
+
+  public static final int GETCLUSTERNAMEREP_FIELD_NUMBER = 13;
+  /**
+   * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 13;</code>
+   * @return Whether the getClusterNameRep field is set.
+   */
+  @java.lang.Override
+  public boolean hasGetClusterNameRep() {
+    return oneTypeCase_ == 13;
+  }
+  /**
+   * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 13;</code>
+   * @return The getClusterNameRep.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.GetClusterNameRep getGetClusterNameRep() {
+    if (oneTypeCase_ == 13) {
+       return (io.grpc.jchannelRpc.GetClusterNameRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.GetClusterNameRep.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 13;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.GetClusterNameRepOrBuilder getGetClusterNameRepOrBuilder() {
+    if (oneTypeCase_ == 13) {
+       return (io.grpc.jchannelRpc.GetClusterNameRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.GetClusterNameRep.getDefaultInstance();
+  }
+
+  public static final int PRINTPROTOREP_FIELD_NUMBER = 14;
+  /**
+   * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 14;</code>
+   * @return Whether the printProtoRep field is set.
+   */
+  @java.lang.Override
+  public boolean hasPrintProtoRep() {
+    return oneTypeCase_ == 14;
+  }
+  /**
+   * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 14;</code>
+   * @return The printProtoRep.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.PrintProtocolSpecRep getPrintProtoRep() {
+    if (oneTypeCase_ == 14) {
+       return (io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.PrintProtocolSpecRep.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 14;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.PrintProtocolSpecRepOrBuilder getPrintProtoRepOrBuilder() {
+    if (oneTypeCase_ == 14) {
+       return (io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.PrintProtocolSpecRep.getDefaultInstance();
   }
 
   private byte memoizedIsInitialized = -1;
@@ -782,28 +853,31 @@ private static final long serialVersionUID = 0L;
       output.writeMessage(5, (io.grpc.jchannelRpc.ViewRep) oneType_);
     }
     if (oneTypeCase_ == 6) {
-      output.writeMessage(6, (io.grpc.jchannelRpc.StateRep) oneType_);
+      output.writeMessage(6, (io.grpc.jchannelRpc.ViewRep_server) oneType_);
     }
     if (oneTypeCase_ == 7) {
-      output.writeMessage(7, (io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_);
+      output.writeMessage(7, (io.grpc.jchannelRpc.UpdateNameCacheRep) oneType_);
     }
     if (oneTypeCase_ == 8) {
-      output.writeMessage(8, (io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_);
+      output.writeMessage(8, (io.grpc.jchannelRpc.StateRep) oneType_);
     }
     if (oneTypeCase_ == 9) {
-      output.writeMessage(9, (io.grpc.jchannelRpc.GetAddressRep) oneType_);
+      output.writeMessage(9, (io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_);
     }
     if (oneTypeCase_ == 10) {
-      output.writeMessage(10, (io.grpc.jchannelRpc.GetNameRep) oneType_);
+      output.writeMessage(10, (io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_);
     }
     if (oneTypeCase_ == 11) {
-      output.writeMessage(11, (io.grpc.jchannelRpc.GetClusterNameRep) oneType_);
+      output.writeMessage(11, (io.grpc.jchannelRpc.GetAddressRep) oneType_);
     }
     if (oneTypeCase_ == 12) {
-      output.writeMessage(12, (io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_);
+      output.writeMessage(12, (io.grpc.jchannelRpc.GetNameRep) oneType_);
     }
     if (oneTypeCase_ == 13) {
-      output.writeMessage(13, (io.grpc.jchannelRpc.ViewRep_server) oneType_);
+      output.writeMessage(13, (io.grpc.jchannelRpc.GetClusterNameRep) oneType_);
+    }
+    if (oneTypeCase_ == 14) {
+      output.writeMessage(14, (io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_);
     }
     unknownFields.writeTo(output);
   }
@@ -836,35 +910,39 @@ private static final long serialVersionUID = 0L;
     }
     if (oneTypeCase_ == 6) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(6, (io.grpc.jchannelRpc.StateRep) oneType_);
+        .computeMessageSize(6, (io.grpc.jchannelRpc.ViewRep_server) oneType_);
     }
     if (oneTypeCase_ == 7) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(7, (io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_);
+        .computeMessageSize(7, (io.grpc.jchannelRpc.UpdateNameCacheRep) oneType_);
     }
     if (oneTypeCase_ == 8) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(8, (io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_);
+        .computeMessageSize(8, (io.grpc.jchannelRpc.StateRep) oneType_);
     }
     if (oneTypeCase_ == 9) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(9, (io.grpc.jchannelRpc.GetAddressRep) oneType_);
+        .computeMessageSize(9, (io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_);
     }
     if (oneTypeCase_ == 10) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(10, (io.grpc.jchannelRpc.GetNameRep) oneType_);
+        .computeMessageSize(10, (io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_);
     }
     if (oneTypeCase_ == 11) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(11, (io.grpc.jchannelRpc.GetClusterNameRep) oneType_);
+        .computeMessageSize(11, (io.grpc.jchannelRpc.GetAddressRep) oneType_);
     }
     if (oneTypeCase_ == 12) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(12, (io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_);
+        .computeMessageSize(12, (io.grpc.jchannelRpc.GetNameRep) oneType_);
     }
     if (oneTypeCase_ == 13) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(13, (io.grpc.jchannelRpc.ViewRep_server) oneType_);
+        .computeMessageSize(13, (io.grpc.jchannelRpc.GetClusterNameRep) oneType_);
+    }
+    if (oneTypeCase_ == 14) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(14, (io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -904,36 +982,40 @@ private static final long serialVersionUID = 0L;
             .equals(other.getViewResponse())) return false;
         break;
       case 6:
+        if (!getViewRepServer()
+            .equals(other.getViewRepServer())) return false;
+        break;
+      case 7:
+        if (!getUpdateNameCache()
+            .equals(other.getUpdateNameCache())) return false;
+        break;
+      case 8:
         if (!getStateRep()
             .equals(other.getStateRep())) return false;
         break;
-      case 7:
+      case 9:
         if (!getStateMsg1()
             .equals(other.getStateMsg1())) return false;
         break;
-      case 8:
+      case 10:
         if (!getStateMsg2()
             .equals(other.getStateMsg2())) return false;
         break;
-      case 9:
+      case 11:
         if (!getGetAddressRep()
             .equals(other.getGetAddressRep())) return false;
         break;
-      case 10:
+      case 12:
         if (!getGetNameRep()
             .equals(other.getGetNameRep())) return false;
         break;
-      case 11:
+      case 13:
         if (!getGetClusterNameRep()
             .equals(other.getGetClusterNameRep())) return false;
         break;
-      case 12:
+      case 14:
         if (!getPrintProtoRep()
             .equals(other.getPrintProtoRep())) return false;
-        break;
-      case 13:
-        if (!getViewRepServer()
-            .equals(other.getViewRepServer())) return false;
         break;
       case 0:
       default:
@@ -971,36 +1053,40 @@ private static final long serialVersionUID = 0L;
         hash = (53 * hash) + getViewResponse().hashCode();
         break;
       case 6:
+        hash = (37 * hash) + VIEWREP_SERVER_FIELD_NUMBER;
+        hash = (53 * hash) + getViewRepServer().hashCode();
+        break;
+      case 7:
+        hash = (37 * hash) + UPDATENAMECACHE_FIELD_NUMBER;
+        hash = (53 * hash) + getUpdateNameCache().hashCode();
+        break;
+      case 8:
         hash = (37 * hash) + STATEREP_FIELD_NUMBER;
         hash = (53 * hash) + getStateRep().hashCode();
         break;
-      case 7:
+      case 9:
         hash = (37 * hash) + STATEMSG1_FIELD_NUMBER;
         hash = (53 * hash) + getStateMsg1().hashCode();
         break;
-      case 8:
+      case 10:
         hash = (37 * hash) + STATEMSG2_FIELD_NUMBER;
         hash = (53 * hash) + getStateMsg2().hashCode();
         break;
-      case 9:
+      case 11:
         hash = (37 * hash) + GETADDRESSREP_FIELD_NUMBER;
         hash = (53 * hash) + getGetAddressRep().hashCode();
         break;
-      case 10:
+      case 12:
         hash = (37 * hash) + GETNAMEREP_FIELD_NUMBER;
         hash = (53 * hash) + getGetNameRep().hashCode();
         break;
-      case 11:
+      case 13:
         hash = (37 * hash) + GETCLUSTERNAMEREP_FIELD_NUMBER;
         hash = (53 * hash) + getGetClusterNameRep().hashCode();
         break;
-      case 12:
+      case 14:
         hash = (37 * hash) + PRINTPROTOREP_FIELD_NUMBER;
         hash = (53 * hash) + getPrintProtoRep().hashCode();
-        break;
-      case 13:
-        hash = (37 * hash) + VIEWREP_SERVER_FIELD_NUMBER;
-        hash = (53 * hash) + getViewRepServer().hashCode();
         break;
       case 0:
       default:
@@ -1202,59 +1288,66 @@ private static final long serialVersionUID = 0L;
         }
       }
       if (oneTypeCase_ == 6) {
+        if (viewRepServerBuilder_ == null) {
+          result.oneType_ = oneType_;
+        } else {
+          result.oneType_ = viewRepServerBuilder_.build();
+        }
+      }
+      if (oneTypeCase_ == 7) {
+        if (updateNameCacheBuilder_ == null) {
+          result.oneType_ = oneType_;
+        } else {
+          result.oneType_ = updateNameCacheBuilder_.build();
+        }
+      }
+      if (oneTypeCase_ == 8) {
         if (stateRepBuilder_ == null) {
           result.oneType_ = oneType_;
         } else {
           result.oneType_ = stateRepBuilder_.build();
         }
       }
-      if (oneTypeCase_ == 7) {
+      if (oneTypeCase_ == 9) {
         if (stateMsg1Builder_ == null) {
           result.oneType_ = oneType_;
         } else {
           result.oneType_ = stateMsg1Builder_.build();
         }
       }
-      if (oneTypeCase_ == 8) {
+      if (oneTypeCase_ == 10) {
         if (stateMsg2Builder_ == null) {
           result.oneType_ = oneType_;
         } else {
           result.oneType_ = stateMsg2Builder_.build();
         }
       }
-      if (oneTypeCase_ == 9) {
+      if (oneTypeCase_ == 11) {
         if (getAddressRepBuilder_ == null) {
           result.oneType_ = oneType_;
         } else {
           result.oneType_ = getAddressRepBuilder_.build();
         }
       }
-      if (oneTypeCase_ == 10) {
+      if (oneTypeCase_ == 12) {
         if (getNameRepBuilder_ == null) {
           result.oneType_ = oneType_;
         } else {
           result.oneType_ = getNameRepBuilder_.build();
         }
       }
-      if (oneTypeCase_ == 11) {
+      if (oneTypeCase_ == 13) {
         if (getClusterNameRepBuilder_ == null) {
           result.oneType_ = oneType_;
         } else {
           result.oneType_ = getClusterNameRepBuilder_.build();
         }
       }
-      if (oneTypeCase_ == 12) {
+      if (oneTypeCase_ == 14) {
         if (printProtoRepBuilder_ == null) {
           result.oneType_ = oneType_;
         } else {
           result.oneType_ = printProtoRepBuilder_.build();
-        }
-      }
-      if (oneTypeCase_ == 13) {
-        if (viewRepServerBuilder_ == null) {
-          result.oneType_ = oneType_;
-        } else {
-          result.oneType_ = viewRepServerBuilder_.build();
         }
       }
       result.oneTypeCase_ = oneTypeCase_;
@@ -1327,6 +1420,14 @@ private static final long serialVersionUID = 0L;
           mergeViewResponse(other.getViewResponse());
           break;
         }
+        case VIEWREP_SERVER: {
+          mergeViewRepServer(other.getViewRepServer());
+          break;
+        }
+        case UPDATENAMECACHE: {
+          mergeUpdateNameCache(other.getUpdateNameCache());
+          break;
+        }
         case STATEREP: {
           mergeStateRep(other.getStateRep());
           break;
@@ -1353,10 +1454,6 @@ private static final long serialVersionUID = 0L;
         }
         case PRINTPROTOREP: {
           mergePrintProtoRep(other.getPrintProtoRep());
-          break;
-        }
-        case VIEWREP_SERVER: {
-          mergeViewRepServer(other.getViewRepServer());
           break;
         }
         case ONETYPE_NOT_SET: {
@@ -1833,6 +1930,10 @@ private static final long serialVersionUID = 0L;
     private com.google.protobuf.SingleFieldBuilderV3<
         io.grpc.jchannelRpc.UpdateRep, io.grpc.jchannelRpc.UpdateRep.Builder, io.grpc.jchannelRpc.UpdateRepOrBuilder> updateResponseBuilder_;
     /**
+     * <pre>
+     * update available grpc addresses of nodes
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.UpdateRep updateResponse = 4;</code>
      * @return Whether the updateResponse field is set.
      */
@@ -1841,6 +1942,10 @@ private static final long serialVersionUID = 0L;
       return oneTypeCase_ == 4;
     }
     /**
+     * <pre>
+     * update available grpc addresses of nodes
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.UpdateRep updateResponse = 4;</code>
      * @return The updateResponse.
      */
@@ -1859,6 +1964,10 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
+     * <pre>
+     * update available grpc addresses of nodes
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.UpdateRep updateResponse = 4;</code>
      */
     public Builder setUpdateResponse(io.grpc.jchannelRpc.UpdateRep value) {
@@ -1875,6 +1984,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * update available grpc addresses of nodes
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.UpdateRep updateResponse = 4;</code>
      */
     public Builder setUpdateResponse(
@@ -1889,6 +2002,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * update available grpc addresses of nodes
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.UpdateRep updateResponse = 4;</code>
      */
     public Builder mergeUpdateResponse(io.grpc.jchannelRpc.UpdateRep value) {
@@ -1911,6 +2028,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * update available grpc addresses of nodes
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.UpdateRep updateResponse = 4;</code>
      */
     public Builder clearUpdateResponse() {
@@ -1930,12 +2051,20 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * update available grpc addresses of nodes
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.UpdateRep updateResponse = 4;</code>
      */
     public io.grpc.jchannelRpc.UpdateRep.Builder getUpdateResponseBuilder() {
       return getUpdateResponseFieldBuilder().getBuilder();
     }
     /**
+     * <pre>
+     * update available grpc addresses of nodes
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.UpdateRep updateResponse = 4;</code>
      */
     @java.lang.Override
@@ -1950,6 +2079,10 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
+     * <pre>
+     * update available grpc addresses of nodes
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.UpdateRep updateResponse = 4;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
@@ -1975,7 +2108,7 @@ private static final long serialVersionUID = 0L;
         io.grpc.jchannelRpc.ViewRep, io.grpc.jchannelRpc.ViewRep.Builder, io.grpc.jchannelRpc.ViewRepOrBuilder> viewResponseBuilder_;
     /**
      * <pre>
-     *  client view
+     *  JChannel-client view
      * </pre>
      *
      * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
@@ -1987,7 +2120,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     *  client view
+     *  JChannel-client view
      * </pre>
      *
      * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
@@ -2009,7 +2142,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     *  client view
+     *  JChannel-client view
      * </pre>
      *
      * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
@@ -2029,7 +2162,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     *  client view
+     *  JChannel-client view
      * </pre>
      *
      * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
@@ -2047,7 +2180,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     *  client view
+     *  JChannel-client view
      * </pre>
      *
      * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
@@ -2073,7 +2206,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     *  client view
+     *  JChannel-client view
      * </pre>
      *
      * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
@@ -2096,7 +2229,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     *  client view
+     *  JChannel-client view
      * </pre>
      *
      * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
@@ -2106,7 +2239,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     *  client view
+     *  JChannel-client view
      * </pre>
      *
      * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
@@ -2124,7 +2257,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     *  client view
+     *  JChannel-client view
      * </pre>
      *
      * <code>.cn.yingming.grpc1.ViewRep viewResponse = 5;</code>
@@ -2149,1023 +2282,36 @@ private static final long serialVersionUID = 0L;
     }
 
     private com.google.protobuf.SingleFieldBuilderV3<
-        io.grpc.jchannelRpc.StateRep, io.grpc.jchannelRpc.StateRep.Builder, io.grpc.jchannelRpc.StateRepOrBuilder> stateRepBuilder_;
-    /**
-     * <code>.cn.yingming.grpc1.StateRep stateRep = 6;</code>
-     * @return Whether the stateRep field is set.
-     */
-    @java.lang.Override
-    public boolean hasStateRep() {
-      return oneTypeCase_ == 6;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateRep stateRep = 6;</code>
-     * @return The stateRep.
-     */
-    @java.lang.Override
-    public io.grpc.jchannelRpc.StateRep getStateRep() {
-      if (stateRepBuilder_ == null) {
-        if (oneTypeCase_ == 6) {
-          return (io.grpc.jchannelRpc.StateRep) oneType_;
-        }
-        return io.grpc.jchannelRpc.StateRep.getDefaultInstance();
-      } else {
-        if (oneTypeCase_ == 6) {
-          return stateRepBuilder_.getMessage();
-        }
-        return io.grpc.jchannelRpc.StateRep.getDefaultInstance();
-      }
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateRep stateRep = 6;</code>
-     */
-    public Builder setStateRep(io.grpc.jchannelRpc.StateRep value) {
-      if (stateRepBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        oneType_ = value;
-        onChanged();
-      } else {
-        stateRepBuilder_.setMessage(value);
-      }
-      oneTypeCase_ = 6;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateRep stateRep = 6;</code>
-     */
-    public Builder setStateRep(
-        io.grpc.jchannelRpc.StateRep.Builder builderForValue) {
-      if (stateRepBuilder_ == null) {
-        oneType_ = builderForValue.build();
-        onChanged();
-      } else {
-        stateRepBuilder_.setMessage(builderForValue.build());
-      }
-      oneTypeCase_ = 6;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateRep stateRep = 6;</code>
-     */
-    public Builder mergeStateRep(io.grpc.jchannelRpc.StateRep value) {
-      if (stateRepBuilder_ == null) {
-        if (oneTypeCase_ == 6 &&
-            oneType_ != io.grpc.jchannelRpc.StateRep.getDefaultInstance()) {
-          oneType_ = io.grpc.jchannelRpc.StateRep.newBuilder((io.grpc.jchannelRpc.StateRep) oneType_)
-              .mergeFrom(value).buildPartial();
-        } else {
-          oneType_ = value;
-        }
-        onChanged();
-      } else {
-        if (oneTypeCase_ == 6) {
-          stateRepBuilder_.mergeFrom(value);
-        }
-        stateRepBuilder_.setMessage(value);
-      }
-      oneTypeCase_ = 6;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateRep stateRep = 6;</code>
-     */
-    public Builder clearStateRep() {
-      if (stateRepBuilder_ == null) {
-        if (oneTypeCase_ == 6) {
-          oneTypeCase_ = 0;
-          oneType_ = null;
-          onChanged();
-        }
-      } else {
-        if (oneTypeCase_ == 6) {
-          oneTypeCase_ = 0;
-          oneType_ = null;
-        }
-        stateRepBuilder_.clear();
-      }
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateRep stateRep = 6;</code>
-     */
-    public io.grpc.jchannelRpc.StateRep.Builder getStateRepBuilder() {
-      return getStateRepFieldBuilder().getBuilder();
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateRep stateRep = 6;</code>
-     */
-    @java.lang.Override
-    public io.grpc.jchannelRpc.StateRepOrBuilder getStateRepOrBuilder() {
-      if ((oneTypeCase_ == 6) && (stateRepBuilder_ != null)) {
-        return stateRepBuilder_.getMessageOrBuilder();
-      } else {
-        if (oneTypeCase_ == 6) {
-          return (io.grpc.jchannelRpc.StateRep) oneType_;
-        }
-        return io.grpc.jchannelRpc.StateRep.getDefaultInstance();
-      }
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateRep stateRep = 6;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        io.grpc.jchannelRpc.StateRep, io.grpc.jchannelRpc.StateRep.Builder, io.grpc.jchannelRpc.StateRepOrBuilder> 
-        getStateRepFieldBuilder() {
-      if (stateRepBuilder_ == null) {
-        if (!(oneTypeCase_ == 6)) {
-          oneType_ = io.grpc.jchannelRpc.StateRep.getDefaultInstance();
-        }
-        stateRepBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            io.grpc.jchannelRpc.StateRep, io.grpc.jchannelRpc.StateRep.Builder, io.grpc.jchannelRpc.StateRepOrBuilder>(
-                (io.grpc.jchannelRpc.StateRep) oneType_,
-                getParentForChildren(),
-                isClean());
-        oneType_ = null;
-      }
-      oneTypeCase_ = 6;
-      onChanged();;
-      return stateRepBuilder_;
-    }
-
-    private com.google.protobuf.SingleFieldBuilderV3<
-        io.grpc.jchannelRpc.StateMsg_withTarget_1, io.grpc.jchannelRpc.StateMsg_withTarget_1.Builder, io.grpc.jchannelRpc.StateMsg_withTarget_1OrBuilder> stateMsg1Builder_;
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 7;</code>
-     * @return Whether the stateMsg1 field is set.
-     */
-    @java.lang.Override
-    public boolean hasStateMsg1() {
-      return oneTypeCase_ == 7;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 7;</code>
-     * @return The stateMsg1.
-     */
-    @java.lang.Override
-    public io.grpc.jchannelRpc.StateMsg_withTarget_1 getStateMsg1() {
-      if (stateMsg1Builder_ == null) {
-        if (oneTypeCase_ == 7) {
-          return (io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_;
-        }
-        return io.grpc.jchannelRpc.StateMsg_withTarget_1.getDefaultInstance();
-      } else {
-        if (oneTypeCase_ == 7) {
-          return stateMsg1Builder_.getMessage();
-        }
-        return io.grpc.jchannelRpc.StateMsg_withTarget_1.getDefaultInstance();
-      }
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 7;</code>
-     */
-    public Builder setStateMsg1(io.grpc.jchannelRpc.StateMsg_withTarget_1 value) {
-      if (stateMsg1Builder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        oneType_ = value;
-        onChanged();
-      } else {
-        stateMsg1Builder_.setMessage(value);
-      }
-      oneTypeCase_ = 7;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 7;</code>
-     */
-    public Builder setStateMsg1(
-        io.grpc.jchannelRpc.StateMsg_withTarget_1.Builder builderForValue) {
-      if (stateMsg1Builder_ == null) {
-        oneType_ = builderForValue.build();
-        onChanged();
-      } else {
-        stateMsg1Builder_.setMessage(builderForValue.build());
-      }
-      oneTypeCase_ = 7;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 7;</code>
-     */
-    public Builder mergeStateMsg1(io.grpc.jchannelRpc.StateMsg_withTarget_1 value) {
-      if (stateMsg1Builder_ == null) {
-        if (oneTypeCase_ == 7 &&
-            oneType_ != io.grpc.jchannelRpc.StateMsg_withTarget_1.getDefaultInstance()) {
-          oneType_ = io.grpc.jchannelRpc.StateMsg_withTarget_1.newBuilder((io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_)
-              .mergeFrom(value).buildPartial();
-        } else {
-          oneType_ = value;
-        }
-        onChanged();
-      } else {
-        if (oneTypeCase_ == 7) {
-          stateMsg1Builder_.mergeFrom(value);
-        }
-        stateMsg1Builder_.setMessage(value);
-      }
-      oneTypeCase_ = 7;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 7;</code>
-     */
-    public Builder clearStateMsg1() {
-      if (stateMsg1Builder_ == null) {
-        if (oneTypeCase_ == 7) {
-          oneTypeCase_ = 0;
-          oneType_ = null;
-          onChanged();
-        }
-      } else {
-        if (oneTypeCase_ == 7) {
-          oneTypeCase_ = 0;
-          oneType_ = null;
-        }
-        stateMsg1Builder_.clear();
-      }
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 7;</code>
-     */
-    public io.grpc.jchannelRpc.StateMsg_withTarget_1.Builder getStateMsg1Builder() {
-      return getStateMsg1FieldBuilder().getBuilder();
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 7;</code>
-     */
-    @java.lang.Override
-    public io.grpc.jchannelRpc.StateMsg_withTarget_1OrBuilder getStateMsg1OrBuilder() {
-      if ((oneTypeCase_ == 7) && (stateMsg1Builder_ != null)) {
-        return stateMsg1Builder_.getMessageOrBuilder();
-      } else {
-        if (oneTypeCase_ == 7) {
-          return (io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_;
-        }
-        return io.grpc.jchannelRpc.StateMsg_withTarget_1.getDefaultInstance();
-      }
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 7;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        io.grpc.jchannelRpc.StateMsg_withTarget_1, io.grpc.jchannelRpc.StateMsg_withTarget_1.Builder, io.grpc.jchannelRpc.StateMsg_withTarget_1OrBuilder> 
-        getStateMsg1FieldBuilder() {
-      if (stateMsg1Builder_ == null) {
-        if (!(oneTypeCase_ == 7)) {
-          oneType_ = io.grpc.jchannelRpc.StateMsg_withTarget_1.getDefaultInstance();
-        }
-        stateMsg1Builder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            io.grpc.jchannelRpc.StateMsg_withTarget_1, io.grpc.jchannelRpc.StateMsg_withTarget_1.Builder, io.grpc.jchannelRpc.StateMsg_withTarget_1OrBuilder>(
-                (io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_,
-                getParentForChildren(),
-                isClean());
-        oneType_ = null;
-      }
-      oneTypeCase_ = 7;
-      onChanged();;
-      return stateMsg1Builder_;
-    }
-
-    private com.google.protobuf.SingleFieldBuilderV3<
-        io.grpc.jchannelRpc.StateMsg_withTarget_2, io.grpc.jchannelRpc.StateMsg_withTarget_2.Builder, io.grpc.jchannelRpc.StateMsg_withTarget_2OrBuilder> stateMsg2Builder_;
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 8;</code>
-     * @return Whether the stateMsg2 field is set.
-     */
-    @java.lang.Override
-    public boolean hasStateMsg2() {
-      return oneTypeCase_ == 8;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 8;</code>
-     * @return The stateMsg2.
-     */
-    @java.lang.Override
-    public io.grpc.jchannelRpc.StateMsg_withTarget_2 getStateMsg2() {
-      if (stateMsg2Builder_ == null) {
-        if (oneTypeCase_ == 8) {
-          return (io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_;
-        }
-        return io.grpc.jchannelRpc.StateMsg_withTarget_2.getDefaultInstance();
-      } else {
-        if (oneTypeCase_ == 8) {
-          return stateMsg2Builder_.getMessage();
-        }
-        return io.grpc.jchannelRpc.StateMsg_withTarget_2.getDefaultInstance();
-      }
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 8;</code>
-     */
-    public Builder setStateMsg2(io.grpc.jchannelRpc.StateMsg_withTarget_2 value) {
-      if (stateMsg2Builder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        oneType_ = value;
-        onChanged();
-      } else {
-        stateMsg2Builder_.setMessage(value);
-      }
-      oneTypeCase_ = 8;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 8;</code>
-     */
-    public Builder setStateMsg2(
-        io.grpc.jchannelRpc.StateMsg_withTarget_2.Builder builderForValue) {
-      if (stateMsg2Builder_ == null) {
-        oneType_ = builderForValue.build();
-        onChanged();
-      } else {
-        stateMsg2Builder_.setMessage(builderForValue.build());
-      }
-      oneTypeCase_ = 8;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 8;</code>
-     */
-    public Builder mergeStateMsg2(io.grpc.jchannelRpc.StateMsg_withTarget_2 value) {
-      if (stateMsg2Builder_ == null) {
-        if (oneTypeCase_ == 8 &&
-            oneType_ != io.grpc.jchannelRpc.StateMsg_withTarget_2.getDefaultInstance()) {
-          oneType_ = io.grpc.jchannelRpc.StateMsg_withTarget_2.newBuilder((io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_)
-              .mergeFrom(value).buildPartial();
-        } else {
-          oneType_ = value;
-        }
-        onChanged();
-      } else {
-        if (oneTypeCase_ == 8) {
-          stateMsg2Builder_.mergeFrom(value);
-        }
-        stateMsg2Builder_.setMessage(value);
-      }
-      oneTypeCase_ = 8;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 8;</code>
-     */
-    public Builder clearStateMsg2() {
-      if (stateMsg2Builder_ == null) {
-        if (oneTypeCase_ == 8) {
-          oneTypeCase_ = 0;
-          oneType_ = null;
-          onChanged();
-        }
-      } else {
-        if (oneTypeCase_ == 8) {
-          oneTypeCase_ = 0;
-          oneType_ = null;
-        }
-        stateMsg2Builder_.clear();
-      }
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 8;</code>
-     */
-    public io.grpc.jchannelRpc.StateMsg_withTarget_2.Builder getStateMsg2Builder() {
-      return getStateMsg2FieldBuilder().getBuilder();
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 8;</code>
-     */
-    @java.lang.Override
-    public io.grpc.jchannelRpc.StateMsg_withTarget_2OrBuilder getStateMsg2OrBuilder() {
-      if ((oneTypeCase_ == 8) && (stateMsg2Builder_ != null)) {
-        return stateMsg2Builder_.getMessageOrBuilder();
-      } else {
-        if (oneTypeCase_ == 8) {
-          return (io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_;
-        }
-        return io.grpc.jchannelRpc.StateMsg_withTarget_2.getDefaultInstance();
-      }
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 8;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        io.grpc.jchannelRpc.StateMsg_withTarget_2, io.grpc.jchannelRpc.StateMsg_withTarget_2.Builder, io.grpc.jchannelRpc.StateMsg_withTarget_2OrBuilder> 
-        getStateMsg2FieldBuilder() {
-      if (stateMsg2Builder_ == null) {
-        if (!(oneTypeCase_ == 8)) {
-          oneType_ = io.grpc.jchannelRpc.StateMsg_withTarget_2.getDefaultInstance();
-        }
-        stateMsg2Builder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            io.grpc.jchannelRpc.StateMsg_withTarget_2, io.grpc.jchannelRpc.StateMsg_withTarget_2.Builder, io.grpc.jchannelRpc.StateMsg_withTarget_2OrBuilder>(
-                (io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_,
-                getParentForChildren(),
-                isClean());
-        oneType_ = null;
-      }
-      oneTypeCase_ = 8;
-      onChanged();;
-      return stateMsg2Builder_;
-    }
-
-    private com.google.protobuf.SingleFieldBuilderV3<
-        io.grpc.jchannelRpc.GetAddressRep, io.grpc.jchannelRpc.GetAddressRep.Builder, io.grpc.jchannelRpc.GetAddressRepOrBuilder> getAddressRepBuilder_;
-    /**
-     * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 9;</code>
-     * @return Whether the getAddressRep field is set.
-     */
-    @java.lang.Override
-    public boolean hasGetAddressRep() {
-      return oneTypeCase_ == 9;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 9;</code>
-     * @return The getAddressRep.
-     */
-    @java.lang.Override
-    public io.grpc.jchannelRpc.GetAddressRep getGetAddressRep() {
-      if (getAddressRepBuilder_ == null) {
-        if (oneTypeCase_ == 9) {
-          return (io.grpc.jchannelRpc.GetAddressRep) oneType_;
-        }
-        return io.grpc.jchannelRpc.GetAddressRep.getDefaultInstance();
-      } else {
-        if (oneTypeCase_ == 9) {
-          return getAddressRepBuilder_.getMessage();
-        }
-        return io.grpc.jchannelRpc.GetAddressRep.getDefaultInstance();
-      }
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 9;</code>
-     */
-    public Builder setGetAddressRep(io.grpc.jchannelRpc.GetAddressRep value) {
-      if (getAddressRepBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        oneType_ = value;
-        onChanged();
-      } else {
-        getAddressRepBuilder_.setMessage(value);
-      }
-      oneTypeCase_ = 9;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 9;</code>
-     */
-    public Builder setGetAddressRep(
-        io.grpc.jchannelRpc.GetAddressRep.Builder builderForValue) {
-      if (getAddressRepBuilder_ == null) {
-        oneType_ = builderForValue.build();
-        onChanged();
-      } else {
-        getAddressRepBuilder_.setMessage(builderForValue.build());
-      }
-      oneTypeCase_ = 9;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 9;</code>
-     */
-    public Builder mergeGetAddressRep(io.grpc.jchannelRpc.GetAddressRep value) {
-      if (getAddressRepBuilder_ == null) {
-        if (oneTypeCase_ == 9 &&
-            oneType_ != io.grpc.jchannelRpc.GetAddressRep.getDefaultInstance()) {
-          oneType_ = io.grpc.jchannelRpc.GetAddressRep.newBuilder((io.grpc.jchannelRpc.GetAddressRep) oneType_)
-              .mergeFrom(value).buildPartial();
-        } else {
-          oneType_ = value;
-        }
-        onChanged();
-      } else {
-        if (oneTypeCase_ == 9) {
-          getAddressRepBuilder_.mergeFrom(value);
-        }
-        getAddressRepBuilder_.setMessage(value);
-      }
-      oneTypeCase_ = 9;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 9;</code>
-     */
-    public Builder clearGetAddressRep() {
-      if (getAddressRepBuilder_ == null) {
-        if (oneTypeCase_ == 9) {
-          oneTypeCase_ = 0;
-          oneType_ = null;
-          onChanged();
-        }
-      } else {
-        if (oneTypeCase_ == 9) {
-          oneTypeCase_ = 0;
-          oneType_ = null;
-        }
-        getAddressRepBuilder_.clear();
-      }
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 9;</code>
-     */
-    public io.grpc.jchannelRpc.GetAddressRep.Builder getGetAddressRepBuilder() {
-      return getGetAddressRepFieldBuilder().getBuilder();
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 9;</code>
-     */
-    @java.lang.Override
-    public io.grpc.jchannelRpc.GetAddressRepOrBuilder getGetAddressRepOrBuilder() {
-      if ((oneTypeCase_ == 9) && (getAddressRepBuilder_ != null)) {
-        return getAddressRepBuilder_.getMessageOrBuilder();
-      } else {
-        if (oneTypeCase_ == 9) {
-          return (io.grpc.jchannelRpc.GetAddressRep) oneType_;
-        }
-        return io.grpc.jchannelRpc.GetAddressRep.getDefaultInstance();
-      }
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 9;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        io.grpc.jchannelRpc.GetAddressRep, io.grpc.jchannelRpc.GetAddressRep.Builder, io.grpc.jchannelRpc.GetAddressRepOrBuilder> 
-        getGetAddressRepFieldBuilder() {
-      if (getAddressRepBuilder_ == null) {
-        if (!(oneTypeCase_ == 9)) {
-          oneType_ = io.grpc.jchannelRpc.GetAddressRep.getDefaultInstance();
-        }
-        getAddressRepBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            io.grpc.jchannelRpc.GetAddressRep, io.grpc.jchannelRpc.GetAddressRep.Builder, io.grpc.jchannelRpc.GetAddressRepOrBuilder>(
-                (io.grpc.jchannelRpc.GetAddressRep) oneType_,
-                getParentForChildren(),
-                isClean());
-        oneType_ = null;
-      }
-      oneTypeCase_ = 9;
-      onChanged();;
-      return getAddressRepBuilder_;
-    }
-
-    private com.google.protobuf.SingleFieldBuilderV3<
-        io.grpc.jchannelRpc.GetNameRep, io.grpc.jchannelRpc.GetNameRep.Builder, io.grpc.jchannelRpc.GetNameRepOrBuilder> getNameRepBuilder_;
-    /**
-     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
-     * @return Whether the getNameRep field is set.
-     */
-    @java.lang.Override
-    public boolean hasGetNameRep() {
-      return oneTypeCase_ == 10;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
-     * @return The getNameRep.
-     */
-    @java.lang.Override
-    public io.grpc.jchannelRpc.GetNameRep getGetNameRep() {
-      if (getNameRepBuilder_ == null) {
-        if (oneTypeCase_ == 10) {
-          return (io.grpc.jchannelRpc.GetNameRep) oneType_;
-        }
-        return io.grpc.jchannelRpc.GetNameRep.getDefaultInstance();
-      } else {
-        if (oneTypeCase_ == 10) {
-          return getNameRepBuilder_.getMessage();
-        }
-        return io.grpc.jchannelRpc.GetNameRep.getDefaultInstance();
-      }
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
-     */
-    public Builder setGetNameRep(io.grpc.jchannelRpc.GetNameRep value) {
-      if (getNameRepBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        oneType_ = value;
-        onChanged();
-      } else {
-        getNameRepBuilder_.setMessage(value);
-      }
-      oneTypeCase_ = 10;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
-     */
-    public Builder setGetNameRep(
-        io.grpc.jchannelRpc.GetNameRep.Builder builderForValue) {
-      if (getNameRepBuilder_ == null) {
-        oneType_ = builderForValue.build();
-        onChanged();
-      } else {
-        getNameRepBuilder_.setMessage(builderForValue.build());
-      }
-      oneTypeCase_ = 10;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
-     */
-    public Builder mergeGetNameRep(io.grpc.jchannelRpc.GetNameRep value) {
-      if (getNameRepBuilder_ == null) {
-        if (oneTypeCase_ == 10 &&
-            oneType_ != io.grpc.jchannelRpc.GetNameRep.getDefaultInstance()) {
-          oneType_ = io.grpc.jchannelRpc.GetNameRep.newBuilder((io.grpc.jchannelRpc.GetNameRep) oneType_)
-              .mergeFrom(value).buildPartial();
-        } else {
-          oneType_ = value;
-        }
-        onChanged();
-      } else {
-        if (oneTypeCase_ == 10) {
-          getNameRepBuilder_.mergeFrom(value);
-        }
-        getNameRepBuilder_.setMessage(value);
-      }
-      oneTypeCase_ = 10;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
-     */
-    public Builder clearGetNameRep() {
-      if (getNameRepBuilder_ == null) {
-        if (oneTypeCase_ == 10) {
-          oneTypeCase_ = 0;
-          oneType_ = null;
-          onChanged();
-        }
-      } else {
-        if (oneTypeCase_ == 10) {
-          oneTypeCase_ = 0;
-          oneType_ = null;
-        }
-        getNameRepBuilder_.clear();
-      }
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
-     */
-    public io.grpc.jchannelRpc.GetNameRep.Builder getGetNameRepBuilder() {
-      return getGetNameRepFieldBuilder().getBuilder();
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
-     */
-    @java.lang.Override
-    public io.grpc.jchannelRpc.GetNameRepOrBuilder getGetNameRepOrBuilder() {
-      if ((oneTypeCase_ == 10) && (getNameRepBuilder_ != null)) {
-        return getNameRepBuilder_.getMessageOrBuilder();
-      } else {
-        if (oneTypeCase_ == 10) {
-          return (io.grpc.jchannelRpc.GetNameRep) oneType_;
-        }
-        return io.grpc.jchannelRpc.GetNameRep.getDefaultInstance();
-      }
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 10;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        io.grpc.jchannelRpc.GetNameRep, io.grpc.jchannelRpc.GetNameRep.Builder, io.grpc.jchannelRpc.GetNameRepOrBuilder> 
-        getGetNameRepFieldBuilder() {
-      if (getNameRepBuilder_ == null) {
-        if (!(oneTypeCase_ == 10)) {
-          oneType_ = io.grpc.jchannelRpc.GetNameRep.getDefaultInstance();
-        }
-        getNameRepBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            io.grpc.jchannelRpc.GetNameRep, io.grpc.jchannelRpc.GetNameRep.Builder, io.grpc.jchannelRpc.GetNameRepOrBuilder>(
-                (io.grpc.jchannelRpc.GetNameRep) oneType_,
-                getParentForChildren(),
-                isClean());
-        oneType_ = null;
-      }
-      oneTypeCase_ = 10;
-      onChanged();;
-      return getNameRepBuilder_;
-    }
-
-    private com.google.protobuf.SingleFieldBuilderV3<
-        io.grpc.jchannelRpc.GetClusterNameRep, io.grpc.jchannelRpc.GetClusterNameRep.Builder, io.grpc.jchannelRpc.GetClusterNameRepOrBuilder> getClusterNameRepBuilder_;
-    /**
-     * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 11;</code>
-     * @return Whether the getClusterNameRep field is set.
-     */
-    @java.lang.Override
-    public boolean hasGetClusterNameRep() {
-      return oneTypeCase_ == 11;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 11;</code>
-     * @return The getClusterNameRep.
-     */
-    @java.lang.Override
-    public io.grpc.jchannelRpc.GetClusterNameRep getGetClusterNameRep() {
-      if (getClusterNameRepBuilder_ == null) {
-        if (oneTypeCase_ == 11) {
-          return (io.grpc.jchannelRpc.GetClusterNameRep) oneType_;
-        }
-        return io.grpc.jchannelRpc.GetClusterNameRep.getDefaultInstance();
-      } else {
-        if (oneTypeCase_ == 11) {
-          return getClusterNameRepBuilder_.getMessage();
-        }
-        return io.grpc.jchannelRpc.GetClusterNameRep.getDefaultInstance();
-      }
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 11;</code>
-     */
-    public Builder setGetClusterNameRep(io.grpc.jchannelRpc.GetClusterNameRep value) {
-      if (getClusterNameRepBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        oneType_ = value;
-        onChanged();
-      } else {
-        getClusterNameRepBuilder_.setMessage(value);
-      }
-      oneTypeCase_ = 11;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 11;</code>
-     */
-    public Builder setGetClusterNameRep(
-        io.grpc.jchannelRpc.GetClusterNameRep.Builder builderForValue) {
-      if (getClusterNameRepBuilder_ == null) {
-        oneType_ = builderForValue.build();
-        onChanged();
-      } else {
-        getClusterNameRepBuilder_.setMessage(builderForValue.build());
-      }
-      oneTypeCase_ = 11;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 11;</code>
-     */
-    public Builder mergeGetClusterNameRep(io.grpc.jchannelRpc.GetClusterNameRep value) {
-      if (getClusterNameRepBuilder_ == null) {
-        if (oneTypeCase_ == 11 &&
-            oneType_ != io.grpc.jchannelRpc.GetClusterNameRep.getDefaultInstance()) {
-          oneType_ = io.grpc.jchannelRpc.GetClusterNameRep.newBuilder((io.grpc.jchannelRpc.GetClusterNameRep) oneType_)
-              .mergeFrom(value).buildPartial();
-        } else {
-          oneType_ = value;
-        }
-        onChanged();
-      } else {
-        if (oneTypeCase_ == 11) {
-          getClusterNameRepBuilder_.mergeFrom(value);
-        }
-        getClusterNameRepBuilder_.setMessage(value);
-      }
-      oneTypeCase_ = 11;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 11;</code>
-     */
-    public Builder clearGetClusterNameRep() {
-      if (getClusterNameRepBuilder_ == null) {
-        if (oneTypeCase_ == 11) {
-          oneTypeCase_ = 0;
-          oneType_ = null;
-          onChanged();
-        }
-      } else {
-        if (oneTypeCase_ == 11) {
-          oneTypeCase_ = 0;
-          oneType_ = null;
-        }
-        getClusterNameRepBuilder_.clear();
-      }
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 11;</code>
-     */
-    public io.grpc.jchannelRpc.GetClusterNameRep.Builder getGetClusterNameRepBuilder() {
-      return getGetClusterNameRepFieldBuilder().getBuilder();
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 11;</code>
-     */
-    @java.lang.Override
-    public io.grpc.jchannelRpc.GetClusterNameRepOrBuilder getGetClusterNameRepOrBuilder() {
-      if ((oneTypeCase_ == 11) && (getClusterNameRepBuilder_ != null)) {
-        return getClusterNameRepBuilder_.getMessageOrBuilder();
-      } else {
-        if (oneTypeCase_ == 11) {
-          return (io.grpc.jchannelRpc.GetClusterNameRep) oneType_;
-        }
-        return io.grpc.jchannelRpc.GetClusterNameRep.getDefaultInstance();
-      }
-    }
-    /**
-     * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 11;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        io.grpc.jchannelRpc.GetClusterNameRep, io.grpc.jchannelRpc.GetClusterNameRep.Builder, io.grpc.jchannelRpc.GetClusterNameRepOrBuilder> 
-        getGetClusterNameRepFieldBuilder() {
-      if (getClusterNameRepBuilder_ == null) {
-        if (!(oneTypeCase_ == 11)) {
-          oneType_ = io.grpc.jchannelRpc.GetClusterNameRep.getDefaultInstance();
-        }
-        getClusterNameRepBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            io.grpc.jchannelRpc.GetClusterNameRep, io.grpc.jchannelRpc.GetClusterNameRep.Builder, io.grpc.jchannelRpc.GetClusterNameRepOrBuilder>(
-                (io.grpc.jchannelRpc.GetClusterNameRep) oneType_,
-                getParentForChildren(),
-                isClean());
-        oneType_ = null;
-      }
-      oneTypeCase_ = 11;
-      onChanged();;
-      return getClusterNameRepBuilder_;
-    }
-
-    private com.google.protobuf.SingleFieldBuilderV3<
-        io.grpc.jchannelRpc.PrintProtocolSpecRep, io.grpc.jchannelRpc.PrintProtocolSpecRep.Builder, io.grpc.jchannelRpc.PrintProtocolSpecRepOrBuilder> printProtoRepBuilder_;
-    /**
-     * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 12;</code>
-     * @return Whether the printProtoRep field is set.
-     */
-    @java.lang.Override
-    public boolean hasPrintProtoRep() {
-      return oneTypeCase_ == 12;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 12;</code>
-     * @return The printProtoRep.
-     */
-    @java.lang.Override
-    public io.grpc.jchannelRpc.PrintProtocolSpecRep getPrintProtoRep() {
-      if (printProtoRepBuilder_ == null) {
-        if (oneTypeCase_ == 12) {
-          return (io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_;
-        }
-        return io.grpc.jchannelRpc.PrintProtocolSpecRep.getDefaultInstance();
-      } else {
-        if (oneTypeCase_ == 12) {
-          return printProtoRepBuilder_.getMessage();
-        }
-        return io.grpc.jchannelRpc.PrintProtocolSpecRep.getDefaultInstance();
-      }
-    }
-    /**
-     * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 12;</code>
-     */
-    public Builder setPrintProtoRep(io.grpc.jchannelRpc.PrintProtocolSpecRep value) {
-      if (printProtoRepBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        oneType_ = value;
-        onChanged();
-      } else {
-        printProtoRepBuilder_.setMessage(value);
-      }
-      oneTypeCase_ = 12;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 12;</code>
-     */
-    public Builder setPrintProtoRep(
-        io.grpc.jchannelRpc.PrintProtocolSpecRep.Builder builderForValue) {
-      if (printProtoRepBuilder_ == null) {
-        oneType_ = builderForValue.build();
-        onChanged();
-      } else {
-        printProtoRepBuilder_.setMessage(builderForValue.build());
-      }
-      oneTypeCase_ = 12;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 12;</code>
-     */
-    public Builder mergePrintProtoRep(io.grpc.jchannelRpc.PrintProtocolSpecRep value) {
-      if (printProtoRepBuilder_ == null) {
-        if (oneTypeCase_ == 12 &&
-            oneType_ != io.grpc.jchannelRpc.PrintProtocolSpecRep.getDefaultInstance()) {
-          oneType_ = io.grpc.jchannelRpc.PrintProtocolSpecRep.newBuilder((io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_)
-              .mergeFrom(value).buildPartial();
-        } else {
-          oneType_ = value;
-        }
-        onChanged();
-      } else {
-        if (oneTypeCase_ == 12) {
-          printProtoRepBuilder_.mergeFrom(value);
-        }
-        printProtoRepBuilder_.setMessage(value);
-      }
-      oneTypeCase_ = 12;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 12;</code>
-     */
-    public Builder clearPrintProtoRep() {
-      if (printProtoRepBuilder_ == null) {
-        if (oneTypeCase_ == 12) {
-          oneTypeCase_ = 0;
-          oneType_ = null;
-          onChanged();
-        }
-      } else {
-        if (oneTypeCase_ == 12) {
-          oneTypeCase_ = 0;
-          oneType_ = null;
-        }
-        printProtoRepBuilder_.clear();
-      }
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 12;</code>
-     */
-    public io.grpc.jchannelRpc.PrintProtocolSpecRep.Builder getPrintProtoRepBuilder() {
-      return getPrintProtoRepFieldBuilder().getBuilder();
-    }
-    /**
-     * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 12;</code>
-     */
-    @java.lang.Override
-    public io.grpc.jchannelRpc.PrintProtocolSpecRepOrBuilder getPrintProtoRepOrBuilder() {
-      if ((oneTypeCase_ == 12) && (printProtoRepBuilder_ != null)) {
-        return printProtoRepBuilder_.getMessageOrBuilder();
-      } else {
-        if (oneTypeCase_ == 12) {
-          return (io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_;
-        }
-        return io.grpc.jchannelRpc.PrintProtocolSpecRep.getDefaultInstance();
-      }
-    }
-    /**
-     * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 12;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        io.grpc.jchannelRpc.PrintProtocolSpecRep, io.grpc.jchannelRpc.PrintProtocolSpecRep.Builder, io.grpc.jchannelRpc.PrintProtocolSpecRepOrBuilder> 
-        getPrintProtoRepFieldBuilder() {
-      if (printProtoRepBuilder_ == null) {
-        if (!(oneTypeCase_ == 12)) {
-          oneType_ = io.grpc.jchannelRpc.PrintProtocolSpecRep.getDefaultInstance();
-        }
-        printProtoRepBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            io.grpc.jchannelRpc.PrintProtocolSpecRep, io.grpc.jchannelRpc.PrintProtocolSpecRep.Builder, io.grpc.jchannelRpc.PrintProtocolSpecRepOrBuilder>(
-                (io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_,
-                getParentForChildren(),
-                isClean());
-        oneType_ = null;
-      }
-      oneTypeCase_ = 12;
-      onChanged();;
-      return printProtoRepBuilder_;
-    }
-
-    private com.google.protobuf.SingleFieldBuilderV3<
         io.grpc.jchannelRpc.ViewRep_server, io.grpc.jchannelRpc.ViewRep_server.Builder, io.grpc.jchannelRpc.ViewRep_serverOrBuilder> viewRepServerBuilder_;
     /**
      * <pre>
-     * server view
+     * JChannel-server view
      * </pre>
      *
-     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 6;</code>
      * @return Whether the viewRepServer field is set.
      */
     @java.lang.Override
     public boolean hasViewRepServer() {
-      return oneTypeCase_ == 13;
+      return oneTypeCase_ == 6;
     }
     /**
      * <pre>
-     * server view
+     * JChannel-server view
      * </pre>
      *
-     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 6;</code>
      * @return The viewRepServer.
      */
     @java.lang.Override
     public io.grpc.jchannelRpc.ViewRep_server getViewRepServer() {
       if (viewRepServerBuilder_ == null) {
-        if (oneTypeCase_ == 13) {
+        if (oneTypeCase_ == 6) {
           return (io.grpc.jchannelRpc.ViewRep_server) oneType_;
         }
         return io.grpc.jchannelRpc.ViewRep_server.getDefaultInstance();
       } else {
-        if (oneTypeCase_ == 13) {
+        if (oneTypeCase_ == 6) {
           return viewRepServerBuilder_.getMessage();
         }
         return io.grpc.jchannelRpc.ViewRep_server.getDefaultInstance();
@@ -3173,10 +2319,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * server view
+     * JChannel-server view
      * </pre>
      *
-     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 6;</code>
      */
     public Builder setViewRepServer(io.grpc.jchannelRpc.ViewRep_server value) {
       if (viewRepServerBuilder_ == null) {
@@ -3188,15 +2334,15 @@ private static final long serialVersionUID = 0L;
       } else {
         viewRepServerBuilder_.setMessage(value);
       }
-      oneTypeCase_ = 13;
+      oneTypeCase_ = 6;
       return this;
     }
     /**
      * <pre>
-     * server view
+     * JChannel-server view
      * </pre>
      *
-     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 6;</code>
      */
     public Builder setViewRepServer(
         io.grpc.jchannelRpc.ViewRep_server.Builder builderForValue) {
@@ -3206,19 +2352,19 @@ private static final long serialVersionUID = 0L;
       } else {
         viewRepServerBuilder_.setMessage(builderForValue.build());
       }
-      oneTypeCase_ = 13;
+      oneTypeCase_ = 6;
       return this;
     }
     /**
      * <pre>
-     * server view
+     * JChannel-server view
      * </pre>
      *
-     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 6;</code>
      */
     public Builder mergeViewRepServer(io.grpc.jchannelRpc.ViewRep_server value) {
       if (viewRepServerBuilder_ == null) {
-        if (oneTypeCase_ == 13 &&
+        if (oneTypeCase_ == 6 &&
             oneType_ != io.grpc.jchannelRpc.ViewRep_server.getDefaultInstance()) {
           oneType_ = io.grpc.jchannelRpc.ViewRep_server.newBuilder((io.grpc.jchannelRpc.ViewRep_server) oneType_)
               .mergeFrom(value).buildPartial();
@@ -3227,23 +2373,1058 @@ private static final long serialVersionUID = 0L;
         }
         onChanged();
       } else {
-        if (oneTypeCase_ == 13) {
+        if (oneTypeCase_ == 6) {
           viewRepServerBuilder_.mergeFrom(value);
         }
         viewRepServerBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 6;
+      return this;
+    }
+    /**
+     * <pre>
+     * JChannel-server view
+     * </pre>
+     *
+     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 6;</code>
+     */
+    public Builder clearViewRepServer() {
+      if (viewRepServerBuilder_ == null) {
+        if (oneTypeCase_ == 6) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 6) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        viewRepServerBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * JChannel-server view
+     * </pre>
+     *
+     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 6;</code>
+     */
+    public io.grpc.jchannelRpc.ViewRep_server.Builder getViewRepServerBuilder() {
+      return getViewRepServerFieldBuilder().getBuilder();
+    }
+    /**
+     * <pre>
+     * JChannel-server view
+     * </pre>
+     *
+     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 6;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.ViewRep_serverOrBuilder getViewRepServerOrBuilder() {
+      if ((oneTypeCase_ == 6) && (viewRepServerBuilder_ != null)) {
+        return viewRepServerBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 6) {
+          return (io.grpc.jchannelRpc.ViewRep_server) oneType_;
+        }
+        return io.grpc.jchannelRpc.ViewRep_server.getDefaultInstance();
+      }
+    }
+    /**
+     * <pre>
+     * JChannel-server view
+     * </pre>
+     *
+     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 6;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.ViewRep_server, io.grpc.jchannelRpc.ViewRep_server.Builder, io.grpc.jchannelRpc.ViewRep_serverOrBuilder> 
+        getViewRepServerFieldBuilder() {
+      if (viewRepServerBuilder_ == null) {
+        if (!(oneTypeCase_ == 6)) {
+          oneType_ = io.grpc.jchannelRpc.ViewRep_server.getDefaultInstance();
+        }
+        viewRepServerBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.ViewRep_server, io.grpc.jchannelRpc.ViewRep_server.Builder, io.grpc.jchannelRpc.ViewRep_serverOrBuilder>(
+                (io.grpc.jchannelRpc.ViewRep_server) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 6;
+      onChanged();;
+      return viewRepServerBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.UpdateNameCacheRep, io.grpc.jchannelRpc.UpdateNameCacheRep.Builder, io.grpc.jchannelRpc.UpdateNameCacheRepOrBuilder> updateNameCacheBuilder_;
+    /**
+     * <pre>
+     * update the NameCache of JChannel-server
+     * </pre>
+     *
+     * <code>.cn.yingming.grpc1.UpdateNameCacheRep updateNameCache = 7;</code>
+     * @return Whether the updateNameCache field is set.
+     */
+    @java.lang.Override
+    public boolean hasUpdateNameCache() {
+      return oneTypeCase_ == 7;
+    }
+    /**
+     * <pre>
+     * update the NameCache of JChannel-server
+     * </pre>
+     *
+     * <code>.cn.yingming.grpc1.UpdateNameCacheRep updateNameCache = 7;</code>
+     * @return The updateNameCache.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.UpdateNameCacheRep getUpdateNameCache() {
+      if (updateNameCacheBuilder_ == null) {
+        if (oneTypeCase_ == 7) {
+          return (io.grpc.jchannelRpc.UpdateNameCacheRep) oneType_;
+        }
+        return io.grpc.jchannelRpc.UpdateNameCacheRep.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 7) {
+          return updateNameCacheBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.UpdateNameCacheRep.getDefaultInstance();
+      }
+    }
+    /**
+     * <pre>
+     * update the NameCache of JChannel-server
+     * </pre>
+     *
+     * <code>.cn.yingming.grpc1.UpdateNameCacheRep updateNameCache = 7;</code>
+     */
+    public Builder setUpdateNameCache(io.grpc.jchannelRpc.UpdateNameCacheRep value) {
+      if (updateNameCacheBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        updateNameCacheBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 7;
+      return this;
+    }
+    /**
+     * <pre>
+     * update the NameCache of JChannel-server
+     * </pre>
+     *
+     * <code>.cn.yingming.grpc1.UpdateNameCacheRep updateNameCache = 7;</code>
+     */
+    public Builder setUpdateNameCache(
+        io.grpc.jchannelRpc.UpdateNameCacheRep.Builder builderForValue) {
+      if (updateNameCacheBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        updateNameCacheBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 7;
+      return this;
+    }
+    /**
+     * <pre>
+     * update the NameCache of JChannel-server
+     * </pre>
+     *
+     * <code>.cn.yingming.grpc1.UpdateNameCacheRep updateNameCache = 7;</code>
+     */
+    public Builder mergeUpdateNameCache(io.grpc.jchannelRpc.UpdateNameCacheRep value) {
+      if (updateNameCacheBuilder_ == null) {
+        if (oneTypeCase_ == 7 &&
+            oneType_ != io.grpc.jchannelRpc.UpdateNameCacheRep.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.UpdateNameCacheRep.newBuilder((io.grpc.jchannelRpc.UpdateNameCacheRep) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 7) {
+          updateNameCacheBuilder_.mergeFrom(value);
+        }
+        updateNameCacheBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 7;
+      return this;
+    }
+    /**
+     * <pre>
+     * update the NameCache of JChannel-server
+     * </pre>
+     *
+     * <code>.cn.yingming.grpc1.UpdateNameCacheRep updateNameCache = 7;</code>
+     */
+    public Builder clearUpdateNameCache() {
+      if (updateNameCacheBuilder_ == null) {
+        if (oneTypeCase_ == 7) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 7) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        updateNameCacheBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * update the NameCache of JChannel-server
+     * </pre>
+     *
+     * <code>.cn.yingming.grpc1.UpdateNameCacheRep updateNameCache = 7;</code>
+     */
+    public io.grpc.jchannelRpc.UpdateNameCacheRep.Builder getUpdateNameCacheBuilder() {
+      return getUpdateNameCacheFieldBuilder().getBuilder();
+    }
+    /**
+     * <pre>
+     * update the NameCache of JChannel-server
+     * </pre>
+     *
+     * <code>.cn.yingming.grpc1.UpdateNameCacheRep updateNameCache = 7;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.UpdateNameCacheRepOrBuilder getUpdateNameCacheOrBuilder() {
+      if ((oneTypeCase_ == 7) && (updateNameCacheBuilder_ != null)) {
+        return updateNameCacheBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 7) {
+          return (io.grpc.jchannelRpc.UpdateNameCacheRep) oneType_;
+        }
+        return io.grpc.jchannelRpc.UpdateNameCacheRep.getDefaultInstance();
+      }
+    }
+    /**
+     * <pre>
+     * update the NameCache of JChannel-server
+     * </pre>
+     *
+     * <code>.cn.yingming.grpc1.UpdateNameCacheRep updateNameCache = 7;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.UpdateNameCacheRep, io.grpc.jchannelRpc.UpdateNameCacheRep.Builder, io.grpc.jchannelRpc.UpdateNameCacheRepOrBuilder> 
+        getUpdateNameCacheFieldBuilder() {
+      if (updateNameCacheBuilder_ == null) {
+        if (!(oneTypeCase_ == 7)) {
+          oneType_ = io.grpc.jchannelRpc.UpdateNameCacheRep.getDefaultInstance();
+        }
+        updateNameCacheBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.UpdateNameCacheRep, io.grpc.jchannelRpc.UpdateNameCacheRep.Builder, io.grpc.jchannelRpc.UpdateNameCacheRepOrBuilder>(
+                (io.grpc.jchannelRpc.UpdateNameCacheRep) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 7;
+      onChanged();;
+      return updateNameCacheBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.StateRep, io.grpc.jchannelRpc.StateRep.Builder, io.grpc.jchannelRpc.StateRepOrBuilder> stateRepBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.StateRep stateRep = 8;</code>
+     * @return Whether the stateRep field is set.
+     */
+    @java.lang.Override
+    public boolean hasStateRep() {
+      return oneTypeCase_ == 8;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateRep stateRep = 8;</code>
+     * @return The stateRep.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.StateRep getStateRep() {
+      if (stateRepBuilder_ == null) {
+        if (oneTypeCase_ == 8) {
+          return (io.grpc.jchannelRpc.StateRep) oneType_;
+        }
+        return io.grpc.jchannelRpc.StateRep.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 8) {
+          return stateRepBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.StateRep.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateRep stateRep = 8;</code>
+     */
+    public Builder setStateRep(io.grpc.jchannelRpc.StateRep value) {
+      if (stateRepBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        stateRepBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 8;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateRep stateRep = 8;</code>
+     */
+    public Builder setStateRep(
+        io.grpc.jchannelRpc.StateRep.Builder builderForValue) {
+      if (stateRepBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        stateRepBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 8;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateRep stateRep = 8;</code>
+     */
+    public Builder mergeStateRep(io.grpc.jchannelRpc.StateRep value) {
+      if (stateRepBuilder_ == null) {
+        if (oneTypeCase_ == 8 &&
+            oneType_ != io.grpc.jchannelRpc.StateRep.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.StateRep.newBuilder((io.grpc.jchannelRpc.StateRep) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 8) {
+          stateRepBuilder_.mergeFrom(value);
+        }
+        stateRepBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 8;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateRep stateRep = 8;</code>
+     */
+    public Builder clearStateRep() {
+      if (stateRepBuilder_ == null) {
+        if (oneTypeCase_ == 8) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 8) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        stateRepBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateRep stateRep = 8;</code>
+     */
+    public io.grpc.jchannelRpc.StateRep.Builder getStateRepBuilder() {
+      return getStateRepFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateRep stateRep = 8;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.StateRepOrBuilder getStateRepOrBuilder() {
+      if ((oneTypeCase_ == 8) && (stateRepBuilder_ != null)) {
+        return stateRepBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 8) {
+          return (io.grpc.jchannelRpc.StateRep) oneType_;
+        }
+        return io.grpc.jchannelRpc.StateRep.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateRep stateRep = 8;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.StateRep, io.grpc.jchannelRpc.StateRep.Builder, io.grpc.jchannelRpc.StateRepOrBuilder> 
+        getStateRepFieldBuilder() {
+      if (stateRepBuilder_ == null) {
+        if (!(oneTypeCase_ == 8)) {
+          oneType_ = io.grpc.jchannelRpc.StateRep.getDefaultInstance();
+        }
+        stateRepBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.StateRep, io.grpc.jchannelRpc.StateRep.Builder, io.grpc.jchannelRpc.StateRepOrBuilder>(
+                (io.grpc.jchannelRpc.StateRep) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 8;
+      onChanged();;
+      return stateRepBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.StateMsg_withTarget_1, io.grpc.jchannelRpc.StateMsg_withTarget_1.Builder, io.grpc.jchannelRpc.StateMsg_withTarget_1OrBuilder> stateMsg1Builder_;
+    /**
+     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
+     * @return Whether the stateMsg1 field is set.
+     */
+    @java.lang.Override
+    public boolean hasStateMsg1() {
+      return oneTypeCase_ == 9;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
+     * @return The stateMsg1.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.StateMsg_withTarget_1 getStateMsg1() {
+      if (stateMsg1Builder_ == null) {
+        if (oneTypeCase_ == 9) {
+          return (io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_;
+        }
+        return io.grpc.jchannelRpc.StateMsg_withTarget_1.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 9) {
+          return stateMsg1Builder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.StateMsg_withTarget_1.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
+     */
+    public Builder setStateMsg1(io.grpc.jchannelRpc.StateMsg_withTarget_1 value) {
+      if (stateMsg1Builder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        stateMsg1Builder_.setMessage(value);
+      }
+      oneTypeCase_ = 9;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
+     */
+    public Builder setStateMsg1(
+        io.grpc.jchannelRpc.StateMsg_withTarget_1.Builder builderForValue) {
+      if (stateMsg1Builder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        stateMsg1Builder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 9;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
+     */
+    public Builder mergeStateMsg1(io.grpc.jchannelRpc.StateMsg_withTarget_1 value) {
+      if (stateMsg1Builder_ == null) {
+        if (oneTypeCase_ == 9 &&
+            oneType_ != io.grpc.jchannelRpc.StateMsg_withTarget_1.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.StateMsg_withTarget_1.newBuilder((io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 9) {
+          stateMsg1Builder_.mergeFrom(value);
+        }
+        stateMsg1Builder_.setMessage(value);
+      }
+      oneTypeCase_ = 9;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
+     */
+    public Builder clearStateMsg1() {
+      if (stateMsg1Builder_ == null) {
+        if (oneTypeCase_ == 9) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 9) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        stateMsg1Builder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
+     */
+    public io.grpc.jchannelRpc.StateMsg_withTarget_1.Builder getStateMsg1Builder() {
+      return getStateMsg1FieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.StateMsg_withTarget_1OrBuilder getStateMsg1OrBuilder() {
+      if ((oneTypeCase_ == 9) && (stateMsg1Builder_ != null)) {
+        return stateMsg1Builder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 9) {
+          return (io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_;
+        }
+        return io.grpc.jchannelRpc.StateMsg_withTarget_1.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.StateMsg_withTarget_1, io.grpc.jchannelRpc.StateMsg_withTarget_1.Builder, io.grpc.jchannelRpc.StateMsg_withTarget_1OrBuilder> 
+        getStateMsg1FieldBuilder() {
+      if (stateMsg1Builder_ == null) {
+        if (!(oneTypeCase_ == 9)) {
+          oneType_ = io.grpc.jchannelRpc.StateMsg_withTarget_1.getDefaultInstance();
+        }
+        stateMsg1Builder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.StateMsg_withTarget_1, io.grpc.jchannelRpc.StateMsg_withTarget_1.Builder, io.grpc.jchannelRpc.StateMsg_withTarget_1OrBuilder>(
+                (io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 9;
+      onChanged();;
+      return stateMsg1Builder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.StateMsg_withTarget_2, io.grpc.jchannelRpc.StateMsg_withTarget_2.Builder, io.grpc.jchannelRpc.StateMsg_withTarget_2OrBuilder> stateMsg2Builder_;
+    /**
+     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
+     * @return Whether the stateMsg2 field is set.
+     */
+    @java.lang.Override
+    public boolean hasStateMsg2() {
+      return oneTypeCase_ == 10;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
+     * @return The stateMsg2.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.StateMsg_withTarget_2 getStateMsg2() {
+      if (stateMsg2Builder_ == null) {
+        if (oneTypeCase_ == 10) {
+          return (io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_;
+        }
+        return io.grpc.jchannelRpc.StateMsg_withTarget_2.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 10) {
+          return stateMsg2Builder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.StateMsg_withTarget_2.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
+     */
+    public Builder setStateMsg2(io.grpc.jchannelRpc.StateMsg_withTarget_2 value) {
+      if (stateMsg2Builder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        stateMsg2Builder_.setMessage(value);
+      }
+      oneTypeCase_ = 10;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
+     */
+    public Builder setStateMsg2(
+        io.grpc.jchannelRpc.StateMsg_withTarget_2.Builder builderForValue) {
+      if (stateMsg2Builder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        stateMsg2Builder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 10;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
+     */
+    public Builder mergeStateMsg2(io.grpc.jchannelRpc.StateMsg_withTarget_2 value) {
+      if (stateMsg2Builder_ == null) {
+        if (oneTypeCase_ == 10 &&
+            oneType_ != io.grpc.jchannelRpc.StateMsg_withTarget_2.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.StateMsg_withTarget_2.newBuilder((io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 10) {
+          stateMsg2Builder_.mergeFrom(value);
+        }
+        stateMsg2Builder_.setMessage(value);
+      }
+      oneTypeCase_ = 10;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
+     */
+    public Builder clearStateMsg2() {
+      if (stateMsg2Builder_ == null) {
+        if (oneTypeCase_ == 10) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 10) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        stateMsg2Builder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
+     */
+    public io.grpc.jchannelRpc.StateMsg_withTarget_2.Builder getStateMsg2Builder() {
+      return getStateMsg2FieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.StateMsg_withTarget_2OrBuilder getStateMsg2OrBuilder() {
+      if ((oneTypeCase_ == 10) && (stateMsg2Builder_ != null)) {
+        return stateMsg2Builder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 10) {
+          return (io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_;
+        }
+        return io.grpc.jchannelRpc.StateMsg_withTarget_2.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.StateMsg_withTarget_2, io.grpc.jchannelRpc.StateMsg_withTarget_2.Builder, io.grpc.jchannelRpc.StateMsg_withTarget_2OrBuilder> 
+        getStateMsg2FieldBuilder() {
+      if (stateMsg2Builder_ == null) {
+        if (!(oneTypeCase_ == 10)) {
+          oneType_ = io.grpc.jchannelRpc.StateMsg_withTarget_2.getDefaultInstance();
+        }
+        stateMsg2Builder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.StateMsg_withTarget_2, io.grpc.jchannelRpc.StateMsg_withTarget_2.Builder, io.grpc.jchannelRpc.StateMsg_withTarget_2OrBuilder>(
+                (io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 10;
+      onChanged();;
+      return stateMsg2Builder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.GetAddressRep, io.grpc.jchannelRpc.GetAddressRep.Builder, io.grpc.jchannelRpc.GetAddressRepOrBuilder> getAddressRepBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 11;</code>
+     * @return Whether the getAddressRep field is set.
+     */
+    @java.lang.Override
+    public boolean hasGetAddressRep() {
+      return oneTypeCase_ == 11;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 11;</code>
+     * @return The getAddressRep.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.GetAddressRep getGetAddressRep() {
+      if (getAddressRepBuilder_ == null) {
+        if (oneTypeCase_ == 11) {
+          return (io.grpc.jchannelRpc.GetAddressRep) oneType_;
+        }
+        return io.grpc.jchannelRpc.GetAddressRep.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 11) {
+          return getAddressRepBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.GetAddressRep.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 11;</code>
+     */
+    public Builder setGetAddressRep(io.grpc.jchannelRpc.GetAddressRep value) {
+      if (getAddressRepBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        getAddressRepBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 11;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 11;</code>
+     */
+    public Builder setGetAddressRep(
+        io.grpc.jchannelRpc.GetAddressRep.Builder builderForValue) {
+      if (getAddressRepBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        getAddressRepBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 11;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 11;</code>
+     */
+    public Builder mergeGetAddressRep(io.grpc.jchannelRpc.GetAddressRep value) {
+      if (getAddressRepBuilder_ == null) {
+        if (oneTypeCase_ == 11 &&
+            oneType_ != io.grpc.jchannelRpc.GetAddressRep.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.GetAddressRep.newBuilder((io.grpc.jchannelRpc.GetAddressRep) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 11) {
+          getAddressRepBuilder_.mergeFrom(value);
+        }
+        getAddressRepBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 11;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 11;</code>
+     */
+    public Builder clearGetAddressRep() {
+      if (getAddressRepBuilder_ == null) {
+        if (oneTypeCase_ == 11) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 11) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        getAddressRepBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 11;</code>
+     */
+    public io.grpc.jchannelRpc.GetAddressRep.Builder getGetAddressRepBuilder() {
+      return getGetAddressRepFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 11;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.GetAddressRepOrBuilder getGetAddressRepOrBuilder() {
+      if ((oneTypeCase_ == 11) && (getAddressRepBuilder_ != null)) {
+        return getAddressRepBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 11) {
+          return (io.grpc.jchannelRpc.GetAddressRep) oneType_;
+        }
+        return io.grpc.jchannelRpc.GetAddressRep.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 11;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.GetAddressRep, io.grpc.jchannelRpc.GetAddressRep.Builder, io.grpc.jchannelRpc.GetAddressRepOrBuilder> 
+        getGetAddressRepFieldBuilder() {
+      if (getAddressRepBuilder_ == null) {
+        if (!(oneTypeCase_ == 11)) {
+          oneType_ = io.grpc.jchannelRpc.GetAddressRep.getDefaultInstance();
+        }
+        getAddressRepBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.GetAddressRep, io.grpc.jchannelRpc.GetAddressRep.Builder, io.grpc.jchannelRpc.GetAddressRepOrBuilder>(
+                (io.grpc.jchannelRpc.GetAddressRep) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 11;
+      onChanged();;
+      return getAddressRepBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.GetNameRep, io.grpc.jchannelRpc.GetNameRep.Builder, io.grpc.jchannelRpc.GetNameRepOrBuilder> getNameRepBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 12;</code>
+     * @return Whether the getNameRep field is set.
+     */
+    @java.lang.Override
+    public boolean hasGetNameRep() {
+      return oneTypeCase_ == 12;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 12;</code>
+     * @return The getNameRep.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.GetNameRep getGetNameRep() {
+      if (getNameRepBuilder_ == null) {
+        if (oneTypeCase_ == 12) {
+          return (io.grpc.jchannelRpc.GetNameRep) oneType_;
+        }
+        return io.grpc.jchannelRpc.GetNameRep.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 12) {
+          return getNameRepBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.GetNameRep.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 12;</code>
+     */
+    public Builder setGetNameRep(io.grpc.jchannelRpc.GetNameRep value) {
+      if (getNameRepBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        getNameRepBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 12;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 12;</code>
+     */
+    public Builder setGetNameRep(
+        io.grpc.jchannelRpc.GetNameRep.Builder builderForValue) {
+      if (getNameRepBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        getNameRepBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 12;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 12;</code>
+     */
+    public Builder mergeGetNameRep(io.grpc.jchannelRpc.GetNameRep value) {
+      if (getNameRepBuilder_ == null) {
+        if (oneTypeCase_ == 12 &&
+            oneType_ != io.grpc.jchannelRpc.GetNameRep.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.GetNameRep.newBuilder((io.grpc.jchannelRpc.GetNameRep) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 12) {
+          getNameRepBuilder_.mergeFrom(value);
+        }
+        getNameRepBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 12;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 12;</code>
+     */
+    public Builder clearGetNameRep() {
+      if (getNameRepBuilder_ == null) {
+        if (oneTypeCase_ == 12) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 12) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        getNameRepBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 12;</code>
+     */
+    public io.grpc.jchannelRpc.GetNameRep.Builder getGetNameRepBuilder() {
+      return getGetNameRepFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 12;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.GetNameRepOrBuilder getGetNameRepOrBuilder() {
+      if ((oneTypeCase_ == 12) && (getNameRepBuilder_ != null)) {
+        return getNameRepBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 12) {
+          return (io.grpc.jchannelRpc.GetNameRep) oneType_;
+        }
+        return io.grpc.jchannelRpc.GetNameRep.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetNameRep getNameRep = 12;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.GetNameRep, io.grpc.jchannelRpc.GetNameRep.Builder, io.grpc.jchannelRpc.GetNameRepOrBuilder> 
+        getGetNameRepFieldBuilder() {
+      if (getNameRepBuilder_ == null) {
+        if (!(oneTypeCase_ == 12)) {
+          oneType_ = io.grpc.jchannelRpc.GetNameRep.getDefaultInstance();
+        }
+        getNameRepBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.GetNameRep, io.grpc.jchannelRpc.GetNameRep.Builder, io.grpc.jchannelRpc.GetNameRepOrBuilder>(
+                (io.grpc.jchannelRpc.GetNameRep) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 12;
+      onChanged();;
+      return getNameRepBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.GetClusterNameRep, io.grpc.jchannelRpc.GetClusterNameRep.Builder, io.grpc.jchannelRpc.GetClusterNameRepOrBuilder> getClusterNameRepBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 13;</code>
+     * @return Whether the getClusterNameRep field is set.
+     */
+    @java.lang.Override
+    public boolean hasGetClusterNameRep() {
+      return oneTypeCase_ == 13;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 13;</code>
+     * @return The getClusterNameRep.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.GetClusterNameRep getGetClusterNameRep() {
+      if (getClusterNameRepBuilder_ == null) {
+        if (oneTypeCase_ == 13) {
+          return (io.grpc.jchannelRpc.GetClusterNameRep) oneType_;
+        }
+        return io.grpc.jchannelRpc.GetClusterNameRep.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 13) {
+          return getClusterNameRepBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.GetClusterNameRep.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 13;</code>
+     */
+    public Builder setGetClusterNameRep(io.grpc.jchannelRpc.GetClusterNameRep value) {
+      if (getClusterNameRepBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        getClusterNameRepBuilder_.setMessage(value);
       }
       oneTypeCase_ = 13;
       return this;
     }
     /**
-     * <pre>
-     * server view
-     * </pre>
-     *
-     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+     * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 13;</code>
      */
-    public Builder clearViewRepServer() {
-      if (viewRepServerBuilder_ == null) {
+    public Builder setGetClusterNameRep(
+        io.grpc.jchannelRpc.GetClusterNameRep.Builder builderForValue) {
+      if (getClusterNameRepBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        getClusterNameRepBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 13;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 13;</code>
+     */
+    public Builder mergeGetClusterNameRep(io.grpc.jchannelRpc.GetClusterNameRep value) {
+      if (getClusterNameRepBuilder_ == null) {
+        if (oneTypeCase_ == 13 &&
+            oneType_ != io.grpc.jchannelRpc.GetClusterNameRep.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.GetClusterNameRep.newBuilder((io.grpc.jchannelRpc.GetClusterNameRep) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 13) {
+          getClusterNameRepBuilder_.mergeFrom(value);
+        }
+        getClusterNameRepBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 13;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 13;</code>
+     */
+    public Builder clearGetClusterNameRep() {
+      if (getClusterNameRepBuilder_ == null) {
         if (oneTypeCase_ == 13) {
           oneTypeCase_ = 0;
           oneType_ = null;
@@ -3254,62 +3435,191 @@ private static final long serialVersionUID = 0L;
           oneTypeCase_ = 0;
           oneType_ = null;
         }
-        viewRepServerBuilder_.clear();
+        getClusterNameRepBuilder_.clear();
       }
       return this;
     }
     /**
-     * <pre>
-     * server view
-     * </pre>
-     *
-     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+     * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 13;</code>
      */
-    public io.grpc.jchannelRpc.ViewRep_server.Builder getViewRepServerBuilder() {
-      return getViewRepServerFieldBuilder().getBuilder();
+    public io.grpc.jchannelRpc.GetClusterNameRep.Builder getGetClusterNameRepBuilder() {
+      return getGetClusterNameRepFieldBuilder().getBuilder();
     }
     /**
-     * <pre>
-     * server view
-     * </pre>
-     *
-     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+     * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 13;</code>
      */
     @java.lang.Override
-    public io.grpc.jchannelRpc.ViewRep_serverOrBuilder getViewRepServerOrBuilder() {
-      if ((oneTypeCase_ == 13) && (viewRepServerBuilder_ != null)) {
-        return viewRepServerBuilder_.getMessageOrBuilder();
+    public io.grpc.jchannelRpc.GetClusterNameRepOrBuilder getGetClusterNameRepOrBuilder() {
+      if ((oneTypeCase_ == 13) && (getClusterNameRepBuilder_ != null)) {
+        return getClusterNameRepBuilder_.getMessageOrBuilder();
       } else {
         if (oneTypeCase_ == 13) {
-          return (io.grpc.jchannelRpc.ViewRep_server) oneType_;
+          return (io.grpc.jchannelRpc.GetClusterNameRep) oneType_;
         }
-        return io.grpc.jchannelRpc.ViewRep_server.getDefaultInstance();
+        return io.grpc.jchannelRpc.GetClusterNameRep.getDefaultInstance();
       }
     }
     /**
-     * <pre>
-     * server view
-     * </pre>
-     *
-     * <code>.cn.yingming.grpc1.ViewRep_server viewRep_server = 13;</code>
+     * <code>.cn.yingming.grpc1.GetClusterNameRep getClusterNameRep = 13;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
-        io.grpc.jchannelRpc.ViewRep_server, io.grpc.jchannelRpc.ViewRep_server.Builder, io.grpc.jchannelRpc.ViewRep_serverOrBuilder> 
-        getViewRepServerFieldBuilder() {
-      if (viewRepServerBuilder_ == null) {
+        io.grpc.jchannelRpc.GetClusterNameRep, io.grpc.jchannelRpc.GetClusterNameRep.Builder, io.grpc.jchannelRpc.GetClusterNameRepOrBuilder> 
+        getGetClusterNameRepFieldBuilder() {
+      if (getClusterNameRepBuilder_ == null) {
         if (!(oneTypeCase_ == 13)) {
-          oneType_ = io.grpc.jchannelRpc.ViewRep_server.getDefaultInstance();
+          oneType_ = io.grpc.jchannelRpc.GetClusterNameRep.getDefaultInstance();
         }
-        viewRepServerBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            io.grpc.jchannelRpc.ViewRep_server, io.grpc.jchannelRpc.ViewRep_server.Builder, io.grpc.jchannelRpc.ViewRep_serverOrBuilder>(
-                (io.grpc.jchannelRpc.ViewRep_server) oneType_,
+        getClusterNameRepBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.GetClusterNameRep, io.grpc.jchannelRpc.GetClusterNameRep.Builder, io.grpc.jchannelRpc.GetClusterNameRepOrBuilder>(
+                (io.grpc.jchannelRpc.GetClusterNameRep) oneType_,
                 getParentForChildren(),
                 isClean());
         oneType_ = null;
       }
       oneTypeCase_ = 13;
       onChanged();;
-      return viewRepServerBuilder_;
+      return getClusterNameRepBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.PrintProtocolSpecRep, io.grpc.jchannelRpc.PrintProtocolSpecRep.Builder, io.grpc.jchannelRpc.PrintProtocolSpecRepOrBuilder> printProtoRepBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 14;</code>
+     * @return Whether the printProtoRep field is set.
+     */
+    @java.lang.Override
+    public boolean hasPrintProtoRep() {
+      return oneTypeCase_ == 14;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 14;</code>
+     * @return The printProtoRep.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.PrintProtocolSpecRep getPrintProtoRep() {
+      if (printProtoRepBuilder_ == null) {
+        if (oneTypeCase_ == 14) {
+          return (io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_;
+        }
+        return io.grpc.jchannelRpc.PrintProtocolSpecRep.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 14) {
+          return printProtoRepBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.PrintProtocolSpecRep.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 14;</code>
+     */
+    public Builder setPrintProtoRep(io.grpc.jchannelRpc.PrintProtocolSpecRep value) {
+      if (printProtoRepBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        printProtoRepBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 14;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 14;</code>
+     */
+    public Builder setPrintProtoRep(
+        io.grpc.jchannelRpc.PrintProtocolSpecRep.Builder builderForValue) {
+      if (printProtoRepBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        printProtoRepBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 14;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 14;</code>
+     */
+    public Builder mergePrintProtoRep(io.grpc.jchannelRpc.PrintProtocolSpecRep value) {
+      if (printProtoRepBuilder_ == null) {
+        if (oneTypeCase_ == 14 &&
+            oneType_ != io.grpc.jchannelRpc.PrintProtocolSpecRep.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.PrintProtocolSpecRep.newBuilder((io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 14) {
+          printProtoRepBuilder_.mergeFrom(value);
+        }
+        printProtoRepBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 14;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 14;</code>
+     */
+    public Builder clearPrintProtoRep() {
+      if (printProtoRepBuilder_ == null) {
+        if (oneTypeCase_ == 14) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 14) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        printProtoRepBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 14;</code>
+     */
+    public io.grpc.jchannelRpc.PrintProtocolSpecRep.Builder getPrintProtoRepBuilder() {
+      return getPrintProtoRepFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 14;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.PrintProtocolSpecRepOrBuilder getPrintProtoRepOrBuilder() {
+      if ((oneTypeCase_ == 14) && (printProtoRepBuilder_ != null)) {
+        return printProtoRepBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 14) {
+          return (io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_;
+        }
+        return io.grpc.jchannelRpc.PrintProtocolSpecRep.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.PrintProtocolSpecRep printProtoRep = 14;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.PrintProtocolSpecRep, io.grpc.jchannelRpc.PrintProtocolSpecRep.Builder, io.grpc.jchannelRpc.PrintProtocolSpecRepOrBuilder> 
+        getPrintProtoRepFieldBuilder() {
+      if (printProtoRepBuilder_ == null) {
+        if (!(oneTypeCase_ == 14)) {
+          oneType_ = io.grpc.jchannelRpc.PrintProtocolSpecRep.getDefaultInstance();
+        }
+        printProtoRepBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.PrintProtocolSpecRep, io.grpc.jchannelRpc.PrintProtocolSpecRep.Builder, io.grpc.jchannelRpc.PrintProtocolSpecRepOrBuilder>(
+                (io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 14;
+      onChanged();;
+      return printProtoRepBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

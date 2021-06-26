@@ -12,10 +12,10 @@ public class SimpleChatRJ {
     RemoteJChannel remoteJChannel;
     ReceiverRJ receiver;
 
-    private void start(String name, String server_address, String cluster, String state_target) throws Exception{
+    private void start(String server_address, String cluster) throws Exception{
 
         receiver = new ReceiverRJ();
-        remoteJChannel = new RemoteJChannel(name, server_address);
+        remoteJChannel = new RemoteJChannel(server_address);
         remoteJChannel.setReceiverRJ(receiver);
         //remoteJChannel.setDiscardOwnMessages(true);
         //remoteJChannel.setStats(true);
@@ -80,6 +80,6 @@ public class SimpleChatRJ {
     }
 
     public static void main(String[] args) throws Exception {
-        new SimpleChatRJ().start(args[0], args[1], args[2], args[3]);
+        new SimpleChatRJ().start(args[0], args[1]);
     }
 }
