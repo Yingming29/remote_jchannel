@@ -67,6 +67,8 @@ public class NodeJChannel implements Receiver{
             } finally {
                 lock.unlock();
             }
+        } else if (){
+            System.out.println();
         } else if (obj == null){
             Request req = null;
             try{
