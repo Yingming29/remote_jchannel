@@ -412,7 +412,7 @@ public class RemoteJChannel extends JChannel {
                     "because the RemoteJchannel miss some properties.");
         }
     }
-
+    // the cluster can be changed to null, because they connects to one cluster
     private boolean checkProperty(){
         if (this.address == null || this.address.equals("")){
             throw new IllegalStateException("The address (for grpc server) of RemoteJChannel is null.");

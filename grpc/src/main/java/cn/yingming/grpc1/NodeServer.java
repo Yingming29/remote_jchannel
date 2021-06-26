@@ -131,8 +131,6 @@ public class NodeServer {
                         forwardMsg(reqForward);
                         // 4. store the generated Address and logcial to this node's NameCache
                         NameCache.add(generated_address, generated_name);
-                        // 5. update the current NameCache to the client
-
                     /*  Condition2
                         Receive the disconnect() request.
                      */
@@ -426,7 +424,10 @@ public class NodeServer {
                         .setUpdateResponse(updateRep)
                         .build();
                 responseObserver.onNext(rep2);
-
+                // generate and update the current NameCache to the client
+                UpdateNameCacheRep nameCacheRep = generateNameCacheMsg();
+                Response rep3 = Response.newBuilder().setUpdateNameCache(nameCacheRep).build();
+                responseObserver.onNext(rep3);
                 // Copy and send a JChannel-server View to the client
                 View view = jchannel.channel.getView();
                 ByteArrayDataOutputStream vOutStream = new ByteArrayDataOutputStream();
@@ -487,17 +488,32 @@ public class NodeServer {
             }
         }
 
-        protected void updateNameCache(StreamObserver observer){
+        protected UpdateNameCacheRep generateNameCacheMsg(){
+            UpdateNameCacheRep nameCacheRep = null;
             lock.lock();
             try{
-                Map m = NameCache.getContents();
                 UpdateNameCacheRep.Builder builder = UpdateNameCacheRep.newBuilder();
+                Map<Address, String> m = NameCache.getContents();
 
-
+                for (Address oneAddress: m.keySet()) {
+                    ByteArrayDataOutputStream vOutStream = new ByteArrayDataOutputStream();
+                    if (oneAddress instanceof UUID){
+                        UUID u = (UUID) oneAddress;
+                        u.writeTo(vOutStream);
+                    } else{
+                        throw new IllegalArgumentException("It does not belong to UUID Address.");
+                    }
+                    byte[] v_byte = vOutStream.buffer();
+                    builder.addAddress(ByteString.copyFrom(v_byte));
+                    builder.addLogicalName(oneAddress.toString());
+                }
+                nameCacheRep = builder.build();
+            } catch (IOException e) {
+                e.printStackTrace();
             } finally {
                 lock.unlock();
             }
-
+            return nameCacheRep;
         }
 
         // Broadcast the messages for updating addresses of servers

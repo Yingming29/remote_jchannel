@@ -273,6 +273,28 @@ public class RemoteJChannelStub {
             synchronized (this.client.obj) {
                 this.client.obj.notify();
             }
+        } else if (response.hasUpdateNameCache()){
+            UpdateNameCacheRep nameCacheRep = response.getUpdateNameCache();
+            List<ByteString> addressList = nameCacheRep.getAddressList();
+            List<String> nameList = nameCacheRep.getLogicalNameList();
+            for (int i = 0; i < addressList.size(); i++) {
+                ByteString bs = addressList.get(i);
+                byte[] byte_address = bs.toByteArray();
+                UUID u = new UUID();
+                ByteArrayDataInputStream in = new ByteArrayDataInputStream(byte_address);
+                try {
+                    u.readFrom(in);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+                System.out.println("A pair of Address and logical name: " + u + ", " + nameList.get(i));
+                stubLock.lock();
+                try {
+                    NameCache.add(u, nameList.get(i));
+                } finally {
+                    stubLock.unlock();
+                }
+            }
         } else if(response.hasViewRepServer()){
             ViewRep_server view_server = response.getViewRepServer();
             ByteArrayDataInputStream v_in = new ByteArrayDataInputStream(view_server.getViewByte().toByteArray());
