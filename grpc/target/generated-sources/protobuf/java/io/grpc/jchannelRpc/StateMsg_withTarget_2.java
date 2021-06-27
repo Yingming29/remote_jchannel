@@ -74,11 +74,11 @@ private static final long serialVersionUID = 0L;
           }
           case 34: {
             if (!((mutable_bitField0_ & 0x00000001) != 0)) {
-              oneOfHistory_ = new java.util.ArrayList<io.grpc.jchannelRpc.MessageRep>();
+              oneOfHistory_ = new java.util.ArrayList<io.grpc.jchannelRpc.MessageReqRep>();
               mutable_bitField0_ |= 0x00000001;
             }
             oneOfHistory_.add(
-                input.readMessage(io.grpc.jchannelRpc.MessageRep.parser(), extensionRegistry));
+                input.readMessage(io.grpc.jchannelRpc.MessageReqRep.parser(), extensionRegistry));
             break;
           }
           case 42: {
@@ -237,41 +237,41 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int ONEOFHISTORY_FIELD_NUMBER = 4;
-  private java.util.List<io.grpc.jchannelRpc.MessageRep> oneOfHistory_;
+  private java.util.List<io.grpc.jchannelRpc.MessageReqRep> oneOfHistory_;
   /**
-   * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+   * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
    */
   @java.lang.Override
-  public java.util.List<io.grpc.jchannelRpc.MessageRep> getOneOfHistoryList() {
+  public java.util.List<io.grpc.jchannelRpc.MessageReqRep> getOneOfHistoryList() {
     return oneOfHistory_;
   }
   /**
-   * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+   * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
    */
   @java.lang.Override
-  public java.util.List<? extends io.grpc.jchannelRpc.MessageRepOrBuilder> 
+  public java.util.List<? extends io.grpc.jchannelRpc.MessageReqRepOrBuilder> 
       getOneOfHistoryOrBuilderList() {
     return oneOfHistory_;
   }
   /**
-   * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+   * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
    */
   @java.lang.Override
   public int getOneOfHistoryCount() {
     return oneOfHistory_.size();
   }
   /**
-   * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+   * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
    */
   @java.lang.Override
-  public io.grpc.jchannelRpc.MessageRep getOneOfHistory(int index) {
+  public io.grpc.jchannelRpc.MessageReqRep getOneOfHistory(int index) {
     return oneOfHistory_.get(index);
   }
   /**
-   * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+   * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
    */
   @java.lang.Override
-  public io.grpc.jchannelRpc.MessageRepOrBuilder getOneOfHistoryOrBuilder(
+  public io.grpc.jchannelRpc.MessageReqRepOrBuilder getOneOfHistoryOrBuilder(
       int index) {
     return oneOfHistory_.get(index);
   }
@@ -952,22 +952,22 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.util.List<io.grpc.jchannelRpc.MessageRep> oneOfHistory_ =
+    private java.util.List<io.grpc.jchannelRpc.MessageReqRep> oneOfHistory_ =
       java.util.Collections.emptyList();
     private void ensureOneOfHistoryIsMutable() {
       if (!((bitField0_ & 0x00000001) != 0)) {
-        oneOfHistory_ = new java.util.ArrayList<io.grpc.jchannelRpc.MessageRep>(oneOfHistory_);
+        oneOfHistory_ = new java.util.ArrayList<io.grpc.jchannelRpc.MessageReqRep>(oneOfHistory_);
         bitField0_ |= 0x00000001;
        }
     }
 
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        io.grpc.jchannelRpc.MessageRep, io.grpc.jchannelRpc.MessageRep.Builder, io.grpc.jchannelRpc.MessageRepOrBuilder> oneOfHistoryBuilder_;
+        io.grpc.jchannelRpc.MessageReqRep, io.grpc.jchannelRpc.MessageReqRep.Builder, io.grpc.jchannelRpc.MessageReqRepOrBuilder> oneOfHistoryBuilder_;
 
     /**
-     * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
      */
-    public java.util.List<io.grpc.jchannelRpc.MessageRep> getOneOfHistoryList() {
+    public java.util.List<io.grpc.jchannelRpc.MessageReqRep> getOneOfHistoryList() {
       if (oneOfHistoryBuilder_ == null) {
         return java.util.Collections.unmodifiableList(oneOfHistory_);
       } else {
@@ -975,7 +975,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
      */
     public int getOneOfHistoryCount() {
       if (oneOfHistoryBuilder_ == null) {
@@ -985,9 +985,9 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
      */
-    public io.grpc.jchannelRpc.MessageRep getOneOfHistory(int index) {
+    public io.grpc.jchannelRpc.MessageReqRep getOneOfHistory(int index) {
       if (oneOfHistoryBuilder_ == null) {
         return oneOfHistory_.get(index);
       } else {
@@ -995,10 +995,10 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
      */
     public Builder setOneOfHistory(
-        int index, io.grpc.jchannelRpc.MessageRep value) {
+        int index, io.grpc.jchannelRpc.MessageReqRep value) {
       if (oneOfHistoryBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1012,10 +1012,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
      */
     public Builder setOneOfHistory(
-        int index, io.grpc.jchannelRpc.MessageRep.Builder builderForValue) {
+        int index, io.grpc.jchannelRpc.MessageReqRep.Builder builderForValue) {
       if (oneOfHistoryBuilder_ == null) {
         ensureOneOfHistoryIsMutable();
         oneOfHistory_.set(index, builderForValue.build());
@@ -1026,9 +1026,9 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
      */
-    public Builder addOneOfHistory(io.grpc.jchannelRpc.MessageRep value) {
+    public Builder addOneOfHistory(io.grpc.jchannelRpc.MessageReqRep value) {
       if (oneOfHistoryBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1042,10 +1042,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
      */
     public Builder addOneOfHistory(
-        int index, io.grpc.jchannelRpc.MessageRep value) {
+        int index, io.grpc.jchannelRpc.MessageReqRep value) {
       if (oneOfHistoryBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1059,10 +1059,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
      */
     public Builder addOneOfHistory(
-        io.grpc.jchannelRpc.MessageRep.Builder builderForValue) {
+        io.grpc.jchannelRpc.MessageReqRep.Builder builderForValue) {
       if (oneOfHistoryBuilder_ == null) {
         ensureOneOfHistoryIsMutable();
         oneOfHistory_.add(builderForValue.build());
@@ -1073,10 +1073,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
      */
     public Builder addOneOfHistory(
-        int index, io.grpc.jchannelRpc.MessageRep.Builder builderForValue) {
+        int index, io.grpc.jchannelRpc.MessageReqRep.Builder builderForValue) {
       if (oneOfHistoryBuilder_ == null) {
         ensureOneOfHistoryIsMutable();
         oneOfHistory_.add(index, builderForValue.build());
@@ -1087,10 +1087,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
      */
     public Builder addAllOneOfHistory(
-        java.lang.Iterable<? extends io.grpc.jchannelRpc.MessageRep> values) {
+        java.lang.Iterable<? extends io.grpc.jchannelRpc.MessageReqRep> values) {
       if (oneOfHistoryBuilder_ == null) {
         ensureOneOfHistoryIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -1102,7 +1102,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
      */
     public Builder clearOneOfHistory() {
       if (oneOfHistoryBuilder_ == null) {
@@ -1115,7 +1115,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
      */
     public Builder removeOneOfHistory(int index) {
       if (oneOfHistoryBuilder_ == null) {
@@ -1128,16 +1128,16 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
      */
-    public io.grpc.jchannelRpc.MessageRep.Builder getOneOfHistoryBuilder(
+    public io.grpc.jchannelRpc.MessageReqRep.Builder getOneOfHistoryBuilder(
         int index) {
       return getOneOfHistoryFieldBuilder().getBuilder(index);
     }
     /**
-     * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
      */
-    public io.grpc.jchannelRpc.MessageRepOrBuilder getOneOfHistoryOrBuilder(
+    public io.grpc.jchannelRpc.MessageReqRepOrBuilder getOneOfHistoryOrBuilder(
         int index) {
       if (oneOfHistoryBuilder_ == null) {
         return oneOfHistory_.get(index);  } else {
@@ -1145,9 +1145,9 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
      */
-    public java.util.List<? extends io.grpc.jchannelRpc.MessageRepOrBuilder> 
+    public java.util.List<? extends io.grpc.jchannelRpc.MessageReqRepOrBuilder> 
          getOneOfHistoryOrBuilderList() {
       if (oneOfHistoryBuilder_ != null) {
         return oneOfHistoryBuilder_.getMessageOrBuilderList();
@@ -1156,33 +1156,33 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
      */
-    public io.grpc.jchannelRpc.MessageRep.Builder addOneOfHistoryBuilder() {
+    public io.grpc.jchannelRpc.MessageReqRep.Builder addOneOfHistoryBuilder() {
       return getOneOfHistoryFieldBuilder().addBuilder(
-          io.grpc.jchannelRpc.MessageRep.getDefaultInstance());
+          io.grpc.jchannelRpc.MessageReqRep.getDefaultInstance());
     }
     /**
-     * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
      */
-    public io.grpc.jchannelRpc.MessageRep.Builder addOneOfHistoryBuilder(
+    public io.grpc.jchannelRpc.MessageReqRep.Builder addOneOfHistoryBuilder(
         int index) {
       return getOneOfHistoryFieldBuilder().addBuilder(
-          index, io.grpc.jchannelRpc.MessageRep.getDefaultInstance());
+          index, io.grpc.jchannelRpc.MessageReqRep.getDefaultInstance());
     }
     /**
-     * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
      */
-    public java.util.List<io.grpc.jchannelRpc.MessageRep.Builder> 
+    public java.util.List<io.grpc.jchannelRpc.MessageReqRep.Builder> 
          getOneOfHistoryBuilderList() {
       return getOneOfHistoryFieldBuilder().getBuilderList();
     }
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        io.grpc.jchannelRpc.MessageRep, io.grpc.jchannelRpc.MessageRep.Builder, io.grpc.jchannelRpc.MessageRepOrBuilder> 
+        io.grpc.jchannelRpc.MessageReqRep, io.grpc.jchannelRpc.MessageReqRep.Builder, io.grpc.jchannelRpc.MessageReqRepOrBuilder> 
         getOneOfHistoryFieldBuilder() {
       if (oneOfHistoryBuilder_ == null) {
         oneOfHistoryBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-            io.grpc.jchannelRpc.MessageRep, io.grpc.jchannelRpc.MessageRep.Builder, io.grpc.jchannelRpc.MessageRepOrBuilder>(
+            io.grpc.jchannelRpc.MessageReqRep, io.grpc.jchannelRpc.MessageReqRep.Builder, io.grpc.jchannelRpc.MessageReqRepOrBuilder>(
                 oneOfHistory_,
                 ((bitField0_ & 0x00000001) != 0),
                 getParentForChildren(),

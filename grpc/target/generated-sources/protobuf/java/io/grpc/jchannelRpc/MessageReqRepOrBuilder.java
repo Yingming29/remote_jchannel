@@ -3,8 +3,8 @@
 
 package io.grpc.jchannelRpc;
 
-public interface MessageReqOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:cn.yingming.grpc1.MessageReq)
+public interface MessageReqRepOrBuilder extends
+    // @@protoc_insertion_point(interface_extends:cn.yingming.grpc1.MessageReqRep)
     com.google.protobuf.MessageOrBuilder {
 
   /**

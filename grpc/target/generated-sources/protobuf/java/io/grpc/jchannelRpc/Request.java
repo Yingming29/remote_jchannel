@@ -49,14 +49,14 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            io.grpc.jchannelRpc.MessageReq.Builder subBuilder = null;
+            io.grpc.jchannelRpc.MessageReqRep.Builder subBuilder = null;
             if (oneTypeCase_ == 1) {
-              subBuilder = ((io.grpc.jchannelRpc.MessageReq) oneType_).toBuilder();
+              subBuilder = ((io.grpc.jchannelRpc.MessageReqRep) oneType_).toBuilder();
             }
             oneType_ =
-                input.readMessage(io.grpc.jchannelRpc.MessageReq.parser(), extensionRegistry);
+                input.readMessage(io.grpc.jchannelRpc.MessageReqRep.parser(), extensionRegistry);
             if (subBuilder != null) {
-              subBuilder.mergeFrom((io.grpc.jchannelRpc.MessageReq) oneType_);
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.MessageReqRep) oneType_);
               oneType_ = subBuilder.buildPartial();
             }
             oneTypeCase_ = 1;
@@ -225,7 +225,7 @@ private static final long serialVersionUID = 0L;
   public enum OneTypeCase
       implements com.google.protobuf.Internal.EnumLite,
           com.google.protobuf.AbstractMessage.InternalOneOfEnum {
-    MESSAGEREQUEST(1),
+    MESSAGEREQREP(1),
     CONNECTREQUEST(2),
     DISCONNECTREQUEST(3),
     STATEREQ(4),
@@ -252,7 +252,7 @@ private static final long serialVersionUID = 0L;
 
     public static OneTypeCase forNumber(int value) {
       switch (value) {
-        case 1: return MESSAGEREQUEST;
+        case 1: return MESSAGEREQREP;
         case 2: return CONNECTREQUEST;
         case 3: return DISCONNECTREQUEST;
         case 4: return STATEREQ;
@@ -277,35 +277,35 @@ private static final long serialVersionUID = 0L;
         oneTypeCase_);
   }
 
-  public static final int MESSAGEREQUEST_FIELD_NUMBER = 1;
+  public static final int MESSAGEREQREP_FIELD_NUMBER = 1;
   /**
-   * <code>.cn.yingming.grpc1.MessageReq messageRequest = 1;</code>
-   * @return Whether the messageRequest field is set.
+   * <code>.cn.yingming.grpc1.MessageReqRep messageReqRep = 1;</code>
+   * @return Whether the messageReqRep field is set.
    */
   @java.lang.Override
-  public boolean hasMessageRequest() {
+  public boolean hasMessageReqRep() {
     return oneTypeCase_ == 1;
   }
   /**
-   * <code>.cn.yingming.grpc1.MessageReq messageRequest = 1;</code>
-   * @return The messageRequest.
+   * <code>.cn.yingming.grpc1.MessageReqRep messageReqRep = 1;</code>
+   * @return The messageReqRep.
    */
   @java.lang.Override
-  public io.grpc.jchannelRpc.MessageReq getMessageRequest() {
+  public io.grpc.jchannelRpc.MessageReqRep getMessageReqRep() {
     if (oneTypeCase_ == 1) {
-       return (io.grpc.jchannelRpc.MessageReq) oneType_;
+       return (io.grpc.jchannelRpc.MessageReqRep) oneType_;
     }
-    return io.grpc.jchannelRpc.MessageReq.getDefaultInstance();
+    return io.grpc.jchannelRpc.MessageReqRep.getDefaultInstance();
   }
   /**
-   * <code>.cn.yingming.grpc1.MessageReq messageRequest = 1;</code>
+   * <code>.cn.yingming.grpc1.MessageReqRep messageReqRep = 1;</code>
    */
   @java.lang.Override
-  public io.grpc.jchannelRpc.MessageReqOrBuilder getMessageRequestOrBuilder() {
+  public io.grpc.jchannelRpc.MessageReqRepOrBuilder getMessageReqRepOrBuilder() {
     if (oneTypeCase_ == 1) {
-       return (io.grpc.jchannelRpc.MessageReq) oneType_;
+       return (io.grpc.jchannelRpc.MessageReqRep) oneType_;
     }
-    return io.grpc.jchannelRpc.MessageReq.getDefaultInstance();
+    return io.grpc.jchannelRpc.MessageReqRep.getDefaultInstance();
   }
 
   public static final int CONNECTREQUEST_FIELD_NUMBER = 2;
@@ -602,7 +602,7 @@ private static final long serialVersionUID = 0L;
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (oneTypeCase_ == 1) {
-      output.writeMessage(1, (io.grpc.jchannelRpc.MessageReq) oneType_);
+      output.writeMessage(1, (io.grpc.jchannelRpc.MessageReqRep) oneType_);
     }
     if (oneTypeCase_ == 2) {
       output.writeMessage(2, (io.grpc.jchannelRpc.ConnectReq) oneType_);
@@ -642,7 +642,7 @@ private static final long serialVersionUID = 0L;
     size = 0;
     if (oneTypeCase_ == 1) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(1, (io.grpc.jchannelRpc.MessageReq) oneType_);
+        .computeMessageSize(1, (io.grpc.jchannelRpc.MessageReqRep) oneType_);
     }
     if (oneTypeCase_ == 2) {
       size += com.google.protobuf.CodedOutputStream
@@ -698,8 +698,8 @@ private static final long serialVersionUID = 0L;
     if (!getOneTypeCase().equals(other.getOneTypeCase())) return false;
     switch (oneTypeCase_) {
       case 1:
-        if (!getMessageRequest()
-            .equals(other.getMessageRequest())) return false;
+        if (!getMessageReqRep()
+            .equals(other.getMessageReqRep())) return false;
         break;
       case 2:
         if (!getConnectRequest()
@@ -753,8 +753,8 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     switch (oneTypeCase_) {
       case 1:
-        hash = (37 * hash) + MESSAGEREQUEST_FIELD_NUMBER;
-        hash = (53 * hash) + getMessageRequest().hashCode();
+        hash = (37 * hash) + MESSAGEREQREP_FIELD_NUMBER;
+        hash = (53 * hash) + getMessageReqRep().hashCode();
         break;
       case 2:
         hash = (37 * hash) + CONNECTREQUEST_FIELD_NUMBER;
@@ -957,10 +957,10 @@ private static final long serialVersionUID = 0L;
     public io.grpc.jchannelRpc.Request buildPartial() {
       io.grpc.jchannelRpc.Request result = new io.grpc.jchannelRpc.Request(this);
       if (oneTypeCase_ == 1) {
-        if (messageRequestBuilder_ == null) {
+        if (messageReqRepBuilder_ == null) {
           result.oneType_ = oneType_;
         } else {
-          result.oneType_ = messageRequestBuilder_.build();
+          result.oneType_ = messageReqRepBuilder_.build();
         }
       }
       if (oneTypeCase_ == 2) {
@@ -1076,8 +1076,8 @@ private static final long serialVersionUID = 0L;
     public Builder mergeFrom(io.grpc.jchannelRpc.Request other) {
       if (other == io.grpc.jchannelRpc.Request.getDefaultInstance()) return this;
       switch (other.getOneTypeCase()) {
-        case MESSAGEREQUEST: {
-          mergeMessageRequest(other.getMessageRequest());
+        case MESSAGEREQREP: {
+          mergeMessageReqRep(other.getMessageReqRep());
           break;
         }
         case CONNECTREQUEST: {
@@ -1165,71 +1165,71 @@ private static final long serialVersionUID = 0L;
 
 
     private com.google.protobuf.SingleFieldBuilderV3<
-        io.grpc.jchannelRpc.MessageReq, io.grpc.jchannelRpc.MessageReq.Builder, io.grpc.jchannelRpc.MessageReqOrBuilder> messageRequestBuilder_;
+        io.grpc.jchannelRpc.MessageReqRep, io.grpc.jchannelRpc.MessageReqRep.Builder, io.grpc.jchannelRpc.MessageReqRepOrBuilder> messageReqRepBuilder_;
     /**
-     * <code>.cn.yingming.grpc1.MessageReq messageRequest = 1;</code>
-     * @return Whether the messageRequest field is set.
+     * <code>.cn.yingming.grpc1.MessageReqRep messageReqRep = 1;</code>
+     * @return Whether the messageReqRep field is set.
      */
     @java.lang.Override
-    public boolean hasMessageRequest() {
+    public boolean hasMessageReqRep() {
       return oneTypeCase_ == 1;
     }
     /**
-     * <code>.cn.yingming.grpc1.MessageReq messageRequest = 1;</code>
-     * @return The messageRequest.
+     * <code>.cn.yingming.grpc1.MessageReqRep messageReqRep = 1;</code>
+     * @return The messageReqRep.
      */
     @java.lang.Override
-    public io.grpc.jchannelRpc.MessageReq getMessageRequest() {
-      if (messageRequestBuilder_ == null) {
+    public io.grpc.jchannelRpc.MessageReqRep getMessageReqRep() {
+      if (messageReqRepBuilder_ == null) {
         if (oneTypeCase_ == 1) {
-          return (io.grpc.jchannelRpc.MessageReq) oneType_;
+          return (io.grpc.jchannelRpc.MessageReqRep) oneType_;
         }
-        return io.grpc.jchannelRpc.MessageReq.getDefaultInstance();
+        return io.grpc.jchannelRpc.MessageReqRep.getDefaultInstance();
       } else {
         if (oneTypeCase_ == 1) {
-          return messageRequestBuilder_.getMessage();
+          return messageReqRepBuilder_.getMessage();
         }
-        return io.grpc.jchannelRpc.MessageReq.getDefaultInstance();
+        return io.grpc.jchannelRpc.MessageReqRep.getDefaultInstance();
       }
     }
     /**
-     * <code>.cn.yingming.grpc1.MessageReq messageRequest = 1;</code>
+     * <code>.cn.yingming.grpc1.MessageReqRep messageReqRep = 1;</code>
      */
-    public Builder setMessageRequest(io.grpc.jchannelRpc.MessageReq value) {
-      if (messageRequestBuilder_ == null) {
+    public Builder setMessageReqRep(io.grpc.jchannelRpc.MessageReqRep value) {
+      if (messageReqRepBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
         }
         oneType_ = value;
         onChanged();
       } else {
-        messageRequestBuilder_.setMessage(value);
+        messageReqRepBuilder_.setMessage(value);
       }
       oneTypeCase_ = 1;
       return this;
     }
     /**
-     * <code>.cn.yingming.grpc1.MessageReq messageRequest = 1;</code>
+     * <code>.cn.yingming.grpc1.MessageReqRep messageReqRep = 1;</code>
      */
-    public Builder setMessageRequest(
-        io.grpc.jchannelRpc.MessageReq.Builder builderForValue) {
-      if (messageRequestBuilder_ == null) {
+    public Builder setMessageReqRep(
+        io.grpc.jchannelRpc.MessageReqRep.Builder builderForValue) {
+      if (messageReqRepBuilder_ == null) {
         oneType_ = builderForValue.build();
         onChanged();
       } else {
-        messageRequestBuilder_.setMessage(builderForValue.build());
+        messageReqRepBuilder_.setMessage(builderForValue.build());
       }
       oneTypeCase_ = 1;
       return this;
     }
     /**
-     * <code>.cn.yingming.grpc1.MessageReq messageRequest = 1;</code>
+     * <code>.cn.yingming.grpc1.MessageReqRep messageReqRep = 1;</code>
      */
-    public Builder mergeMessageRequest(io.grpc.jchannelRpc.MessageReq value) {
-      if (messageRequestBuilder_ == null) {
+    public Builder mergeMessageReqRep(io.grpc.jchannelRpc.MessageReqRep value) {
+      if (messageReqRepBuilder_ == null) {
         if (oneTypeCase_ == 1 &&
-            oneType_ != io.grpc.jchannelRpc.MessageReq.getDefaultInstance()) {
-          oneType_ = io.grpc.jchannelRpc.MessageReq.newBuilder((io.grpc.jchannelRpc.MessageReq) oneType_)
+            oneType_ != io.grpc.jchannelRpc.MessageReqRep.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.MessageReqRep.newBuilder((io.grpc.jchannelRpc.MessageReqRep) oneType_)
               .mergeFrom(value).buildPartial();
         } else {
           oneType_ = value;
@@ -1237,18 +1237,18 @@ private static final long serialVersionUID = 0L;
         onChanged();
       } else {
         if (oneTypeCase_ == 1) {
-          messageRequestBuilder_.mergeFrom(value);
+          messageReqRepBuilder_.mergeFrom(value);
         }
-        messageRequestBuilder_.setMessage(value);
+        messageReqRepBuilder_.setMessage(value);
       }
       oneTypeCase_ = 1;
       return this;
     }
     /**
-     * <code>.cn.yingming.grpc1.MessageReq messageRequest = 1;</code>
+     * <code>.cn.yingming.grpc1.MessageReqRep messageReqRep = 1;</code>
      */
-    public Builder clearMessageRequest() {
-      if (messageRequestBuilder_ == null) {
+    public Builder clearMessageReqRep() {
+      if (messageReqRepBuilder_ == null) {
         if (oneTypeCase_ == 1) {
           oneTypeCase_ = 0;
           oneType_ = null;
@@ -1259,50 +1259,50 @@ private static final long serialVersionUID = 0L;
           oneTypeCase_ = 0;
           oneType_ = null;
         }
-        messageRequestBuilder_.clear();
+        messageReqRepBuilder_.clear();
       }
       return this;
     }
     /**
-     * <code>.cn.yingming.grpc1.MessageReq messageRequest = 1;</code>
+     * <code>.cn.yingming.grpc1.MessageReqRep messageReqRep = 1;</code>
      */
-    public io.grpc.jchannelRpc.MessageReq.Builder getMessageRequestBuilder() {
-      return getMessageRequestFieldBuilder().getBuilder();
+    public io.grpc.jchannelRpc.MessageReqRep.Builder getMessageReqRepBuilder() {
+      return getMessageReqRepFieldBuilder().getBuilder();
     }
     /**
-     * <code>.cn.yingming.grpc1.MessageReq messageRequest = 1;</code>
+     * <code>.cn.yingming.grpc1.MessageReqRep messageReqRep = 1;</code>
      */
     @java.lang.Override
-    public io.grpc.jchannelRpc.MessageReqOrBuilder getMessageRequestOrBuilder() {
-      if ((oneTypeCase_ == 1) && (messageRequestBuilder_ != null)) {
-        return messageRequestBuilder_.getMessageOrBuilder();
+    public io.grpc.jchannelRpc.MessageReqRepOrBuilder getMessageReqRepOrBuilder() {
+      if ((oneTypeCase_ == 1) && (messageReqRepBuilder_ != null)) {
+        return messageReqRepBuilder_.getMessageOrBuilder();
       } else {
         if (oneTypeCase_ == 1) {
-          return (io.grpc.jchannelRpc.MessageReq) oneType_;
+          return (io.grpc.jchannelRpc.MessageReqRep) oneType_;
         }
-        return io.grpc.jchannelRpc.MessageReq.getDefaultInstance();
+        return io.grpc.jchannelRpc.MessageReqRep.getDefaultInstance();
       }
     }
     /**
-     * <code>.cn.yingming.grpc1.MessageReq messageRequest = 1;</code>
+     * <code>.cn.yingming.grpc1.MessageReqRep messageReqRep = 1;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
-        io.grpc.jchannelRpc.MessageReq, io.grpc.jchannelRpc.MessageReq.Builder, io.grpc.jchannelRpc.MessageReqOrBuilder> 
-        getMessageRequestFieldBuilder() {
-      if (messageRequestBuilder_ == null) {
+        io.grpc.jchannelRpc.MessageReqRep, io.grpc.jchannelRpc.MessageReqRep.Builder, io.grpc.jchannelRpc.MessageReqRepOrBuilder> 
+        getMessageReqRepFieldBuilder() {
+      if (messageReqRepBuilder_ == null) {
         if (!(oneTypeCase_ == 1)) {
-          oneType_ = io.grpc.jchannelRpc.MessageReq.getDefaultInstance();
+          oneType_ = io.grpc.jchannelRpc.MessageReqRep.getDefaultInstance();
         }
-        messageRequestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            io.grpc.jchannelRpc.MessageReq, io.grpc.jchannelRpc.MessageReq.Builder, io.grpc.jchannelRpc.MessageReqOrBuilder>(
-                (io.grpc.jchannelRpc.MessageReq) oneType_,
+        messageReqRepBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.MessageReqRep, io.grpc.jchannelRpc.MessageReqRep.Builder, io.grpc.jchannelRpc.MessageReqRepOrBuilder>(
+                (io.grpc.jchannelRpc.MessageReqRep) oneType_,
                 getParentForChildren(),
                 isClean());
         oneType_ = null;
       }
       oneTypeCase_ = 1;
       onChanged();;
-      return messageRequestBuilder_;
+      return messageReqRepBuilder_;
     }
 
     private com.google.protobuf.SingleFieldBuilderV3<

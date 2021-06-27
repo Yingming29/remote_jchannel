@@ -4,18 +4,18 @@
 package io.grpc.jchannelRpc;
 
 /**
- * Protobuf type {@code cn.yingming.grpc1.MessageReq}
+ * Protobuf type {@code cn.yingming.grpc1.MessageReqRep}
  */
-public final class MessageReq extends
+public final class MessageReqRep extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:cn.yingming.grpc1.MessageReq)
-    MessageReqOrBuilder {
+    // @@protoc_insertion_point(message_implements:cn.yingming.grpc1.MessageReqRep)
+    MessageReqRepOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use MessageReq.newBuilder() to construct.
-  private MessageReq(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use MessageReqRep.newBuilder() to construct.
+  private MessageReqRep(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private MessageReq() {
+  private MessageReqRep() {
     messageObj_ = com.google.protobuf.ByteString.EMPTY;
     type_ = "";
   }
@@ -24,7 +24,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(
       UnusedPrivateParameter unused) {
-    return new MessageReq();
+    return new MessageReqRep();
   }
 
   @java.lang.Override
@@ -32,7 +32,7 @@ private static final long serialVersionUID = 0L;
   getUnknownFields() {
     return this.unknownFields;
   }
-  private MessageReq(
+  private MessageReqRep(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -82,15 +82,15 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_MessageReq_descriptor;
+    return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_MessageReqRep_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_MessageReq_fieldAccessorTable
+    return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_MessageReqRep_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            io.grpc.jchannelRpc.MessageReq.class, io.grpc.jchannelRpc.MessageReq.Builder.class);
+            io.grpc.jchannelRpc.MessageReqRep.class, io.grpc.jchannelRpc.MessageReqRep.Builder.class);
   }
 
   public static final int MESSAGEOBJ_FIELD_NUMBER = 1;
@@ -188,10 +188,10 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof io.grpc.jchannelRpc.MessageReq)) {
+    if (!(obj instanceof io.grpc.jchannelRpc.MessageReqRep)) {
       return super.equals(obj);
     }
-    io.grpc.jchannelRpc.MessageReq other = (io.grpc.jchannelRpc.MessageReq) obj;
+    io.grpc.jchannelRpc.MessageReqRep other = (io.grpc.jchannelRpc.MessageReqRep) obj;
 
     if (!getMessageObj()
         .equals(other.getMessageObj())) return false;
@@ -217,69 +217,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static io.grpc.jchannelRpc.MessageReq parseFrom(
+  public static io.grpc.jchannelRpc.MessageReqRep parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static io.grpc.jchannelRpc.MessageReq parseFrom(
+  public static io.grpc.jchannelRpc.MessageReqRep parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static io.grpc.jchannelRpc.MessageReq parseFrom(
+  public static io.grpc.jchannelRpc.MessageReqRep parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static io.grpc.jchannelRpc.MessageReq parseFrom(
+  public static io.grpc.jchannelRpc.MessageReqRep parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static io.grpc.jchannelRpc.MessageReq parseFrom(byte[] data)
+  public static io.grpc.jchannelRpc.MessageReqRep parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static io.grpc.jchannelRpc.MessageReq parseFrom(
+  public static io.grpc.jchannelRpc.MessageReqRep parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static io.grpc.jchannelRpc.MessageReq parseFrom(java.io.InputStream input)
+  public static io.grpc.jchannelRpc.MessageReqRep parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static io.grpc.jchannelRpc.MessageReq parseFrom(
+  public static io.grpc.jchannelRpc.MessageReqRep parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static io.grpc.jchannelRpc.MessageReq parseDelimitedFrom(java.io.InputStream input)
+  public static io.grpc.jchannelRpc.MessageReqRep parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static io.grpc.jchannelRpc.MessageReq parseDelimitedFrom(
+  public static io.grpc.jchannelRpc.MessageReqRep parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static io.grpc.jchannelRpc.MessageReq parseFrom(
+  public static io.grpc.jchannelRpc.MessageReqRep parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static io.grpc.jchannelRpc.MessageReq parseFrom(
+  public static io.grpc.jchannelRpc.MessageReqRep parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -292,7 +292,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(io.grpc.jchannelRpc.MessageReq prototype) {
+  public static Builder newBuilder(io.grpc.jchannelRpc.MessageReqRep prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -308,26 +308,26 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code cn.yingming.grpc1.MessageReq}
+   * Protobuf type {@code cn.yingming.grpc1.MessageReqRep}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:cn.yingming.grpc1.MessageReq)
-      io.grpc.jchannelRpc.MessageReqOrBuilder {
+      // @@protoc_insertion_point(builder_implements:cn.yingming.grpc1.MessageReqRep)
+      io.grpc.jchannelRpc.MessageReqRepOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_MessageReq_descriptor;
+      return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_MessageReqRep_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_MessageReq_fieldAccessorTable
+      return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_MessageReqRep_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              io.grpc.jchannelRpc.MessageReq.class, io.grpc.jchannelRpc.MessageReq.Builder.class);
+              io.grpc.jchannelRpc.MessageReqRep.class, io.grpc.jchannelRpc.MessageReqRep.Builder.class);
     }
 
-    // Construct using io.grpc.jchannelRpc.MessageReq.newBuilder()
+    // Construct using io.grpc.jchannelRpc.MessageReqRep.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -355,17 +355,17 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_MessageReq_descriptor;
+      return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_MessageReqRep_descriptor;
     }
 
     @java.lang.Override
-    public io.grpc.jchannelRpc.MessageReq getDefaultInstanceForType() {
-      return io.grpc.jchannelRpc.MessageReq.getDefaultInstance();
+    public io.grpc.jchannelRpc.MessageReqRep getDefaultInstanceForType() {
+      return io.grpc.jchannelRpc.MessageReqRep.getDefaultInstance();
     }
 
     @java.lang.Override
-    public io.grpc.jchannelRpc.MessageReq build() {
-      io.grpc.jchannelRpc.MessageReq result = buildPartial();
+    public io.grpc.jchannelRpc.MessageReqRep build() {
+      io.grpc.jchannelRpc.MessageReqRep result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -373,8 +373,8 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public io.grpc.jchannelRpc.MessageReq buildPartial() {
-      io.grpc.jchannelRpc.MessageReq result = new io.grpc.jchannelRpc.MessageReq(this);
+    public io.grpc.jchannelRpc.MessageReqRep buildPartial() {
+      io.grpc.jchannelRpc.MessageReqRep result = new io.grpc.jchannelRpc.MessageReqRep(this);
       result.messageObj_ = messageObj_;
       result.type_ = type_;
       onBuilt();
@@ -415,16 +415,16 @@ private static final long serialVersionUID = 0L;
     }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof io.grpc.jchannelRpc.MessageReq) {
-        return mergeFrom((io.grpc.jchannelRpc.MessageReq)other);
+      if (other instanceof io.grpc.jchannelRpc.MessageReqRep) {
+        return mergeFrom((io.grpc.jchannelRpc.MessageReqRep)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(io.grpc.jchannelRpc.MessageReq other) {
-      if (other == io.grpc.jchannelRpc.MessageReq.getDefaultInstance()) return this;
+    public Builder mergeFrom(io.grpc.jchannelRpc.MessageReqRep other) {
+      if (other == io.grpc.jchannelRpc.MessageReqRep.getDefaultInstance()) return this;
       if (other.getMessageObj() != com.google.protobuf.ByteString.EMPTY) {
         setMessageObj(other.getMessageObj());
       }
@@ -447,11 +447,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      io.grpc.jchannelRpc.MessageReq parsedMessage = null;
+      io.grpc.jchannelRpc.MessageReqRep parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (io.grpc.jchannelRpc.MessageReq) e.getUnfinishedMessage();
+        parsedMessage = (io.grpc.jchannelRpc.MessageReqRep) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -583,41 +583,41 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:cn.yingming.grpc1.MessageReq)
+    // @@protoc_insertion_point(builder_scope:cn.yingming.grpc1.MessageReqRep)
   }
 
-  // @@protoc_insertion_point(class_scope:cn.yingming.grpc1.MessageReq)
-  private static final io.grpc.jchannelRpc.MessageReq DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:cn.yingming.grpc1.MessageReqRep)
+  private static final io.grpc.jchannelRpc.MessageReqRep DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new io.grpc.jchannelRpc.MessageReq();
+    DEFAULT_INSTANCE = new io.grpc.jchannelRpc.MessageReqRep();
   }
 
-  public static io.grpc.jchannelRpc.MessageReq getDefaultInstance() {
+  public static io.grpc.jchannelRpc.MessageReqRep getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<MessageReq>
-      PARSER = new com.google.protobuf.AbstractParser<MessageReq>() {
+  private static final com.google.protobuf.Parser<MessageReqRep>
+      PARSER = new com.google.protobuf.AbstractParser<MessageReqRep>() {
     @java.lang.Override
-    public MessageReq parsePartialFrom(
+    public MessageReqRep parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new MessageReq(input, extensionRegistry);
+      return new MessageReqRep(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<MessageReq> parser() {
+  public static com.google.protobuf.Parser<MessageReqRep> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<MessageReq> getParserForType() {
+  public com.google.protobuf.Parser<MessageReqRep> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public io.grpc.jchannelRpc.MessageReq getDefaultInstanceForType() {
+  public io.grpc.jchannelRpc.MessageReqRep getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

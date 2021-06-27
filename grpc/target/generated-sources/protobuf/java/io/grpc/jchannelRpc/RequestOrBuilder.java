@@ -8,19 +8,19 @@ public interface RequestOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>.cn.yingming.grpc1.MessageReq messageRequest = 1;</code>
-   * @return Whether the messageRequest field is set.
+   * <code>.cn.yingming.grpc1.MessageReqRep messageReqRep = 1;</code>
+   * @return Whether the messageReqRep field is set.
    */
-  boolean hasMessageRequest();
+  boolean hasMessageReqRep();
   /**
-   * <code>.cn.yingming.grpc1.MessageReq messageRequest = 1;</code>
-   * @return The messageRequest.
+   * <code>.cn.yingming.grpc1.MessageReqRep messageReqRep = 1;</code>
+   * @return The messageReqRep.
    */
-  io.grpc.jchannelRpc.MessageReq getMessageRequest();
+  io.grpc.jchannelRpc.MessageReqRep getMessageReqRep();
   /**
-   * <code>.cn.yingming.grpc1.MessageReq messageRequest = 1;</code>
+   * <code>.cn.yingming.grpc1.MessageReqRep messageReqRep = 1;</code>
    */
-  io.grpc.jchannelRpc.MessageReqOrBuilder getMessageRequestOrBuilder();
+  io.grpc.jchannelRpc.MessageReqRepOrBuilder getMessageReqRepOrBuilder();
 
   /**
    * <code>.cn.yingming.grpc1.ConnectReq connectRequest = 2;</code>

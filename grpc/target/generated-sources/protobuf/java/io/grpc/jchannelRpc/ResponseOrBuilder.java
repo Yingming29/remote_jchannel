@@ -8,19 +8,19 @@ public interface ResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>.cn.yingming.grpc1.MessageRep messageResponse = 1;</code>
-   * @return Whether the messageResponse field is set.
+   * <code>.cn.yingming.grpc1.MessageReqRep messageReqRep = 1;</code>
+   * @return Whether the messageReqRep field is set.
    */
-  boolean hasMessageResponse();
+  boolean hasMessageReqRep();
   /**
-   * <code>.cn.yingming.grpc1.MessageRep messageResponse = 1;</code>
-   * @return The messageResponse.
+   * <code>.cn.yingming.grpc1.MessageReqRep messageReqRep = 1;</code>
+   * @return The messageReqRep.
    */
-  io.grpc.jchannelRpc.MessageRep getMessageResponse();
+  io.grpc.jchannelRpc.MessageReqRep getMessageReqRep();
   /**
-   * <code>.cn.yingming.grpc1.MessageRep messageResponse = 1;</code>
+   * <code>.cn.yingming.grpc1.MessageReqRep messageReqRep = 1;</code>
    */
-  io.grpc.jchannelRpc.MessageRepOrBuilder getMessageResponseOrBuilder();
+  io.grpc.jchannelRpc.MessageReqRepOrBuilder getMessageReqRepOrBuilder();
 
   /**
    * <code>.cn.yingming.grpc1.ConnectRep connectResponse = 2;</code>

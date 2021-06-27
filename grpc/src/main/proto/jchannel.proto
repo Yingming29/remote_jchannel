@@ -13,7 +13,7 @@ service JChannelsService{
 }
 message Request{
   oneof oneType{
-    MessageReq messageRequest = 1;
+    MessageReqRep messageReqRep = 1;
     ConnectReq connectRequest = 2;
     DisconnectReq disconnectRequest = 3;
     StateReq stateReq = 4;
@@ -27,7 +27,7 @@ message Request{
 }
 message Response{
   oneof oneType{
-    MessageRep messageResponse = 1;
+    MessageReqRep messageReqRep = 1;
     ConnectRep connectResponse = 2;
     DisconnectRep disconnectResponse = 3;
     UpdateRep updateResponse = 4;  // update available grpc addresses of nodes
@@ -104,11 +104,7 @@ message ViewRep{
 message UpdateRep{
   string addresses = 1;
 }
-message MessageReq{
-  bytes messageObj = 1;
-  string type = 2;
-}
-message MessageRep{
+message MessageReqRep{
   bytes messageObj = 1;
   string type = 2;
 }
@@ -153,7 +149,7 @@ message StateReq{
 
 message StateRep{
   int32 size = 1;
-  repeated MessageRep oneOfHistory = 2;
+  repeated MessageReqRep oneOfHistory = 2;
 }
 
 message StateMsg_withTarget_1{
@@ -167,7 +163,7 @@ message StateMsg_withTarget_2{
   string source = 1;
   string cluster = 2;
   string jchannel_address = 3;
-  repeated MessageRep oneOfHistory = 4;
+  repeated MessageReqRep oneOfHistory = 4;
   string target = 5;
 }
 

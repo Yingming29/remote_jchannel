@@ -44,27 +44,27 @@ public interface StateMsg_withTarget_2OrBuilder extends
       getJchannelAddressBytes();
 
   /**
-   * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+   * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
    */
-  java.util.List<io.grpc.jchannelRpc.MessageRep> 
+  java.util.List<io.grpc.jchannelRpc.MessageReqRep> 
       getOneOfHistoryList();
   /**
-   * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+   * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
    */
-  io.grpc.jchannelRpc.MessageRep getOneOfHistory(int index);
+  io.grpc.jchannelRpc.MessageReqRep getOneOfHistory(int index);
   /**
-   * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+   * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
    */
   int getOneOfHistoryCount();
   /**
-   * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+   * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
    */
-  java.util.List<? extends io.grpc.jchannelRpc.MessageRepOrBuilder> 
+  java.util.List<? extends io.grpc.jchannelRpc.MessageReqRepOrBuilder> 
       getOneOfHistoryOrBuilderList();
   /**
-   * <code>repeated .cn.yingming.grpc1.MessageRep oneOfHistory = 4;</code>
+   * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 4;</code>
    */
-  io.grpc.jchannelRpc.MessageRepOrBuilder getOneOfHistoryOrBuilder(
+  io.grpc.jchannelRpc.MessageReqRepOrBuilder getOneOfHistoryOrBuilder(
       int index);
 
   /**
