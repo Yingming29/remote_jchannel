@@ -81,12 +81,26 @@ public class NodeJChannel implements Receiver{
                     System.out.println("Confirm that the JChannel' Address in the existing NameCache.");
                     // generate message for the requester, NameCacheRep, ViewRep of clients,
                     UpdateNameCacheRep nameCacheRep = this.service.generateNameCacheMsg();
-                    // not null
-                    ClusterMap clusterInf = (ClusterMap) this.serviceMap.get("ClientCluster");
-                    ViewRep viewRep = clusterInf.generateView();
+                    // changed: not null , here
+                    ClusterMap clusterInf = null;
+                    if (!this.serviceMap.contains("ClientClient") || this.serviceMap.get("ClientCluster") == null){
+                        clusterInf = new ClusterMap();
+                        this.serviceMap.put("ClientCluster", clusterInf);
+                    } else{
+                        clusterInf = (ClusterMap) this.serviceMap.get("ClientCluster");
+                    }
+                    ViewRep viewRep = null;
+                    UpdateRepBetweenNodes rep;
+                    if (clusterInf.creator != null){
+                        viewRep = clusterInf.generateView();
+                    }
                     // StateRep stateRep = clusterInf.generateState(); change
-                    UpdateRepBetweenNodes rep = UpdateRepBetweenNodes.newBuilder().setClientView(viewRep)
-                            .setNameCache(nameCacheRep).build();
+                    if (clusterInf.creator != null) {
+                        rep = UpdateRepBetweenNodes.newBuilder().setClientView(viewRep)
+                                .setNameCache(nameCacheRep).build();
+                    } else{
+                        rep = UpdateRepBetweenNodes.newBuilder().setNameCache(nameCacheRep).build();
+                    }
                     Message msgRep = new ObjectMessage(msg.getSrc(), rep);
                     this.channel.send(msgRep);
                     System.out.println("UpdateRepBetweenNodes: " + rep);

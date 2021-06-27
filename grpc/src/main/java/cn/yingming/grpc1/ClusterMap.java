@@ -61,7 +61,13 @@ public class ClusterMap implements Serializable {
         viewNum ++;
     }
     // change
-    public Address getCreator(){ return (Address) this.orderList.get(0);}
+    public Address getCreator(){
+        if (this.orderList.size() > 0){
+            return (Address) this.orderList.get(0);
+        } else{
+            return null;
+        }
+    }
     // generate a client view.
     public ViewRep generateView(){
         ViewRep view_rep = null;
