@@ -19,7 +19,8 @@ public class ReceiverRJ implements Receiver {
     public ReceiverRJ(){
         this.state = new LinkedList<MessageRep>();
     }
-    public void receiveRJ(MessageRep msg) {
+    public void receiveRJ(Message msg) {
+        /*
         if (!msg.getContent().equals("")){
             System.out.println(msg.getJchannelAddress() + ": " + msg.getContent());
         } else{
@@ -28,6 +29,10 @@ public class ReceiverRJ implements Receiver {
         synchronized (this.state){
             this.state.add(msg);
         }
+
+         */
+
+        System.out.println(msg);
     }
 
     public void viewAcceptedRJ(View new_view) {
@@ -42,6 +47,7 @@ public class ReceiverRJ implements Receiver {
     }
 
     public void setStateRJ(List new_states){
+        /*
         synchronized (this.state){
             this.state.clear();
             this.state.addAll(new_states);
@@ -55,6 +61,8 @@ public class ReceiverRJ implements Receiver {
                 System.out.println(msg.getJchannelAddress() + ": " + msg.getContentByte());
             }
         }
+
+         */
     }
 
 

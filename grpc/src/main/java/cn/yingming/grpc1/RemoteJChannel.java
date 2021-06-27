@@ -38,7 +38,6 @@ public class RemoteJChannel extends JChannel {
     // whether stats?
     public boolean stats;
     // record for stats of remote jchannel
-    public StatsRJ stats_obj;
     public ReceiverRJ receiver;
     public Object obj;
     public String remoteProtocolStack_string;
@@ -64,7 +63,6 @@ public class RemoteJChannel extends JChannel {
         // whether record the stats of the RemoteJChannel
         this.stats = false;
         // change: create class for stats obj record
-        this.stats_obj = new StatsRJ();
         this.receiver = null;
         this.obj = new Object();
         this.remoteName = null;
@@ -372,8 +370,8 @@ public class RemoteJChannel extends JChannel {
 
     // incomplete
     // return object or print string?
-    public StatsRJ remoteJChannelDumpStats(){
-        return this.stats_obj;
+    public void remoteJChannelDumpStats(){
+         // return this.stats_obj;
     }
 
     @Override
@@ -467,104 +465,32 @@ public class RemoteJChannel extends JChannel {
     }
     @Override
     public JChannel send(Message msg) throws Exception {
-        throw new UnsupportedOperationException("RemoteJChannel does not support this method and Message object." +
-                " Please use other send() and MessageRJ object.");
+        if(msg == null)
+            throw new NullPointerException("msg is null");
+        ReentrantLock lock = new ReentrantLock();
+        lock.lock();
+        try{
+            this.msgList.add(msg);
+        } finally {
+            lock.unlock();
+        }
+
+        return this;
     }
     @Override
     public JChannel send(Address dst, Object obj) throws Exception {
-        throw new UnsupportedOperationException("RemoteJChannel does not support this method." +
-                " Please use other send().");
+        Message msg=new ObjectMessage(dst, obj);
+        return send(msg);
     }
     @Override
     public JChannel send(Address dst, byte[] buf) throws Exception {
-        throw new UnsupportedOperationException("RemoteJChannel does not support this method." +
-                " Please use other send().");
+        return send(new BytesMessage(dst, buf));
     }
     @Override
     public JChannel send(Address dst, byte[] buf, int offset, int length) throws Exception {
-        throw new UnsupportedOperationException("RemoteJChannel does not support this method." +
-                " Please use other send().");
+        return send(new BytesMessage(dst, buf, offset, length));
     }
 
-
-    // the send() without dst
-    public JChannel send(String msg){
-        if (msg == null){
-            throw new IllegalArgumentException("The msg argument cannot be null.");
-        }
-        MessageRJ message = new MessageRJ(msg);
-        ReentrantLock lock = new ReentrantLock();
-        lock.lock();
-        try{
-            this.msgList.add(message);
-        } finally {
-            lock.unlock();
-        }
-        return this;
-    }
-
-    // for unicast with dst
-    public JChannel send(String dst, String msg){
-        if (msg == null || dst == null || msg.equals("") || dst.equals("")){
-            throw new IllegalArgumentException("The msg or dst argument cannot be null.");
-        }
-        MessageRJ message = new MessageRJ(dst, msg);
-        ReentrantLock lock = new ReentrantLock();
-        lock.lock();
-        try{
-            this.msgList.add(message);
-        } finally {
-            lock.unlock();
-        }
-        return this;
-    }
-
-    // send byte[] with unicast
-    public JChannel send(MessageRJ msg){
-        if (msg == null || msg.getBuf() == null || msg.getDst() == null || msg.getDst().equals("")){
-            throw new IllegalArgumentException("The msg or dst or byte[] argument cannot be null.");
-        }
-        ReentrantLock lock = new ReentrantLock();
-        lock.lock();
-        try{
-            this.msgList.add(msg);
-        } finally {
-            lock.unlock();
-        }
-        return this;
-    }
-
-    // send byte[] with dst (unicast)
-    public JChannel send(String dst, byte[] buf){
-        if (buf == null || dst == null || dst.equals("")){
-            throw new IllegalArgumentException("The byte[] or dst argument cannot be null.");
-        }
-        MessageRJ msg = new MessageRJ(dst, buf);
-        ReentrantLock lock = new ReentrantLock();
-        lock.lock();
-        try{
-            this.msgList.add(msg);
-        } finally {
-            lock.unlock();
-        }
-        return this;
-    }
-
-    // send byte[] without dst
-    public JChannel send(byte[] buf){
-        if (buf == null){
-            throw new IllegalArgumentException("The byte[] argument cannot be null.");
-        }
-        MessageRJ msg = new MessageRJ(buf);
-        ReentrantLock lock = new ReentrantLock();
-        lock.lock();
-        try{
-            this.msgList.add(msg);
-        } finally {
-            lock.unlock();
-        }
-        return this;
-    }
 
     @Override
     public JChannel getState(Address target, long timeout) throws Exception {

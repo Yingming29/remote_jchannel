@@ -105,18 +105,10 @@ message UpdateRep{
   string addresses = 1;
 }
 message MessageReq{
-  string source = 1;  // uuid
-  string jchannel_address = 2;  // the fake address of client jchannel, sender
-  string cluster = 3;     // the cluster of jchannel-client
-  string content = 4;     // content of message
-  string timestamp = 5;   // time
-  string destination = 6;  // "" means the broadcast in this cluster, receivers
-  bytes contentByte = 7;
+  bytes messageObj = 1;
 }
 message MessageRep{
-  string jchannel_address = 1; // sender
-  string content = 2;
-  bytes contentByte = 3;
+  bytes messageObj = 1;
 }
 // connect() of JChannel, create a bidirectional streaming of grpc
 message ConnectReq {

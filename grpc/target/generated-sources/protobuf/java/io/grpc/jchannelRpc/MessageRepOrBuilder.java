@@ -8,40 +8,8 @@ public interface MessageRepOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <pre>
-   * sender
-   * </pre>
-   *
-   * <code>string jchannel_address = 1;</code>
-   * @return The jchannelAddress.
+   * <code>bytes messageObj = 1;</code>
+   * @return The messageObj.
    */
-  java.lang.String getJchannelAddress();
-  /**
-   * <pre>
-   * sender
-   * </pre>
-   *
-   * <code>string jchannel_address = 1;</code>
-   * @return The bytes for jchannelAddress.
-   */
-  com.google.protobuf.ByteString
-      getJchannelAddressBytes();
-
-  /**
-   * <code>string content = 2;</code>
-   * @return The content.
-   */
-  java.lang.String getContent();
-  /**
-   * <code>string content = 2;</code>
-   * @return The bytes for content.
-   */
-  com.google.protobuf.ByteString
-      getContentBytes();
-
-  /**
-   * <code>bytes contentByte = 3;</code>
-   * @return The contentByte.
-   */
-  com.google.protobuf.ByteString getContentByte();
+  com.google.protobuf.ByteString getMessageObj();
 }

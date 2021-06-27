@@ -10,6 +10,7 @@ import org.jgroups.ObjectMessage;
 import org.jgroups.View;
 import org.jgroups.util.*;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -181,7 +182,6 @@ public class NodeServer {
                             for (int i = 0; i < rep.getStateRep().getOneOfHistoryList().size(); i++) {
                                 System.out.println(l.get(i).getClass());
                                 MessageRep mp = (MessageRep) l.get(i);
-                                System.out.println(mp.getJchannelAddress() + ":" + mp.getContent());
                             }
                             // send to this client
                             for (Address uuid : clients.keySet()) {
@@ -302,29 +302,32 @@ public class NodeServer {
                            Two types: broadcast ot unicast
                          */
                         MessageReq msgReq = req.getMessageRequest();
-                        // send() messages for broadcast and unicast in the cluster for clients
-                        System.out.println("[gRPC] " + msgReq.getJchannelAddress() + " sends message: "
-                                + msgReq.getContent() + "/" + msgReq.getContentByte().toString()
-                                + " at " + msgReq.getTimestamp());
+                        ByteArrayDataInputStream in = new ByteArrayDataInputStream(msgReq.getMessageObj().toByteArray());
+                        Message msgObj = new ObjectMessage();
+                        try {
+                            msgObj.readFrom(in);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("[grpc] Receive a Message from JChannel-client: " + msgObj);
                         // Type1, broadcast
-                        if (msgReq.getDestination() == null || msgReq.getDestination().equals("")){
-                            System.out.println("[gRPC] Broadcast in the cluster " + msgReq.getCluster());
+                        if (msgObj.getDest() == null){
+                            System.out.println("[gRPC] Broadcast in the client cluster. ");
                             lock.lock();
                             try{
                                 // add to history
-                                ClusterMap cm = (ClusterMap) jchannel.serviceMap.get(msgReq.getCluster());
+                                ClusterMap cm = (ClusterMap) jchannel.serviceMap.get("ClientCluster");
                                 cm.addHistory(msgReq);
                                 // forward msg to other nodes
                                 forwardMsg(req);
                                 // send msg to its gRPC clients
                                 broadcast(msgReq);
-
                             }finally {
                                 lock.unlock();
                             }
                         // Type2, unicast
                         } else{
-                            System.out.println("[gRPC] Unicast in the cluster " + msgReq.getCluster() + " to " + msgReq.getDestination());
+                            System.out.println("[gRPC] Unicast in the client cluster " + ", to " + msgObj.getDest());
                             lock.lock();
                             try{
                                 // forward msg to other JChannels
@@ -491,27 +494,9 @@ public class NodeServer {
         public void broadcast(MessageReq req){
             lock.lock();
             try{
-                Response rep;
-                // Byte message
-                if (req.getContent().equals("")){
-                    MessageRep msgRep = MessageRep.newBuilder()
-                            .setJchannelAddress(req.getJchannelAddress())
-                            .setContentByte(req.getContentByte())
-                            .build();
-                    rep = Response.newBuilder()
-                            .setMessageResponse(msgRep)
-                            .build();
-                } else{
-                    // String  message
-                    MessageRep msgRep = MessageRep.newBuilder()
-                            .setJchannelAddress(req.getJchannelAddress())
-                            .setContent(req.getContent())
-                            .build();
-                    rep = Response.newBuilder()
-                            .setMessageResponse(msgRep)
-                            .build();
-                }
-                ClusterMap clusterObj = (ClusterMap) jchannel.serviceMap.get(req.getCluster());
+                MessageRep msgRep = MessageRep.newBuilder().setMessageObj(req.getMessageObj()).build();
+                Response rep = Response.newBuilder().setMessageResponse(msgRep).build();
+                ClusterMap clusterObj = (ClusterMap) jchannel.serviceMap.get("ClientCluster");
                 for (Address add : clients.keySet()){
                     if (clusterObj.getMap().containsKey(add)){
                         clients.get(add).onNext(rep);
@@ -519,8 +504,7 @@ public class NodeServer {
                     }
                 }
                 System.out.println("One broadcast for message successfully.");
-                System.out.println(rep.toString());
-
+                System.out.println(rep);
             } finally {
                 lock.unlock();
             }
@@ -583,46 +567,27 @@ public class NodeServer {
         }
 
         public void unicast(MessageReq req){
-            String msgCluster = req.getCluster();
-            String msgDest = req.getDestination();
+            String msgCluster = "ClientCluster";
             lock.lock();
             try{
-                Response rep;
-                // byte conent message
-                if (req.getContent().equals("")){
-                    MessageRep msgRep = MessageRep.newBuilder()
-                            .setJchannelAddress(req.getJchannelAddress())
-                            .setContentByte(req.getContentByte())
-                            .build();
-                    rep = Response.newBuilder()
-                            .setMessageResponse(msgRep)
-                            .build();
-                } else{
-                    // String content message
-                    MessageRep msgRep = MessageRep.newBuilder()
-                            .setJchannelAddress(req.getJchannelAddress())
-                            .setContent(req.getContent())
-                            .build();
-                    rep = Response.newBuilder()
-                            .setMessageResponse(msgRep)
-                            .build();
-                }
-
+                MessageRep msgRep = MessageRep.newBuilder().setMessageObj(ByteString.copyFrom(req.getMessageObj().toByteArray())).build();
+                Response rep = Response.newBuilder().setMessageResponse(msgRep).build();
                 ClusterMap clusterObj = (ClusterMap) jchannel.serviceMap.get(msgCluster);
-                System.out.println("----------");
-                System.out.println(clusterObj.getMap());
-                System.out.println(msgDest);
-                System.out.println("----------");
+                ByteArrayDataInputStream in = new ByteArrayDataInputStream(req.getMessageObj().toByteArray());
+                Message msgObj = new ObjectMessage();
+                msgObj.readFrom(in);
                 for (Address add : clients.keySet()){
                     if (clusterObj.getMap().containsKey(add)){
-                        if (clusterObj.getMap().get(add).equals(msgDest)){
+                        if (clusterObj.getMap().get(add).equals(msgObj.getDest().toString())){
                             clients.get(add).onNext(rep);
-                            System.out.println("[gRPC] Send message to a JChannel-Client, " + clusterObj.getMap().get(add));
+                            System.out.println("[gRPC] Send message to a JChannel-Client, " + msgObj.getDest().toString());
                         }
                     }
                 }
                 System.out.println("One unicast for message successfully.");
 
+            } catch (Exception e) {
+                e.printStackTrace();
             } finally {
                 lock.unlock();
             }

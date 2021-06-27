@@ -64,6 +64,9 @@ public class NodeJChannel implements Receiver{
         } else if (msg.getObject() instanceof Request){
             receiveProtobufMsg(msg);
         }
+
+
+        // define receive string and byte for other
     }
 
     private void receiveProtobufMsg(Message msg){
@@ -185,11 +188,18 @@ public class NodeJChannel implements Receiver{
             disconnectCluster(disReq.getCluster(), UUID.fromString(disReq.getJchannelAddress()));
         } else if (msg.getObject() instanceof Request && ((Request) msg.getObject()).hasMessageRequest()){
             MessageReq msgReq = ((Request) msg.getObject()).getMessageRequest();
-            if (msgReq.getDestination().equals("")){
+            Message msgObj = new ObjectMessage();
+            ByteArrayDataInputStream in = new ByteArrayDataInputStream(msgReq.getMessageObj().toByteArray());
+            try{
+                msgObj.readFrom(in);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            if (msgObj.getDest() == null){
                 System.out.println("[JChannel] Receive a shared send() request for broadcast to JChannl-Clients.");
                 lock.lock();
                 try{
-                    ClusterMap cm = (ClusterMap) serviceMap.get(msgReq.getCluster());
+                    ClusterMap cm = (ClusterMap) serviceMap.get("ClientCluster");
                     cm.addHistory(msgReq);
                     this.service.broadcast(msgReq);
                 } finally {

@@ -7,6 +7,7 @@ import org.jgroups.View;
 import org.jgroups.ViewId;
 import org.jgroups.util.ByteArrayDataOutputStream;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -132,20 +133,7 @@ public class ClusterMap implements Serializable {
         return rep;
     }
     public void addHistory(MessageReq msg){
-        MessageRep rep = null;
-        if (msg.getContent().equals("")){
-            rep = MessageRep.newBuilder()
-                    .setJchannelAddress(msg.getJchannelAddress())
-                    .setContentByte(msg.getContentByte())
-                    .build();
-            System.out.println("add history for byte msg.");
-        } else{
-            rep = MessageRep.newBuilder()
-                    .setJchannelAddress(msg.getJchannelAddress())
-                    .setContent(msg.getContent())
-                    .build();
-            System.out.println("add history for string msg.");
-        }
+        MessageRep rep = MessageRep.newBuilder().setMessageObj(ByteString.copyFrom(msg.getMessageObj().toByteArray())).build();
         lock.lock();
         try{
             history.add(rep);

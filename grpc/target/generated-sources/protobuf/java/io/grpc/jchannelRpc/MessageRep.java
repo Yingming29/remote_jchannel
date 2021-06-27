@@ -16,9 +16,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private MessageRep() {
-    jchannelAddress_ = "";
-    content_ = "";
-    contentByte_ = com.google.protobuf.ByteString.EMPTY;
+    messageObj_ = com.google.protobuf.ByteString.EMPTY;
   }
 
   @java.lang.Override
@@ -52,20 +50,8 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
 
-            jchannelAddress_ = s;
-            break;
-          }
-          case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
-
-            content_ = s;
-            break;
-          }
-          case 26: {
-
-            contentByte_ = input.readBytes();
+            messageObj_ = input.readBytes();
             break;
           }
           default: {
@@ -100,99 +86,15 @@ private static final long serialVersionUID = 0L;
             io.grpc.jchannelRpc.MessageRep.class, io.grpc.jchannelRpc.MessageRep.Builder.class);
   }
 
-  public static final int JCHANNEL_ADDRESS_FIELD_NUMBER = 1;
-  private volatile java.lang.Object jchannelAddress_;
+  public static final int MESSAGEOBJ_FIELD_NUMBER = 1;
+  private com.google.protobuf.ByteString messageObj_;
   /**
-   * <pre>
-   * sender
-   * </pre>
-   *
-   * <code>string jchannel_address = 1;</code>
-   * @return The jchannelAddress.
+   * <code>bytes messageObj = 1;</code>
+   * @return The messageObj.
    */
   @java.lang.Override
-  public java.lang.String getJchannelAddress() {
-    java.lang.Object ref = jchannelAddress_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      jchannelAddress_ = s;
-      return s;
-    }
-  }
-  /**
-   * <pre>
-   * sender
-   * </pre>
-   *
-   * <code>string jchannel_address = 1;</code>
-   * @return The bytes for jchannelAddress.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getJchannelAddressBytes() {
-    java.lang.Object ref = jchannelAddress_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      jchannelAddress_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int CONTENT_FIELD_NUMBER = 2;
-  private volatile java.lang.Object content_;
-  /**
-   * <code>string content = 2;</code>
-   * @return The content.
-   */
-  @java.lang.Override
-  public java.lang.String getContent() {
-    java.lang.Object ref = content_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      content_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string content = 2;</code>
-   * @return The bytes for content.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getContentBytes() {
-    java.lang.Object ref = content_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      content_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int CONTENTBYTE_FIELD_NUMBER = 3;
-  private com.google.protobuf.ByteString contentByte_;
-  /**
-   * <code>bytes contentByte = 3;</code>
-   * @return The contentByte.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString getContentByte() {
-    return contentByte_;
+  public com.google.protobuf.ByteString getMessageObj() {
+    return messageObj_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -209,14 +111,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getJchannelAddressBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, jchannelAddress_);
-    }
-    if (!getContentBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, content_);
-    }
-    if (!contentByte_.isEmpty()) {
-      output.writeBytes(3, contentByte_);
+    if (!messageObj_.isEmpty()) {
+      output.writeBytes(1, messageObj_);
     }
     unknownFields.writeTo(output);
   }
@@ -227,15 +123,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getJchannelAddressBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, jchannelAddress_);
-    }
-    if (!getContentBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, content_);
-    }
-    if (!contentByte_.isEmpty()) {
+    if (!messageObj_.isEmpty()) {
       size += com.google.protobuf.CodedOutputStream
-        .computeBytesSize(3, contentByte_);
+        .computeBytesSize(1, messageObj_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -252,12 +142,8 @@ private static final long serialVersionUID = 0L;
     }
     io.grpc.jchannelRpc.MessageRep other = (io.grpc.jchannelRpc.MessageRep) obj;
 
-    if (!getJchannelAddress()
-        .equals(other.getJchannelAddress())) return false;
-    if (!getContent()
-        .equals(other.getContent())) return false;
-    if (!getContentByte()
-        .equals(other.getContentByte())) return false;
+    if (!getMessageObj()
+        .equals(other.getMessageObj())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -269,12 +155,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + JCHANNEL_ADDRESS_FIELD_NUMBER;
-    hash = (53 * hash) + getJchannelAddress().hashCode();
-    hash = (37 * hash) + CONTENT_FIELD_NUMBER;
-    hash = (53 * hash) + getContent().hashCode();
-    hash = (37 * hash) + CONTENTBYTE_FIELD_NUMBER;
-    hash = (53 * hash) + getContentByte().hashCode();
+    hash = (37 * hash) + MESSAGEOBJ_FIELD_NUMBER;
+    hash = (53 * hash) + getMessageObj().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -408,11 +290,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      jchannelAddress_ = "";
-
-      content_ = "";
-
-      contentByte_ = com.google.protobuf.ByteString.EMPTY;
+      messageObj_ = com.google.protobuf.ByteString.EMPTY;
 
       return this;
     }
@@ -440,9 +318,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public io.grpc.jchannelRpc.MessageRep buildPartial() {
       io.grpc.jchannelRpc.MessageRep result = new io.grpc.jchannelRpc.MessageRep(this);
-      result.jchannelAddress_ = jchannelAddress_;
-      result.content_ = content_;
-      result.contentByte_ = contentByte_;
+      result.messageObj_ = messageObj_;
       onBuilt();
       return result;
     }
@@ -491,16 +367,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(io.grpc.jchannelRpc.MessageRep other) {
       if (other == io.grpc.jchannelRpc.MessageRep.getDefaultInstance()) return this;
-      if (!other.getJchannelAddress().isEmpty()) {
-        jchannelAddress_ = other.jchannelAddress_;
-        onChanged();
-      }
-      if (!other.getContent().isEmpty()) {
-        content_ = other.content_;
-        onChanged();
-      }
-      if (other.getContentByte() != com.google.protobuf.ByteString.EMPTY) {
-        setContentByte(other.getContentByte());
+      if (other.getMessageObj() != com.google.protobuf.ByteString.EMPTY) {
+        setMessageObj(other.getMessageObj());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -531,208 +399,36 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object jchannelAddress_ = "";
+    private com.google.protobuf.ByteString messageObj_ = com.google.protobuf.ByteString.EMPTY;
     /**
-     * <pre>
-     * sender
-     * </pre>
-     *
-     * <code>string jchannel_address = 1;</code>
-     * @return The jchannelAddress.
-     */
-    public java.lang.String getJchannelAddress() {
-      java.lang.Object ref = jchannelAddress_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        jchannelAddress_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <pre>
-     * sender
-     * </pre>
-     *
-     * <code>string jchannel_address = 1;</code>
-     * @return The bytes for jchannelAddress.
-     */
-    public com.google.protobuf.ByteString
-        getJchannelAddressBytes() {
-      java.lang.Object ref = jchannelAddress_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        jchannelAddress_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <pre>
-     * sender
-     * </pre>
-     *
-     * <code>string jchannel_address = 1;</code>
-     * @param value The jchannelAddress to set.
-     * @return This builder for chaining.
-     */
-    public Builder setJchannelAddress(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      jchannelAddress_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <pre>
-     * sender
-     * </pre>
-     *
-     * <code>string jchannel_address = 1;</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearJchannelAddress() {
-      
-      jchannelAddress_ = getDefaultInstance().getJchannelAddress();
-      onChanged();
-      return this;
-    }
-    /**
-     * <pre>
-     * sender
-     * </pre>
-     *
-     * <code>string jchannel_address = 1;</code>
-     * @param value The bytes for jchannelAddress to set.
-     * @return This builder for chaining.
-     */
-    public Builder setJchannelAddressBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      jchannelAddress_ = value;
-      onChanged();
-      return this;
-    }
-
-    private java.lang.Object content_ = "";
-    /**
-     * <code>string content = 2;</code>
-     * @return The content.
-     */
-    public java.lang.String getContent() {
-      java.lang.Object ref = content_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        content_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string content = 2;</code>
-     * @return The bytes for content.
-     */
-    public com.google.protobuf.ByteString
-        getContentBytes() {
-      java.lang.Object ref = content_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        content_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string content = 2;</code>
-     * @param value The content to set.
-     * @return This builder for chaining.
-     */
-    public Builder setContent(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      content_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string content = 2;</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearContent() {
-      
-      content_ = getDefaultInstance().getContent();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string content = 2;</code>
-     * @param value The bytes for content to set.
-     * @return This builder for chaining.
-     */
-    public Builder setContentBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      content_ = value;
-      onChanged();
-      return this;
-    }
-
-    private com.google.protobuf.ByteString contentByte_ = com.google.protobuf.ByteString.EMPTY;
-    /**
-     * <code>bytes contentByte = 3;</code>
-     * @return The contentByte.
+     * <code>bytes messageObj = 1;</code>
+     * @return The messageObj.
      */
     @java.lang.Override
-    public com.google.protobuf.ByteString getContentByte() {
-      return contentByte_;
+    public com.google.protobuf.ByteString getMessageObj() {
+      return messageObj_;
     }
     /**
-     * <code>bytes contentByte = 3;</code>
-     * @param value The contentByte to set.
+     * <code>bytes messageObj = 1;</code>
+     * @param value The messageObj to set.
      * @return This builder for chaining.
      */
-    public Builder setContentByte(com.google.protobuf.ByteString value) {
+    public Builder setMessageObj(com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      contentByte_ = value;
+      messageObj_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>bytes contentByte = 3;</code>
+     * <code>bytes messageObj = 1;</code>
      * @return This builder for chaining.
      */
-    public Builder clearContentByte() {
+    public Builder clearMessageObj() {
       
-      contentByte_ = getDefaultInstance().getContentByte();
+      messageObj_ = getDefaultInstance().getMessageObj();
       onChanged();
       return this;
     }
