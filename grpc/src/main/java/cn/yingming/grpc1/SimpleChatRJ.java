@@ -59,18 +59,39 @@ public class SimpleChatRJ {
                         System.out.println("printProtocolSpec(false) for Real JChannel Address (JChannel Server):" + remoteJChannel.printProtocolSpec(false));
                     }
                 } else if (line.startsWith("unicast")) {
+                    // example: unicast content server/client 1
+                    // unicast content client 1
                     String[] strs = line.split(" ");
-                    remoteJChannel.send(strs[1], strs[2]);
+                    int index = Integer.parseInt(strs[3]);
+                    if (strs[2].equals("server")){
+                        try{
+                            remoteJChannel.send(this.remoteJChannel.remoteView.getMembers().get(index), strs[1]);
+                        } catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    } else if (strs[2].equals("client")){
+                        try{
+                            remoteJChannel.send(this.remoteJChannel.view.getMembers().get(index), strs[1]);
+                        } catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
                 } else if (line.startsWith("byte")){
                     byte[] buf = line.getBytes();
-                    remoteJChannel.send(buf);
+                    try{
+                        remoteJChannel.send(null, buf);
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
                 } else if (line.startsWith("tryNameche")){
                     System.out.println(NameCache.printCache());
                     System.out.println(NameCache.get(this.remoteJChannel.real_jchannel_address));
                 } else{
-                    // MessageRJ msg = new MessageRJ(line);
-                    remoteJChannel.send(line);
-
+                    try{
+                        remoteJChannel.send(null, line);
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
 
             } catch (IOException e) {
