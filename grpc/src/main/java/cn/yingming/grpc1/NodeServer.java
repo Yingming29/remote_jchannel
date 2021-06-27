@@ -304,6 +304,7 @@ public class NodeServer {
                         MessageReq msgReq = req.getMessageRequest();
                         ByteArrayDataInputStream in = new ByteArrayDataInputStream(msgReq.getMessageObj().toByteArray());
                         Message msgObj = new ObjectMessage();
+
                         try {
                             msgObj.readFrom(in);
                         } catch (Exception e) {
@@ -544,6 +545,7 @@ public class NodeServer {
             }
 
         }
+
         public void unicast_stateMsg1(StateMsg_withTarget_1 req){
             String msgCluster = req.getCluster();
             String msgDest = req.getTarget();

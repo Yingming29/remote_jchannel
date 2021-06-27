@@ -106,9 +106,11 @@ message UpdateRep{
 }
 message MessageReq{
   bytes messageObj = 1;
+  string type = 2;
 }
 message MessageRep{
   bytes messageObj = 1;
+  string type = 2;
 }
 // connect() of JChannel, create a bidirectional streaming of grpc
 message ConnectReq {

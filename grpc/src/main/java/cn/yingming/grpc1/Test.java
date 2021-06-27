@@ -123,5 +123,32 @@ public class Test {
         List l2 = rep.getLogicalNameList();
         System.out.println(l2);
 
+
+        System.out.println("===============");
+        Message msgtype = new BytesMessage();
+        System.out.println(msgtype.getClass());
+        ByteArrayDataOutputStream out  = new ByteArrayDataOutputStream();
+        msgtype.writeTo(out);
+        byte[] byte_msgtype = out.buffer();
+
+
+
+        /**
+         * Test for all types of Message
+         */
+        BytesMessage msg1 = new BytesMessage();
+        ObjectMessage msg2 = new ObjectMessage();
+        NioMessage msg3 = new NioMessage();
+        EmptyMessage msg4 = new EmptyMessage();
+        ObjectMessage msg5 = new ObjectMessage();
+        LongMessage msg6 = new LongMessage();
+        CompositeMessage msg7 = new CompositeMessage();
+        FragmentedMessage msg8 =  new FragmentedMessage();
+
+        if (msg2.getClass().toString().equals("class org.jgroups.BytesMessage")){
+            System.out.println("true");
+        }
+
+
     }
 }

@@ -12,4 +12,16 @@ public interface MessageRepOrBuilder extends
    * @return The messageObj.
    */
   com.google.protobuf.ByteString getMessageObj();
+
+  /**
+   * <code>string type = 2;</code>
+   * @return The type.
+   */
+  java.lang.String getType();
+  /**
+   * <code>string type = 2;</code>
+   * @return The bytes for type.
+   */
+  com.google.protobuf.ByteString
+      getTypeBytes();
 }

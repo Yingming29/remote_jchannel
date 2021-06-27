@@ -17,6 +17,7 @@ private static final long serialVersionUID = 0L;
   }
   private MessageReq() {
     messageObj_ = com.google.protobuf.ByteString.EMPTY;
+    type_ = "";
   }
 
   @java.lang.Override
@@ -52,6 +53,12 @@ private static final long serialVersionUID = 0L;
           case 10: {
 
             messageObj_ = input.readBytes();
+            break;
+          }
+          case 18: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            type_ = s;
             break;
           }
           default: {
@@ -97,6 +104,44 @@ private static final long serialVersionUID = 0L;
     return messageObj_;
   }
 
+  public static final int TYPE_FIELD_NUMBER = 2;
+  private volatile java.lang.Object type_;
+  /**
+   * <code>string type = 2;</code>
+   * @return The type.
+   */
+  @java.lang.Override
+  public java.lang.String getType() {
+    java.lang.Object ref = type_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      type_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string type = 2;</code>
+   * @return The bytes for type.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getTypeBytes() {
+    java.lang.Object ref = type_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      type_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -114,6 +159,9 @@ private static final long serialVersionUID = 0L;
     if (!messageObj_.isEmpty()) {
       output.writeBytes(1, messageObj_);
     }
+    if (!getTypeBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, type_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -126,6 +174,9 @@ private static final long serialVersionUID = 0L;
     if (!messageObj_.isEmpty()) {
       size += com.google.protobuf.CodedOutputStream
         .computeBytesSize(1, messageObj_);
+    }
+    if (!getTypeBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, type_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -144,6 +195,8 @@ private static final long serialVersionUID = 0L;
 
     if (!getMessageObj()
         .equals(other.getMessageObj())) return false;
+    if (!getType()
+        .equals(other.getType())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -157,6 +210,8 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + MESSAGEOBJ_FIELD_NUMBER;
     hash = (53 * hash) + getMessageObj().hashCode();
+    hash = (37 * hash) + TYPE_FIELD_NUMBER;
+    hash = (53 * hash) + getType().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -292,6 +347,8 @@ private static final long serialVersionUID = 0L;
       super.clear();
       messageObj_ = com.google.protobuf.ByteString.EMPTY;
 
+      type_ = "";
+
       return this;
     }
 
@@ -319,6 +376,7 @@ private static final long serialVersionUID = 0L;
     public io.grpc.jchannelRpc.MessageReq buildPartial() {
       io.grpc.jchannelRpc.MessageReq result = new io.grpc.jchannelRpc.MessageReq(this);
       result.messageObj_ = messageObj_;
+      result.type_ = type_;
       onBuilt();
       return result;
     }
@@ -369,6 +427,10 @@ private static final long serialVersionUID = 0L;
       if (other == io.grpc.jchannelRpc.MessageReq.getDefaultInstance()) return this;
       if (other.getMessageObj() != com.google.protobuf.ByteString.EMPTY) {
         setMessageObj(other.getMessageObj());
+      }
+      if (!other.getType().isEmpty()) {
+        type_ = other.type_;
+        onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -429,6 +491,82 @@ private static final long serialVersionUID = 0L;
     public Builder clearMessageObj() {
       
       messageObj_ = getDefaultInstance().getMessageObj();
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object type_ = "";
+    /**
+     * <code>string type = 2;</code>
+     * @return The type.
+     */
+    public java.lang.String getType() {
+      java.lang.Object ref = type_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        type_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string type = 2;</code>
+     * @return The bytes for type.
+     */
+    public com.google.protobuf.ByteString
+        getTypeBytes() {
+      java.lang.Object ref = type_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        type_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string type = 2;</code>
+     * @param value The type to set.
+     * @return This builder for chaining.
+     */
+    public Builder setType(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      type_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string type = 2;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearType() {
+      
+      type_ = getDefaultInstance().getType();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string type = 2;</code>
+     * @param value The bytes for type to set.
+     * @return This builder for chaining.
+     */
+    public Builder setTypeBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      type_ = value;
       onChanged();
       return this;
     }
