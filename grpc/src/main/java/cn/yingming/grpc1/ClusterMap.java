@@ -74,6 +74,7 @@ public class ClusterMap implements Serializable {
             byte[] v_byte = vOutStream.buffer();
             view_rep = ViewRep.newBuilder().setView(ByteString.copyFrom(v_byte)).build();
             addViewNum();
+            System.out.println("[JChannel] Generate the current client view, " + view);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -90,7 +91,10 @@ public class ClusterMap implements Serializable {
         try{
             this.creator = view.getCoord();
             this.viewNum = (int) view.getViewId().getId();
-            this.orderList = (LinkedList) view.getMembers();
+            for (int i = 0; i < view.getMembers().size(); i++) {
+                orderList.add(view.getMembersRaw()[i]);
+            }
+            System.out.println("[JChannel] Update the client view information, " + view);
         } finally {
             lock.unlock();
         }

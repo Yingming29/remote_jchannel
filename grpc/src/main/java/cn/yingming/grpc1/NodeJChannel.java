@@ -58,12 +58,10 @@ public class NodeJChannel implements Receiver{
         } else if (msg.getObject() instanceof UpdateRepBetweenNodes) {
             System.out.println("Receive the response from the first JChannel-server for updating the previous information of clients.");
             receiveProtobufMsg(msg);
-        } if (msg.getObject() instanceof String){
-            // System.out.println("call receiveString");
-            receiveString(msg);
-        } else {
-            // System.out.println("call receiveByte");
-            receiveByte(msg);
+        } else if (msg.getObject() instanceof ChannelMsg){
+            receiveChannelMsg(msg);
+        } else if (msg.getObject() instanceof Request){
+            receiveProtobufMsg(msg);
         }
     }
 
@@ -82,6 +80,7 @@ public class NodeJChannel implements Receiver{
                     System.out.println("Confirm that the JChannel' Address in the existing NameCache.");
                     // generate message for the requester, NameCacheRep, ViewRep of clients,
                     UpdateNameCacheRep nameCacheRep = this.service.generateNameCacheMsg();
+                    // not null
                     ClusterMap clusterInf = (ClusterMap) this.serviceMap.get("ClientCluster");
                     ViewRep viewRep = clusterInf.generateView();
                     // StateRep stateRep = clusterInf.generateState(); change
@@ -101,7 +100,6 @@ public class NodeJChannel implements Receiver{
             }
 
         } else if (msg.getObject() instanceof UpdateRepBetweenNodes) {
-            System.out.println("??????????????");
             UpdateRepBetweenNodes rep = msg.getObject();
             ViewRep view_rep = rep.getClientView();
             UpdateNameCacheRep nameCacheRep = rep.getNameCache();
@@ -126,102 +124,94 @@ public class NodeJChannel implements Receiver{
                 } finally {
                     lock.unlock();
                 }
-                System.out.println("Test: " + NameCache.getContents());
-                System.out.println("Test: " + rep);
             }
             // 2.update client view
             ClusterMap clusterInf = null;
             if (this.serviceMap.size() == 0){
-                try{
-                    // the same client cluster
-                    clusterInf = new ClusterMap();
-                    this.serviceMap.put("ClientCluster", clusterInf);
-                } catch (Exception e){
-                    e.printStackTrace();
-                }
+                clusterInf = new ClusterMap();
+                this.serviceMap.put("ClientCluster", clusterInf);
+                System.out.println(1);
             } else{
                 clusterInf = (ClusterMap) this.serviceMap.get("ClientCluster");
+                System.out.println(2);
             }
             View v = new View();
             ByteArrayDataInputStream in = new ByteArrayDataInputStream(view_rep.getView().toByteArray());
             try {
                 v.readFrom(in);
+                clusterInf.setFromView(v);
             } catch (Exception e){
                 e.printStackTrace();
             }
-            clusterInf.setFromView(v);
+            System.out.println(v);
             // 3. update state of client
             // clusterInf.history = stateRep; change
 
-        }
-    }
-
-    public void receiveByte(Message msg){
-        Object obj =  UtilsRJ.unserializeObj(msg.getPayload());
-
-        if (obj instanceof Map){
-            System.out.println("Receive the cluster information from node(coordinator) " + msg.getSrc());
-            ConcurrentHashMap m = (ConcurrentHashMap) obj;
+        } else if (msg.getObject() instanceof Request && ((Request) msg.getObject()).hasConnectRequest()){
+            ConnectReq conReq = ((Request) msg.getObject()).getConnectRequest();
+            System.out.println("[JChannel] Receive a shared connect() request for updating th cluster information.");
+            System.out.println("here:" + conReq);
+            // change: After the server receive the connect() result, it generate a
             lock.lock();
             try{
-                this.serviceMap = m;
+                NameCache.add(UUID.fromString(conReq.getJchannelAddress()), conReq.getLogicalName());
+                connectCluster(conReq.getCluster(), UUID.fromString(conReq.getJchannelAddress()), conReq.getLogicalName());
             } finally {
                 lock.unlock();
             }
-        } else if (obj == null){
-            Request req = null;
-            try{
-                req = Request.parseFrom((byte[]) msg.getPayload());
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-            if (req.hasConnectRequest()){
-                ConnectReq conReq = req.getConnectRequest();
-                System.out.println("[JChannel] Receive a shared connect() request for updating th cluster information.");
-                System.out.println("here:" + conReq);
-                // change: After the server receive the connect() result, it generate a
-                connectCluster(conReq.getCluster(), UUID.fromString(conReq.getJchannelAddress()), conReq.getLogicalName());
-            } else if (req.hasDisconnectRequest()){
-                DisconnectReq disReq = req.getDisconnectRequest();
-                System.out.println("[JChannel] Receive a shared disconnect() request for updating th cluster information.");
-                disconnectCluster(disReq.getCluster(), UUID.fromString(disReq.getJchannelAddress()));
-            } else if (req.hasMessageRequest()){
-                MessageReq msgReq = req.getMessageRequest();
-                if (msgReq.getDestination().equals("")){
-                    System.out.println("[JChannel] Receive a shared send() request for broadcast to JChannl-Clients.");
-                    lock.lock();
-                    try{
-                        ClusterMap cm = (ClusterMap) serviceMap.get(msgReq.getCluster());
-                        cm.addHistory(msgReq);
-                        this.service.broadcast(msgReq);
-                    } finally {
-                        lock.unlock();
-                    }
-                } else {
-                    System.out.println("[JChannel] Receive a shared send() request for unicast to a JChannl-Client.");
-                    this.service.unicast(msgReq);
+        } else if (msg.getObject() instanceof Request && ((Request) msg.getObject()).hasDisconnectRequest()){
+            DisconnectReq disReq = ((Request) msg.getObject()).getDisconnectRequest();
+            System.out.println("[JChannel] Receive a shared disconnect() request for updating th cluster information.");
+            disconnectCluster(disReq.getCluster(), UUID.fromString(disReq.getJchannelAddress()));
+        } else if (msg.getObject() instanceof Request && ((Request) msg.getObject()).hasMessageRequest()){
+            MessageReq msgReq = ((Request) msg.getObject()).getMessageRequest();
+            if (msgReq.getDestination().equals("")){
+                System.out.println("[JChannel] Receive a shared send() request for broadcast to JChannl-Clients.");
+                lock.lock();
+                try{
+                    ClusterMap cm = (ClusterMap) serviceMap.get(msgReq.getCluster());
+                    cm.addHistory(msgReq);
+                    this.service.broadcast(msgReq);
+                } finally {
+                    lock.unlock();
                 }
-            } else if (req.hasStateMsg1()){
-                System.out.println("[JChannel] Receive a shared getState(Target) request for unicast to a JChannl-Client.");
-                this.service.unicast_stateMsg1(req.getStateMsg1());
-            } else if (req.hasStateMsg2()) {
-                System.out.println("[JChannel] Receive a shared getState(Target) result for unicast to a JChannl-Client.");
-                this.service.unicast_stateMsg2(req.getStateMsg2());
+            } else {
+                System.out.println("[JChannel] Receive a shared send() request for unicast to a JChannl-Client.");
+                this.service.unicast(msgReq);
             }
+        } else if (msg.getObject() instanceof Request && ((Request) msg.getObject()).hasStateMsg1()){
+            System.out.println("[JChannel] Receive a shared getState(Target) request for unicast to a JChannl-Client.");
+            this.service.unicast_stateMsg1(((Request) msg.getObject()).getStateMsg1());
+        } else if (msg.getObject() instanceof Request && ((Request) msg.getObject()).hasStateMsg2()) {
+            System.out.println("[JChannel] Receive a shared getState(Target) result for unicast to a JChannl-Client.");
+            this.service.unicast_stateMsg2(((Request) msg.getObject()).getStateMsg2());
         }
     }
 
-    public void receiveString(Message msg){
-        String msgStr = msg.getObject();
-        String newMsg = null;
-        // some types of broadcast messages, update address or broadcast the common message
-        synchronized (this.nodesMap){
-            // condition 1, update server messgage
-            if (msgStr.startsWith("grpcAddress:")){
-                String[] strs = msgStr.split(":", 2);
+    public void receiveChannelMsg(Message msg){
+        ChannelMsg cmsg = msg.getObject();
+        if (cmsg.getType().equals("[DisconnectNotGrace]")){
+            UUID u = new UUID();
+            ByteArrayDataInputStream in = new ByteArrayDataInputStream(cmsg.getContentByt().toByteArray());
+            ReentrantLock sublock = new ReentrantLock();
+            sublock.lock();
+            try {
+                u.readFrom(in);
+                disconnectClusterNoGraceful(u);
+            } catch (Exception e){
+                e.printStackTrace();
+            } finally {
+                sublock.unlock();
+            }
+            System.out.println("[JChannel] Receive a shared not graceful disconnect() request for updating th cluster information.");
+        } if (cmsg.getType().equals("grpcAddress")){
+            synchronized (this.nodesMap){
+                // condition 1, update server messgage
+
+                String new_add = cmsg.getContentStr();
                 boolean same = false;
                 for (Object add : this.nodesMap.keySet()) {
-                    if (add.toString().equals(msg.getSrc().toString())&&this.nodesMap.get(add).equals(strs[1])){
+                    if (add.toString().equals(msg.getSrc().toString())&&this.nodesMap.get(add).equals(new_add)){
                         same = true;
                     }
                 }
@@ -230,7 +220,7 @@ public class NodeJChannel implements Receiver{
                     System.out.println("[JChannel] Receive a confirmation from a node, but no change.");
                 } else{
                     // condition 1.2 changed server list, update list and broadcast update servers
-                    this.nodesMap.put(msg.getSrc(), strs[1]);
+                    this.nodesMap.put(msg.getSrc(), new_add);
                     System.out.println("[JChannel] Receive a confirmation from a node, update server map.");
                     System.out.println("[JChannel] After updating: " + this.nodesMap);
                     UpdateRep updateMsg = UpdateRep.newBuilder()
@@ -242,25 +232,6 @@ public class NodeJChannel implements Receiver{
                     this.service.broadcastResponse(broMsg);
                 }
                 // condition 2, connect() request
-            } else if (msgStr.equals("ClusterInformation")){
-                // send the current
-                System.out.println("Receive a request for the current " +
-                        "JChannel-client cluster information from a new node member: " + msg.getSrc());
-                lock.lock();
-                try{
-                    byte[] b = UtilsRJ.serializeObj(this.serviceMap);
-                    System.out.println(b);
-                    Message msg2 = new ObjectMessage(msg.getSrc(), b);
-                    this.channel.send(msg2);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    this.lock.unlock();
-                }
-            } else if (msgStr.startsWith("[DisconnectNotGrace]")){
-                String[] strs = msgStr.split(" ");
-                System.out.println("[JChannel] Receive a shared not graceful disconnect() request for updating th cluster information.");
-                disconnectClusterNoGraceful(UUID.fromString(strs[1]));
             }
         }
     }
@@ -324,16 +295,8 @@ public class NodeJChannel implements Receiver{
             if (view.getMembers().get(0).toString().equals(this.channel.getAddress().toString())){
                 System.out.println("[JChannel] This is the coordinator of the node cluster.");
             } else {
-                /*
-                String msg = "ClusterInformation";
-                try{
-                    // send the request to get the current inf of client-jchannel cluster
-                    this.channel.send(view.getMembers().get(0), msg);
-                } catch (Exception e){
-                    e.printStackTrace();
-                }
-
-                 */
+                ReentrantLock lock = new ReentrantLock();
+                lock.lock();
                 try {
                     UUID u = (UUID) this.channel.getAddress();
                     ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
@@ -343,6 +306,9 @@ public class NodeJChannel implements Receiver{
                     this.channel.send(view.getCoord(), req);
                 } catch (Exception e){
                     e.printStackTrace();
+                }
+                finally {
+                    lock.unlock();
                 }
 
             }
@@ -382,8 +348,10 @@ public class NodeJChannel implements Receiver{
 
     public void sendMyself(){
         // send the address of its gRPC server address/port
-        Message msg = new ObjectMessage(null, "grpcAddress:" + this.grpcAddress);
+        ChannelMsg cmsg = ChannelMsg.newBuilder().setType("grpcAddress").setContentStr(this.grpcAddress).build();
+        Message msg = new ObjectMessage(null, cmsg);
         // send messages exclude itself.
+        // maybe change because the stats and discardOwnMessage
         msg.setFlagIfAbsent(Message.TransientFlag.DONT_LOOPBACK);
         try{
             System.out.println("[JChannel] Send the grpc address of my self.");
@@ -411,8 +379,15 @@ public class NodeJChannel implements Receiver{
                 // put into serviceMap
                 serviceMap.put(cluster, clusterObj);
             }
+            // update namecache to its clients
+            NameCache.add(address, name);
+            UpdateNameCacheRep updateName = this.service.generateNameCacheMsg();
+            Response rep = Response.newBuilder().setUpdateNameCache(updateName).build();
+            // here, the two broadcast()'s target is different, broadcastView() has a specific client-client.
+            this.service.broadcastResponse(rep);
             ClusterMap clusterObj = (ClusterMap) serviceMap.get(cluster);
             ViewRep viewRep= clusterObj.generateView();
+            // changed : generate new namecache and broadcast
             this.service.broadcastView(viewRep, cluster);
         }catch (Exception e){
             e.printStackTrace();

@@ -333,17 +333,23 @@ public class NodeServer {
                 // can add an automatic deleting the cancelled client.
                 @Override
                 public void onError(Throwable throwable) {
-
-                    System.out.println("[gRPC] onError:" + throwable.getMessage() + " Remove it from the node.");
-                    System.out.println(responseObserver);
-                    Address add = removeClient(responseObserver);
-                    String line = "[DisconnectNotGrace] " + add;
-                    Message msg = new ObjectMessage(null, line);
-                    msg.setFlagIfAbsent(Message.TransientFlag.DONT_LOOPBACK);
+                    lock.lock();
                     try {
+                        System.out.println("[gRPC] onError:" + throwable.getMessage() + " Remove it from the node.");
+                        System.out.println(responseObserver);
+                        Address add = removeClient(responseObserver);
+                        ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
+                        UUID u = (UUID) add;
+                        u.writeTo(out);
+                        ChannelMsg channelMsg = ChannelMsg.newBuilder()
+                                .setType("[DisconnectNotGrace]").setContentByt(ByteString.copyFrom(out.buffer())).build();
+                        Message msg = new ObjectMessage(null, channelMsg);
+                        msg.setFlagIfAbsent(Message.TransientFlag.DONT_LOOPBACK);
                         jchannel.channel.send(msg);
                     } catch (Exception e) {
                         e.printStackTrace();
+                    } finally {
+                        lock.unlock();
                     }
                 }
 
@@ -384,20 +390,15 @@ public class NodeServer {
 
         protected Address removeClient(StreamObserver responseObserver){
 
-            this.lock.lock();
-            try{
-                for (Address add:clients.keySet()) {
-                    if (clients.get(add) == responseObserver){
-                        clients.remove(add);
-                        System.out.println("[gRPC] Found the error client, remove it from clients Map.");
-                        jchannel.disconnectClusterNoGraceful(add);
-                        return add;
-                    }
-
+            for (Address add:clients.keySet()) {
+                if (clients.get(add) == responseObserver){
+                    clients.remove(add);
+                    System.out.println("[gRPC] Found the error client, remove it from clients Map.");
+                    jchannel.disconnectClusterNoGraceful(add);
+                    return add;
                 }
-            } finally {
-                this.lock.unlock();
             }
+
             return null;
         }
 
@@ -641,8 +642,7 @@ public class NodeServer {
         }
 
         protected void forwardMsg(Request req){
-            byte[] b =  req.toByteArray();
-            Message msg = new ObjectMessage(null, b);
+            Message msg = new ObjectMessage(null, req);
             // send messages exclude itself.
             msg.setFlagIfAbsent(Message.TransientFlag.DONT_LOOPBACK);
             try {

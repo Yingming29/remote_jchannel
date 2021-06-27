@@ -64,12 +64,14 @@ io/grpc/jchannelRpc/MessageRepOrBuilder.class
 io/grpc/jchannelRpc/ConnectReq$1.class
 io/grpc/jchannelRpc/StateRep$Builder.class
 io/grpc/jchannelRpc/DisconnectReq.class
+io/grpc/jchannelRpc/ChannelMsg.class
 cn/yingming/grpc1/ClusterMap.class
 io/grpc/jchannelRpc/JChannelsServiceGrpc$JChannelsServiceFileDescriptorSupplier.class
 io/grpc/jchannelRpc/Request$1.class
 io/grpc/jchannelRpc/DisconnectRep$1.class
 io/grpc/jchannelRpc/GetAddressReq.class
 cn/yingming/grpc1/RemoteJChannel.class
+io/grpc/jchannelRpc/ChannelMsgOrBuilder.class
 io/grpc/jchannelRpc/PrintProtocolSpecReq$1.class
 io/grpc/jchannelRpc/UpdateNameCacheRep$1.class
 cn/yingming/grpc1/SimpleChat.class
@@ -79,6 +81,7 @@ io/grpc/jchannelRpc/GetNameRep$1.class
 io/grpc/jchannelRpc/ResponseOrBuilder.class
 io/grpc/jchannelRpc/RepAsk$Builder.class
 io/grpc/jchannelRpc/StateReq$Builder.class
+io/grpc/jchannelRpc/ChannelMsg$Builder.class
 io/grpc/jchannelRpc/JChannelsServiceGrpc$JChannelsServiceFutureStub.class
 cn/yingming/grpc1/NodeJChannel.class
 io/grpc/jchannelRpc/MessageReq$Builder.class
@@ -117,6 +120,7 @@ io/grpc/jchannelRpc/ViewRepOrBuilder.class
 io/grpc/jchannelRpc/Response$Builder.class
 io/grpc/jchannelRpc/UpdateRep.class
 io/grpc/jchannelRpc/Request$OneTypeCase.class
+io/grpc/jchannelRpc/ChannelMsg$1.class
 io/grpc/jchannelRpc/GetAddressReq$1.class
 io/grpc/jchannelRpc/StateMsg_withTarget_1OrBuilder.class
 io/grpc/jchannelRpc/GetClusterNameReq.class

@@ -43,6 +43,11 @@ message Response{
     PrintProtocolSpecRep printProtoRep = 14;
   }
 }
+message ChannelMsg{
+  string type = 1;
+  string content_str = 2;
+  bytes content_byt = 3;
+}
 message UpdateReqBetweenNodes{
   bytes address = 1;
 }
