@@ -121,10 +121,17 @@ public class NodeServer {
                         // 2. Store the responseObserver of the client. Map<Address, streamObserver>
                         join(req.getConnectRequest(), responseObserver, generated_address, generated_name);
                         // 3. forward the connect request with generated Address and generated logical name to other nodes for storing
+                        ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
+                        UUID u = (UUID) generated_address;
+                        try {
+                            u.writeTo(out);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         ConnectReq conReqWithAddress = ConnectReq.newBuilder()
                                 .setCluster(req.getConnectRequest().getCluster())
                                 .setTimestamp(req.getConnectRequest().getTimestamp())
-                                .setJchannelAddress(generated_address.toString())
+                                .setJchannAddressByte(ByteString.copyFrom(out.buffer()))
                                 .setLogicalName(generated_name)
                                 .build();
                         Request reqForward = Request.newBuilder().setConnectRequest(conReqWithAddress).build();
@@ -454,9 +461,11 @@ public class NodeServer {
                         .build();
                 responseObserver.onNext(rep2);
                 // generate and update the current NameCache to the client
+                /*  changed here
                 UpdateNameCacheRep nameCacheRep = generateNameCacheMsg();
                 Response rep3 = Response.newBuilder().setUpdateNameCache(nameCacheRep).build();
                 responseObserver.onNext(rep3);
+                 */
                 // Copy and send a JChannel-server View to the client
                 View view = jchannel.channel.getView();
                 ByteArrayDataOutputStream vOutStream = new ByteArrayDataOutputStream();

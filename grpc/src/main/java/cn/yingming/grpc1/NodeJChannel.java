@@ -1,6 +1,7 @@
 package cn.yingming.grpc1;
 
 import com.google.protobuf.ByteString;
+import com.sun.jdi.event.ExceptionEvent;
 import io.grpc.jchannelRpc.*;
 import org.apache.commons.collections.ListUtils;
 import org.jgroups.*;
@@ -154,8 +155,13 @@ public class NodeJChannel implements Receiver{
             // change: After the server receive the connect() result, it generate a
             lock.lock();
             try{
-                NameCache.add(UUID.fromString(conReq.getJchannelAddress()), conReq.getLogicalName());
-                connectCluster(conReq.getCluster(), UUID.fromString(conReq.getJchannelAddress()), conReq.getLogicalName());
+                UUID u = new UUID();
+                ByteArrayDataInputStream in = new ByteArrayDataInputStream(conReq.getJchannAddressByte().toByteArray());
+                u.readFrom(in);
+                NameCache.add(u, conReq.getLogicalName());
+                connectCluster(conReq.getCluster(), u, conReq.getLogicalName());
+            } catch (Exception e){
+                e.printStackTrace();
             } finally {
                 lock.unlock();
             }
@@ -379,7 +385,7 @@ public class NodeJChannel implements Receiver{
                 // put into serviceMap
                 serviceMap.put(cluster, clusterObj);
             }
-            // update namecache to its clients
+            // change:   update namecache to its clients
             NameCache.add(address, name);
             UpdateNameCacheRep updateName = this.service.generateNameCacheMsg();
             Response rep = Response.newBuilder().setUpdateNameCache(updateName).build();
@@ -421,11 +427,19 @@ public class NodeJChannel implements Receiver{
     public void disconnectClusterNoGraceful(Address uuid){
         this.lock.lock();
         try{
+            System.out.println("disconnectClusterNoGraceful?");
+            System.out.println(serviceMap.containsKey("ClientCluster"));
+            System.out.println(serviceMap.get("ClientCluster"));
             for (Object cluster: serviceMap.keySet()) {
                 String clusterName = cluster.toString();
                 ClusterMap clusterMap = (ClusterMap) serviceMap.get(clusterName);
+                System.out.println("1" + clusterName);
                 for (Object eachUuid:clusterMap.getMap().keySet()) {
-                    if (uuid.equals(eachUuid.toString())){
+                    System.out.println("222");
+                    System.out.println(uuid);
+                    System.out.println(eachUuid);
+                    Address add_each = (Address) eachUuid;
+                    if (uuid.equals(add_each)){
                         System.out.println("No grace, Remove the JChannel-client from its cluster.");
                         clusterMap.removeClient(uuid);
                         clusterMap.getMap().remove(uuid);
@@ -439,7 +453,6 @@ public class NodeJChannel implements Receiver{
                             this.service.broadcastView(viewRep, clusterName);
                         }
                     }
-
                 }
             }
         } finally {

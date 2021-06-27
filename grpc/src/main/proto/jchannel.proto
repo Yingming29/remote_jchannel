@@ -125,6 +125,7 @@ message ConnectReq {
   bool reconnect = 3;         // reconnect and jchannel_address will be used in the reconnection part.
   string jchannel_address = 4;
   string logical_name = 5;
+  bytes jchann_address_byte = 6;
 }
 // the first time the client connects to the JChannel-server, the server will create an Address and a logical name for it.
 //

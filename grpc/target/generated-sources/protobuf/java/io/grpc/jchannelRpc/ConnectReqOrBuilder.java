@@ -72,4 +72,10 @@ public interface ConnectReqOrBuilder extends
    */
   com.google.protobuf.ByteString
       getLogicalNameBytes();
+
+  /**
+   * <code>bytes jchann_address_byte = 6;</code>
+   * @return The jchannAddressByte.
+   */
+  com.google.protobuf.ByteString getJchannAddressByte();
 }
