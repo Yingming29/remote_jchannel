@@ -398,7 +398,7 @@ public class NodeServer {
             for (Address add:clients.keySet()) {
                 if (clients.get(add) == responseObserver){
                     clients.remove(add);
-                    System.out.println("[gRPC] Found the error client, remove it from clients Map.");
+                    System.out.println("[gRPC] Found the error client and its observer, remove it from clients Map.");
                     jchannel.disconnectClusterNoGraceful(add);
                     return add;
                 }
@@ -634,7 +634,7 @@ public class NodeServer {
     public static void main(String[] args) throws Exception {
         // Port, NodeName, ClusterName
         final NodeServer server = new NodeServer(Integer.parseInt(args[0]), args[1]);
-        System.out.printf("Inf: %s %s %s \n", args[0], args[1]);
+        System.out.printf("Inf: %s %s \n", args[0], args[1]);
         // start gRPC service
         server.start();
         server.blockUntilShutdown();

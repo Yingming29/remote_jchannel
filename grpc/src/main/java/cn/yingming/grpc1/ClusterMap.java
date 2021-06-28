@@ -36,20 +36,19 @@ public class ClusterMap implements Serializable {
 
     public void removeClient(Address uuid){
         System.out.println(this.map);
-        String target = this.map.get(uuid);
-        int index = orderList.indexOf(target);
-        if (index != -1){
-            System.out.println("Remove the client from its cluster.");
-            orderList.remove(index);
-        } else{
-            System.out.println("The client does not exist in the cluster.");
-        }
+        this.orderList.remove(uuid);
+        System.out.println("Remove the client from the client cluster, " + uuid);
     }
     public int getViewNum(){
         return viewNum;
     }
     public void addViewNum(){
-        viewNum ++;
+        lock.lock();
+        try{
+            viewNum ++;
+        } finally {
+            lock.unlock();
+        }
     }
     // change
     public Address getCreator(){
@@ -73,7 +72,6 @@ public class ClusterMap implements Serializable {
             view.writeTo(vOutStream);
             byte[] v_byte = vOutStream.buffer();
             view_rep = ViewRep.newBuilder().setView(ByteString.copyFrom(v_byte)).build();
-            addViewNum();
             System.out.println("[JChannel] Generate the current client view, " + view);
         } catch (IOException e) {
             e.printStackTrace();

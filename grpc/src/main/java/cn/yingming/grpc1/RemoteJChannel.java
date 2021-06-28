@@ -96,14 +96,22 @@ public class RemoteJChannel extends JChannel {
     }
 
     @Override
-    // getAddress() -> address()
+    /** getAddress() -> address()
+     * address() is a remote grpc call. get the Address of remote JChannel (real JChannel)
+     */
     public Address getAddress() {
         return address();
     }
 
     @Override
-    // grpc call for real jchannel  -> return result by grpc
+    /** grpc call for the Address of remote JChannel (real jchannel)  -> return result by grpc
+     * @return Address, the Address of the remote JChannel (real JChannel) of this client.
+     */
     public Address address() {
+        if (!isWork.get()){
+            System.out.println("The RemoteJChannel client does not start work. Return null");
+            return null;
+        }
         this.clientStub.add_save("getAddress()");
         synchronized (obj){
             try{
@@ -116,26 +124,39 @@ public class RemoteJChannel extends JChannel {
         return this.real_jchannel_address;
     }
 
+    /**
+     * Get the local Address of client, which is generated and sent by remote JChannel, cached locally in the client..
+     * @return Address, the Address of the RemoteJChannelClient.
+     */
     public Address getLocalAddress(){
         if (!isWork.get() && !down.get()){
-            throw new IllegalArgumentException("Client and client stub does not work.");
+            System.out.println("The RemoteJChannel client does not start work. Return null");
+            return null;
         }
         return this.jchannel_address;
     }
 
+    /**
+     * call name()
+     * @return String, the name of remote JChannel.
+     */
     public String getName() {
-        this.clientStub.add_save("getName()");
-        synchronized (obj){
-            try{
-                obj.wait(5000);
-            } catch (Exception e){
-                e.printStackTrace();
-            }
+        if (!isWork.get() && !down.get()){
+            System.out.println("The RemoteJChannel client does not start work. Return null");
+            return null;
         }
-        return this.remoteName;
+        return name();
     }
 
+    /**
+     * grpc call get the logical name of the remote JChannel (real JChannel).
+     * @return String, the name of remote JChannel.
+     */
     public String name() {
+        if (!isWork.get()){
+            System.out.println("The RemoteJChannel client does not start work. Return null");
+            return null;
+        }
         this.clientStub.add_save("getName()");
         synchronized (obj){
             try{
@@ -150,9 +171,13 @@ public class RemoteJChannel extends JChannel {
     @Override
     // setName
     public JChannel name(String name) {
-        throw new UnsupportedOperationException("RemoteJChannel cannot set name.");
+        throw new UnsupportedOperationException("RemoteJChannel client cannot setName() and name(String name).");
     }
-
+    @Override
+    /**
+     * getClusterName() is a remote grpc call. get the remote JChannel's cluster, e.g. NodeCluster
+     * @return String, the cluster name of remote JChannel.
+     */
     public String clusterName() {
         return this.getClusterName();
     }
@@ -176,35 +201,35 @@ public class RemoteJChannel extends JChannel {
     public View remoteJChannelView(){
         return this.isWork.get() ? this.view : null;
     }
-
+    @Override
     public boolean getStats() {
         return this.stats;
     }
-
+    @Override
     public boolean stats() {
         return this.stats;
     }
-
+    @Override
     public JChannel setStats(boolean stats) {
         this.stats = stats;
         return this;
     }
-
+    @Override
     public JChannel stats(boolean stats) {
         this.stats = stats;
         return this;
     }
-
+    @Override
     public boolean getDiscardOwnMessages() {
         return this.discard_own_messages;
     }
 
-
+    @Override
     public JChannel setDiscardOwnMessages(boolean flag) {
         this.discard_own_messages = flag;
         return this;
     }
-
+    @Override
     public boolean flushSupported() {
         throw new UnsupportedOperationException("RemoteJChannel does not have flush. " +
                 "flushSupported() does not return anything.");
@@ -249,6 +274,10 @@ public class RemoteJChannel extends JChannel {
 
     @Override
     public String getClusterName() {
+        if (!isWork.get() && !down.get()){
+            System.out.println("The RemoteJChannel client does not start work. Return null");
+            return null;
+        }
         this.clientStub.add_save("getClusterName()");
         synchronized (obj){
             try{

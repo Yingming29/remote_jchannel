@@ -218,7 +218,8 @@ public class NodeJChannel implements Receiver{
             sublock.lock();
             try {
                 u.readFrom(in);
-                disconnectClusterNoGraceful(u);
+                Address add = (Address) u;
+                disconnectClusterNoGraceful(add);
             } catch (Exception e){
                 e.printStackTrace();
             } finally {
@@ -391,6 +392,7 @@ public class NodeJChannel implements Receiver{
             ClusterMap clusterObj = (ClusterMap) this.serviceMap.get("ClientCluster");
             clusterObj.getMap().put(address, name);
             clusterObj.addMember(address);
+            clusterObj.addViewNum();
             // change:   update namecache to its clients
             NameCache.add(address, name);
             UpdateNameCacheRep updateName = this.service.generateNameCacheMsg();
@@ -398,7 +400,7 @@ public class NodeJChannel implements Receiver{
             // here, the two broadcast()'s target is different, broadcastView() has a specific client-client.
             this.service.broadcastResponse(rep);
             ViewRep viewRep= clusterObj.generateView();
-            System.out.println("connectCluster corrdinator" + clusterObj.getCreator());
+            System.out.println("connectCluster corrdinator:" + clusterObj.getCreator());
             // changed : generate new namecache and broadcast
             this.service.broadcastView(viewRep, cluster);
         } catch (Exception e){
@@ -412,19 +414,14 @@ public class NodeJChannel implements Receiver{
         lock.lock();
         try{
             ClusterMap m = (ClusterMap) serviceMap.get(cluster);
-            if (m.getMap().size() == 1 && m.getMap().get(address) != null){
-                serviceMap.remove(cluster);
-                System.out.println("The last JChannel-Client quits and deletes the cluster, " + cluster);
-            } else if (m.getMap().size() > 1){
-                m.removeClient(address);
-                // change?
-                m.getMap().remove(address);
-                System.out.println(address + " quits " + cluster);
-                ClusterMap clusterObj = (ClusterMap) serviceMap.get(cluster);
-                ViewRep viewRep= clusterObj.generateView();
-                this.service.broadcastView(viewRep, cluster);
-            }
-
+            m.removeClient(address);
+            // change?
+            m.getMap().remove(address);
+            System.out.println(address + " quits " + cluster);
+            ClusterMap clusterObj = (ClusterMap) serviceMap.get(cluster);
+            clusterObj.addViewNum();
+            ViewRep viewRep= clusterObj.generateView();
+            this.service.broadcastView(viewRep, cluster);
         } finally {
             lock.unlock();
         }
@@ -433,32 +430,17 @@ public class NodeJChannel implements Receiver{
     public void disconnectClusterNoGraceful(Address uuid){
         this.lock.lock();
         try{
-            System.out.println("disconnectClusterNoGraceful?");
-            System.out.println(serviceMap.containsKey("ClientCluster"));
-            System.out.println(serviceMap.get("ClientCluster"));
-            for (Object cluster: serviceMap.keySet()) {
-                String clusterName = cluster.toString();
-                ClusterMap clusterMap = (ClusterMap) serviceMap.get(clusterName);
-                System.out.println("1" + clusterName);
-                for (Object eachUuid:clusterMap.getMap().keySet()) {
-                    System.out.println("222");
-                    System.out.println(uuid);
-                    System.out.println(eachUuid);
-                    Address add_each = (Address) eachUuid;
-                    if (uuid.equals(add_each)){
-                        System.out.println("No grace, Remove the JChannel-client from its cluster.");
-                        clusterMap.removeClient(uuid);
-                        clusterMap.getMap().remove(uuid);
-
-                        ClusterMap clusterObj = (ClusterMap) serviceMap.get(clusterName);
-                        if (clusterObj.getMap().size() == 0){
-                            serviceMap.remove(cluster);
-                            System.out.println("The last JChannel-Client quits and deletes the cluster, " + cluster);
-                        } else{
-                            ViewRep viewRep= clusterObj.generateView();
-                            this.service.broadcastView(viewRep, clusterName);
-                        }
-                    }
+            String clusterName = "ClientCluster";
+            ClusterMap clusterMap = (ClusterMap) serviceMap.get(clusterName);
+            for (Object eachUuid:clusterMap.getMap().keySet()) {
+                Address add_each = (Address) eachUuid;
+                if (uuid.equals(add_each)){
+                    System.out.println("Remove the JChannel-client from the client cluster.");
+                    clusterMap.removeClient(uuid);
+                    clusterMap.getMap().remove(uuid);
+                    clusterMap.addViewNum();
+                    ViewRep viewRep= clusterMap.generateView();
+                    this.service.broadcastView(viewRep, clusterName);
                 }
             }
         } finally {
