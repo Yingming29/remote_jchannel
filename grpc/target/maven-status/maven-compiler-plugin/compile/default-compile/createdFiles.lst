@@ -7,6 +7,7 @@ cn/yingming/grpc1/RemoteJChannelStub$1.class
 cn/yingming/grpc1/SubJChannel.class
 cn/yingming/grpc1/SimpleChatRJ.class
 cn/yingming/grpc1/SimpleChat.class
+cn/yingming/grpc1/NodeJChannel.class
 io/grpc/jchannelRpc/MessageReqRep$1.class
 io/grpc/jchannelRpc/MessageReqRepOrBuilder.class
 cn/yingming/grpc1/RemoteJChannelStub.class

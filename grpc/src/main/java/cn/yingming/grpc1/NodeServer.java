@@ -29,7 +29,7 @@ public class NodeServer {
     JChannelsServiceImpl gRPCservice;
     // <no, ip>, it stores all ip address for clients, who are connecting to this server. not useful.
     private ConcurrentHashMap<Integer, String> ips;
-    public NodeServer(int port, String nodeName, String jClusterName) throws Exception {
+    public NodeServer(int port, String jClusterName) throws Exception {
         // port, name, and cluster name of this node
         this.port = port;
         this.nodeName = nodeName;
@@ -633,8 +633,8 @@ public class NodeServer {
 
     public static void main(String[] args) throws Exception {
         // Port, NodeName, ClusterName
-        final NodeServer server = new NodeServer(Integer.parseInt(args[0]), args[1], args[2]);
-        System.out.printf("Inf: %s %s %s \n",args[0], args[1], args[2]);
+        final NodeServer server = new NodeServer(Integer.parseInt(args[0]), args[1]);
+        System.out.printf("Inf: %s %s %s \n", args[0], args[1]);
         // start gRPC service
         server.start();
         server.blockUntilShutdown();

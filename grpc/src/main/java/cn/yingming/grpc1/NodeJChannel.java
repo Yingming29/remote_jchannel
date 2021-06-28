@@ -39,6 +39,7 @@ public class NodeJChannel implements Receiver{
         this.lock = new ReentrantLock();
         this.service = null;
         this.serviceMap = new ConcurrentHashMap<String, ClusterMap>();
+        this.serviceMap.put("ClientCluster", new ClusterMap());
         // put itself into available nodes list
         this.nodesMap.put(this.channel.getAddress(), this.grpcAddress);
 
@@ -85,23 +86,19 @@ public class NodeJChannel implements Receiver{
                     // generate message for the requester, NameCacheRep, ViewRep of clients,
                     UpdateNameCacheRep nameCacheRep = this.service.generateNameCacheMsg();
                     // changed: not null , here
-                    ClusterMap clusterInf = null;
-                    if (!this.serviceMap.contains("ClientClient") || this.serviceMap.get("ClientCluster") == null){
-                        clusterInf = new ClusterMap();
-                        this.serviceMap.put("ClientCluster", clusterInf);
-                    } else{
-                        clusterInf = (ClusterMap) this.serviceMap.get("ClientCluster");
-                    }
+                    ClusterMap clusterInf = (ClusterMap) this.serviceMap.get("ClientCluster");
                     ViewRep viewRep = null;
                     UpdateRepBetweenNodes rep;
-                    if (clusterInf.creator != null){
+                    if (clusterInf.getCreator() != null){
                         viewRep = clusterInf.generateView();
                     }
                     // StateRep stateRep = clusterInf.generateState(); change
-                    if (clusterInf.creator != null) {
+                    if (clusterInf.getCreator() != null) {
                         rep = UpdateRepBetweenNodes.newBuilder().setClientView(viewRep)
                                 .setNameCache(nameCacheRep).build();
+                        System.out.println("!=null");
                     } else{
+                        System.out.println("= null");
                         rep = UpdateRepBetweenNodes.newBuilder().setNameCache(nameCacheRep).build();
                     }
                     Message msgRep = new ObjectMessage(msg.getSrc(), rep);
@@ -389,31 +386,22 @@ public class NodeJChannel implements Receiver{
         lock.lock();
         try{
             // create the cluster or connect an existing cluster.
-            if (serviceMap.containsKey(cluster)){
-                System.out.println(address + "(" +  name + ") connects to the existing cluster: " + cluster);
-                ClusterMap clusterObj = (ClusterMap) serviceMap.get(cluster);
-                clusterObj.getMap().put(address, name);
-                clusterObj.addMember(address);
-            } else{
-                System.out.println(address + "(" +  name + ") connects to a new cluster: " + cluster);
-                // create new cluster object and set it as the creator
-                ClusterMap clusterObj = new ClusterMap(address);
-                clusterObj.getMap().put(address, name);
-                clusterObj.addMember(address);
-                // put into serviceMap
-                serviceMap.put(cluster, clusterObj);
-            }
+            System.out.println(address + "(" +  name + ") connects to client cluster: " + cluster);
+            // create new cluster object and set it as the creator
+            ClusterMap clusterObj = (ClusterMap) this.serviceMap.get("ClientCluster");
+            clusterObj.getMap().put(address, name);
+            clusterObj.addMember(address);
             // change:   update namecache to its clients
             NameCache.add(address, name);
             UpdateNameCacheRep updateName = this.service.generateNameCacheMsg();
             Response rep = Response.newBuilder().setUpdateNameCache(updateName).build();
             // here, the two broadcast()'s target is different, broadcastView() has a specific client-client.
             this.service.broadcastResponse(rep);
-            ClusterMap clusterObj = (ClusterMap) serviceMap.get(cluster);
             ViewRep viewRep= clusterObj.generateView();
+            System.out.println("connectCluster corrdinator" + clusterObj.getCreator());
             // changed : generate new namecache and broadcast
             this.service.broadcastView(viewRep, cluster);
-        }catch (Exception e){
+        } catch (Exception e){
             e.printStackTrace();
         } finally {
             lock.unlock();

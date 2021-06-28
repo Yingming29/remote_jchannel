@@ -18,24 +18,14 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ClusterMap implements Serializable {
     public ConcurrentHashMap<Address, String> map;
     public int viewNum;
-    public Address creator;
     public ReentrantLock lock;
     // the members list with join order.
     public LinkedList orderList;
     // message history
     public LinkedList history;
-    public ClusterMap(Address creator){
-        this.map = new ConcurrentHashMap<>();
-        this.viewNum = 0;
-        this.creator = creator;
-        this.lock = new ReentrantLock();
-        this.orderList = new LinkedList<Address>();
-        this.history = new LinkedList<MessageReqRep>();
-    }
     public ClusterMap(){
         this.map = new ConcurrentHashMap<>();
         this.viewNum = 0;
-        this.creator = null;
         this.lock = new ReentrantLock();
         this.orderList = new LinkedList<Address>();
         this.history = new LinkedList<MessageReqRep>();
@@ -54,7 +44,6 @@ public class ClusterMap implements Serializable {
         } else{
             System.out.println("The client does not exist in the cluster.");
         }
-
     }
     public int getViewNum(){
         return viewNum;
@@ -72,7 +61,9 @@ public class ClusterMap implements Serializable {
     }
     // generate a client view.
     public ViewRep generateView(){
-        System.out.println();
+        System.out.println("generateView test print: " + this.getCreator());
+        System.out.println("generateView test print: " + this.orderList);
+        System.out.println("generateView test print: " + this.map);
         ViewRep view_rep = null;
         this.lock.lock();
         try{
@@ -98,7 +89,6 @@ public class ClusterMap implements Serializable {
     public void setFromView(View view){
         lock.lock();
         try{
-            this.creator = view.getCoord();
             this.viewNum = (int) view.getViewId().getId();
             for (int i = 0; i < view.getMembers().size(); i++) {
                 orderList.add(view.getMembersRaw()[i]);
@@ -109,6 +99,7 @@ public class ClusterMap implements Serializable {
         }
     }
     public void addMember(Address address){
+        System.out.println("add member in the map:" + map);
         lock.lock();
         try{
             if (!this.orderList.contains(address)){
