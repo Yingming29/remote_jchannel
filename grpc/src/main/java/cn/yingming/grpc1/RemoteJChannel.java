@@ -317,7 +317,7 @@ public class RemoteJChannel extends JChannel {
         }
         return real_jchannel_address instanceof org.jgroups.util.UUID ? ((org.jgroups.util.UUID)real_jchannel_address).toStringLong() : null;
     }
-    
+
     @Override
     public String getClusterName() {
         if (!isWork.get() && !down.get()){

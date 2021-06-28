@@ -3,6 +3,7 @@ package cn.yingming.grpc1;
 import com.google.protobuf.ByteString;
 import io.grpc.jchannelRpc.UpdateNameCacheRep;
 import org.jgroups.*;
+import org.jgroups.stack.Protocol;
 import org.jgroups.util.*;
 import org.jgroups.util.UUID;
 
@@ -148,6 +149,8 @@ public class Test {
             System.out.println("true");
         }
 
+
+        HashMap mp = new HashMap<String, Object>();
 
     }
 }

@@ -78,6 +78,7 @@ public class SimpleChat extends JChannel implements Receiver{
 					break;
 				}
 				byte[] b = line.getBytes();
+				/*
 				Address add = this.generateAddress();
 				System.out.println(add);
 				ByteArrayDataOutputStream d3 = new ByteArrayDataOutputStream();
@@ -108,6 +109,8 @@ public class SimpleChat extends JChannel implements Receiver{
 
 				System.out.println(NameCache.getContents());
 
+				 */
+
 				/*
 				MessageRJ msgrj = new MessageRJ("1", "1");
 				Message msg = new ObjectMessage(null, msgrj);
@@ -126,8 +129,8 @@ public class SimpleChat extends JChannel implements Receiver{
 				//System.out.println(channel.printProtocolSpec(true));
 				// System.out.println(channel.printProtocolSpec(false));
 				// System.out.println(JChannel.getVersion());
-				System.out.println(channel.getProtocolStack());
-				ProtocolStack ps = channel.getProtocolStack();
+				//System.out.println(channel.getProtocolStack());
+				// ProtocolStack ps = channel.getProtocolStack();
 
 
 			} catch (Exception e) {
