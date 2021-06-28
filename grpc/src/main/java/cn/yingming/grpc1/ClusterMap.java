@@ -30,7 +30,7 @@ public class ClusterMap implements Serializable {
         this.creator = creator;
         this.lock = new ReentrantLock();
         this.orderList = new LinkedList<Address>();
-        this.history = new LinkedList<MessageRep>();
+        this.history = new LinkedList<MessageReqRep>();
     }
     public ClusterMap(){
         this.map = new ConcurrentHashMap<>();
@@ -38,13 +38,14 @@ public class ClusterMap implements Serializable {
         this.creator = null;
         this.lock = new ReentrantLock();
         this.orderList = new LinkedList<Address>();
-        this.history = new LinkedList<MessageRep>();
+        this.history = new LinkedList<MessageReqRep>();
     }
     public ConcurrentHashMap getMap(){
         return this.map;
     }
 
     public void removeClient(Address uuid){
+        System.out.println(this.map);
         String target = this.map.get(uuid);
         int index = orderList.indexOf(target);
         if (index != -1){
@@ -132,11 +133,10 @@ public class ClusterMap implements Serializable {
         }
         return rep;
     }
-    public void addHistory(MessageReq msg){
-        MessageRep rep = MessageRep.newBuilder().setMessageObj(ByteString.copyFrom(msg.getMessageObj().toByteArray())).build();
+    public void addHistory(MessageReqRep msg){
         lock.lock();
         try{
-            history.add(rep);
+            history.add(msg);
         } finally {
             lock.unlock();
         }

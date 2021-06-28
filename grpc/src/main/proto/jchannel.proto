@@ -61,32 +61,28 @@ message UpdateNameCacheRep{
   repeated string logical_name = 2;
 }
 message PrintProtocolSpecReq{
-  string source = 1;
-  string jchannel_address = 2;
-  bool include_props = 3;
+  string jchannel_address = 1;
+  bool include_props = 2;
 }
 message PrintProtocolSpecRep{
   string protocolStackSpec = 1;
 
 }
 message GetClusterNameReq{
-  string source = 1;
-  string jchannel_address = 2;
+  string jchannel_address = 1;
 }
 message GetClusterNameRep{
   string cluster_name = 1;
 }
 message GetNameReq{
-  string source = 1;
-  string jchannel_address = 2;
+  string jchannel_address = 1;
 }
 message GetNameRep{
   string name = 1;
   string other = 2;
 }
 message GetAddressReq{
-  string source = 1;
-  string jchannel_address = 2;
+  string jchannel_address = 1;
 }
 message GetAddressRep{
   bytes address = 1;

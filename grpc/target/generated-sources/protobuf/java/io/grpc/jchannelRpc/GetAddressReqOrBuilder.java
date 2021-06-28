@@ -8,24 +8,12 @@ public interface GetAddressReqOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string source = 1;</code>
-   * @return The source.
-   */
-  java.lang.String getSource();
-  /**
-   * <code>string source = 1;</code>
-   * @return The bytes for source.
-   */
-  com.google.protobuf.ByteString
-      getSourceBytes();
-
-  /**
-   * <code>string jchannel_address = 2;</code>
+   * <code>string jchannel_address = 1;</code>
    * @return The jchannelAddress.
    */
   java.lang.String getJchannelAddress();
   /**
-   * <code>string jchannel_address = 2;</code>
+   * <code>string jchannel_address = 1;</code>
    * @return The bytes for jchannelAddress.
    */
   com.google.protobuf.ByteString

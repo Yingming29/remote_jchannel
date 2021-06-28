@@ -1,14 +1,33 @@
 package cn.yingming.grpc1;
 
-import io.grpc.jchannelRpc.MessageReq;
+import io.grpc.jchannelRpc.MessageReqRep;
 import org.jgroups.*;
 import org.jgroups.util.ByteArrayDataInputStream;
 
 import java.io.*;
 
 public class UtilsRJ {
+    public static String getMsgType(Message msg){
+        if (msg instanceof BytesMessage){
+            return "BytesMessage";
+        } else if (msg instanceof ObjectMessage){
+            return "ObjectMessage";
+        } else if (msg instanceof CompositeMessage){
+            return "CompositeMessage";
+        } else if (msg instanceof EmptyMessage){
+            return "EmptyMessage";
+        } else if (msg instanceof FragmentedMessage){
+            return "FragmentedMessage";
+        } else if (msg instanceof LongMessage){
+            return "LongMessage";
+        } else if (msg instanceof NioMessage){
+            return "NioMessage";
+        } else{
+            return null;
+        }
+    }
 
-    public static Message convertMessage(MessageReq req){
+    public static Message convertMessage(MessageReqRep req){
         String type = req.getType();
         ByteArrayDataInputStream in = new ByteArrayDataInputStream(req.getMessageObj().toByteArray());
         Message msg = null;

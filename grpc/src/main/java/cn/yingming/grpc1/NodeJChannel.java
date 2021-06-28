@@ -186,15 +186,9 @@ public class NodeJChannel implements Receiver{
             DisconnectReq disReq = ((Request) msg.getObject()).getDisconnectRequest();
             System.out.println("[JChannel] Receive a shared disconnect() request for updating th cluster information.");
             disconnectCluster(disReq.getCluster(), UUID.fromString(disReq.getJchannelAddress()));
-        } else if (msg.getObject() instanceof Request && ((Request) msg.getObject()).hasMessageRequest()){
-            MessageReq msgReq = ((Request) msg.getObject()).getMessageRequest();
-            Message msgObj = new ObjectMessage();
-            ByteArrayDataInputStream in = new ByteArrayDataInputStream(msgReq.getMessageObj().toByteArray());
-            try{
-                msgObj.readFrom(in);
-            } catch (Exception e){
-                e.printStackTrace();
-            }
+        } else if (msg.getObject() instanceof Request && ((Request) msg.getObject()).hasMessageReqRep()){
+            MessageReqRep msgReq = ((Request) msg.getObject()).getMessageReqRep();
+            Message msgObj = UtilsRJ.convertMessage(msgReq);
             if (msgObj.getDest() == null){
                 System.out.println("[JChannel] Receive a shared send() request for broadcast to JChannl-Clients.");
                 lock.lock();

@@ -1,0 +1,12 @@
+io/grpc/jchannelRpc/MessageReqRep$Builder.class
+io/grpc/jchannelRpc/MessageReqRep.class
+cn/yingming/grpc1/UtilsRJ.class
+cn/yingming/grpc1/RemoteJChannelStub$Control.class
+cn/yingming/grpc1/Test.class
+cn/yingming/grpc1/RemoteJChannelStub$1.class
+cn/yingming/grpc1/SubJChannel.class
+cn/yingming/grpc1/SimpleChatRJ.class
+cn/yingming/grpc1/SimpleChat.class
+io/grpc/jchannelRpc/MessageReqRep$1.class
+io/grpc/jchannelRpc/MessageReqRepOrBuilder.class
+cn/yingming/grpc1/RemoteJChannelStub.class

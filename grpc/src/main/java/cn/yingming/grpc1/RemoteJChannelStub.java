@@ -61,26 +61,25 @@ public class RemoteJChannelStub {
             } else if(input.equals("getAddress()")){
                 GetAddressReq getAddressReq = GetAddressReq.newBuilder()
                         .setJchannelAddress(this.client.jchannel_address.toString())
-                        .setSource(this.client.uuid)
                         .build();
                 return Request.newBuilder().setGetAddressReq(getAddressReq).build();
             } else if(input.equals("getName()")){
                 GetNameReq getNameReq = GetNameReq.newBuilder()
                         .setJchannelAddress(this.client.jchannel_address.toString())
-                        .setSource(this.client.uuid).build();
+                        .build();
                 return Request.newBuilder().setGetNameReq(getNameReq).build();
             } else if(input.equals("getClusterName()")){
                 GetClusterNameReq subReq = GetClusterNameReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString())
-                        .setSource(this.client.uuid).build();
+                        .build();
                 return Request.newBuilder().setGetClusterNameReq(subReq).build();
             } else if(input.startsWith("printProtocolSpec()")){
                 PrintProtocolSpecReq subReq = null;
                 if (input.equals("printProtocolSpec() true")){
                     subReq = PrintProtocolSpecReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString())
-                            .setSource(this.client.uuid).setIncludeProps(true).build();
+                            .setIncludeProps(true).build();
                 } else if (input.equals("printProtocolSpec() false")){
                     subReq = PrintProtocolSpecReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString())
-                            .setSource(this.client.uuid).setIncludeProps(false).build();
+                            .setIncludeProps(false).build();
                 }
                 return Request.newBuilder().setPrintProtoReq(subReq).build();
             } else if (input.startsWith("getState()")) {
@@ -116,8 +115,8 @@ public class RemoteJChannelStub {
             } catch (Exception e){
                 e.printStackTrace();
             }
-            MessageReq msg = MessageReq.newBuilder().setMessageObj(ByteString.copyFrom(out.buffer())).build();
-            Request req = Request.newBuilder().setMessageRequest(msg).build();
+            MessageReqRep msg = MessageReqRep.newBuilder().setMessageObj(ByteString.copyFrom(out.buffer())).setType(UtilsRJ.getMsgType(m)).build();
+            Request req = Request.newBuilder().setMessageReqRep(msg).build();
             return req;
         }
         return null;
@@ -239,26 +238,11 @@ public class RemoteJChannelStub {
                 stubLock.unlock();
             }
             System.out.println("View of JChannel-node(Receiver of JChannel-client?): " + this.client.remoteView);
-        } else if (response.hasMessageResponse()) {
-            // get message from server
-            // add the message response to stats object
-            /*
-            try {
-                if (this.client.stats) {
-                    this.client.stats_obj.addRecord(response);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-             */
-
+        } else if (response.hasMessageReqRep()) {
             // change to receiver, remove printMsg
             if (this.client.receiver != null) {
                 try {
-                    ByteArrayDataInputStream in = new ByteArrayDataInputStream(response.getMessageResponse().getMessageObj().toByteArray());
-                    Message msg = new ObjectMessage();
-                    msg.readFrom(in);
+                    Message msg = UtilsRJ.convertMessage(response.getMessageReqRep());
                     this.client.receiver.receiveRJ(msg);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -461,12 +445,21 @@ public class RemoteJChannelStub {
         Date d = new Date();
         SimpleDateFormat dft = new SimpleDateFormat("hh:mm:ss");
         // connect() request
+        ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
+        try {
+            this.client.jchannel_address.writeTo(out);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         ConnectReq joinReq = ConnectReq.newBuilder()
                 .setCluster(client.cluster)
                 .setJchannelAddress(client.uuid)
+                .setLogicalName(client.jchannel_address.toString())
+                .setJchannAddressByte(ByteString.copyFrom(out.buffer()))
                 .setReconnect(true)
                 .setTimestamp(dft.format(d))
                 .build();
+        System.out.println("Reconnect msg:" + joinReq);
         Request req = Request.newBuilder()
                 .setConnectRequest(joinReq)
                 .build();
@@ -542,7 +535,7 @@ public class RemoteJChannelStub {
                 // wait for result
                 synchronized (down){
                     try {
-                        System.out.println("generate address request"+ Thread.currentThread());
+                        // System.out.println("generate address request"+ Thread.currentThread());
                         down.wait();
                     } catch (Exception e){
                         e.printStackTrace();

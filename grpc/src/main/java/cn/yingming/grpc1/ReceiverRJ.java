@@ -1,6 +1,6 @@
 package cn.yingming.grpc1;
 
-import io.grpc.jchannelRpc.MessageRep;
+import io.grpc.jchannelRpc.MessageReqRep;
 import io.grpc.jchannelRpc.Response;
 import io.grpc.jchannelRpc.StateRep;
 import io.grpc.jchannelRpc.ViewRep;
@@ -15,23 +15,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ReceiverRJ implements Receiver {
-    final LinkedList<MessageRep> state;
+    final LinkedList<MessageReqRep> state;
     public ReceiverRJ(){
-        this.state = new LinkedList<MessageRep>();
+        this.state = new LinkedList<MessageReqRep>();
     }
     public void receiveRJ(Message msg) {
-        /*
-        if (!msg.getContent().equals("")){
-            System.out.println(msg.getJchannelAddress() + ": " + msg.getContent());
-        } else{
-            System.out.println(msg.getJchannelAddress() + ": " + msg.getContentByte());
-        }
-        synchronized (this.state){
-            this.state.add(msg);
-        }
-
-         */
-
         System.out.println(msg);
     }
 

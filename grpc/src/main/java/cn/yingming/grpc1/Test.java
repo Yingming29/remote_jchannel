@@ -1,7 +1,6 @@
 package cn.yingming.grpc1;
 
 import com.google.protobuf.ByteString;
-import io.grpc.jchannelRpc.MessageReq;
 import io.grpc.jchannelRpc.UpdateNameCacheRep;
 import org.jgroups.*;
 import org.jgroups.util.*;
