@@ -205,15 +205,54 @@ public class RemoteJChannel extends JChannel {
     }
     @Override
     public boolean getStats() {
+        if (!isWork.get()){
+            System.out.println("The RemoteJChannel client does not start work. Return false");
+            return false;
+        }
+        this.clientStub.add_save("getStats()");
+        synchronized (obj){
+            try{
+                obj.wait(5000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
         return this.stats;
     }
     @Override
     public boolean stats() {
+        if (!isWork.get()){
+            System.out.println("The RemoteJChannel client does not start work. Return false");
+            return false;
+        }
+        this.clientStub.add_save("getStats()");
+        synchronized (obj){
+            try{
+                obj.wait(5000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
         return this.stats;
     }
     @Override
     public JChannel setStats(boolean stats) {
-        this.stats = stats;
+        if (!isWork.get()){
+            System.out.println("The RemoteJChannel client does not start work.");
+            return this;
+        }
+        if (stats){
+            this.clientStub.add_save("setStats() true");
+        } else{
+            this.clientStub.add_save("setStats() false");
+        }
+        synchronized (obj){
+            try{
+                obj.wait(5000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
         return this;
     }
     @Override

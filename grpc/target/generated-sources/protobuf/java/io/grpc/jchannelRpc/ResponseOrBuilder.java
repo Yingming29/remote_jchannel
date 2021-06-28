@@ -280,5 +280,35 @@ public interface ResponseOrBuilder extends
    */
   io.grpc.jchannelRpc.GetPropertyRepOrBuilder getGetPropertyRepOrBuilder();
 
+  /**
+   * <code>.cn.yingming.grpc1.SetStatsRep setStatsRep = 16;</code>
+   * @return Whether the setStatsRep field is set.
+   */
+  boolean hasSetStatsRep();
+  /**
+   * <code>.cn.yingming.grpc1.SetStatsRep setStatsRep = 16;</code>
+   * @return The setStatsRep.
+   */
+  io.grpc.jchannelRpc.SetStatsRep getSetStatsRep();
+  /**
+   * <code>.cn.yingming.grpc1.SetStatsRep setStatsRep = 16;</code>
+   */
+  io.grpc.jchannelRpc.SetStatsRepOrBuilder getSetStatsRepOrBuilder();
+
+  /**
+   * <code>.cn.yingming.grpc1.GetStatsRep getStatsRep = 17;</code>
+   * @return Whether the getStatsRep field is set.
+   */
+  boolean hasGetStatsRep();
+  /**
+   * <code>.cn.yingming.grpc1.GetStatsRep getStatsRep = 17;</code>
+   * @return The getStatsRep.
+   */
+  io.grpc.jchannelRpc.GetStatsRep getGetStatsRep();
+  /**
+   * <code>.cn.yingming.grpc1.GetStatsRep getStatsRep = 17;</code>
+   */
+  io.grpc.jchannelRpc.GetStatsRepOrBuilder getGetStatsRepOrBuilder();
+
   public io.grpc.jchannelRpc.Response.OneTypeCase getOneTypeCase();
 }

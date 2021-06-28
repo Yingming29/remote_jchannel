@@ -172,5 +172,35 @@ public interface RequestOrBuilder extends
    */
   io.grpc.jchannelRpc.GetPropertyReqOrBuilder getGetPropertyReqOrBuilder();
 
+  /**
+   * <code>.cn.yingming.grpc1.SetStatsReq setStatsReq = 12;</code>
+   * @return Whether the setStatsReq field is set.
+   */
+  boolean hasSetStatsReq();
+  /**
+   * <code>.cn.yingming.grpc1.SetStatsReq setStatsReq = 12;</code>
+   * @return The setStatsReq.
+   */
+  io.grpc.jchannelRpc.SetStatsReq getSetStatsReq();
+  /**
+   * <code>.cn.yingming.grpc1.SetStatsReq setStatsReq = 12;</code>
+   */
+  io.grpc.jchannelRpc.SetStatsReqOrBuilder getSetStatsReqOrBuilder();
+
+  /**
+   * <code>.cn.yingming.grpc1.GetStatsReq getStatReq = 13;</code>
+   * @return Whether the getStatReq field is set.
+   */
+  boolean hasGetStatReq();
+  /**
+   * <code>.cn.yingming.grpc1.GetStatsReq getStatReq = 13;</code>
+   * @return The getStatReq.
+   */
+  io.grpc.jchannelRpc.GetStatsReq getGetStatReq();
+  /**
+   * <code>.cn.yingming.grpc1.GetStatsReq getStatReq = 13;</code>
+   */
+  io.grpc.jchannelRpc.GetStatsReqOrBuilder getGetStatReqOrBuilder();
+
   public io.grpc.jchannelRpc.Request.OneTypeCase getOneTypeCase();
 }

@@ -258,6 +258,34 @@ private static final long serialVersionUID = 0L;
             oneTypeCase_ = 15;
             break;
           }
+          case 130: {
+            io.grpc.jchannelRpc.SetStatsRep.Builder subBuilder = null;
+            if (oneTypeCase_ == 16) {
+              subBuilder = ((io.grpc.jchannelRpc.SetStatsRep) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.SetStatsRep.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.SetStatsRep) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 16;
+            break;
+          }
+          case 138: {
+            io.grpc.jchannelRpc.GetStatsRep.Builder subBuilder = null;
+            if (oneTypeCase_ == 17) {
+              subBuilder = ((io.grpc.jchannelRpc.GetStatsRep) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.GetStatsRep.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.GetStatsRep) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 17;
+            break;
+          }
           default: {
             if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -310,6 +338,8 @@ private static final long serialVersionUID = 0L;
     GETCLUSTERNAMEREP(13),
     PRINTPROTOREP(14),
     GETPROPERTYREP(15),
+    SETSTATSREP(16),
+    GETSTATSREP(17),
     ONETYPE_NOT_SET(0);
     private final int value;
     private OneTypeCase(int value) {
@@ -342,6 +372,8 @@ private static final long serialVersionUID = 0L;
         case 13: return GETCLUSTERNAMEREP;
         case 14: return PRINTPROTOREP;
         case 15: return GETPROPERTYREP;
+        case 16: return SETSTATSREP;
+        case 17: return GETSTATSREP;
         case 0: return ONETYPE_NOT_SET;
         default: return null;
       }
@@ -870,6 +902,68 @@ private static final long serialVersionUID = 0L;
     return io.grpc.jchannelRpc.GetPropertyRep.getDefaultInstance();
   }
 
+  public static final int SETSTATSREP_FIELD_NUMBER = 16;
+  /**
+   * <code>.cn.yingming.grpc1.SetStatsRep setStatsRep = 16;</code>
+   * @return Whether the setStatsRep field is set.
+   */
+  @java.lang.Override
+  public boolean hasSetStatsRep() {
+    return oneTypeCase_ == 16;
+  }
+  /**
+   * <code>.cn.yingming.grpc1.SetStatsRep setStatsRep = 16;</code>
+   * @return The setStatsRep.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.SetStatsRep getSetStatsRep() {
+    if (oneTypeCase_ == 16) {
+       return (io.grpc.jchannelRpc.SetStatsRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.SetStatsRep.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.SetStatsRep setStatsRep = 16;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.SetStatsRepOrBuilder getSetStatsRepOrBuilder() {
+    if (oneTypeCase_ == 16) {
+       return (io.grpc.jchannelRpc.SetStatsRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.SetStatsRep.getDefaultInstance();
+  }
+
+  public static final int GETSTATSREP_FIELD_NUMBER = 17;
+  /**
+   * <code>.cn.yingming.grpc1.GetStatsRep getStatsRep = 17;</code>
+   * @return Whether the getStatsRep field is set.
+   */
+  @java.lang.Override
+  public boolean hasGetStatsRep() {
+    return oneTypeCase_ == 17;
+  }
+  /**
+   * <code>.cn.yingming.grpc1.GetStatsRep getStatsRep = 17;</code>
+   * @return The getStatsRep.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.GetStatsRep getGetStatsRep() {
+    if (oneTypeCase_ == 17) {
+       return (io.grpc.jchannelRpc.GetStatsRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.GetStatsRep.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.GetStatsRep getStatsRep = 17;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.GetStatsRepOrBuilder getGetStatsRepOrBuilder() {
+    if (oneTypeCase_ == 17) {
+       return (io.grpc.jchannelRpc.GetStatsRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.GetStatsRep.getDefaultInstance();
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -928,6 +1022,12 @@ private static final long serialVersionUID = 0L;
     }
     if (oneTypeCase_ == 15) {
       output.writeMessage(15, (io.grpc.jchannelRpc.GetPropertyRep) oneType_);
+    }
+    if (oneTypeCase_ == 16) {
+      output.writeMessage(16, (io.grpc.jchannelRpc.SetStatsRep) oneType_);
+    }
+    if (oneTypeCase_ == 17) {
+      output.writeMessage(17, (io.grpc.jchannelRpc.GetStatsRep) oneType_);
     }
     unknownFields.writeTo(output);
   }
@@ -997,6 +1097,14 @@ private static final long serialVersionUID = 0L;
     if (oneTypeCase_ == 15) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(15, (io.grpc.jchannelRpc.GetPropertyRep) oneType_);
+    }
+    if (oneTypeCase_ == 16) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(16, (io.grpc.jchannelRpc.SetStatsRep) oneType_);
+    }
+    if (oneTypeCase_ == 17) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(17, (io.grpc.jchannelRpc.GetStatsRep) oneType_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -1075,6 +1183,14 @@ private static final long serialVersionUID = 0L;
         if (!getGetPropertyRep()
             .equals(other.getGetPropertyRep())) return false;
         break;
+      case 16:
+        if (!getSetStatsRep()
+            .equals(other.getSetStatsRep())) return false;
+        break;
+      case 17:
+        if (!getGetStatsRep()
+            .equals(other.getGetStatsRep())) return false;
+        break;
       case 0:
       default:
     }
@@ -1149,6 +1265,14 @@ private static final long serialVersionUID = 0L;
       case 15:
         hash = (37 * hash) + GETPROPERTYREP_FIELD_NUMBER;
         hash = (53 * hash) + getGetPropertyRep().hashCode();
+        break;
+      case 16:
+        hash = (37 * hash) + SETSTATSREP_FIELD_NUMBER;
+        hash = (53 * hash) + getSetStatsRep().hashCode();
+        break;
+      case 17:
+        hash = (37 * hash) + GETSTATSREP_FIELD_NUMBER;
+        hash = (53 * hash) + getGetStatsRep().hashCode();
         break;
       case 0:
       default:
@@ -1419,6 +1543,20 @@ private static final long serialVersionUID = 0L;
           result.oneType_ = getPropertyRepBuilder_.build();
         }
       }
+      if (oneTypeCase_ == 16) {
+        if (setStatsRepBuilder_ == null) {
+          result.oneType_ = oneType_;
+        } else {
+          result.oneType_ = setStatsRepBuilder_.build();
+        }
+      }
+      if (oneTypeCase_ == 17) {
+        if (getStatsRepBuilder_ == null) {
+          result.oneType_ = oneType_;
+        } else {
+          result.oneType_ = getStatsRepBuilder_.build();
+        }
+      }
       result.oneTypeCase_ = oneTypeCase_;
       onBuilt();
       return result;
@@ -1527,6 +1665,14 @@ private static final long serialVersionUID = 0L;
         }
         case GETPROPERTYREP: {
           mergeGetPropertyRep(other.getGetPropertyRep());
+          break;
+        }
+        case SETSTATSREP: {
+          mergeSetStatsRep(other.getSetStatsRep());
+          break;
+        }
+        case GETSTATSREP: {
+          mergeGetStatsRep(other.getGetStatsRep());
           break;
         }
         case ONETYPE_NOT_SET: {
@@ -3834,6 +3980,288 @@ private static final long serialVersionUID = 0L;
       oneTypeCase_ = 15;
       onChanged();;
       return getPropertyRepBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.SetStatsRep, io.grpc.jchannelRpc.SetStatsRep.Builder, io.grpc.jchannelRpc.SetStatsRepOrBuilder> setStatsRepBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.SetStatsRep setStatsRep = 16;</code>
+     * @return Whether the setStatsRep field is set.
+     */
+    @java.lang.Override
+    public boolean hasSetStatsRep() {
+      return oneTypeCase_ == 16;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.SetStatsRep setStatsRep = 16;</code>
+     * @return The setStatsRep.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.SetStatsRep getSetStatsRep() {
+      if (setStatsRepBuilder_ == null) {
+        if (oneTypeCase_ == 16) {
+          return (io.grpc.jchannelRpc.SetStatsRep) oneType_;
+        }
+        return io.grpc.jchannelRpc.SetStatsRep.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 16) {
+          return setStatsRepBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.SetStatsRep.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.SetStatsRep setStatsRep = 16;</code>
+     */
+    public Builder setSetStatsRep(io.grpc.jchannelRpc.SetStatsRep value) {
+      if (setStatsRepBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        setStatsRepBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 16;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.SetStatsRep setStatsRep = 16;</code>
+     */
+    public Builder setSetStatsRep(
+        io.grpc.jchannelRpc.SetStatsRep.Builder builderForValue) {
+      if (setStatsRepBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        setStatsRepBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 16;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.SetStatsRep setStatsRep = 16;</code>
+     */
+    public Builder mergeSetStatsRep(io.grpc.jchannelRpc.SetStatsRep value) {
+      if (setStatsRepBuilder_ == null) {
+        if (oneTypeCase_ == 16 &&
+            oneType_ != io.grpc.jchannelRpc.SetStatsRep.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.SetStatsRep.newBuilder((io.grpc.jchannelRpc.SetStatsRep) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 16) {
+          setStatsRepBuilder_.mergeFrom(value);
+        }
+        setStatsRepBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 16;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.SetStatsRep setStatsRep = 16;</code>
+     */
+    public Builder clearSetStatsRep() {
+      if (setStatsRepBuilder_ == null) {
+        if (oneTypeCase_ == 16) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 16) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        setStatsRepBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.SetStatsRep setStatsRep = 16;</code>
+     */
+    public io.grpc.jchannelRpc.SetStatsRep.Builder getSetStatsRepBuilder() {
+      return getSetStatsRepFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.SetStatsRep setStatsRep = 16;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.SetStatsRepOrBuilder getSetStatsRepOrBuilder() {
+      if ((oneTypeCase_ == 16) && (setStatsRepBuilder_ != null)) {
+        return setStatsRepBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 16) {
+          return (io.grpc.jchannelRpc.SetStatsRep) oneType_;
+        }
+        return io.grpc.jchannelRpc.SetStatsRep.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.SetStatsRep setStatsRep = 16;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.SetStatsRep, io.grpc.jchannelRpc.SetStatsRep.Builder, io.grpc.jchannelRpc.SetStatsRepOrBuilder> 
+        getSetStatsRepFieldBuilder() {
+      if (setStatsRepBuilder_ == null) {
+        if (!(oneTypeCase_ == 16)) {
+          oneType_ = io.grpc.jchannelRpc.SetStatsRep.getDefaultInstance();
+        }
+        setStatsRepBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.SetStatsRep, io.grpc.jchannelRpc.SetStatsRep.Builder, io.grpc.jchannelRpc.SetStatsRepOrBuilder>(
+                (io.grpc.jchannelRpc.SetStatsRep) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 16;
+      onChanged();;
+      return setStatsRepBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.GetStatsRep, io.grpc.jchannelRpc.GetStatsRep.Builder, io.grpc.jchannelRpc.GetStatsRepOrBuilder> getStatsRepBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.GetStatsRep getStatsRep = 17;</code>
+     * @return Whether the getStatsRep field is set.
+     */
+    @java.lang.Override
+    public boolean hasGetStatsRep() {
+      return oneTypeCase_ == 17;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetStatsRep getStatsRep = 17;</code>
+     * @return The getStatsRep.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.GetStatsRep getGetStatsRep() {
+      if (getStatsRepBuilder_ == null) {
+        if (oneTypeCase_ == 17) {
+          return (io.grpc.jchannelRpc.GetStatsRep) oneType_;
+        }
+        return io.grpc.jchannelRpc.GetStatsRep.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 17) {
+          return getStatsRepBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.GetStatsRep.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetStatsRep getStatsRep = 17;</code>
+     */
+    public Builder setGetStatsRep(io.grpc.jchannelRpc.GetStatsRep value) {
+      if (getStatsRepBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        getStatsRepBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 17;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetStatsRep getStatsRep = 17;</code>
+     */
+    public Builder setGetStatsRep(
+        io.grpc.jchannelRpc.GetStatsRep.Builder builderForValue) {
+      if (getStatsRepBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        getStatsRepBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 17;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetStatsRep getStatsRep = 17;</code>
+     */
+    public Builder mergeGetStatsRep(io.grpc.jchannelRpc.GetStatsRep value) {
+      if (getStatsRepBuilder_ == null) {
+        if (oneTypeCase_ == 17 &&
+            oneType_ != io.grpc.jchannelRpc.GetStatsRep.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.GetStatsRep.newBuilder((io.grpc.jchannelRpc.GetStatsRep) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 17) {
+          getStatsRepBuilder_.mergeFrom(value);
+        }
+        getStatsRepBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 17;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetStatsRep getStatsRep = 17;</code>
+     */
+    public Builder clearGetStatsRep() {
+      if (getStatsRepBuilder_ == null) {
+        if (oneTypeCase_ == 17) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 17) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        getStatsRepBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetStatsRep getStatsRep = 17;</code>
+     */
+    public io.grpc.jchannelRpc.GetStatsRep.Builder getGetStatsRepBuilder() {
+      return getGetStatsRepFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetStatsRep getStatsRep = 17;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.GetStatsRepOrBuilder getGetStatsRepOrBuilder() {
+      if ((oneTypeCase_ == 17) && (getStatsRepBuilder_ != null)) {
+        return getStatsRepBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 17) {
+          return (io.grpc.jchannelRpc.GetStatsRep) oneType_;
+        }
+        return io.grpc.jchannelRpc.GetStatsRep.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetStatsRep getStatsRep = 17;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.GetStatsRep, io.grpc.jchannelRpc.GetStatsRep.Builder, io.grpc.jchannelRpc.GetStatsRepOrBuilder> 
+        getGetStatsRepFieldBuilder() {
+      if (getStatsRepBuilder_ == null) {
+        if (!(oneTypeCase_ == 17)) {
+          oneType_ = io.grpc.jchannelRpc.GetStatsRep.getDefaultInstance();
+        }
+        getStatsRepBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.GetStatsRep, io.grpc.jchannelRpc.GetStatsRep.Builder, io.grpc.jchannelRpc.GetStatsRepOrBuilder>(
+                (io.grpc.jchannelRpc.GetStatsRep) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 17;
+      onChanged();;
+      return getStatsRepBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

@@ -277,6 +277,23 @@ public class NodeServer {
                         System.out.println(rep);
                         responseObserver.onNext(rep);
 
+                    } else if (req.hasGetStatReq()){
+                        GetStatsReq getStatsReq = req.getGetStatReq();
+                        System.out.println("[grpc] Receive the getStats() request for the JChannel-server name from JChannel-Client:"
+                                + getStatsReq.getJchannelAddress());
+                        GetStatsRep getStatsRep = GetStatsRep.newBuilder().setStats(jchannel.channel.getStats()).build();
+                        Response rep = Response.newBuilder().setGetStatsRep(getStatsRep).build();
+                        System.out.println(rep);
+                        responseObserver.onNext(rep);
+                    } else if (req.hasSetStatsReq()){
+                        SetStatsReq setStatsReq = req.getSetStatsReq();
+                        System.out.println("[grpc] Receive the setStats() request for the JChannel-server name from JChannel-Client:"
+                                + setStatsReq.getJchannelAddress());
+                        jchannel.channel.setStats(setStatsReq.getStats());
+                        SetStatsRep setStatsRep = SetStatsRep.newBuilder().setStats(jchannel.channel.stats()).build();
+                        Response rep = Response.newBuilder().setSetStatsRep(setStatsRep).build();
+                        System.out.println(rep);
+                        responseObserver.onNext(rep);
                     } else if(req.hasGetPropertyReq()){
                         // getName() request
                         GetPropertyReq getPropertyReq = req.getGetPropertyReq();
@@ -321,7 +338,7 @@ public class NodeServer {
                         responseObserver.onNext(rep);
 
                     } else{
-                        /* Condition3
+                        /*
                            Receive the common message, send() request.
                            Two types: broadcast ot unicast
                          */

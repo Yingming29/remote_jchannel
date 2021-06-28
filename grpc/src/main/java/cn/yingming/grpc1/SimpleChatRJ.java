@@ -50,6 +50,8 @@ public class SimpleChatRJ {
                     System.out.println("getName() for Real JChannel Address (JChannel Server):" + remoteJChannel.getName());
                 } else if(line.startsWith("getClusterName()") || line.startsWith("clusterName()")){
                     System.out.println("getClusterName() for Real JChannel Address (JChannel Server):" + remoteJChannel.getClusterName());
+                } else if(line.startsWith("getStats()")){
+                    System.out.println("getStats() for Real JChannel Address (JChannel Server):" + remoteJChannel.getStats());
                 } else if(line.startsWith("printProtocolSpec()")){
                     String[] strs = line.split(" ", 2);
                     if(strs[1].equals("true")){
@@ -57,6 +59,13 @@ public class SimpleChatRJ {
                     } else if (strs[1].equals("false")){
                         remoteJChannel.remoteProtocolStack_string = remoteJChannel.printProtocolSpec(false);
                         System.out.println("printProtocolSpec(false) for Real JChannel Address (JChannel Server):" + remoteJChannel.printProtocolSpec(false));
+                    }
+                } else if(line.startsWith("setStats()")){
+                    String[] strs = line.split(" ");
+                    if (strs[1].equals("true")){
+                        System.out.println("setStats(true) for Real JChannel Address (JChannel Server):" + remoteJChannel.setStats(true));
+                    } else if (strs[1].equals("false")){
+                        System.out.println("setStats(false) for Real JChannel Address (JChannel Server):" + remoteJChannel.setStats(false));
                     }
                 } else if (line.startsWith("unicast")) {
                     // example: unicast content server/client 1

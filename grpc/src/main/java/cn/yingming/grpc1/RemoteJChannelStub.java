@@ -69,11 +69,23 @@ public class RemoteJChannelStub {
                         .setJchannelAddress(this.client.jchannel_address.toString())
                         .build();
                 return Request.newBuilder().setGetAddressReq(getAddressReq).build();
+            } else if(input.equals("getStats()")){
+                GetStatsReq getStatsReq = GetStatsReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString()).build();
+                return Request.newBuilder().setGetStatReq(getStatsReq).build();
             } else if(input.equals("getName()")){
                 GetNameReq getNameReq = GetNameReq.newBuilder()
                         .setJchannelAddress(this.client.jchannel_address.toString())
                         .build();
                 return Request.newBuilder().setGetNameReq(getNameReq).build();
+            } else if(input.startsWith("setStats()")){
+                System.out.println(input);
+                SetStatsReq setStatsReq = null;
+                if (input.equals("setStats() true")){
+                    setStatsReq = SetStatsReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString()).setStats(true).build();
+                } else if (input.equals("setStats() false")){
+                    setStatsReq = SetStatsReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString()).setStats(false).build();
+                }
+                return Request.newBuilder().setSetStatsReq(setStatsReq).build();
             } else if(input.equals("getProperties()")){
                 GetPropertyReq getPropertyReq = GetPropertyReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString()).build();
                 return Request.newBuilder().setGetPropertyReq(getPropertyReq).build();
@@ -185,6 +197,13 @@ public class RemoteJChannelStub {
             synchronized (this.client.obj) {
                 this.client.obj.notify();
             }
+        } else if(response.hasSetStatsRep()){
+            SetStatsRep rep = response.getSetStatsRep();
+            System.out.println("setStats() response:" + rep);
+            this.client.stats = rep.getStats();
+            synchronized (this.client.obj) {
+                this.client.obj.notify();
+            }
         } else if(response.hasGetPropertyRep()){
             GetPropertyRep rep = response.getGetPropertyRep();
             System.out.println("getProperties() response:" + rep);
@@ -241,6 +260,13 @@ public class RemoteJChannelStub {
                 }
             } else {
                 System.out.println("Receive message, but RemoteJChannel does not have receiver.");
+            }
+        } else if (response.hasGetStatsRep()) {
+            GetStatsRep rep = response.getGetStatsRep();
+            System.out.println("getStats() response:" + rep);
+            this.client.stats = rep.getStats();
+            synchronized (this.client.obj) {
+                this.client.obj.notify();
             }
         } else if (response.hasUpdateResponse()) {
             // update the available server addresses

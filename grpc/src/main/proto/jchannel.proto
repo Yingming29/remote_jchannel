@@ -25,6 +25,7 @@ message Request{
     PrintProtocolSpecReq printProtoReq = 10;
     GetPropertyReq getPropertyReq = 11;
     SetStatsReq setStatsReq = 12;
+    GetStatsReq getStatReq = 13;
   }
 }
 message Response{
@@ -45,10 +46,18 @@ message Response{
     PrintProtocolSpecRep printProtoRep = 14;
     GetPropertyRep getPropertyRep = 15;
     SetStatsRep setStatsRep = 16;
+    GetStatsRep getStatsRep = 17;
   }
+}
+message GetStatsReq{
+  string jchannel_address = 1;
+}
+message GetStatsRep{
+  bool stats = 1;
 }
 message SetStatsReq{
   string jchannel_address = 1;
+  bool stats = 2;
 }
 message SetStatsRep{
   bool stats = 1;
