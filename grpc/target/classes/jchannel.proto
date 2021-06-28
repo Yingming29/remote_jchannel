@@ -121,7 +121,7 @@ message ConnectRep {
 
 // disconnect()
 message DisconnectReq{
-  string jchannel_address = 1;
+  bytes jchannel_address = 1;
   string cluster = 2;
   string timestamp = 3;
 }

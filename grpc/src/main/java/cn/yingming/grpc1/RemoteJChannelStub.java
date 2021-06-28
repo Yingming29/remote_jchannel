@@ -50,8 +50,15 @@ public class RemoteJChannelStub {
             // single send request
             if (input.equals("disconnect")) {
                 // disconnect request
+                ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
+                UUID u = (UUID) this.client.jchannel_address;
+                try {
+                    u.writeTo(out);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
                 DisconnectReq msgReq = DisconnectReq.newBuilder()
-                        .setJchannelAddress(this.client.jchannel_address.toString())
+                        .setJchannelAddress(ByteString.copyFrom(out.buffer()))
                         .setCluster(this.client.cluster)
                         .setTimestamp(dft.format(d))
                         .build();
@@ -235,7 +242,6 @@ public class RemoteJChannelStub {
             } finally {
                 stubLock.unlock();
             }
-
         } else if (response.hasViewResponse()) {
             ViewRep view = response.getViewResponse();
             ByteArrayDataInputStream v_in = new ByteArrayDataInputStream(view.getView().toByteArray());
@@ -521,7 +527,7 @@ public class RemoteJChannelStub {
                 // reconnect part.
                 if (!client.down.get()){
                     try{
-                        // System.out.println("exit 0 on control thread.");
+                        System.out.println("exit 0 on control thread.");
                         System.exit(0);
                     } catch (Exception e){
                         e.printStackTrace();

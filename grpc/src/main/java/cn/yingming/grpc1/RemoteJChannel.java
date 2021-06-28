@@ -468,6 +468,10 @@ public class RemoteJChannel extends JChannel {
                 "PLease use connect(String cluster) or connect(String cluster, String target)");
     }
     @Override
+    /**
+     * send disconnect request to JChannel-server
+     * @return RemoteJChannel
+     */
     public synchronized JChannel disconnect(){
         ReentrantLock lock = new ReentrantLock();
         lock.lock();
@@ -480,6 +484,10 @@ public class RemoteJChannel extends JChannel {
         return this;
     }
     @Override
+    /**
+     * send disconnect request to JChannel-server
+     *
+     */
     public synchronized void close(){
         ReentrantLock lock = new ReentrantLock();
         lock.lock();
@@ -489,8 +497,12 @@ public class RemoteJChannel extends JChannel {
         } finally {
             lock.unlock();
         }
+
     }
     @Override
+    /** Send a Message object to remote JChannel.
+     *
+     */
     public JChannel send(Message msg) throws Exception {
         if(msg == null)
             throw new NullPointerException("msg is null");
@@ -505,19 +517,27 @@ public class RemoteJChannel extends JChannel {
         return this;
     }
     @Override
+    /** Send an object to remote JChannel with an Address dest
+     *
+     */
     public JChannel send(Address dst, Object obj) throws Exception {
         Message msg=new ObjectMessage(dst, obj);
         return send(msg);
     }
     @Override
+    /** Send a byte array to remote JChannel with an Address dest
+     *
+     */
     public JChannel send(Address dst, byte[] buf) throws Exception {
         return send(new BytesMessage(dst, buf));
     }
     @Override
+    /** Send an byte array with offset and length to remote JChannel with an Address dest
+     *
+     */
     public JChannel send(Address dst, byte[] buf, int offset, int length) throws Exception {
         return send(new BytesMessage(dst, buf, offset, length));
     }
-
 
     @Override
     public JChannel getState(Address target, long timeout) throws Exception {

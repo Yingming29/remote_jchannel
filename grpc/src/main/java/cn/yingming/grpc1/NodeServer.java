@@ -155,18 +155,24 @@ public class NodeServer {
                         System.out.println("[gRPC] Receive the disconnect() request from a client.");
                         System.out.println(req.getDisconnectRequest().getJchannelAddress() + " quits the cluster, " +
                                 req.getDisconnectRequest().getCluster());
+                        ByteArrayDataInputStream in = new ByteArrayDataInputStream(req.getDisconnectRequest().getJchannelAddress().toByteArray());
+                        UUID u = new UUID();
+                        try{
+                            u.readFrom(in);
+                        } catch (Exception e){
+                            e.printStackTrace();
+                        }
                         // remove responseObserver for the disconnect()
                         lock.lock();
                         try {
                             // 1. remove the client responseObserver
                             for (Address add : clients.keySet()) {
-                                if (add.equals(UUID.fromString(req.getDisconnectRequest().getJchannelAddress()))){
+                                if (add.equals(u)){
                                     clients.remove(add);
                                 }
                             }
                             // 2. remove the client from its cluster information
-                            jchannel.disconnectCluster(req.getDisconnectRequest().getCluster(),
-                                    UUID.fromString(req.getDisconnectRequest().getJchannelAddress()));
+                            jchannel.disconnectCluster(req.getDisconnectRequest().getCluster(), u);
                         } finally {
                             lock.unlock();
                         }

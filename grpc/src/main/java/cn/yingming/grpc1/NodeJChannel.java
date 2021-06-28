@@ -182,7 +182,14 @@ public class NodeJChannel implements Receiver{
         } else if (msg.getObject() instanceof Request && ((Request) msg.getObject()).hasDisconnectRequest()){
             DisconnectReq disReq = ((Request) msg.getObject()).getDisconnectRequest();
             System.out.println("[JChannel] Receive a shared disconnect() request for updating th cluster information.");
-            disconnectCluster(disReq.getCluster(), UUID.fromString(disReq.getJchannelAddress()));
+            ByteArrayDataInputStream in = new ByteArrayDataInputStream(disReq.getJchannelAddress().toByteArray());
+            UUID u = new UUID();
+            try{
+                u.readFrom(in);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            disconnectCluster(disReq.getCluster(), u);
         } else if (msg.getObject() instanceof Request && ((Request) msg.getObject()).hasMessageReqRep()){
             MessageReqRep msgReq = ((Request) msg.getObject()).getMessageReqRep();
             Message msgObj = UtilsRJ.convertMessage(msgReq);
@@ -415,7 +422,6 @@ public class NodeJChannel implements Receiver{
         try{
             ClusterMap m = (ClusterMap) serviceMap.get(cluster);
             m.removeClient(address);
-            // change?
             m.getMap().remove(address);
             System.out.println(address + " quits " + cluster);
             ClusterMap clusterObj = (ClusterMap) serviceMap.get(cluster);

@@ -229,7 +229,7 @@ public final class JChannelRpc {
       "ame\030\004 \001(\t\022\033\n\023jchann_address_byte\030\005 \001(\014\"C" +
       "\n\nConnectRep\022\016\n\006result\030\001 \001(\010\022\017\n\007address\030" +
       "\002 \001(\014\022\024\n\014logical_name\030\003 \001(\t\"M\n\rDisconnec" +
-      "tReq\022\030\n\020jchannel_address\030\001 \001(\t\022\017\n\007cluste" +
+      "tReq\022\030\n\020jchannel_address\030\001 \001(\014\022\017\n\007cluste" +
       "r\030\002 \001(\t\022\021\n\ttimestamp\030\003 \001(\t\"\037\n\rDisconnect" +
       "Rep\022\016\n\006result\030\001 \001(\010\"\030\n\006ReqAsk\022\016\n\006source\030" +
       "\001 \001(\t\"\032\n\006RepAsk\022\020\n\010survival\030\001 \001(\010\"E\n\010Sta" +
