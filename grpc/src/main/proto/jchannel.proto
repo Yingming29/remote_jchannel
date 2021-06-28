@@ -23,6 +23,7 @@ message Request{
     GetNameReq getNameReq = 8;
     GetClusterNameReq getClusterNameReq = 9;
     PrintProtocolSpecReq printProtoReq = 10;
+    GetPropertyReq getPropertyReq = 11;
   }
 }
 message Response{
@@ -41,7 +42,14 @@ message Response{
     GetNameRep getNameRep = 12;
     GetClusterNameRep getClusterNameRep = 13;
     PrintProtocolSpecRep printProtoRep = 14;
+    GetPropertyRep getPropertyRep = 15;
   }
+}
+message GetPropertyReq{
+  string jchannel_address = 1;
+}
+message GetPropertyRep{
+  string properties = 1;
 }
 message ChannelMsg{
   string type = 1;
@@ -78,7 +86,6 @@ message GetNameReq{
 }
 message GetNameRep{
   string name = 1;
-  string other = 2;
 }
 message GetAddressReq{
   string jchannel_address = 1;

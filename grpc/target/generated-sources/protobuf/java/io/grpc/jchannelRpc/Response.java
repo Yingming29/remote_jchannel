@@ -244,6 +244,20 @@ private static final long serialVersionUID = 0L;
             oneTypeCase_ = 14;
             break;
           }
+          case 122: {
+            io.grpc.jchannelRpc.GetPropertyRep.Builder subBuilder = null;
+            if (oneTypeCase_ == 15) {
+              subBuilder = ((io.grpc.jchannelRpc.GetPropertyRep) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.GetPropertyRep.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.GetPropertyRep) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 15;
+            break;
+          }
           default: {
             if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -295,6 +309,7 @@ private static final long serialVersionUID = 0L;
     GETNAMEREP(12),
     GETCLUSTERNAMEREP(13),
     PRINTPROTOREP(14),
+    GETPROPERTYREP(15),
     ONETYPE_NOT_SET(0);
     private final int value;
     private OneTypeCase(int value) {
@@ -326,6 +341,7 @@ private static final long serialVersionUID = 0L;
         case 12: return GETNAMEREP;
         case 13: return GETCLUSTERNAMEREP;
         case 14: return PRINTPROTOREP;
+        case 15: return GETPROPERTYREP;
         case 0: return ONETYPE_NOT_SET;
         default: return null;
       }
@@ -823,6 +839,37 @@ private static final long serialVersionUID = 0L;
     return io.grpc.jchannelRpc.PrintProtocolSpecRep.getDefaultInstance();
   }
 
+  public static final int GETPROPERTYREP_FIELD_NUMBER = 15;
+  /**
+   * <code>.cn.yingming.grpc1.GetPropertyRep getPropertyRep = 15;</code>
+   * @return Whether the getPropertyRep field is set.
+   */
+  @java.lang.Override
+  public boolean hasGetPropertyRep() {
+    return oneTypeCase_ == 15;
+  }
+  /**
+   * <code>.cn.yingming.grpc1.GetPropertyRep getPropertyRep = 15;</code>
+   * @return The getPropertyRep.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.GetPropertyRep getGetPropertyRep() {
+    if (oneTypeCase_ == 15) {
+       return (io.grpc.jchannelRpc.GetPropertyRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.GetPropertyRep.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.GetPropertyRep getPropertyRep = 15;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.GetPropertyRepOrBuilder getGetPropertyRepOrBuilder() {
+    if (oneTypeCase_ == 15) {
+       return (io.grpc.jchannelRpc.GetPropertyRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.GetPropertyRep.getDefaultInstance();
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -878,6 +925,9 @@ private static final long serialVersionUID = 0L;
     }
     if (oneTypeCase_ == 14) {
       output.writeMessage(14, (io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_);
+    }
+    if (oneTypeCase_ == 15) {
+      output.writeMessage(15, (io.grpc.jchannelRpc.GetPropertyRep) oneType_);
     }
     unknownFields.writeTo(output);
   }
@@ -943,6 +993,10 @@ private static final long serialVersionUID = 0L;
     if (oneTypeCase_ == 14) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(14, (io.grpc.jchannelRpc.PrintProtocolSpecRep) oneType_);
+    }
+    if (oneTypeCase_ == 15) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(15, (io.grpc.jchannelRpc.GetPropertyRep) oneType_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -1017,6 +1071,10 @@ private static final long serialVersionUID = 0L;
         if (!getPrintProtoRep()
             .equals(other.getPrintProtoRep())) return false;
         break;
+      case 15:
+        if (!getGetPropertyRep()
+            .equals(other.getGetPropertyRep())) return false;
+        break;
       case 0:
       default:
     }
@@ -1087,6 +1145,10 @@ private static final long serialVersionUID = 0L;
       case 14:
         hash = (37 * hash) + PRINTPROTOREP_FIELD_NUMBER;
         hash = (53 * hash) + getPrintProtoRep().hashCode();
+        break;
+      case 15:
+        hash = (37 * hash) + GETPROPERTYREP_FIELD_NUMBER;
+        hash = (53 * hash) + getGetPropertyRep().hashCode();
         break;
       case 0:
       default:
@@ -1350,6 +1412,13 @@ private static final long serialVersionUID = 0L;
           result.oneType_ = printProtoRepBuilder_.build();
         }
       }
+      if (oneTypeCase_ == 15) {
+        if (getPropertyRepBuilder_ == null) {
+          result.oneType_ = oneType_;
+        } else {
+          result.oneType_ = getPropertyRepBuilder_.build();
+        }
+      }
       result.oneTypeCase_ = oneTypeCase_;
       onBuilt();
       return result;
@@ -1454,6 +1523,10 @@ private static final long serialVersionUID = 0L;
         }
         case PRINTPROTOREP: {
           mergePrintProtoRep(other.getPrintProtoRep());
+          break;
+        }
+        case GETPROPERTYREP: {
+          mergeGetPropertyRep(other.getGetPropertyRep());
           break;
         }
         case ONETYPE_NOT_SET: {
@@ -3620,6 +3693,147 @@ private static final long serialVersionUID = 0L;
       oneTypeCase_ = 14;
       onChanged();;
       return printProtoRepBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.GetPropertyRep, io.grpc.jchannelRpc.GetPropertyRep.Builder, io.grpc.jchannelRpc.GetPropertyRepOrBuilder> getPropertyRepBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.GetPropertyRep getPropertyRep = 15;</code>
+     * @return Whether the getPropertyRep field is set.
+     */
+    @java.lang.Override
+    public boolean hasGetPropertyRep() {
+      return oneTypeCase_ == 15;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetPropertyRep getPropertyRep = 15;</code>
+     * @return The getPropertyRep.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.GetPropertyRep getGetPropertyRep() {
+      if (getPropertyRepBuilder_ == null) {
+        if (oneTypeCase_ == 15) {
+          return (io.grpc.jchannelRpc.GetPropertyRep) oneType_;
+        }
+        return io.grpc.jchannelRpc.GetPropertyRep.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 15) {
+          return getPropertyRepBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.GetPropertyRep.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetPropertyRep getPropertyRep = 15;</code>
+     */
+    public Builder setGetPropertyRep(io.grpc.jchannelRpc.GetPropertyRep value) {
+      if (getPropertyRepBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        getPropertyRepBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 15;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetPropertyRep getPropertyRep = 15;</code>
+     */
+    public Builder setGetPropertyRep(
+        io.grpc.jchannelRpc.GetPropertyRep.Builder builderForValue) {
+      if (getPropertyRepBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        getPropertyRepBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 15;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetPropertyRep getPropertyRep = 15;</code>
+     */
+    public Builder mergeGetPropertyRep(io.grpc.jchannelRpc.GetPropertyRep value) {
+      if (getPropertyRepBuilder_ == null) {
+        if (oneTypeCase_ == 15 &&
+            oneType_ != io.grpc.jchannelRpc.GetPropertyRep.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.GetPropertyRep.newBuilder((io.grpc.jchannelRpc.GetPropertyRep) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 15) {
+          getPropertyRepBuilder_.mergeFrom(value);
+        }
+        getPropertyRepBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 15;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetPropertyRep getPropertyRep = 15;</code>
+     */
+    public Builder clearGetPropertyRep() {
+      if (getPropertyRepBuilder_ == null) {
+        if (oneTypeCase_ == 15) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 15) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        getPropertyRepBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetPropertyRep getPropertyRep = 15;</code>
+     */
+    public io.grpc.jchannelRpc.GetPropertyRep.Builder getGetPropertyRepBuilder() {
+      return getGetPropertyRepFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetPropertyRep getPropertyRep = 15;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.GetPropertyRepOrBuilder getGetPropertyRepOrBuilder() {
+      if ((oneTypeCase_ == 15) && (getPropertyRepBuilder_ != null)) {
+        return getPropertyRepBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 15) {
+          return (io.grpc.jchannelRpc.GetPropertyRep) oneType_;
+        }
+        return io.grpc.jchannelRpc.GetPropertyRep.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetPropertyRep getPropertyRep = 15;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.GetPropertyRep, io.grpc.jchannelRpc.GetPropertyRep.Builder, io.grpc.jchannelRpc.GetPropertyRepOrBuilder> 
+        getGetPropertyRepFieldBuilder() {
+      if (getPropertyRepBuilder_ == null) {
+        if (!(oneTypeCase_ == 15)) {
+          oneType_ = io.grpc.jchannelRpc.GetPropertyRep.getDefaultInstance();
+        }
+        getPropertyRepBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.GetPropertyRep, io.grpc.jchannelRpc.GetPropertyRep.Builder, io.grpc.jchannelRpc.GetPropertyRepOrBuilder>(
+                (io.grpc.jchannelRpc.GetPropertyRep) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 15;
+      onChanged();;
+      return getPropertyRepBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

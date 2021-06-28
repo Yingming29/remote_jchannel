@@ -265,5 +265,20 @@ public interface ResponseOrBuilder extends
    */
   io.grpc.jchannelRpc.PrintProtocolSpecRepOrBuilder getPrintProtoRepOrBuilder();
 
+  /**
+   * <code>.cn.yingming.grpc1.GetPropertyRep getPropertyRep = 15;</code>
+   * @return Whether the getPropertyRep field is set.
+   */
+  boolean hasGetPropertyRep();
+  /**
+   * <code>.cn.yingming.grpc1.GetPropertyRep getPropertyRep = 15;</code>
+   * @return The getPropertyRep.
+   */
+  io.grpc.jchannelRpc.GetPropertyRep getGetPropertyRep();
+  /**
+   * <code>.cn.yingming.grpc1.GetPropertyRep getPropertyRep = 15;</code>
+   */
+  io.grpc.jchannelRpc.GetPropertyRepOrBuilder getGetPropertyRepOrBuilder();
+
   public io.grpc.jchannelRpc.Response.OneTypeCase getOneTypeCase();
 }

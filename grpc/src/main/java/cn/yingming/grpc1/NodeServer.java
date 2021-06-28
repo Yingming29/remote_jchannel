@@ -246,7 +246,6 @@ public class NodeServer {
                             ByteArrayDataOutputStream outputStream = new ByteArrayDataOutputStream();
                             try {
                                 jchannel.channel.getAddress().writeTo(outputStream);
-                                // Util.createRandomAddress().writeTo(outputStream);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -275,6 +274,23 @@ public class NodeServer {
                             getNameRep = GetNameRep.newBuilder().build();
                         }
                         Response rep = Response.newBuilder().setGetNameRep(getNameRep).build();
+                        System.out.println(rep);
+                        responseObserver.onNext(rep);
+
+                    } else if(req.hasGetPropertyReq()){
+                        // getName() request
+                        GetPropertyReq getPropertyReq = req.getGetPropertyReq();
+                        System.out.println("[grpc] Receive the getProperties() request for the JChannel-server name from JChannel-Client:"
+                                + getPropertyReq.getJchannelAddress());
+                        GetPropertyRep getPropertyRep;
+                        Response rep;
+                        String property = jchannel.channel.getProperties();
+                        if (property != null){
+                            getPropertyRep = GetPropertyRep.newBuilder().setProperties(property).build();
+                        } else{
+                            getPropertyRep = GetPropertyRep.newBuilder().build();
+                        }
+                        rep = Response.newBuilder().setGetPropertyRep(getPropertyRep).build();
                         System.out.println(rep);
                         responseObserver.onNext(rep);
 

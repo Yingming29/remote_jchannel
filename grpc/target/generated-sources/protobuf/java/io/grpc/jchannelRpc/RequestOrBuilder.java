@@ -157,5 +157,20 @@ public interface RequestOrBuilder extends
    */
   io.grpc.jchannelRpc.PrintProtocolSpecReqOrBuilder getPrintProtoReqOrBuilder();
 
+  /**
+   * <code>.cn.yingming.grpc1.GetPropertyReq getPropertyReq = 11;</code>
+   * @return Whether the getPropertyReq field is set.
+   */
+  boolean hasGetPropertyReq();
+  /**
+   * <code>.cn.yingming.grpc1.GetPropertyReq getPropertyReq = 11;</code>
+   * @return The getPropertyReq.
+   */
+  io.grpc.jchannelRpc.GetPropertyReq getGetPropertyReq();
+  /**
+   * <code>.cn.yingming.grpc1.GetPropertyReq getPropertyReq = 11;</code>
+   */
+  io.grpc.jchannelRpc.GetPropertyReqOrBuilder getGetPropertyReqOrBuilder();
+
   public io.grpc.jchannelRpc.Request.OneTypeCase getOneTypeCase();
 }

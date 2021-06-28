@@ -40,6 +40,7 @@ public class RemoteJChannel extends JChannel {
     public ReceiverRJ receiver;
     public Object obj;
     public String remoteProtocolStack_string;
+    public String property;
 
     public RemoteJChannel(String address) throws Exception{
         this.address = address;
@@ -67,6 +68,7 @@ public class RemoteJChannel extends JChannel {
         this.remoteCluster = null;
         this.remoteProtocolStack_string = null;
         this.remoteView = new View();
+        this.property = null;
     }
 
     @Override
@@ -362,7 +364,19 @@ public class RemoteJChannel extends JChannel {
 
     @Override
     public String getProperties() {
-        throw new UnsupportedOperationException("RemoteJChannel does not have ProtocolStack.");
+        if (!isWork.get() && !down.get()){
+            System.out.println("The RemoteJChannel client does not start work. Return null");
+            return null;
+        }
+        this.clientStub.add_save("getProperties()");
+        synchronized (obj){
+            try{
+                obj.wait(5000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return this.property;
     }
 
     @Override

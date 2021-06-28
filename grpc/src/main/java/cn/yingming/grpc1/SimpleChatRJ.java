@@ -86,6 +86,8 @@ public class SimpleChatRJ {
                 } else if (line.startsWith("tryNameche")){
                     System.out.println(NameCache.printCache());
                     System.out.println(NameCache.get(this.remoteJChannel.real_jchannel_address));
+                } else if(line.startsWith("getProperties()")){
+                    System.out.println("getProperties() for Real JChannel Address (JChannel Server):" + remoteJChannel.getProperties());
                 } else if (line.startsWith("disconnect")) {
                     System.out.println("Disconnect" + this.remoteJChannel.disconnect());
                 } else{

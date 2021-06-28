@@ -74,6 +74,9 @@ public class RemoteJChannelStub {
                         .setJchannelAddress(this.client.jchannel_address.toString())
                         .build();
                 return Request.newBuilder().setGetNameReq(getNameReq).build();
+            } else if(input.equals("getProperties()")){
+                GetPropertyReq getPropertyReq = GetPropertyReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString()).build();
+                return Request.newBuilder().setGetPropertyReq(getPropertyReq).build();
             } else if(input.equals("getClusterName()")){
                 GetClusterNameReq subReq = GetClusterNameReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString())
                         .build();
@@ -179,6 +182,13 @@ public class RemoteJChannelStub {
             PrintProtocolSpecRep rep = response.getPrintProtoRep();
             System.out.println("printProtocolSpec() response:" + rep);
             this.client.remoteProtocolStack_string = rep.getProtocolStackSpec();
+            synchronized (this.client.obj) {
+                this.client.obj.notify();
+            }
+        } else if(response.hasGetPropertyRep()){
+            GetPropertyRep rep = response.getGetPropertyRep();
+            System.out.println("getProperties() response:" + rep);
+            this.client.property = rep.getProperties();
             synchronized (this.client.obj) {
                 this.client.obj.notify();
             }

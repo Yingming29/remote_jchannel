@@ -4,26 +4,26 @@
 package io.grpc.jchannelRpc;
 
 /**
- * Protobuf type {@code cn.yingming.grpc1.GetNameRep}
+ * Protobuf type {@code cn.yingming.grpc1.GetPropertyRep}
  */
-public final class GetNameRep extends
+public final class GetPropertyRep extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:cn.yingming.grpc1.GetNameRep)
-    GetNameRepOrBuilder {
+    // @@protoc_insertion_point(message_implements:cn.yingming.grpc1.GetPropertyRep)
+    GetPropertyRepOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use GetNameRep.newBuilder() to construct.
-  private GetNameRep(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use GetPropertyRep.newBuilder() to construct.
+  private GetPropertyRep(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private GetNameRep() {
-    name_ = "";
+  private GetPropertyRep() {
+    properties_ = "";
   }
 
   @java.lang.Override
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(
       UnusedPrivateParameter unused) {
-    return new GetNameRep();
+    return new GetPropertyRep();
   }
 
   @java.lang.Override
@@ -31,7 +31,7 @@ private static final long serialVersionUID = 0L;
   getUnknownFields() {
     return this.unknownFields;
   }
-  private GetNameRep(
+  private GetPropertyRep(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -52,7 +52,7 @@ private static final long serialVersionUID = 0L;
           case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            name_ = s;
+            properties_ = s;
             break;
           }
           default: {
@@ -76,49 +76,49 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_GetNameRep_descriptor;
+    return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_GetPropertyRep_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_GetNameRep_fieldAccessorTable
+    return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_GetPropertyRep_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            io.grpc.jchannelRpc.GetNameRep.class, io.grpc.jchannelRpc.GetNameRep.Builder.class);
+            io.grpc.jchannelRpc.GetPropertyRep.class, io.grpc.jchannelRpc.GetPropertyRep.Builder.class);
   }
 
-  public static final int NAME_FIELD_NUMBER = 1;
-  private volatile java.lang.Object name_;
+  public static final int PROPERTIES_FIELD_NUMBER = 1;
+  private volatile java.lang.Object properties_;
   /**
-   * <code>string name = 1;</code>
-   * @return The name.
+   * <code>string properties = 1;</code>
+   * @return The properties.
    */
   @java.lang.Override
-  public java.lang.String getName() {
-    java.lang.Object ref = name_;
+  public java.lang.String getProperties() {
+    java.lang.Object ref = properties_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      name_ = s;
+      properties_ = s;
       return s;
     }
   }
   /**
-   * <code>string name = 1;</code>
-   * @return The bytes for name.
+   * <code>string properties = 1;</code>
+   * @return The bytes for properties.
    */
   @java.lang.Override
   public com.google.protobuf.ByteString
-      getNameBytes() {
-    java.lang.Object ref = name_;
+      getPropertiesBytes() {
+    java.lang.Object ref = properties_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      name_ = b;
+      properties_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -139,8 +139,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getNameBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
+    if (!getPropertiesBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, properties_);
     }
     unknownFields.writeTo(output);
   }
@@ -151,8 +151,8 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getNameBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
+    if (!getPropertiesBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, properties_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -164,13 +164,13 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof io.grpc.jchannelRpc.GetNameRep)) {
+    if (!(obj instanceof io.grpc.jchannelRpc.GetPropertyRep)) {
       return super.equals(obj);
     }
-    io.grpc.jchannelRpc.GetNameRep other = (io.grpc.jchannelRpc.GetNameRep) obj;
+    io.grpc.jchannelRpc.GetPropertyRep other = (io.grpc.jchannelRpc.GetPropertyRep) obj;
 
-    if (!getName()
-        .equals(other.getName())) return false;
+    if (!getProperties()
+        .equals(other.getProperties())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -182,76 +182,76 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getName().hashCode();
+    hash = (37 * hash) + PROPERTIES_FIELD_NUMBER;
+    hash = (53 * hash) + getProperties().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static io.grpc.jchannelRpc.GetNameRep parseFrom(
+  public static io.grpc.jchannelRpc.GetPropertyRep parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static io.grpc.jchannelRpc.GetNameRep parseFrom(
+  public static io.grpc.jchannelRpc.GetPropertyRep parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static io.grpc.jchannelRpc.GetNameRep parseFrom(
+  public static io.grpc.jchannelRpc.GetPropertyRep parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static io.grpc.jchannelRpc.GetNameRep parseFrom(
+  public static io.grpc.jchannelRpc.GetPropertyRep parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static io.grpc.jchannelRpc.GetNameRep parseFrom(byte[] data)
+  public static io.grpc.jchannelRpc.GetPropertyRep parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static io.grpc.jchannelRpc.GetNameRep parseFrom(
+  public static io.grpc.jchannelRpc.GetPropertyRep parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static io.grpc.jchannelRpc.GetNameRep parseFrom(java.io.InputStream input)
+  public static io.grpc.jchannelRpc.GetPropertyRep parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static io.grpc.jchannelRpc.GetNameRep parseFrom(
+  public static io.grpc.jchannelRpc.GetPropertyRep parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static io.grpc.jchannelRpc.GetNameRep parseDelimitedFrom(java.io.InputStream input)
+  public static io.grpc.jchannelRpc.GetPropertyRep parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static io.grpc.jchannelRpc.GetNameRep parseDelimitedFrom(
+  public static io.grpc.jchannelRpc.GetPropertyRep parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static io.grpc.jchannelRpc.GetNameRep parseFrom(
+  public static io.grpc.jchannelRpc.GetPropertyRep parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static io.grpc.jchannelRpc.GetNameRep parseFrom(
+  public static io.grpc.jchannelRpc.GetPropertyRep parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -264,7 +264,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(io.grpc.jchannelRpc.GetNameRep prototype) {
+  public static Builder newBuilder(io.grpc.jchannelRpc.GetPropertyRep prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -280,26 +280,26 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code cn.yingming.grpc1.GetNameRep}
+   * Protobuf type {@code cn.yingming.grpc1.GetPropertyRep}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:cn.yingming.grpc1.GetNameRep)
-      io.grpc.jchannelRpc.GetNameRepOrBuilder {
+      // @@protoc_insertion_point(builder_implements:cn.yingming.grpc1.GetPropertyRep)
+      io.grpc.jchannelRpc.GetPropertyRepOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_GetNameRep_descriptor;
+      return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_GetPropertyRep_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_GetNameRep_fieldAccessorTable
+      return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_GetPropertyRep_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              io.grpc.jchannelRpc.GetNameRep.class, io.grpc.jchannelRpc.GetNameRep.Builder.class);
+              io.grpc.jchannelRpc.GetPropertyRep.class, io.grpc.jchannelRpc.GetPropertyRep.Builder.class);
     }
 
-    // Construct using io.grpc.jchannelRpc.GetNameRep.newBuilder()
+    // Construct using io.grpc.jchannelRpc.GetPropertyRep.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -317,7 +317,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      name_ = "";
+      properties_ = "";
 
       return this;
     }
@@ -325,17 +325,17 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_GetNameRep_descriptor;
+      return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_GetPropertyRep_descriptor;
     }
 
     @java.lang.Override
-    public io.grpc.jchannelRpc.GetNameRep getDefaultInstanceForType() {
-      return io.grpc.jchannelRpc.GetNameRep.getDefaultInstance();
+    public io.grpc.jchannelRpc.GetPropertyRep getDefaultInstanceForType() {
+      return io.grpc.jchannelRpc.GetPropertyRep.getDefaultInstance();
     }
 
     @java.lang.Override
-    public io.grpc.jchannelRpc.GetNameRep build() {
-      io.grpc.jchannelRpc.GetNameRep result = buildPartial();
+    public io.grpc.jchannelRpc.GetPropertyRep build() {
+      io.grpc.jchannelRpc.GetPropertyRep result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -343,9 +343,9 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public io.grpc.jchannelRpc.GetNameRep buildPartial() {
-      io.grpc.jchannelRpc.GetNameRep result = new io.grpc.jchannelRpc.GetNameRep(this);
-      result.name_ = name_;
+    public io.grpc.jchannelRpc.GetPropertyRep buildPartial() {
+      io.grpc.jchannelRpc.GetPropertyRep result = new io.grpc.jchannelRpc.GetPropertyRep(this);
+      result.properties_ = properties_;
       onBuilt();
       return result;
     }
@@ -384,18 +384,18 @@ private static final long serialVersionUID = 0L;
     }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof io.grpc.jchannelRpc.GetNameRep) {
-        return mergeFrom((io.grpc.jchannelRpc.GetNameRep)other);
+      if (other instanceof io.grpc.jchannelRpc.GetPropertyRep) {
+        return mergeFrom((io.grpc.jchannelRpc.GetPropertyRep)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(io.grpc.jchannelRpc.GetNameRep other) {
-      if (other == io.grpc.jchannelRpc.GetNameRep.getDefaultInstance()) return this;
-      if (!other.getName().isEmpty()) {
-        name_ = other.name_;
+    public Builder mergeFrom(io.grpc.jchannelRpc.GetPropertyRep other) {
+      if (other == io.grpc.jchannelRpc.GetPropertyRep.getDefaultInstance()) return this;
+      if (!other.getProperties().isEmpty()) {
+        properties_ = other.properties_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -413,11 +413,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      io.grpc.jchannelRpc.GetNameRep parsedMessage = null;
+      io.grpc.jchannelRpc.GetPropertyRep parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (io.grpc.jchannelRpc.GetNameRep) e.getUnfinishedMessage();
+        parsedMessage = (io.grpc.jchannelRpc.GetPropertyRep) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -427,78 +427,78 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object name_ = "";
+    private java.lang.Object properties_ = "";
     /**
-     * <code>string name = 1;</code>
-     * @return The name.
+     * <code>string properties = 1;</code>
+     * @return The properties.
      */
-    public java.lang.String getName() {
-      java.lang.Object ref = name_;
+    public java.lang.String getProperties() {
+      java.lang.Object ref = properties_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        name_ = s;
+        properties_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string name = 1;</code>
-     * @return The bytes for name.
+     * <code>string properties = 1;</code>
+     * @return The bytes for properties.
      */
     public com.google.protobuf.ByteString
-        getNameBytes() {
-      java.lang.Object ref = name_;
+        getPropertiesBytes() {
+      java.lang.Object ref = properties_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        name_ = b;
+        properties_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string name = 1;</code>
-     * @param value The name to set.
+     * <code>string properties = 1;</code>
+     * @param value The properties to set.
      * @return This builder for chaining.
      */
-    public Builder setName(
+    public Builder setProperties(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      name_ = value;
+      properties_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string name = 1;</code>
+     * <code>string properties = 1;</code>
      * @return This builder for chaining.
      */
-    public Builder clearName() {
+    public Builder clearProperties() {
       
-      name_ = getDefaultInstance().getName();
+      properties_ = getDefaultInstance().getProperties();
       onChanged();
       return this;
     }
     /**
-     * <code>string name = 1;</code>
-     * @param value The bytes for name to set.
+     * <code>string properties = 1;</code>
+     * @param value The bytes for properties to set.
      * @return This builder for chaining.
      */
-    public Builder setNameBytes(
+    public Builder setPropertiesBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      name_ = value;
+      properties_ = value;
       onChanged();
       return this;
     }
@@ -515,41 +515,41 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:cn.yingming.grpc1.GetNameRep)
+    // @@protoc_insertion_point(builder_scope:cn.yingming.grpc1.GetPropertyRep)
   }
 
-  // @@protoc_insertion_point(class_scope:cn.yingming.grpc1.GetNameRep)
-  private static final io.grpc.jchannelRpc.GetNameRep DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:cn.yingming.grpc1.GetPropertyRep)
+  private static final io.grpc.jchannelRpc.GetPropertyRep DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new io.grpc.jchannelRpc.GetNameRep();
+    DEFAULT_INSTANCE = new io.grpc.jchannelRpc.GetPropertyRep();
   }
 
-  public static io.grpc.jchannelRpc.GetNameRep getDefaultInstance() {
+  public static io.grpc.jchannelRpc.GetPropertyRep getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<GetNameRep>
-      PARSER = new com.google.protobuf.AbstractParser<GetNameRep>() {
+  private static final com.google.protobuf.Parser<GetPropertyRep>
+      PARSER = new com.google.protobuf.AbstractParser<GetPropertyRep>() {
     @java.lang.Override
-    public GetNameRep parsePartialFrom(
+    public GetPropertyRep parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new GetNameRep(input, extensionRegistry);
+      return new GetPropertyRep(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<GetNameRep> parser() {
+  public static com.google.protobuf.Parser<GetPropertyRep> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<GetNameRep> getParserForType() {
+  public com.google.protobuf.Parser<GetPropertyRep> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public io.grpc.jchannelRpc.GetNameRep getDefaultInstanceForType() {
+  public io.grpc.jchannelRpc.GetPropertyRep getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

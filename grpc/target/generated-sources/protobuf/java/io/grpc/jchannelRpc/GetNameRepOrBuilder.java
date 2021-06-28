@@ -18,16 +18,4 @@ public interface GetNameRepOrBuilder extends
    */
   com.google.protobuf.ByteString
       getNameBytes();
-
-  /**
-   * <code>string other = 2;</code>
-   * @return The other.
-   */
-  java.lang.String getOther();
-  /**
-   * <code>string other = 2;</code>
-   * @return The bytes for other.
-   */
-  com.google.protobuf.ByteString
-      getOtherBytes();
 }
