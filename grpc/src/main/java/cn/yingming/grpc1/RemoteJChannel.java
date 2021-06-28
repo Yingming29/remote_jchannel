@@ -257,7 +257,22 @@ public class RemoteJChannel extends JChannel {
     }
     @Override
     public JChannel stats(boolean stats) {
-        this.stats = stats;
+        if (!isWork.get()){
+            System.out.println("The RemoteJChannel client does not start work.");
+            return this;
+        }
+        if (stats){
+            this.clientStub.add_save("setStats() true");
+        } else{
+            this.clientStub.add_save("setStats() false");
+        }
+        synchronized (obj){
+            try{
+                obj.wait(5000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
         return this;
     }
     @Override
@@ -269,11 +284,6 @@ public class RemoteJChannel extends JChannel {
     public JChannel setDiscardOwnMessages(boolean flag) {
         this.discard_own_messages = flag;
         return this;
-    }
-    @Override
-    public boolean flushSupported() {
-        throw new UnsupportedOperationException("RemoteJChannel does not have flush. " +
-                "flushSupported() does not return anything.");
     }
 
     @Override
@@ -307,12 +317,7 @@ public class RemoteJChannel extends JChannel {
         }
         return real_jchannel_address instanceof org.jgroups.util.UUID ? ((org.jgroups.util.UUID)real_jchannel_address).toStringLong() : null;
     }
-
-    @Override
-    public JChannel setName(String name) {
-        throw new UnsupportedOperationException("RemoteJChannel cannot set name.");
-    }
-
+    
     @Override
     public String getClusterName() {
         if (!isWork.get() && !down.get()){

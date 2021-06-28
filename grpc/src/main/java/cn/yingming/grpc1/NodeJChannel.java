@@ -446,8 +446,10 @@ public class NodeJChannel implements Receiver{
                     clusterMap.removeClient(uuid);
                     clusterMap.getMap().remove(uuid);
                     clusterMap.addViewNum();
-                    ViewRep viewRep= clusterMap.generateView();
-                    this.service.broadcastView(viewRep, clusterName);
+                    if (clusterMap.getCreator() != null){
+                        ViewRep viewRep= clusterMap.generateView();
+                        this.service.broadcastView(viewRep, clusterName);
+                    }
                 }
             }
         } finally {
