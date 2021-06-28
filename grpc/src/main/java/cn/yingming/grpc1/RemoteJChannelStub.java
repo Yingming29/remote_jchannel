@@ -43,7 +43,6 @@ public class RemoteJChannelStub {
     }
 
     public Request judgeRequest(Object obj) {
-        System.out.println("judgeRequest"+ Thread.currentThread());
         Date d = new Date();
         SimpleDateFormat dft = new SimpleDateFormat("hh:mm:ss");
         if (obj instanceof String) {
@@ -82,29 +81,6 @@ public class RemoteJChannelStub {
                             .setIncludeProps(false).build();
                 }
                 return Request.newBuilder().setPrintProtoReq(subReq).build();
-            } else if (input.startsWith("getState()")) {
-                String[] strs = input.split(" ");
-                if (strs.length > 2) {
-                    throw new IllegalArgumentException("getState() error.");
-                } else {
-                    if (strs[1].equals("null")) {
-                        StateReq stateReq = StateReq.newBuilder()
-                                .setSource(client.uuid)
-                                .setCluster(client.cluster)
-                                .setJchannelAddress(client.jchannel_address.toString())
-                                .build();
-
-                        return Request.newBuilder().setStateReq(stateReq).build();
-                    } else {
-                        StateMsg_withTarget_1 msg = StateMsg_withTarget_1.newBuilder()
-                                .setSource(this.client.uuid)
-                                .setCluster(this.client.cluster)
-                                .setJchannelAddress(this.client.jchannel_address.toString())
-                                .setTarget(strs[1])
-                                .build();
-                        return Request.newBuilder().setStateMsg1(msg).build();
-                    }
-                }
             }
         } else if(obj instanceof Message) {
             Message m = (Message) obj;
@@ -315,7 +291,7 @@ public class RemoteJChannelStub {
                         StateMsg_withTarget_2 msg2 = StateMsg_withTarget_2.newBuilder()
                                 .setCluster(this.client.cluster)
                                 .setJchannelAddress(this.client.jchannel_address.toString())
-                                .setSource(this.client.uuid)
+                                //.setSource(this.client.uuid)
                                 .setTarget(msg1.getJchannelAddress())
                                 .addAllOneOfHistory(this.client.receiver.getStateRJ())
                                 .build();
@@ -411,7 +387,7 @@ public class RemoteJChannelStub {
             e.printStackTrace();
         }
 
-        ReqAsk req = ReqAsk.newBuilder().setSource(client.uuid).build();
+        ReqAsk req = ReqAsk.newBuilder().setSource(client.jchannel_address.toString()).build();
         try {
             RepAsk rep = this.blockingStub.withDeadlineAfter(5000, TimeUnit.MILLISECONDS).ask(req);
             if (rep.getSurvival()) {
