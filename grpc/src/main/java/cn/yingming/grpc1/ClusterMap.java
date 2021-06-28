@@ -90,8 +90,10 @@ public class ClusterMap implements Serializable {
             this.viewNum = (int) view.getViewId().getId();
             for (int i = 0; i < view.getMembers().size(); i++) {
                 orderList.add(view.getMembersRaw()[i]);
+                map.put(view.getMembersRaw()[i], view.getMembersRaw()[i].toString());
             }
             System.out.println("[JChannel] Update the client view information, " + view);
+            System.out.println("setFromView: " + this.orderList);
         } finally {
             lock.unlock();
         }
