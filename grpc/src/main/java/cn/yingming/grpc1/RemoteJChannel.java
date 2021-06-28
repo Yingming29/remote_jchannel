@@ -468,8 +468,7 @@ public class RemoteJChannel extends JChannel {
 
     @Override
     protected synchronized JChannel connect(String cluster_name, boolean useFlushIfPresent) throws Exception {
-        throw new UnsupportedOperationException("RemoteJChannel does not support this connect()." +
-                "PLease use connect(String cluster) or connect(String cluster, String target)");
+        throw new UnsupportedOperationException("RemoteJChannel does not support this connect().");
     }
     @Override
     public synchronized JChannel connect(String cluster_name, Address target, long timeout) throws Exception {
@@ -478,8 +477,7 @@ public class RemoteJChannel extends JChannel {
     }
     @Override
     public synchronized JChannel connect(String cluster_name, Address target, long timeout, boolean useFlushIfPresent) throws Exception {
-        throw new UnsupportedOperationException("RemoteJChannel does not support this connect()." +
-                "PLease use connect(String cluster) or connect(String cluster, String target)");
+        throw new UnsupportedOperationException("RemoteJChannel does not support this connect().");
     }
     @Override
     /**
@@ -608,14 +606,6 @@ public class RemoteJChannel extends JChannel {
     }
 
     @Override
-    protected JChannel setAddress() {
-        throw new UnsupportedOperationException("RemoteJChannel does not support this method.");
-    }
-    @Override
-    protected Address generateAddress() {
-        throw new UnsupportedOperationException("RemoteJChannel does not support this method.");
-    }
-    @Override
     protected JChannel checkClosed() {
         if (!this.down.get()) {
             throw new IllegalStateException("channel is closed");
@@ -644,16 +634,19 @@ public class RemoteJChannel extends JChannel {
         }
     }
     @Override
-    protected JChannel stopStack(boolean stop, boolean destroy) {
-        throw new UnsupportedOperationException("RemoteJChannel does not support this method.");
-    }
-    @Override
     protected Address determineCoordinator() {
-        throw new UnsupportedOperationException("RemoteJChannel does not support this method. " +
-                "Please use determineCoordinatorRJ().");
+        if (!isWork.get() && !down.get()){
+            return this.remoteView.getCoord();
+        } else {
+            return null;
+        }
     }
-    protected Address determineCoordinatorRJ() {
-        return this.view != null ? this.view.getCoord() : null;
+    protected Address determineClientCoordinator() {
+        if (!isWork.get() && !down.get()){
+            return this.view.getCoord();
+        } else {
+            return null;
+        }
     }
 
 }
