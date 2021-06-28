@@ -217,9 +217,9 @@ public class NodeJChannel implements Receiver{
             ReentrantLock sublock = new ReentrantLock();
             sublock.lock();
             try {
+                System.out.println("disconnect 1");
                 u.readFrom(in);
-                Address add = (Address) u;
-                disconnectClusterNoGraceful(add);
+                disconnectClusterNoGraceful(u);
             } catch (Exception e){
                 e.printStackTrace();
             } finally {
@@ -428,6 +428,7 @@ public class NodeJChannel implements Receiver{
     }
 
     public void disconnectClusterNoGraceful(Address uuid){
+        System.out.println("disconnect 2");
         this.lock.lock();
         try{
             String clusterName = "ClientCluster";
