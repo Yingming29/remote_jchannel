@@ -22,7 +22,6 @@ private static final long serialVersionUID = 0L;
   private ConnectReq() {
     cluster_ = "";
     timestamp_ = "";
-    jchannelAddress_ = "";
     logicalName_ = "";
     jchannAddressByte_ = com.google.protobuf.ByteString.EMPTY;
   }
@@ -77,16 +76,10 @@ private static final long serialVersionUID = 0L;
           case 34: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            jchannelAddress_ = s;
-            break;
-          }
-          case 42: {
-            java.lang.String s = input.readStringRequireUtf8();
-
             logicalName_ = s;
             break;
           }
-          case 50: {
+          case 42: {
 
             jchannAddressByte_ = input.readBytes();
             break;
@@ -222,48 +215,10 @@ private static final long serialVersionUID = 0L;
     return reconnect_;
   }
 
-  public static final int JCHANNEL_ADDRESS_FIELD_NUMBER = 4;
-  private volatile java.lang.Object jchannelAddress_;
-  /**
-   * <code>string jchannel_address = 4;</code>
-   * @return The jchannelAddress.
-   */
-  @java.lang.Override
-  public java.lang.String getJchannelAddress() {
-    java.lang.Object ref = jchannelAddress_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      jchannelAddress_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string jchannel_address = 4;</code>
-   * @return The bytes for jchannelAddress.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getJchannelAddressBytes() {
-    java.lang.Object ref = jchannelAddress_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      jchannelAddress_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int LOGICAL_NAME_FIELD_NUMBER = 5;
+  public static final int LOGICAL_NAME_FIELD_NUMBER = 4;
   private volatile java.lang.Object logicalName_;
   /**
-   * <code>string logical_name = 5;</code>
+   * <code>string logical_name = 4;</code>
    * @return The logicalName.
    */
   @java.lang.Override
@@ -280,7 +235,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string logical_name = 5;</code>
+   * <code>string logical_name = 4;</code>
    * @return The bytes for logicalName.
    */
   @java.lang.Override
@@ -298,10 +253,10 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int JCHANN_ADDRESS_BYTE_FIELD_NUMBER = 6;
+  public static final int JCHANN_ADDRESS_BYTE_FIELD_NUMBER = 5;
   private com.google.protobuf.ByteString jchannAddressByte_;
   /**
-   * <code>bytes jchann_address_byte = 6;</code>
+   * <code>bytes jchann_address_byte = 5;</code>
    * @return The jchannAddressByte.
    */
   @java.lang.Override
@@ -332,14 +287,11 @@ private static final long serialVersionUID = 0L;
     if (reconnect_ != false) {
       output.writeBool(3, reconnect_);
     }
-    if (!getJchannelAddressBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, jchannelAddress_);
-    }
     if (!getLogicalNameBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, logicalName_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, logicalName_);
     }
     if (!jchannAddressByte_.isEmpty()) {
-      output.writeBytes(6, jchannAddressByte_);
+      output.writeBytes(5, jchannAddressByte_);
     }
     unknownFields.writeTo(output);
   }
@@ -360,15 +312,12 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeBoolSize(3, reconnect_);
     }
-    if (!getJchannelAddressBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, jchannelAddress_);
-    }
     if (!getLogicalNameBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, logicalName_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, logicalName_);
     }
     if (!jchannAddressByte_.isEmpty()) {
       size += com.google.protobuf.CodedOutputStream
-        .computeBytesSize(6, jchannAddressByte_);
+        .computeBytesSize(5, jchannAddressByte_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -391,8 +340,6 @@ private static final long serialVersionUID = 0L;
         .equals(other.getTimestamp())) return false;
     if (getReconnect()
         != other.getReconnect()) return false;
-    if (!getJchannelAddress()
-        .equals(other.getJchannelAddress())) return false;
     if (!getLogicalName()
         .equals(other.getLogicalName())) return false;
     if (!getJchannAddressByte()
@@ -415,8 +362,6 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + RECONNECT_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
         getReconnect());
-    hash = (37 * hash) + JCHANNEL_ADDRESS_FIELD_NUMBER;
-    hash = (53 * hash) + getJchannelAddress().hashCode();
     hash = (37 * hash) + LOGICAL_NAME_FIELD_NUMBER;
     hash = (53 * hash) + getLogicalName().hashCode();
     hash = (37 * hash) + JCHANN_ADDRESS_BYTE_FIELD_NUMBER;
@@ -564,8 +509,6 @@ private static final long serialVersionUID = 0L;
 
       reconnect_ = false;
 
-      jchannelAddress_ = "";
-
       logicalName_ = "";
 
       jchannAddressByte_ = com.google.protobuf.ByteString.EMPTY;
@@ -599,7 +542,6 @@ private static final long serialVersionUID = 0L;
       result.cluster_ = cluster_;
       result.timestamp_ = timestamp_;
       result.reconnect_ = reconnect_;
-      result.jchannelAddress_ = jchannelAddress_;
       result.logicalName_ = logicalName_;
       result.jchannAddressByte_ = jchannAddressByte_;
       onBuilt();
@@ -660,10 +602,6 @@ private static final long serialVersionUID = 0L;
       }
       if (other.getReconnect() != false) {
         setReconnect(other.getReconnect());
-      }
-      if (!other.getJchannelAddress().isEmpty()) {
-        jchannelAddress_ = other.jchannelAddress_;
-        onChanged();
       }
       if (!other.getLogicalName().isEmpty()) {
         logicalName_ = other.logicalName_;
@@ -916,85 +854,9 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object jchannelAddress_ = "";
-    /**
-     * <code>string jchannel_address = 4;</code>
-     * @return The jchannelAddress.
-     */
-    public java.lang.String getJchannelAddress() {
-      java.lang.Object ref = jchannelAddress_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        jchannelAddress_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string jchannel_address = 4;</code>
-     * @return The bytes for jchannelAddress.
-     */
-    public com.google.protobuf.ByteString
-        getJchannelAddressBytes() {
-      java.lang.Object ref = jchannelAddress_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        jchannelAddress_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string jchannel_address = 4;</code>
-     * @param value The jchannelAddress to set.
-     * @return This builder for chaining.
-     */
-    public Builder setJchannelAddress(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      jchannelAddress_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string jchannel_address = 4;</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearJchannelAddress() {
-      
-      jchannelAddress_ = getDefaultInstance().getJchannelAddress();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string jchannel_address = 4;</code>
-     * @param value The bytes for jchannelAddress to set.
-     * @return This builder for chaining.
-     */
-    public Builder setJchannelAddressBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      jchannelAddress_ = value;
-      onChanged();
-      return this;
-    }
-
     private java.lang.Object logicalName_ = "";
     /**
-     * <code>string logical_name = 5;</code>
+     * <code>string logical_name = 4;</code>
      * @return The logicalName.
      */
     public java.lang.String getLogicalName() {
@@ -1010,7 +872,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string logical_name = 5;</code>
+     * <code>string logical_name = 4;</code>
      * @return The bytes for logicalName.
      */
     public com.google.protobuf.ByteString
@@ -1027,7 +889,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string logical_name = 5;</code>
+     * <code>string logical_name = 4;</code>
      * @param value The logicalName to set.
      * @return This builder for chaining.
      */
@@ -1042,7 +904,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string logical_name = 5;</code>
+     * <code>string logical_name = 4;</code>
      * @return This builder for chaining.
      */
     public Builder clearLogicalName() {
@@ -1052,7 +914,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string logical_name = 5;</code>
+     * <code>string logical_name = 4;</code>
      * @param value The bytes for logicalName to set.
      * @return This builder for chaining.
      */
@@ -1070,7 +932,7 @@ private static final long serialVersionUID = 0L;
 
     private com.google.protobuf.ByteString jchannAddressByte_ = com.google.protobuf.ByteString.EMPTY;
     /**
-     * <code>bytes jchann_address_byte = 6;</code>
+     * <code>bytes jchann_address_byte = 5;</code>
      * @return The jchannAddressByte.
      */
     @java.lang.Override
@@ -1078,7 +940,7 @@ private static final long serialVersionUID = 0L;
       return jchannAddressByte_;
     }
     /**
-     * <code>bytes jchann_address_byte = 6;</code>
+     * <code>bytes jchann_address_byte = 5;</code>
      * @param value The jchannAddressByte to set.
      * @return This builder for chaining.
      */
@@ -1092,7 +954,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>bytes jchann_address_byte = 6;</code>
+     * <code>bytes jchann_address_byte = 5;</code>
      * @return This builder for chaining.
      */
     public Builder clearJchannAddressByte() {

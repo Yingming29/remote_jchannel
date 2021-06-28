@@ -72,6 +72,7 @@ public class ClusterMap implements Serializable {
     }
     // generate a client view.
     public ViewRep generateView(){
+        System.out.println();
         ViewRep view_rep = null;
         this.lock.lock();
         try{

@@ -51,7 +51,7 @@ public class RemoteJChannelStub {
             if (input.equals("disconnect")) {
                 // disconnect request
                 DisconnectReq msgReq = DisconnectReq.newBuilder()
-                        .setJchannelAddress(this.client.uuid)
+                        .setJchannelAddress(this.client.jchannel_address.toString())
                         .setCluster(this.client.cluster)
                         .setTimestamp(dft.format(d))
                         .build();
@@ -109,7 +109,6 @@ public class RemoteJChannelStub {
                 u.readFrom(in);
                 // three properties:
                 this.client.jchannel_address = u;
-                this.client.uuid = u.toString();
                 this.client.name = connectRep.getLogicalName();
                 client.isWork.set(true);
                 client.down.set(true);
@@ -429,7 +428,6 @@ public class RemoteJChannelStub {
         }
         ConnectReq joinReq = ConnectReq.newBuilder()
                 .setCluster(client.cluster)
-                .setJchannelAddress(client.uuid)
                 .setLogicalName(client.jchannel_address.toString())
                 .setJchannAddressByte(ByteString.copyFrom(out.buffer()))
                 .setReconnect(true)

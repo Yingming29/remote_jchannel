@@ -223,33 +223,32 @@ public final class JChannelRpc {
       "\016ViewRep_server\022\016\n\006sender\030\001 \001(\t\022\021\n\tview_" +
       "byte\030\002 \001(\014\"\027\n\007ViewRep\022\014\n\004view\030\001 \001(\014\"\036\n\tU" +
       "pdateRep\022\021\n\taddresses\030\001 \001(\t\"1\n\rMessageRe" +
-      "qRep\022\022\n\nmessageObj\030\001 \001(\014\022\014\n\004type\030\002 \001(\t\"\220" +
-      "\001\n\nConnectReq\022\017\n\007cluster\030\001 \001(\t\022\021\n\ttimest" +
-      "amp\030\002 \001(\t\022\021\n\treconnect\030\003 \001(\010\022\030\n\020jchannel" +
-      "_address\030\004 \001(\t\022\024\n\014logical_name\030\005 \001(\t\022\033\n\023" +
-      "jchann_address_byte\030\006 \001(\014\"C\n\nConnectRep\022" +
-      "\016\n\006result\030\001 \001(\010\022\017\n\007address\030\002 \001(\014\022\024\n\014logi" +
-      "cal_name\030\003 \001(\t\"M\n\rDisconnectReq\022\030\n\020jchan" +
-      "nel_address\030\001 \001(\t\022\017\n\007cluster\030\002 \001(\t\022\021\n\tti" +
-      "mestamp\030\003 \001(\t\"\037\n\rDisconnectRep\022\016\n\006result" +
-      "\030\001 \001(\010\"\030\n\006ReqAsk\022\016\n\006source\030\001 \001(\t\"\032\n\006RepA" +
-      "sk\022\020\n\010survival\030\001 \001(\010\"E\n\010StateReq\022\016\n\006sour" +
+      "qRep\022\022\n\nmessageObj\030\001 \001(\014\022\014\n\004type\030\002 \001(\t\"v" +
+      "\n\nConnectReq\022\017\n\007cluster\030\001 \001(\t\022\021\n\ttimesta" +
+      "mp\030\002 \001(\t\022\021\n\treconnect\030\003 \001(\010\022\024\n\014logical_n" +
+      "ame\030\004 \001(\t\022\033\n\023jchann_address_byte\030\005 \001(\014\"C" +
+      "\n\nConnectRep\022\016\n\006result\030\001 \001(\010\022\017\n\007address\030" +
+      "\002 \001(\014\022\024\n\014logical_name\030\003 \001(\t\"M\n\rDisconnec" +
+      "tReq\022\030\n\020jchannel_address\030\001 \001(\t\022\017\n\007cluste" +
+      "r\030\002 \001(\t\022\021\n\ttimestamp\030\003 \001(\t\"\037\n\rDisconnect" +
+      "Rep\022\016\n\006result\030\001 \001(\010\"\030\n\006ReqAsk\022\016\n\006source\030" +
+      "\001 \001(\t\"\032\n\006RepAsk\022\020\n\010survival\030\001 \001(\010\"E\n\010Sta" +
+      "teReq\022\016\n\006source\030\001 \001(\t\022\017\n\007cluster\030\002 \001(\t\022\030" +
+      "\n\020jchannel_address\030\003 \001(\t\"P\n\010StateRep\022\014\n\004" +
+      "size\030\001 \001(\005\0226\n\014oneOfHistory\030\002 \003(\0132 .cn.yi" +
+      "ngming.grpc1.MessageReqRep\"b\n\025StateMsg_w" +
+      "ithTarget_1\022\016\n\006source\030\001 \001(\t\022\017\n\007cluster\030\002" +
+      " \001(\t\022\030\n\020jchannel_address\030\003 \001(\t\022\016\n\006target" +
+      "\030\004 \001(\t\"\232\001\n\025StateMsg_withTarget_2\022\016\n\006sour" +
       "ce\030\001 \001(\t\022\017\n\007cluster\030\002 \001(\t\022\030\n\020jchannel_ad" +
-      "dress\030\003 \001(\t\"P\n\010StateRep\022\014\n\004size\030\001 \001(\005\0226\n" +
-      "\014oneOfHistory\030\002 \003(\0132 .cn.yingming.grpc1." +
-      "MessageReqRep\"b\n\025StateMsg_withTarget_1\022\016" +
-      "\n\006source\030\001 \001(\t\022\017\n\007cluster\030\002 \001(\t\022\030\n\020jchan" +
-      "nel_address\030\003 \001(\t\022\016\n\006target\030\004 \001(\t\"\232\001\n\025St" +
-      "ateMsg_withTarget_2\022\016\n\006source\030\001 \001(\t\022\017\n\007c" +
-      "luster\030\002 \001(\t\022\030\n\020jchannel_address\030\003 \001(\t\0226" +
-      "\n\014oneOfHistory\030\004 \003(\0132 .cn.yingming.grpc1" +
-      ".MessageReqRep\022\016\n\006target\030\005 \001(\t2\233\001\n\020JChan" +
-      "nelsService\022H\n\007connect\022\032.cn.yingming.grp" +
-      "c1.Request\032\033.cn.yingming.grpc1.Response\"" +
-      "\000(\0010\001\022=\n\003ask\022\031.cn.yingming.grpc1.ReqAsk\032" +
-      "\031.cn.yingming.grpc1.RepAsk\"\000B/\n\023io.grpc." +
-      "jchannelRpcB\013JChannelRpcP\001\242\002\010YINGMINGb\006p" +
-      "roto3"
+      "dress\030\003 \001(\t\0226\n\014oneOfHistory\030\004 \003(\0132 .cn.y" +
+      "ingming.grpc1.MessageReqRep\022\016\n\006target\030\005 " +
+      "\001(\t2\233\001\n\020JChannelsService\022H\n\007connect\022\032.cn" +
+      ".yingming.grpc1.Request\032\033.cn.yingming.gr" +
+      "pc1.Response\"\000(\0010\001\022=\n\003ask\022\031.cn.yingming." +
+      "grpc1.ReqAsk\032\031.cn.yingming.grpc1.RepAsk\"" +
+      "\000B/\n\023io.grpc.jchannelRpcB\013JChannelRpcP\001\242" +
+      "\002\010YINGMINGb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -368,7 +367,7 @@ public final class JChannelRpc {
     internal_static_cn_yingming_grpc1_ConnectReq_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_cn_yingming_grpc1_ConnectReq_descriptor,
-        new java.lang.String[] { "Cluster", "Timestamp", "Reconnect", "JchannelAddress", "LogicalName", "JchannAddressByte", });
+        new java.lang.String[] { "Cluster", "Timestamp", "Reconnect", "LogicalName", "JchannAddressByte", });
     internal_static_cn_yingming_grpc1_ConnectRep_descriptor =
       getDescriptor().getMessageTypes().get(19);
     internal_static_cn_yingming_grpc1_ConnectRep_fieldAccessorTable = new

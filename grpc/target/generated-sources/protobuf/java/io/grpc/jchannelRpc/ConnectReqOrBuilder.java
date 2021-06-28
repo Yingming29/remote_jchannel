@@ -50,31 +50,19 @@ public interface ConnectReqOrBuilder extends
   boolean getReconnect();
 
   /**
-   * <code>string jchannel_address = 4;</code>
-   * @return The jchannelAddress.
-   */
-  java.lang.String getJchannelAddress();
-  /**
-   * <code>string jchannel_address = 4;</code>
-   * @return The bytes for jchannelAddress.
-   */
-  com.google.protobuf.ByteString
-      getJchannelAddressBytes();
-
-  /**
-   * <code>string logical_name = 5;</code>
+   * <code>string logical_name = 4;</code>
    * @return The logicalName.
    */
   java.lang.String getLogicalName();
   /**
-   * <code>string logical_name = 5;</code>
+   * <code>string logical_name = 4;</code>
    * @return The bytes for logicalName.
    */
   com.google.protobuf.ByteString
       getLogicalNameBytes();
 
   /**
-   * <code>bytes jchann_address_byte = 6;</code>
+   * <code>bytes jchann_address_byte = 5;</code>
    * @return The jchannAddressByte.
    */
   com.google.protobuf.ByteString getJchannAddressByte();
