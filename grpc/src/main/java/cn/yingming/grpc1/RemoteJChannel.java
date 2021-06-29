@@ -43,6 +43,7 @@ public class RemoteJChannel extends JChannel {
     public String remoteProtocolStack_string;
     public String property;
     public Map<String, Map<String, Object>> statsMap;
+    public String state;
 
     public RemoteJChannel(String address) throws Exception{
         this.address = address;
@@ -72,6 +73,7 @@ public class RemoteJChannel extends JChannel {
         this.remoteView = new View();
         this.property = null;
         this.statsMap = null;
+        this.state = null;
     }
 
     @Override
@@ -376,19 +378,19 @@ public class RemoteJChannel extends JChannel {
 
     @Override
     public String getState() {
-        if(this.clientStub != null && this.clientStub.channel != null){
-            if (this.down.get()){
-                if (this.isWork.get()){
-                    return "grpc connection works";
-                } else{
-                    return "grpc connection does not work";
-                }
-            } else{
-                return "stub down";
-            }
-        } else{
-            throw new IllegalStateException("The stub or channel of stub does not work.");
+        if (!isWork.get() && !down.get()){
+            System.out.println("The RemoteJChannel client does not start work. Return null");
+            return null;
         }
+        this.clientStub.add_save("getState()");
+        synchronized (obj){
+            try{
+                obj.wait(5000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return this.state;
     }
     @Override
     public boolean isOpen() {
