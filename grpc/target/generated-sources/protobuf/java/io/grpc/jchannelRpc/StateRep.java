@@ -16,7 +16,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private StateRep() {
-    oneOfHistory_ = java.util.Collections.emptyList();
+    state_ = com.google.protobuf.ByteString.EMPTY;
   }
 
   @java.lang.Override
@@ -39,7 +39,6 @@ private static final long serialVersionUID = 0L;
     if (extensionRegistry == null) {
       throw new java.lang.NullPointerException();
     }
-    int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
         com.google.protobuf.UnknownFieldSet.newBuilder();
     try {
@@ -50,18 +49,9 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 8: {
+          case 10: {
 
-            size_ = input.readInt32();
-            break;
-          }
-          case 18: {
-            if (!((mutable_bitField0_ & 0x00000001) != 0)) {
-              oneOfHistory_ = new java.util.ArrayList<io.grpc.jchannelRpc.MessageReqRep>();
-              mutable_bitField0_ |= 0x00000001;
-            }
-            oneOfHistory_.add(
-                input.readMessage(io.grpc.jchannelRpc.MessageReqRep.parser(), extensionRegistry));
+            state_ = input.readBytes();
             break;
           }
           default: {
@@ -79,9 +69,6 @@ private static final long serialVersionUID = 0L;
       throw new com.google.protobuf.InvalidProtocolBufferException(
           e).setUnfinishedMessage(this);
     } finally {
-      if (((mutable_bitField0_ & 0x00000001) != 0)) {
-        oneOfHistory_ = java.util.Collections.unmodifiableList(oneOfHistory_);
-      }
       this.unknownFields = unknownFields.build();
       makeExtensionsImmutable();
     }
@@ -99,55 +86,15 @@ private static final long serialVersionUID = 0L;
             io.grpc.jchannelRpc.StateRep.class, io.grpc.jchannelRpc.StateRep.Builder.class);
   }
 
-  public static final int SIZE_FIELD_NUMBER = 1;
-  private int size_;
+  public static final int STATE_FIELD_NUMBER = 1;
+  private com.google.protobuf.ByteString state_;
   /**
-   * <code>int32 size = 1;</code>
-   * @return The size.
+   * <code>bytes state = 1;</code>
+   * @return The state.
    */
   @java.lang.Override
-  public int getSize() {
-    return size_;
-  }
-
-  public static final int ONEOFHISTORY_FIELD_NUMBER = 2;
-  private java.util.List<io.grpc.jchannelRpc.MessageReqRep> oneOfHistory_;
-  /**
-   * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 2;</code>
-   */
-  @java.lang.Override
-  public java.util.List<io.grpc.jchannelRpc.MessageReqRep> getOneOfHistoryList() {
-    return oneOfHistory_;
-  }
-  /**
-   * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 2;</code>
-   */
-  @java.lang.Override
-  public java.util.List<? extends io.grpc.jchannelRpc.MessageReqRepOrBuilder> 
-      getOneOfHistoryOrBuilderList() {
-    return oneOfHistory_;
-  }
-  /**
-   * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 2;</code>
-   */
-  @java.lang.Override
-  public int getOneOfHistoryCount() {
-    return oneOfHistory_.size();
-  }
-  /**
-   * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 2;</code>
-   */
-  @java.lang.Override
-  public io.grpc.jchannelRpc.MessageReqRep getOneOfHistory(int index) {
-    return oneOfHistory_.get(index);
-  }
-  /**
-   * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 2;</code>
-   */
-  @java.lang.Override
-  public io.grpc.jchannelRpc.MessageReqRepOrBuilder getOneOfHistoryOrBuilder(
-      int index) {
-    return oneOfHistory_.get(index);
+  public com.google.protobuf.ByteString getState() {
+    return state_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -164,11 +111,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (size_ != 0) {
-      output.writeInt32(1, size_);
-    }
-    for (int i = 0; i < oneOfHistory_.size(); i++) {
-      output.writeMessage(2, oneOfHistory_.get(i));
+    if (!state_.isEmpty()) {
+      output.writeBytes(1, state_);
     }
     unknownFields.writeTo(output);
   }
@@ -179,13 +123,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (size_ != 0) {
+    if (!state_.isEmpty()) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(1, size_);
-    }
-    for (int i = 0; i < oneOfHistory_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(2, oneOfHistory_.get(i));
+        .computeBytesSize(1, state_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -202,10 +142,8 @@ private static final long serialVersionUID = 0L;
     }
     io.grpc.jchannelRpc.StateRep other = (io.grpc.jchannelRpc.StateRep) obj;
 
-    if (getSize()
-        != other.getSize()) return false;
-    if (!getOneOfHistoryList()
-        .equals(other.getOneOfHistoryList())) return false;
+    if (!getState()
+        .equals(other.getState())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -217,12 +155,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + SIZE_FIELD_NUMBER;
-    hash = (53 * hash) + getSize();
-    if (getOneOfHistoryCount() > 0) {
-      hash = (37 * hash) + ONEOFHISTORY_FIELD_NUMBER;
-      hash = (53 * hash) + getOneOfHistoryList().hashCode();
-    }
+    hash = (37 * hash) + STATE_FIELD_NUMBER;
+    hash = (53 * hash) + getState().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -351,20 +285,13 @@ private static final long serialVersionUID = 0L;
     private void maybeForceBuilderInitialization() {
       if (com.google.protobuf.GeneratedMessageV3
               .alwaysUseFieldBuilders) {
-        getOneOfHistoryFieldBuilder();
       }
     }
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      size_ = 0;
+      state_ = com.google.protobuf.ByteString.EMPTY;
 
-      if (oneOfHistoryBuilder_ == null) {
-        oneOfHistory_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
-      } else {
-        oneOfHistoryBuilder_.clear();
-      }
       return this;
     }
 
@@ -391,17 +318,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public io.grpc.jchannelRpc.StateRep buildPartial() {
       io.grpc.jchannelRpc.StateRep result = new io.grpc.jchannelRpc.StateRep(this);
-      int from_bitField0_ = bitField0_;
-      result.size_ = size_;
-      if (oneOfHistoryBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
-          oneOfHistory_ = java.util.Collections.unmodifiableList(oneOfHistory_);
-          bitField0_ = (bitField0_ & ~0x00000001);
-        }
-        result.oneOfHistory_ = oneOfHistory_;
-      } else {
-        result.oneOfHistory_ = oneOfHistoryBuilder_.build();
-      }
+      result.state_ = state_;
       onBuilt();
       return result;
     }
@@ -450,34 +367,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(io.grpc.jchannelRpc.StateRep other) {
       if (other == io.grpc.jchannelRpc.StateRep.getDefaultInstance()) return this;
-      if (other.getSize() != 0) {
-        setSize(other.getSize());
-      }
-      if (oneOfHistoryBuilder_ == null) {
-        if (!other.oneOfHistory_.isEmpty()) {
-          if (oneOfHistory_.isEmpty()) {
-            oneOfHistory_ = other.oneOfHistory_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-          } else {
-            ensureOneOfHistoryIsMutable();
-            oneOfHistory_.addAll(other.oneOfHistory_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.oneOfHistory_.isEmpty()) {
-          if (oneOfHistoryBuilder_.isEmpty()) {
-            oneOfHistoryBuilder_.dispose();
-            oneOfHistoryBuilder_ = null;
-            oneOfHistory_ = other.oneOfHistory_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-            oneOfHistoryBuilder_ = 
-              com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                 getOneOfHistoryFieldBuilder() : null;
-          } else {
-            oneOfHistoryBuilder_.addAllMessages(other.oneOfHistory_);
-          }
-        }
+      if (other.getState() != com.google.protobuf.ByteString.EMPTY) {
+        setState(other.getState());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -507,277 +398,39 @@ private static final long serialVersionUID = 0L;
       }
       return this;
     }
-    private int bitField0_;
 
-    private int size_ ;
+    private com.google.protobuf.ByteString state_ = com.google.protobuf.ByteString.EMPTY;
     /**
-     * <code>int32 size = 1;</code>
-     * @return The size.
+     * <code>bytes state = 1;</code>
+     * @return The state.
      */
     @java.lang.Override
-    public int getSize() {
-      return size_;
+    public com.google.protobuf.ByteString getState() {
+      return state_;
     }
     /**
-     * <code>int32 size = 1;</code>
-     * @param value The size to set.
+     * <code>bytes state = 1;</code>
+     * @param value The state to set.
      * @return This builder for chaining.
      */
-    public Builder setSize(int value) {
-      
-      size_ = value;
+    public Builder setState(com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      state_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>int32 size = 1;</code>
+     * <code>bytes state = 1;</code>
      * @return This builder for chaining.
      */
-    public Builder clearSize() {
+    public Builder clearState() {
       
-      size_ = 0;
+      state_ = getDefaultInstance().getState();
       onChanged();
       return this;
-    }
-
-    private java.util.List<io.grpc.jchannelRpc.MessageReqRep> oneOfHistory_ =
-      java.util.Collections.emptyList();
-    private void ensureOneOfHistoryIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
-        oneOfHistory_ = new java.util.ArrayList<io.grpc.jchannelRpc.MessageReqRep>(oneOfHistory_);
-        bitField0_ |= 0x00000001;
-       }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-        io.grpc.jchannelRpc.MessageReqRep, io.grpc.jchannelRpc.MessageReqRep.Builder, io.grpc.jchannelRpc.MessageReqRepOrBuilder> oneOfHistoryBuilder_;
-
-    /**
-     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 2;</code>
-     */
-    public java.util.List<io.grpc.jchannelRpc.MessageReqRep> getOneOfHistoryList() {
-      if (oneOfHistoryBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(oneOfHistory_);
-      } else {
-        return oneOfHistoryBuilder_.getMessageList();
-      }
-    }
-    /**
-     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 2;</code>
-     */
-    public int getOneOfHistoryCount() {
-      if (oneOfHistoryBuilder_ == null) {
-        return oneOfHistory_.size();
-      } else {
-        return oneOfHistoryBuilder_.getCount();
-      }
-    }
-    /**
-     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 2;</code>
-     */
-    public io.grpc.jchannelRpc.MessageReqRep getOneOfHistory(int index) {
-      if (oneOfHistoryBuilder_ == null) {
-        return oneOfHistory_.get(index);
-      } else {
-        return oneOfHistoryBuilder_.getMessage(index);
-      }
-    }
-    /**
-     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 2;</code>
-     */
-    public Builder setOneOfHistory(
-        int index, io.grpc.jchannelRpc.MessageReqRep value) {
-      if (oneOfHistoryBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureOneOfHistoryIsMutable();
-        oneOfHistory_.set(index, value);
-        onChanged();
-      } else {
-        oneOfHistoryBuilder_.setMessage(index, value);
-      }
-      return this;
-    }
-    /**
-     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 2;</code>
-     */
-    public Builder setOneOfHistory(
-        int index, io.grpc.jchannelRpc.MessageReqRep.Builder builderForValue) {
-      if (oneOfHistoryBuilder_ == null) {
-        ensureOneOfHistoryIsMutable();
-        oneOfHistory_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        oneOfHistoryBuilder_.setMessage(index, builderForValue.build());
-      }
-      return this;
-    }
-    /**
-     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 2;</code>
-     */
-    public Builder addOneOfHistory(io.grpc.jchannelRpc.MessageReqRep value) {
-      if (oneOfHistoryBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureOneOfHistoryIsMutable();
-        oneOfHistory_.add(value);
-        onChanged();
-      } else {
-        oneOfHistoryBuilder_.addMessage(value);
-      }
-      return this;
-    }
-    /**
-     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 2;</code>
-     */
-    public Builder addOneOfHistory(
-        int index, io.grpc.jchannelRpc.MessageReqRep value) {
-      if (oneOfHistoryBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureOneOfHistoryIsMutable();
-        oneOfHistory_.add(index, value);
-        onChanged();
-      } else {
-        oneOfHistoryBuilder_.addMessage(index, value);
-      }
-      return this;
-    }
-    /**
-     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 2;</code>
-     */
-    public Builder addOneOfHistory(
-        io.grpc.jchannelRpc.MessageReqRep.Builder builderForValue) {
-      if (oneOfHistoryBuilder_ == null) {
-        ensureOneOfHistoryIsMutable();
-        oneOfHistory_.add(builderForValue.build());
-        onChanged();
-      } else {
-        oneOfHistoryBuilder_.addMessage(builderForValue.build());
-      }
-      return this;
-    }
-    /**
-     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 2;</code>
-     */
-    public Builder addOneOfHistory(
-        int index, io.grpc.jchannelRpc.MessageReqRep.Builder builderForValue) {
-      if (oneOfHistoryBuilder_ == null) {
-        ensureOneOfHistoryIsMutable();
-        oneOfHistory_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        oneOfHistoryBuilder_.addMessage(index, builderForValue.build());
-      }
-      return this;
-    }
-    /**
-     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 2;</code>
-     */
-    public Builder addAllOneOfHistory(
-        java.lang.Iterable<? extends io.grpc.jchannelRpc.MessageReqRep> values) {
-      if (oneOfHistoryBuilder_ == null) {
-        ensureOneOfHistoryIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, oneOfHistory_);
-        onChanged();
-      } else {
-        oneOfHistoryBuilder_.addAllMessages(values);
-      }
-      return this;
-    }
-    /**
-     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 2;</code>
-     */
-    public Builder clearOneOfHistory() {
-      if (oneOfHistoryBuilder_ == null) {
-        oneOfHistory_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-      } else {
-        oneOfHistoryBuilder_.clear();
-      }
-      return this;
-    }
-    /**
-     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 2;</code>
-     */
-    public Builder removeOneOfHistory(int index) {
-      if (oneOfHistoryBuilder_ == null) {
-        ensureOneOfHistoryIsMutable();
-        oneOfHistory_.remove(index);
-        onChanged();
-      } else {
-        oneOfHistoryBuilder_.remove(index);
-      }
-      return this;
-    }
-    /**
-     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 2;</code>
-     */
-    public io.grpc.jchannelRpc.MessageReqRep.Builder getOneOfHistoryBuilder(
-        int index) {
-      return getOneOfHistoryFieldBuilder().getBuilder(index);
-    }
-    /**
-     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 2;</code>
-     */
-    public io.grpc.jchannelRpc.MessageReqRepOrBuilder getOneOfHistoryOrBuilder(
-        int index) {
-      if (oneOfHistoryBuilder_ == null) {
-        return oneOfHistory_.get(index);  } else {
-        return oneOfHistoryBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 2;</code>
-     */
-    public java.util.List<? extends io.grpc.jchannelRpc.MessageReqRepOrBuilder> 
-         getOneOfHistoryOrBuilderList() {
-      if (oneOfHistoryBuilder_ != null) {
-        return oneOfHistoryBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(oneOfHistory_);
-      }
-    }
-    /**
-     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 2;</code>
-     */
-    public io.grpc.jchannelRpc.MessageReqRep.Builder addOneOfHistoryBuilder() {
-      return getOneOfHistoryFieldBuilder().addBuilder(
-          io.grpc.jchannelRpc.MessageReqRep.getDefaultInstance());
-    }
-    /**
-     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 2;</code>
-     */
-    public io.grpc.jchannelRpc.MessageReqRep.Builder addOneOfHistoryBuilder(
-        int index) {
-      return getOneOfHistoryFieldBuilder().addBuilder(
-          index, io.grpc.jchannelRpc.MessageReqRep.getDefaultInstance());
-    }
-    /**
-     * <code>repeated .cn.yingming.grpc1.MessageReqRep oneOfHistory = 2;</code>
-     */
-    public java.util.List<io.grpc.jchannelRpc.MessageReqRep.Builder> 
-         getOneOfHistoryBuilderList() {
-      return getOneOfHistoryFieldBuilder().getBuilderList();
-    }
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-        io.grpc.jchannelRpc.MessageReqRep, io.grpc.jchannelRpc.MessageReqRep.Builder, io.grpc.jchannelRpc.MessageReqRepOrBuilder> 
-        getOneOfHistoryFieldBuilder() {
-      if (oneOfHistoryBuilder_ == null) {
-        oneOfHistoryBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-            io.grpc.jchannelRpc.MessageReqRep, io.grpc.jchannelRpc.MessageReqRep.Builder, io.grpc.jchannelRpc.MessageReqRepOrBuilder>(
-                oneOfHistory_,
-                ((bitField0_ & 0x00000001) != 0),
-                getParentForChildren(),
-                isClean());
-        oneOfHistory_ = null;
-      }
-      return oneOfHistoryBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

@@ -5,6 +5,7 @@ import org.jgroups.*;
 import org.jgroups.util.ByteArrayDataInputStream;
 
 import java.io.*;
+import java.util.List;
 
 public class UtilsRJ {
     public static String getMsgType(Message msg){

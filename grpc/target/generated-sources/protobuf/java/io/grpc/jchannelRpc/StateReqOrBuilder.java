@@ -8,38 +8,20 @@ public interface StateReqOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string source = 1;</code>
-   * @return The source.
-   */
-  java.lang.String getSource();
-  /**
-   * <code>string source = 1;</code>
-   * @return The bytes for source.
-   */
-  com.google.protobuf.ByteString
-      getSourceBytes();
-
-  /**
-   * <code>string cluster = 2;</code>
-   * @return The cluster.
-   */
-  java.lang.String getCluster();
-  /**
-   * <code>string cluster = 2;</code>
-   * @return The bytes for cluster.
-   */
-  com.google.protobuf.ByteString
-      getClusterBytes();
-
-  /**
-   * <code>string jchannel_address = 3;</code>
+   * <code>string jchannel_address = 1;</code>
    * @return The jchannelAddress.
    */
   java.lang.String getJchannelAddress();
   /**
-   * <code>string jchannel_address = 3;</code>
+   * <code>string jchannel_address = 1;</code>
    * @return The bytes for jchannelAddress.
    */
   com.google.protobuf.ByteString
       getJchannelAddressBytes();
+
+  /**
+   * <code>bytes target = 2;</code>
+   * @return The target.
+   */
+  com.google.protobuf.ByteString getTarget();
 }

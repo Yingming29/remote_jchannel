@@ -16,10 +16,8 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private StateMsg_withTarget_1() {
-    source_ = "";
-    cluster_ = "";
-    jchannelAddress_ = "";
-    target_ = "";
+    jchannelAddress_ = com.google.protobuf.ByteString.EMPTY;
+    target_ = com.google.protobuf.ByteString.EMPTY;
   }
 
   @java.lang.Override
@@ -53,27 +51,13 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
 
-            source_ = s;
+            jchannelAddress_ = input.readBytes();
             break;
           }
           case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
 
-            cluster_ = s;
-            break;
-          }
-          case 26: {
-            java.lang.String s = input.readStringRequireUtf8();
-
-            jchannelAddress_ = s;
-            break;
-          }
-          case 34: {
-            java.lang.String s = input.readStringRequireUtf8();
-
-            target_ = s;
+            target_ = input.readBytes();
             break;
           }
           default: {
@@ -108,156 +92,26 @@ private static final long serialVersionUID = 0L;
             io.grpc.jchannelRpc.StateMsg_withTarget_1.class, io.grpc.jchannelRpc.StateMsg_withTarget_1.Builder.class);
   }
 
-  public static final int SOURCE_FIELD_NUMBER = 1;
-  private volatile java.lang.Object source_;
+  public static final int JCHANNEL_ADDRESS_FIELD_NUMBER = 1;
+  private com.google.protobuf.ByteString jchannelAddress_;
   /**
-   * <code>string source = 1;</code>
-   * @return The source.
-   */
-  @java.lang.Override
-  public java.lang.String getSource() {
-    java.lang.Object ref = source_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      source_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string source = 1;</code>
-   * @return The bytes for source.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getSourceBytes() {
-    java.lang.Object ref = source_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      source_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int CLUSTER_FIELD_NUMBER = 2;
-  private volatile java.lang.Object cluster_;
-  /**
-   * <code>string cluster = 2;</code>
-   * @return The cluster.
-   */
-  @java.lang.Override
-  public java.lang.String getCluster() {
-    java.lang.Object ref = cluster_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      cluster_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string cluster = 2;</code>
-   * @return The bytes for cluster.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getClusterBytes() {
-    java.lang.Object ref = cluster_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      cluster_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int JCHANNEL_ADDRESS_FIELD_NUMBER = 3;
-  private volatile java.lang.Object jchannelAddress_;
-  /**
-   * <code>string jchannel_address = 3;</code>
+   * <code>bytes jchannel_address = 1;</code>
    * @return The jchannelAddress.
    */
   @java.lang.Override
-  public java.lang.String getJchannelAddress() {
-    java.lang.Object ref = jchannelAddress_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      jchannelAddress_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string jchannel_address = 3;</code>
-   * @return The bytes for jchannelAddress.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getJchannelAddressBytes() {
-    java.lang.Object ref = jchannelAddress_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      jchannelAddress_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public com.google.protobuf.ByteString getJchannelAddress() {
+    return jchannelAddress_;
   }
 
-  public static final int TARGET_FIELD_NUMBER = 4;
-  private volatile java.lang.Object target_;
+  public static final int TARGET_FIELD_NUMBER = 2;
+  private com.google.protobuf.ByteString target_;
   /**
-   * <code>string target = 4;</code>
+   * <code>bytes target = 2;</code>
    * @return The target.
    */
   @java.lang.Override
-  public java.lang.String getTarget() {
-    java.lang.Object ref = target_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      target_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string target = 4;</code>
-   * @return The bytes for target.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getTargetBytes() {
-    java.lang.Object ref = target_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      target_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public com.google.protobuf.ByteString getTarget() {
+    return target_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -274,17 +128,11 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getSourceBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, source_);
+    if (!jchannelAddress_.isEmpty()) {
+      output.writeBytes(1, jchannelAddress_);
     }
-    if (!getClusterBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, cluster_);
-    }
-    if (!getJchannelAddressBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, jchannelAddress_);
-    }
-    if (!getTargetBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, target_);
+    if (!target_.isEmpty()) {
+      output.writeBytes(2, target_);
     }
     unknownFields.writeTo(output);
   }
@@ -295,17 +143,13 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getSourceBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, source_);
+    if (!jchannelAddress_.isEmpty()) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeBytesSize(1, jchannelAddress_);
     }
-    if (!getClusterBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, cluster_);
-    }
-    if (!getJchannelAddressBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, jchannelAddress_);
-    }
-    if (!getTargetBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, target_);
+    if (!target_.isEmpty()) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeBytesSize(2, target_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -322,10 +166,6 @@ private static final long serialVersionUID = 0L;
     }
     io.grpc.jchannelRpc.StateMsg_withTarget_1 other = (io.grpc.jchannelRpc.StateMsg_withTarget_1) obj;
 
-    if (!getSource()
-        .equals(other.getSource())) return false;
-    if (!getCluster()
-        .equals(other.getCluster())) return false;
     if (!getJchannelAddress()
         .equals(other.getJchannelAddress())) return false;
     if (!getTarget()
@@ -341,10 +181,6 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + SOURCE_FIELD_NUMBER;
-    hash = (53 * hash) + getSource().hashCode();
-    hash = (37 * hash) + CLUSTER_FIELD_NUMBER;
-    hash = (53 * hash) + getCluster().hashCode();
     hash = (37 * hash) + JCHANNEL_ADDRESS_FIELD_NUMBER;
     hash = (53 * hash) + getJchannelAddress().hashCode();
     hash = (37 * hash) + TARGET_FIELD_NUMBER;
@@ -482,13 +318,9 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      source_ = "";
+      jchannelAddress_ = com.google.protobuf.ByteString.EMPTY;
 
-      cluster_ = "";
-
-      jchannelAddress_ = "";
-
-      target_ = "";
+      target_ = com.google.protobuf.ByteString.EMPTY;
 
       return this;
     }
@@ -516,8 +348,6 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public io.grpc.jchannelRpc.StateMsg_withTarget_1 buildPartial() {
       io.grpc.jchannelRpc.StateMsg_withTarget_1 result = new io.grpc.jchannelRpc.StateMsg_withTarget_1(this);
-      result.source_ = source_;
-      result.cluster_ = cluster_;
       result.jchannelAddress_ = jchannelAddress_;
       result.target_ = target_;
       onBuilt();
@@ -568,21 +398,11 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(io.grpc.jchannelRpc.StateMsg_withTarget_1 other) {
       if (other == io.grpc.jchannelRpc.StateMsg_withTarget_1.getDefaultInstance()) return this;
-      if (!other.getSource().isEmpty()) {
-        source_ = other.source_;
-        onChanged();
+      if (other.getJchannelAddress() != com.google.protobuf.ByteString.EMPTY) {
+        setJchannelAddress(other.getJchannelAddress());
       }
-      if (!other.getCluster().isEmpty()) {
-        cluster_ = other.cluster_;
-        onChanged();
-      }
-      if (!other.getJchannelAddress().isEmpty()) {
-        jchannelAddress_ = other.jchannelAddress_;
-        onChanged();
-      }
-      if (!other.getTarget().isEmpty()) {
-        target_ = other.target_;
-        onChanged();
+      if (other.getTarget() != com.google.protobuf.ByteString.EMPTY) {
+        setTarget(other.getTarget());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -613,199 +433,21 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object source_ = "";
+    private com.google.protobuf.ByteString jchannelAddress_ = com.google.protobuf.ByteString.EMPTY;
     /**
-     * <code>string source = 1;</code>
-     * @return The source.
-     */
-    public java.lang.String getSource() {
-      java.lang.Object ref = source_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        source_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string source = 1;</code>
-     * @return The bytes for source.
-     */
-    public com.google.protobuf.ByteString
-        getSourceBytes() {
-      java.lang.Object ref = source_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        source_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string source = 1;</code>
-     * @param value The source to set.
-     * @return This builder for chaining.
-     */
-    public Builder setSource(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      source_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string source = 1;</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearSource() {
-      
-      source_ = getDefaultInstance().getSource();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string source = 1;</code>
-     * @param value The bytes for source to set.
-     * @return This builder for chaining.
-     */
-    public Builder setSourceBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      source_ = value;
-      onChanged();
-      return this;
-    }
-
-    private java.lang.Object cluster_ = "";
-    /**
-     * <code>string cluster = 2;</code>
-     * @return The cluster.
-     */
-    public java.lang.String getCluster() {
-      java.lang.Object ref = cluster_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        cluster_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string cluster = 2;</code>
-     * @return The bytes for cluster.
-     */
-    public com.google.protobuf.ByteString
-        getClusterBytes() {
-      java.lang.Object ref = cluster_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        cluster_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string cluster = 2;</code>
-     * @param value The cluster to set.
-     * @return This builder for chaining.
-     */
-    public Builder setCluster(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      cluster_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string cluster = 2;</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearCluster() {
-      
-      cluster_ = getDefaultInstance().getCluster();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string cluster = 2;</code>
-     * @param value The bytes for cluster to set.
-     * @return This builder for chaining.
-     */
-    public Builder setClusterBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      cluster_ = value;
-      onChanged();
-      return this;
-    }
-
-    private java.lang.Object jchannelAddress_ = "";
-    /**
-     * <code>string jchannel_address = 3;</code>
+     * <code>bytes jchannel_address = 1;</code>
      * @return The jchannelAddress.
      */
-    public java.lang.String getJchannelAddress() {
-      java.lang.Object ref = jchannelAddress_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        jchannelAddress_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    @java.lang.Override
+    public com.google.protobuf.ByteString getJchannelAddress() {
+      return jchannelAddress_;
     }
     /**
-     * <code>string jchannel_address = 3;</code>
-     * @return The bytes for jchannelAddress.
-     */
-    public com.google.protobuf.ByteString
-        getJchannelAddressBytes() {
-      java.lang.Object ref = jchannelAddress_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        jchannelAddress_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string jchannel_address = 3;</code>
+     * <code>bytes jchannel_address = 1;</code>
      * @param value The jchannelAddress to set.
      * @return This builder for chaining.
      */
-    public Builder setJchannelAddress(
-        java.lang.String value) {
+    public Builder setJchannelAddress(com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -815,7 +457,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string jchannel_address = 3;</code>
+     * <code>bytes jchannel_address = 1;</code>
      * @return This builder for chaining.
      */
     public Builder clearJchannelAddress() {
@@ -824,64 +466,22 @@ private static final long serialVersionUID = 0L;
       onChanged();
       return this;
     }
-    /**
-     * <code>string jchannel_address = 3;</code>
-     * @param value The bytes for jchannelAddress to set.
-     * @return This builder for chaining.
-     */
-    public Builder setJchannelAddressBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      jchannelAddress_ = value;
-      onChanged();
-      return this;
-    }
 
-    private java.lang.Object target_ = "";
+    private com.google.protobuf.ByteString target_ = com.google.protobuf.ByteString.EMPTY;
     /**
-     * <code>string target = 4;</code>
+     * <code>bytes target = 2;</code>
      * @return The target.
      */
-    public java.lang.String getTarget() {
-      java.lang.Object ref = target_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        target_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    @java.lang.Override
+    public com.google.protobuf.ByteString getTarget() {
+      return target_;
     }
     /**
-     * <code>string target = 4;</code>
-     * @return The bytes for target.
-     */
-    public com.google.protobuf.ByteString
-        getTargetBytes() {
-      java.lang.Object ref = target_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        target_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string target = 4;</code>
+     * <code>bytes target = 2;</code>
      * @param value The target to set.
      * @return This builder for chaining.
      */
-    public Builder setTarget(
-        java.lang.String value) {
+    public Builder setTarget(com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -891,28 +491,12 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string target = 4;</code>
+     * <code>bytes target = 2;</code>
      * @return This builder for chaining.
      */
     public Builder clearTarget() {
       
       target_ = getDefaultInstance().getTarget();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string target = 4;</code>
-     * @param value The bytes for target to set.
-     * @return This builder for chaining.
-     */
-    public Builder setTargetBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      target_ = value;
       onChanged();
       return this;
     }

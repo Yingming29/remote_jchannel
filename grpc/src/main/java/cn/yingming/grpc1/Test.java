@@ -150,9 +150,6 @@ public class Test {
             System.out.println("true");
         }
 
-
-
-
         HashMap mp = new HashMap<String, Object>();
 
         SetDiscardOwnMsgReq discardMsgReq = SetDiscardOwnMsgReq.newBuilder()

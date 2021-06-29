@@ -5,12 +5,9 @@ import com.sun.jdi.event.ExceptionEvent;
 import io.grpc.jchannelRpc.*;
 import org.apache.commons.collections.ListUtils;
 import org.jgroups.*;
-import org.jgroups.util.ByteArrayDataInputStream;
-import org.jgroups.util.ByteArrayDataOutputStream;
-import org.jgroups.util.NameCache;
-import org.jgroups.util.UUID;
+import org.jgroups.util.*;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -235,6 +232,25 @@ public class NodeJChannel implements Receiver{
             System.out.println("[JChannel] Receive a shared getState(Target) result for unicast to a JChannl-Client.");
             this.service.unicast_stateMsg2(((Request) msg.getObject()).getStateMsg2());
         }
+    }
+
+
+    @Override
+    public void getState(OutputStream output) throws Exception {
+         synchronized (state){
+             Util.objectToStream(state, new DataOutputStream(output));
+         }
+    }
+
+    public void setState(InputStream input) throws Exception{
+        List<Message> list;
+        list = (List<Message>) Util.objectFromStream(new DataInputStream(input));
+        synchronized (state){
+            state.clear();
+            state.addAll(list);
+        }
+        System.out.println(list.size() + " messages in chat history.");
+        list.forEach(System.out::println);
     }
 
     public void receiveChannelMsg(Message msg){
@@ -478,4 +494,5 @@ public class NodeJChannel implements Receiver{
         }
 
     }
+
 }

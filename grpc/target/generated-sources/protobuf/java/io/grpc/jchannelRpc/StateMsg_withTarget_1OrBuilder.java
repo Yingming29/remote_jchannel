@@ -8,50 +8,14 @@ public interface StateMsg_withTarget_1OrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string source = 1;</code>
-   * @return The source.
-   */
-  java.lang.String getSource();
-  /**
-   * <code>string source = 1;</code>
-   * @return The bytes for source.
-   */
-  com.google.protobuf.ByteString
-      getSourceBytes();
-
-  /**
-   * <code>string cluster = 2;</code>
-   * @return The cluster.
-   */
-  java.lang.String getCluster();
-  /**
-   * <code>string cluster = 2;</code>
-   * @return The bytes for cluster.
-   */
-  com.google.protobuf.ByteString
-      getClusterBytes();
-
-  /**
-   * <code>string jchannel_address = 3;</code>
+   * <code>bytes jchannel_address = 1;</code>
    * @return The jchannelAddress.
    */
-  java.lang.String getJchannelAddress();
-  /**
-   * <code>string jchannel_address = 3;</code>
-   * @return The bytes for jchannelAddress.
-   */
-  com.google.protobuf.ByteString
-      getJchannelAddressBytes();
+  com.google.protobuf.ByteString getJchannelAddress();
 
   /**
-   * <code>string target = 4;</code>
+   * <code>bytes target = 2;</code>
    * @return The target.
    */
-  java.lang.String getTarget();
-  /**
-   * <code>string target = 4;</code>
-   * @return The bytes for target.
-   */
-  com.google.protobuf.ByteString
-      getTargetBytes();
+  com.google.protobuf.ByteString getTarget();
 }

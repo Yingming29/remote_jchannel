@@ -11,7 +11,9 @@ import org.jgroups.View;
 import org.jgroups.util.*;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -187,23 +189,28 @@ public class NodeServer {
                                 stateReq.getCluster());
                         lock.lock();
                         try {
-                            /*
-                            // generate the history
-                            ClusterMap cm = (ClusterMap) jchannel.serviceMap.get(stateReq.getCluster());
+
+                            // generate the history from real JChannel
+                            // ClusterMap cm = (ClusterMap) jchannel.serviceMap.get(stateReq.getCluster());
                             // StateRep stateRep = cm.generateState();
+
+
+                            OutputStream out = new ByteArrayOutputStream();
+                            jchannel.getState(out);
+                            ByteArrayOutputStream out2 = (ByteArrayOutputStream) out;
+                            StateRep stateRep = StateRep.newBuilder().setState(ByteString.copyFrom(out2.toByteArray())).build();
                             Response rep = Response.newBuilder()
                                     .setStateRep(stateRep)
                                     .build();
-                            List l = rep.getStateRep().getOneOfHistoryList();
                             // send to this client
                             for (Address uuid : clients.keySet()) {
-                                if (uuid.equals(req.getStateReq().getSource())){
+                                if (uuid.toString().equals(req.getStateReq().getJchannelAddress())){
                                     clients.get(uuid).onNext(rep);
-                                    // System.out.println("rep: " + rep);
+                                    System.out.println("state: " + rep);
                                 }
                             }
-
-                             */
+                        } catch (Exception e){
+                            e.printStackTrace();
                         } finally {
                             lock.unlock();
                         }

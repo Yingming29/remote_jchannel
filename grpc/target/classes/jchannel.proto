@@ -204,28 +204,22 @@ message RepAsk{
   bool survival = 1;
 }
 message StateReq{
-  string source = 1;
-  string cluster = 2;
-  string jchannel_address = 3;
+  string jchannel_address = 1;
+  bytes target = 2;
 }
 
 message StateRep{
-  int32 size = 1;
-  repeated MessageReqRep oneOfHistory = 2;
+  bytes state = 1;
 }
 
 message StateMsg_withTarget_1{
-  string source = 1;
-  string cluster = 2;
-  string jchannel_address = 3;
-  string target = 4;
+  bytes jchannel_address = 1;
+  bytes target = 2;
 }
 
 message StateMsg_withTarget_2{
-  string source = 1;
-  string cluster = 2;
-  string jchannel_address = 3;
+  bytes jchannel_address = 3;
   repeated MessageReqRep oneOfHistory = 4;
-  string target = 5;
+  bytes target = 5;
 }
 
