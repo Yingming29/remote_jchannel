@@ -14,10 +14,10 @@ import java.io.OutputStream;
 import java.util.LinkedList;
 
 public class ReceiverRJ implements Receiver {
-    final LinkedList<MessageReqRep> state;
+    final LinkedList<Message> state;
 
     public ReceiverRJ() {
-        this.state = new LinkedList<MessageReqRep>();
+        this.state = new LinkedList<Message>();
     }
 
     @Override

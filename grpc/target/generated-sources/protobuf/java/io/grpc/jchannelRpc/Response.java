@@ -300,6 +300,34 @@ private static final long serialVersionUID = 0L;
             oneTypeCase_ = 18;
             break;
           }
+          case 154: {
+            io.grpc.jchannelRpc.SetDiscardOwnMsgRep.Builder subBuilder = null;
+            if (oneTypeCase_ == 19) {
+              subBuilder = ((io.grpc.jchannelRpc.SetDiscardOwnMsgRep) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.SetDiscardOwnMsgRep.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.SetDiscardOwnMsgRep) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 19;
+            break;
+          }
+          case 162: {
+            io.grpc.jchannelRpc.GetDiscardOwnMsgRep.Builder subBuilder = null;
+            if (oneTypeCase_ == 20) {
+              subBuilder = ((io.grpc.jchannelRpc.GetDiscardOwnMsgRep) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.GetDiscardOwnMsgRep.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.GetDiscardOwnMsgRep) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 20;
+            break;
+          }
           default: {
             if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -355,6 +383,8 @@ private static final long serialVersionUID = 0L;
     SETSTATSREP(16),
     GETSTATSREP(17),
     DUMPSTATSREP(18),
+    SETDISCARDOWNREP(19),
+    GETDISCARDOWNREP(20),
     ONETYPE_NOT_SET(0);
     private final int value;
     private OneTypeCase(int value) {
@@ -390,6 +420,8 @@ private static final long serialVersionUID = 0L;
         case 16: return SETSTATSREP;
         case 17: return GETSTATSREP;
         case 18: return DUMPSTATSREP;
+        case 19: return SETDISCARDOWNREP;
+        case 20: return GETDISCARDOWNREP;
         case 0: return ONETYPE_NOT_SET;
         default: return null;
       }
@@ -1011,6 +1043,68 @@ private static final long serialVersionUID = 0L;
     return io.grpc.jchannelRpc.DumpStatsRep.getDefaultInstance();
   }
 
+  public static final int SETDISCARDOWNREP_FIELD_NUMBER = 19;
+  /**
+   * <code>.cn.yingming.grpc1.SetDiscardOwnMsgRep setDiscardOwnRep = 19;</code>
+   * @return Whether the setDiscardOwnRep field is set.
+   */
+  @java.lang.Override
+  public boolean hasSetDiscardOwnRep() {
+    return oneTypeCase_ == 19;
+  }
+  /**
+   * <code>.cn.yingming.grpc1.SetDiscardOwnMsgRep setDiscardOwnRep = 19;</code>
+   * @return The setDiscardOwnRep.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.SetDiscardOwnMsgRep getSetDiscardOwnRep() {
+    if (oneTypeCase_ == 19) {
+       return (io.grpc.jchannelRpc.SetDiscardOwnMsgRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.SetDiscardOwnMsgRep.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.SetDiscardOwnMsgRep setDiscardOwnRep = 19;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.SetDiscardOwnMsgRepOrBuilder getSetDiscardOwnRepOrBuilder() {
+    if (oneTypeCase_ == 19) {
+       return (io.grpc.jchannelRpc.SetDiscardOwnMsgRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.SetDiscardOwnMsgRep.getDefaultInstance();
+  }
+
+  public static final int GETDISCARDOWNREP_FIELD_NUMBER = 20;
+  /**
+   * <code>.cn.yingming.grpc1.GetDiscardOwnMsgRep getDiscardOwnRep = 20;</code>
+   * @return Whether the getDiscardOwnRep field is set.
+   */
+  @java.lang.Override
+  public boolean hasGetDiscardOwnRep() {
+    return oneTypeCase_ == 20;
+  }
+  /**
+   * <code>.cn.yingming.grpc1.GetDiscardOwnMsgRep getDiscardOwnRep = 20;</code>
+   * @return The getDiscardOwnRep.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.GetDiscardOwnMsgRep getGetDiscardOwnRep() {
+    if (oneTypeCase_ == 20) {
+       return (io.grpc.jchannelRpc.GetDiscardOwnMsgRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.GetDiscardOwnMsgRep.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.GetDiscardOwnMsgRep getDiscardOwnRep = 20;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.GetDiscardOwnMsgRepOrBuilder getGetDiscardOwnRepOrBuilder() {
+    if (oneTypeCase_ == 20) {
+       return (io.grpc.jchannelRpc.GetDiscardOwnMsgRep) oneType_;
+    }
+    return io.grpc.jchannelRpc.GetDiscardOwnMsgRep.getDefaultInstance();
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -1078,6 +1172,12 @@ private static final long serialVersionUID = 0L;
     }
     if (oneTypeCase_ == 18) {
       output.writeMessage(18, (io.grpc.jchannelRpc.DumpStatsRep) oneType_);
+    }
+    if (oneTypeCase_ == 19) {
+      output.writeMessage(19, (io.grpc.jchannelRpc.SetDiscardOwnMsgRep) oneType_);
+    }
+    if (oneTypeCase_ == 20) {
+      output.writeMessage(20, (io.grpc.jchannelRpc.GetDiscardOwnMsgRep) oneType_);
     }
     unknownFields.writeTo(output);
   }
@@ -1159,6 +1259,14 @@ private static final long serialVersionUID = 0L;
     if (oneTypeCase_ == 18) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(18, (io.grpc.jchannelRpc.DumpStatsRep) oneType_);
+    }
+    if (oneTypeCase_ == 19) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(19, (io.grpc.jchannelRpc.SetDiscardOwnMsgRep) oneType_);
+    }
+    if (oneTypeCase_ == 20) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(20, (io.grpc.jchannelRpc.GetDiscardOwnMsgRep) oneType_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -1249,6 +1357,14 @@ private static final long serialVersionUID = 0L;
         if (!getDumpStatsRep()
             .equals(other.getDumpStatsRep())) return false;
         break;
+      case 19:
+        if (!getSetDiscardOwnRep()
+            .equals(other.getSetDiscardOwnRep())) return false;
+        break;
+      case 20:
+        if (!getGetDiscardOwnRep()
+            .equals(other.getGetDiscardOwnRep())) return false;
+        break;
       case 0:
       default:
     }
@@ -1335,6 +1451,14 @@ private static final long serialVersionUID = 0L;
       case 18:
         hash = (37 * hash) + DUMPSTATSREP_FIELD_NUMBER;
         hash = (53 * hash) + getDumpStatsRep().hashCode();
+        break;
+      case 19:
+        hash = (37 * hash) + SETDISCARDOWNREP_FIELD_NUMBER;
+        hash = (53 * hash) + getSetDiscardOwnRep().hashCode();
+        break;
+      case 20:
+        hash = (37 * hash) + GETDISCARDOWNREP_FIELD_NUMBER;
+        hash = (53 * hash) + getGetDiscardOwnRep().hashCode();
         break;
       case 0:
       default:
@@ -1626,6 +1750,20 @@ private static final long serialVersionUID = 0L;
           result.oneType_ = dumpStatsRepBuilder_.build();
         }
       }
+      if (oneTypeCase_ == 19) {
+        if (setDiscardOwnRepBuilder_ == null) {
+          result.oneType_ = oneType_;
+        } else {
+          result.oneType_ = setDiscardOwnRepBuilder_.build();
+        }
+      }
+      if (oneTypeCase_ == 20) {
+        if (getDiscardOwnRepBuilder_ == null) {
+          result.oneType_ = oneType_;
+        } else {
+          result.oneType_ = getDiscardOwnRepBuilder_.build();
+        }
+      }
       result.oneTypeCase_ = oneTypeCase_;
       onBuilt();
       return result;
@@ -1746,6 +1884,14 @@ private static final long serialVersionUID = 0L;
         }
         case DUMPSTATSREP: {
           mergeDumpStatsRep(other.getDumpStatsRep());
+          break;
+        }
+        case SETDISCARDOWNREP: {
+          mergeSetDiscardOwnRep(other.getSetDiscardOwnRep());
+          break;
+        }
+        case GETDISCARDOWNREP: {
+          mergeGetDiscardOwnRep(other.getGetDiscardOwnRep());
           break;
         }
         case ONETYPE_NOT_SET: {
@@ -4476,6 +4622,288 @@ private static final long serialVersionUID = 0L;
       oneTypeCase_ = 18;
       onChanged();;
       return dumpStatsRepBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.SetDiscardOwnMsgRep, io.grpc.jchannelRpc.SetDiscardOwnMsgRep.Builder, io.grpc.jchannelRpc.SetDiscardOwnMsgRepOrBuilder> setDiscardOwnRepBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.SetDiscardOwnMsgRep setDiscardOwnRep = 19;</code>
+     * @return Whether the setDiscardOwnRep field is set.
+     */
+    @java.lang.Override
+    public boolean hasSetDiscardOwnRep() {
+      return oneTypeCase_ == 19;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.SetDiscardOwnMsgRep setDiscardOwnRep = 19;</code>
+     * @return The setDiscardOwnRep.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.SetDiscardOwnMsgRep getSetDiscardOwnRep() {
+      if (setDiscardOwnRepBuilder_ == null) {
+        if (oneTypeCase_ == 19) {
+          return (io.grpc.jchannelRpc.SetDiscardOwnMsgRep) oneType_;
+        }
+        return io.grpc.jchannelRpc.SetDiscardOwnMsgRep.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 19) {
+          return setDiscardOwnRepBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.SetDiscardOwnMsgRep.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.SetDiscardOwnMsgRep setDiscardOwnRep = 19;</code>
+     */
+    public Builder setSetDiscardOwnRep(io.grpc.jchannelRpc.SetDiscardOwnMsgRep value) {
+      if (setDiscardOwnRepBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        setDiscardOwnRepBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 19;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.SetDiscardOwnMsgRep setDiscardOwnRep = 19;</code>
+     */
+    public Builder setSetDiscardOwnRep(
+        io.grpc.jchannelRpc.SetDiscardOwnMsgRep.Builder builderForValue) {
+      if (setDiscardOwnRepBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        setDiscardOwnRepBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 19;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.SetDiscardOwnMsgRep setDiscardOwnRep = 19;</code>
+     */
+    public Builder mergeSetDiscardOwnRep(io.grpc.jchannelRpc.SetDiscardOwnMsgRep value) {
+      if (setDiscardOwnRepBuilder_ == null) {
+        if (oneTypeCase_ == 19 &&
+            oneType_ != io.grpc.jchannelRpc.SetDiscardOwnMsgRep.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.SetDiscardOwnMsgRep.newBuilder((io.grpc.jchannelRpc.SetDiscardOwnMsgRep) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 19) {
+          setDiscardOwnRepBuilder_.mergeFrom(value);
+        }
+        setDiscardOwnRepBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 19;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.SetDiscardOwnMsgRep setDiscardOwnRep = 19;</code>
+     */
+    public Builder clearSetDiscardOwnRep() {
+      if (setDiscardOwnRepBuilder_ == null) {
+        if (oneTypeCase_ == 19) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 19) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        setDiscardOwnRepBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.SetDiscardOwnMsgRep setDiscardOwnRep = 19;</code>
+     */
+    public io.grpc.jchannelRpc.SetDiscardOwnMsgRep.Builder getSetDiscardOwnRepBuilder() {
+      return getSetDiscardOwnRepFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.SetDiscardOwnMsgRep setDiscardOwnRep = 19;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.SetDiscardOwnMsgRepOrBuilder getSetDiscardOwnRepOrBuilder() {
+      if ((oneTypeCase_ == 19) && (setDiscardOwnRepBuilder_ != null)) {
+        return setDiscardOwnRepBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 19) {
+          return (io.grpc.jchannelRpc.SetDiscardOwnMsgRep) oneType_;
+        }
+        return io.grpc.jchannelRpc.SetDiscardOwnMsgRep.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.SetDiscardOwnMsgRep setDiscardOwnRep = 19;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.SetDiscardOwnMsgRep, io.grpc.jchannelRpc.SetDiscardOwnMsgRep.Builder, io.grpc.jchannelRpc.SetDiscardOwnMsgRepOrBuilder> 
+        getSetDiscardOwnRepFieldBuilder() {
+      if (setDiscardOwnRepBuilder_ == null) {
+        if (!(oneTypeCase_ == 19)) {
+          oneType_ = io.grpc.jchannelRpc.SetDiscardOwnMsgRep.getDefaultInstance();
+        }
+        setDiscardOwnRepBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.SetDiscardOwnMsgRep, io.grpc.jchannelRpc.SetDiscardOwnMsgRep.Builder, io.grpc.jchannelRpc.SetDiscardOwnMsgRepOrBuilder>(
+                (io.grpc.jchannelRpc.SetDiscardOwnMsgRep) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 19;
+      onChanged();;
+      return setDiscardOwnRepBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.GetDiscardOwnMsgRep, io.grpc.jchannelRpc.GetDiscardOwnMsgRep.Builder, io.grpc.jchannelRpc.GetDiscardOwnMsgRepOrBuilder> getDiscardOwnRepBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.GetDiscardOwnMsgRep getDiscardOwnRep = 20;</code>
+     * @return Whether the getDiscardOwnRep field is set.
+     */
+    @java.lang.Override
+    public boolean hasGetDiscardOwnRep() {
+      return oneTypeCase_ == 20;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetDiscardOwnMsgRep getDiscardOwnRep = 20;</code>
+     * @return The getDiscardOwnRep.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.GetDiscardOwnMsgRep getGetDiscardOwnRep() {
+      if (getDiscardOwnRepBuilder_ == null) {
+        if (oneTypeCase_ == 20) {
+          return (io.grpc.jchannelRpc.GetDiscardOwnMsgRep) oneType_;
+        }
+        return io.grpc.jchannelRpc.GetDiscardOwnMsgRep.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 20) {
+          return getDiscardOwnRepBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.GetDiscardOwnMsgRep.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetDiscardOwnMsgRep getDiscardOwnRep = 20;</code>
+     */
+    public Builder setGetDiscardOwnRep(io.grpc.jchannelRpc.GetDiscardOwnMsgRep value) {
+      if (getDiscardOwnRepBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        getDiscardOwnRepBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 20;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetDiscardOwnMsgRep getDiscardOwnRep = 20;</code>
+     */
+    public Builder setGetDiscardOwnRep(
+        io.grpc.jchannelRpc.GetDiscardOwnMsgRep.Builder builderForValue) {
+      if (getDiscardOwnRepBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        getDiscardOwnRepBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 20;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetDiscardOwnMsgRep getDiscardOwnRep = 20;</code>
+     */
+    public Builder mergeGetDiscardOwnRep(io.grpc.jchannelRpc.GetDiscardOwnMsgRep value) {
+      if (getDiscardOwnRepBuilder_ == null) {
+        if (oneTypeCase_ == 20 &&
+            oneType_ != io.grpc.jchannelRpc.GetDiscardOwnMsgRep.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.GetDiscardOwnMsgRep.newBuilder((io.grpc.jchannelRpc.GetDiscardOwnMsgRep) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 20) {
+          getDiscardOwnRepBuilder_.mergeFrom(value);
+        }
+        getDiscardOwnRepBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 20;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetDiscardOwnMsgRep getDiscardOwnRep = 20;</code>
+     */
+    public Builder clearGetDiscardOwnRep() {
+      if (getDiscardOwnRepBuilder_ == null) {
+        if (oneTypeCase_ == 20) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 20) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        getDiscardOwnRepBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetDiscardOwnMsgRep getDiscardOwnRep = 20;</code>
+     */
+    public io.grpc.jchannelRpc.GetDiscardOwnMsgRep.Builder getGetDiscardOwnRepBuilder() {
+      return getGetDiscardOwnRepFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetDiscardOwnMsgRep getDiscardOwnRep = 20;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.GetDiscardOwnMsgRepOrBuilder getGetDiscardOwnRepOrBuilder() {
+      if ((oneTypeCase_ == 20) && (getDiscardOwnRepBuilder_ != null)) {
+        return getDiscardOwnRepBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 20) {
+          return (io.grpc.jchannelRpc.GetDiscardOwnMsgRep) oneType_;
+        }
+        return io.grpc.jchannelRpc.GetDiscardOwnMsgRep.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetDiscardOwnMsgRep getDiscardOwnRep = 20;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.GetDiscardOwnMsgRep, io.grpc.jchannelRpc.GetDiscardOwnMsgRep.Builder, io.grpc.jchannelRpc.GetDiscardOwnMsgRepOrBuilder> 
+        getGetDiscardOwnRepFieldBuilder() {
+      if (getDiscardOwnRepBuilder_ == null) {
+        if (!(oneTypeCase_ == 20)) {
+          oneType_ = io.grpc.jchannelRpc.GetDiscardOwnMsgRep.getDefaultInstance();
+        }
+        getDiscardOwnRepBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.GetDiscardOwnMsgRep, io.grpc.jchannelRpc.GetDiscardOwnMsgRep.Builder, io.grpc.jchannelRpc.GetDiscardOwnMsgRepOrBuilder>(
+                (io.grpc.jchannelRpc.GetDiscardOwnMsgRep) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 20;
+      onChanged();;
+      return getDiscardOwnRepBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

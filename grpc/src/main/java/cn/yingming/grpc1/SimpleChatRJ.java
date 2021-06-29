@@ -82,6 +82,15 @@ public class SimpleChatRJ {
                         }
                         System.out.println("dumpStats(Protocol_name, attrs) for real JChannel (JChannel Server):" + remoteJChannel.dumpStats(strs[1], attr_list));
                     }
+                } else if(line.startsWith("getDiscardOwnMessage()")){
+                    System.out.println("getDiscardOwnMessage() for real JChannel Address (JChannel Server):" + remoteJChannel.getDiscardOwnMessages());
+                } else if(line.startsWith("setDiscardOwnMessage()")){
+                    String[] strs = line.split(" ");
+                    if (strs.equals("true")){
+                        System.out.println("setDiscardOwnMessage(true) for real JChannel Address (JChannel Server):" + remoteJChannel.setDiscardOwnMessages(true));
+                    } else {
+                        System.out.println("setDiscardOwnMessage(false) for real JChannel Address (JChannel Server):" + remoteJChannel.setDiscardOwnMessages(false));
+                    }
                 } else if (line.startsWith("unicast")) {
                     // example: unicast content server/client 1
                     // unicast content client 1

@@ -27,7 +27,8 @@ message Request{
     SetStatsReq setStatsReq = 12;
     GetStatsReq getStatReq = 13;
     DumpStatsReq dumpStatsReq = 14;
-    DiscardOwnMsgReq discardOwnMsgReq = 15;
+    SetDiscardOwnMsgReq setDiscardOwnMsgReq = 15;
+    GetDiscardOwnMsgReq getDiscardOwnMsgReq = 16;
   }
 }
 message Response{
@@ -50,14 +51,21 @@ message Response{
     SetStatsRep setStatsRep = 16;
     GetStatsRep getStatsRep = 17;
     DumpStatsRep dumpStatsRep = 18;
-    DiscardOwnMsgRep discardOwnRep = 19;
+    SetDiscardOwnMsgRep setDiscardOwnRep = 19;
+    GetDiscardOwnMsgRep getDiscardOwnRep = 20;
   }
 }
-message DiscardOwnMsgReq{
+message SetDiscardOwnMsgReq{
   string jchannal_address = 1;
   bool discard = 2;
 }
-message DiscardOwnMsgRep{
+message SetDiscardOwnMsgRep{
+  bool discard = 1;
+}
+message GetDiscardOwnMsgReq{
+  string jchannel_address = 1;
+}
+message GetDiscardOwnMsgRep{
   bool discard = 1;
 }
 message DumpStatsReq{

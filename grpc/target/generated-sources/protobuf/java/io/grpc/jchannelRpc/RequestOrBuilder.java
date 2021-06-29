@@ -217,5 +217,35 @@ public interface RequestOrBuilder extends
    */
   io.grpc.jchannelRpc.DumpStatsReqOrBuilder getDumpStatsReqOrBuilder();
 
+  /**
+   * <code>.cn.yingming.grpc1.SetDiscardOwnMsgReq setDiscardOwnMsgReq = 15;</code>
+   * @return Whether the setDiscardOwnMsgReq field is set.
+   */
+  boolean hasSetDiscardOwnMsgReq();
+  /**
+   * <code>.cn.yingming.grpc1.SetDiscardOwnMsgReq setDiscardOwnMsgReq = 15;</code>
+   * @return The setDiscardOwnMsgReq.
+   */
+  io.grpc.jchannelRpc.SetDiscardOwnMsgReq getSetDiscardOwnMsgReq();
+  /**
+   * <code>.cn.yingming.grpc1.SetDiscardOwnMsgReq setDiscardOwnMsgReq = 15;</code>
+   */
+  io.grpc.jchannelRpc.SetDiscardOwnMsgReqOrBuilder getSetDiscardOwnMsgReqOrBuilder();
+
+  /**
+   * <code>.cn.yingming.grpc1.GetDiscardOwnMsgReq getDiscardOwnMsgReq = 16;</code>
+   * @return Whether the getDiscardOwnMsgReq field is set.
+   */
+  boolean hasGetDiscardOwnMsgReq();
+  /**
+   * <code>.cn.yingming.grpc1.GetDiscardOwnMsgReq getDiscardOwnMsgReq = 16;</code>
+   * @return The getDiscardOwnMsgReq.
+   */
+  io.grpc.jchannelRpc.GetDiscardOwnMsgReq getGetDiscardOwnMsgReq();
+  /**
+   * <code>.cn.yingming.grpc1.GetDiscardOwnMsgReq getDiscardOwnMsgReq = 16;</code>
+   */
+  io.grpc.jchannelRpc.GetDiscardOwnMsgReqOrBuilder getGetDiscardOwnMsgReqOrBuilder();
+
   public io.grpc.jchannelRpc.Request.OneTypeCase getOneTypeCase();
 }

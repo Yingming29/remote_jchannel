@@ -60,6 +60,9 @@ public class NodeJChannel implements Receiver{
         } else if (msg.getObject() instanceof UpdateRepBetweenNodes) {
             System.out.println("Receive the response from the first JChannel-server for updating the previous information of clients.");
             receiveProtobufMsg(msg);
+        } else if (msg.getObject() instanceof MessageReqRep){
+            System.out.println("Receive a MessageReqRep from other JChannel-server for sending Message.");
+
         } else if (msg.getObject() instanceof ChannelMsg){
             receiveChannelMsg(msg);
         } else if (msg.getObject() instanceof Request){

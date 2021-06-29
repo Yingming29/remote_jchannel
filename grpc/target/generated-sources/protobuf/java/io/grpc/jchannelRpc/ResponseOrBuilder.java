@@ -325,5 +325,35 @@ public interface ResponseOrBuilder extends
    */
   io.grpc.jchannelRpc.DumpStatsRepOrBuilder getDumpStatsRepOrBuilder();
 
+  /**
+   * <code>.cn.yingming.grpc1.SetDiscardOwnMsgRep setDiscardOwnRep = 19;</code>
+   * @return Whether the setDiscardOwnRep field is set.
+   */
+  boolean hasSetDiscardOwnRep();
+  /**
+   * <code>.cn.yingming.grpc1.SetDiscardOwnMsgRep setDiscardOwnRep = 19;</code>
+   * @return The setDiscardOwnRep.
+   */
+  io.grpc.jchannelRpc.SetDiscardOwnMsgRep getSetDiscardOwnRep();
+  /**
+   * <code>.cn.yingming.grpc1.SetDiscardOwnMsgRep setDiscardOwnRep = 19;</code>
+   */
+  io.grpc.jchannelRpc.SetDiscardOwnMsgRepOrBuilder getSetDiscardOwnRepOrBuilder();
+
+  /**
+   * <code>.cn.yingming.grpc1.GetDiscardOwnMsgRep getDiscardOwnRep = 20;</code>
+   * @return Whether the getDiscardOwnRep field is set.
+   */
+  boolean hasGetDiscardOwnRep();
+  /**
+   * <code>.cn.yingming.grpc1.GetDiscardOwnMsgRep getDiscardOwnRep = 20;</code>
+   * @return The getDiscardOwnRep.
+   */
+  io.grpc.jchannelRpc.GetDiscardOwnMsgRep getGetDiscardOwnRep();
+  /**
+   * <code>.cn.yingming.grpc1.GetDiscardOwnMsgRep getDiscardOwnRep = 20;</code>
+   */
+  io.grpc.jchannelRpc.GetDiscardOwnMsgRepOrBuilder getGetDiscardOwnRepOrBuilder();
+
   public io.grpc.jchannelRpc.Response.OneTypeCase getOneTypeCase();
 }

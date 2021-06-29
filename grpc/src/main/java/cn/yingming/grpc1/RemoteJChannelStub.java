@@ -69,6 +69,19 @@ public class RemoteJChannelStub {
                         .setJchannelAddress(this.client.jchannel_address.toString())
                         .build();
                 return Request.newBuilder().setGetAddressReq(getAddressReq).build();
+            } else if(input.equals("getDiscardOwnMessage()")) {
+                GetDiscardOwnMsgReq discardMsgReq = GetDiscardOwnMsgReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString()).build();
+                return Request.newBuilder().setGetDiscardOwnMsgReq(discardMsgReq).build();
+            } else if(input.startsWith("setDiscardOwnMessage()")) {
+                String[] strs = input.split(" ");
+                boolean b = false;
+                if (strs[1].equals("true")){
+                    b = true;
+                }
+                SetDiscardOwnMsgReq discardMsgReq = SetDiscardOwnMsgReq.newBuilder()
+                        .setDiscard(b).setJchannalAddress(this.client.jchannel_address.toString()).build();
+                System.out.println(discardMsgReq);
+                return Request.newBuilder().setSetDiscardOwnMsgReq(discardMsgReq).build();
             } else if(input.equals("getStats()")){
                 GetStatsReq getStatsReq = GetStatsReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString()).build();
                 return Request.newBuilder().setGetStatReq(getStatsReq).build();
@@ -218,6 +231,20 @@ public class RemoteJChannelStub {
             GetPropertyRep rep = response.getGetPropertyRep();
             System.out.println("getProperties() response:" + rep);
             this.client.property = rep.getProperties();
+            synchronized (this.client.obj) {
+                this.client.obj.notify();
+            }
+        } else if(response.hasGetDiscardOwnRep()){
+            GetDiscardOwnMsgRep rep = response.getGetDiscardOwnRep();
+            System.out.println("getDiscardOwnMessage() response:" + rep);
+            this.client.discard_own_messages = rep.getDiscard();
+            synchronized (this.client.obj) {
+                this.client.obj.notify();
+            }
+        } else if(response.hasSetDiscardOwnRep()){
+            SetDiscardOwnMsgRep rep = response.getSetDiscardOwnRep();
+            System.out.println("setDiscardOwnMessage() response:" + rep);
+            this.client.discard_own_messages = rep.getDiscard();
             synchronized (this.client.obj) {
                 this.client.obj.notify();
             }

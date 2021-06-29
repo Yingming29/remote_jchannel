@@ -279,12 +279,35 @@ public class RemoteJChannel extends JChannel {
     }
     @Override
     public boolean getDiscardOwnMessages() {
+        if (!isWork.get()){
+            System.out.println("The RemoteJChannel client does not start work.");
+            return false;
+        }
+        this.clientStub.add_save("getDiscardOwnMessage()");
+        synchronized (obj){
+            try{
+                obj.wait(5000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
         return this.discard_own_messages;
     }
 
     @Override
     public JChannel setDiscardOwnMessages(boolean flag) {
-        this.discard_own_messages = flag;
+        if (!isWork.get()){
+            System.out.println("The RemoteJChannel client does not start work.");
+            return this;
+        }
+        this.clientStub.add_save("setDiscardOwnMessage() " + flag);
+        synchronized (obj){
+            try{
+                obj.wait(5000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
         return this;
     }
 

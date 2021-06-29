@@ -1,6 +1,7 @@
 package cn.yingming.grpc1;
 
 import com.google.protobuf.ByteString;
+import io.grpc.jchannelRpc.SetDiscardOwnMsgReq;
 import io.grpc.jchannelRpc.UpdateNameCacheRep;
 import org.jgroups.*;
 import org.jgroups.stack.Protocol;
@@ -150,7 +151,13 @@ public class Test {
         }
 
 
+
+
         HashMap mp = new HashMap<String, Object>();
+
+        SetDiscardOwnMsgReq discardMsgReq = SetDiscardOwnMsgReq.newBuilder()
+                .setDiscard(false).setJchannalAddress("address String").build();
+        System.out.println(discardMsgReq);
 
     }
 }
