@@ -44,6 +44,7 @@ public class RemoteJChannel extends JChannel {
     public String property;
     public Map<String, Map<String, Object>> statsMap;
     public String state;
+    public boolean isState;
 
     public RemoteJChannel(String address) throws Exception{
         this.address = address;
@@ -394,39 +395,71 @@ public class RemoteJChannel extends JChannel {
     }
     @Override
     public boolean isOpen() {
-        if(this.clientStub != null && this.clientStub.channel != null){
-            if (!this.clientStub.channel.isTerminated() && !this.clientStub.channel.isShutdown()){
-                return true;
-            }
-        } else{
-            throw new IllegalStateException("The stub or channel of stub does not work.");
+        if (!isWork.get() && !down.get()){
+            System.out.println("The RemoteJChannel client does not start work. Return null");
+            return false;
         }
-        return false;
+        this.clientStub.add_save("isOpen()");
+        synchronized (obj){
+            try{
+                obj.wait(5000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return this.isState;
     }
 
     @Override
     // change
     public boolean isConnected() {
-        throw new UnsupportedOperationException("RemoteJChannel does not have CONNECTED state." +
-                "Please use isOpen() or getState().");
+        if (!isWork.get() && !down.get()){
+            System.out.println("The RemoteJChannel client does not start work. Return null");
+            return false;
+        }
+        this.clientStub.add_save("isConnected()");
+        synchronized (obj){
+            try{
+                obj.wait(5000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return this.isState;
     }
 
     @Override
     public boolean isConnecting() {
-        throw new UnsupportedOperationException("RemoteJChannel does not have CONNECTING state." +
-                "Please use isOpen(), isClose() or getState().");
+        if (!isWork.get() && !down.get()){
+            System.out.println("The RemoteJChannel client does not start work. Return null");
+            return false;
+        }
+        this.clientStub.add_save("isConnecting()");
+        synchronized (obj){
+            try{
+                obj.wait(5000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return this.isState;
     }
 
     @Override
     public boolean isClosed() {
-        if(this.clientStub != null && this.clientStub.channel != null){
-            if (this.clientStub.channel.isTerminated() || this.clientStub.channel.isShutdown()){
-                return true;
-            }
-        } else{
-            throw new IllegalStateException("The stub or channel of stub does not work.");
+        if (!isWork.get() && !down.get()){
+            System.out.println("The RemoteJChannel client does not start work. Return null");
+            return false;
         }
-        return false;
+        this.clientStub.add_save("isClosed()");
+        synchronized (obj){
+            try{
+                obj.wait(5000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return this.isState;
     }
 
     public static String getVersion() {

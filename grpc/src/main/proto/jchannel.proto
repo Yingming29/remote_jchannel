@@ -29,6 +29,8 @@ message Request{
     DumpStatsReq dumpStatsReq = 14;
     SetDiscardOwnMsgReq setDiscardOwnMsgReq = 15;
     GetDiscardOwnMsgReq getDiscardOwnMsgReq = 16;
+    GetStateReq getStateReq = 17;
+    IsStateReq isStateReq = 18;
   }
 }
 message Response{
@@ -53,7 +55,16 @@ message Response{
     DumpStatsRep dumpStatsRep = 18;
     SetDiscardOwnMsgRep setDiscardOwnRep = 19;
     GetDiscardOwnMsgRep getDiscardOwnRep = 20;
+    GetStateRep getStateRep = 21;
+    IsStateRep isStateRep = 22;
   }
+}
+message IsStateReq{
+  string jchannel_address = 1;
+  string type = 2;
+}
+message IsStateRep{
+  bool result = 1;
 }
 message GetStateReq{
   string jchannel_address = 1;

@@ -272,6 +272,34 @@ private static final long serialVersionUID = 0L;
             oneTypeCase_ = 16;
             break;
           }
+          case 138: {
+            io.grpc.jchannelRpc.GetStateReq.Builder subBuilder = null;
+            if (oneTypeCase_ == 17) {
+              subBuilder = ((io.grpc.jchannelRpc.GetStateReq) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.GetStateReq.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.GetStateReq) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 17;
+            break;
+          }
+          case 146: {
+            io.grpc.jchannelRpc.IsStateReq.Builder subBuilder = null;
+            if (oneTypeCase_ == 18) {
+              subBuilder = ((io.grpc.jchannelRpc.IsStateReq) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.IsStateReq.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.IsStateReq) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 18;
+            break;
+          }
           default: {
             if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -325,6 +353,8 @@ private static final long serialVersionUID = 0L;
     DUMPSTATSREQ(14),
     SETDISCARDOWNMSGREQ(15),
     GETDISCARDOWNMSGREQ(16),
+    GETSTATEREQ(17),
+    ISSTATEREQ(18),
     ONETYPE_NOT_SET(0);
     private final int value;
     private OneTypeCase(int value) {
@@ -358,6 +388,8 @@ private static final long serialVersionUID = 0L;
         case 14: return DUMPSTATSREQ;
         case 15: return SETDISCARDOWNMSGREQ;
         case 16: return GETDISCARDOWNMSGREQ;
+        case 17: return GETSTATEREQ;
+        case 18: return ISSTATEREQ;
         case 0: return ONETYPE_NOT_SET;
         default: return null;
       }
@@ -468,6 +500,9 @@ private static final long serialVersionUID = 0L;
 
   public static final int STATEREQ_FIELD_NUMBER = 4;
   /**
+   * <pre>
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.StateReq stateReq = 4;</code>
    * @return Whether the stateReq field is set.
    */
@@ -476,6 +511,9 @@ private static final long serialVersionUID = 0L;
     return oneTypeCase_ == 4;
   }
   /**
+   * <pre>
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.StateReq stateReq = 4;</code>
    * @return The stateReq.
    */
@@ -487,6 +525,9 @@ private static final long serialVersionUID = 0L;
     return io.grpc.jchannelRpc.StateReq.getDefaultInstance();
   }
   /**
+   * <pre>
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.StateReq stateReq = 4;</code>
    */
   @java.lang.Override
@@ -499,6 +540,9 @@ private static final long serialVersionUID = 0L;
 
   public static final int STATEMSG1_FIELD_NUMBER = 5;
   /**
+   * <pre>
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 5;</code>
    * @return Whether the stateMsg1 field is set.
    */
@@ -507,6 +551,9 @@ private static final long serialVersionUID = 0L;
     return oneTypeCase_ == 5;
   }
   /**
+   * <pre>
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 5;</code>
    * @return The stateMsg1.
    */
@@ -518,6 +565,9 @@ private static final long serialVersionUID = 0L;
     return io.grpc.jchannelRpc.StateMsg_withTarget_1.getDefaultInstance();
   }
   /**
+   * <pre>
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 5;</code>
    */
   @java.lang.Override
@@ -530,6 +580,9 @@ private static final long serialVersionUID = 0L;
 
   public static final int STATEMSG2_FIELD_NUMBER = 6;
   /**
+   * <pre>
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 6;</code>
    * @return Whether the stateMsg2 field is set.
    */
@@ -538,6 +591,9 @@ private static final long serialVersionUID = 0L;
     return oneTypeCase_ == 6;
   }
   /**
+   * <pre>
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 6;</code>
    * @return The stateMsg2.
    */
@@ -549,6 +605,9 @@ private static final long serialVersionUID = 0L;
     return io.grpc.jchannelRpc.StateMsg_withTarget_2.getDefaultInstance();
   }
   /**
+   * <pre>
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 6;</code>
    */
   @java.lang.Override
@@ -869,6 +928,68 @@ private static final long serialVersionUID = 0L;
     return io.grpc.jchannelRpc.GetDiscardOwnMsgReq.getDefaultInstance();
   }
 
+  public static final int GETSTATEREQ_FIELD_NUMBER = 17;
+  /**
+   * <code>.cn.yingming.grpc1.GetStateReq getStateReq = 17;</code>
+   * @return Whether the getStateReq field is set.
+   */
+  @java.lang.Override
+  public boolean hasGetStateReq() {
+    return oneTypeCase_ == 17;
+  }
+  /**
+   * <code>.cn.yingming.grpc1.GetStateReq getStateReq = 17;</code>
+   * @return The getStateReq.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.GetStateReq getGetStateReq() {
+    if (oneTypeCase_ == 17) {
+       return (io.grpc.jchannelRpc.GetStateReq) oneType_;
+    }
+    return io.grpc.jchannelRpc.GetStateReq.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.GetStateReq getStateReq = 17;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.GetStateReqOrBuilder getGetStateReqOrBuilder() {
+    if (oneTypeCase_ == 17) {
+       return (io.grpc.jchannelRpc.GetStateReq) oneType_;
+    }
+    return io.grpc.jchannelRpc.GetStateReq.getDefaultInstance();
+  }
+
+  public static final int ISSTATEREQ_FIELD_NUMBER = 18;
+  /**
+   * <code>.cn.yingming.grpc1.IsStateReq isStateReq = 18;</code>
+   * @return Whether the isStateReq field is set.
+   */
+  @java.lang.Override
+  public boolean hasIsStateReq() {
+    return oneTypeCase_ == 18;
+  }
+  /**
+   * <code>.cn.yingming.grpc1.IsStateReq isStateReq = 18;</code>
+   * @return The isStateReq.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.IsStateReq getIsStateReq() {
+    if (oneTypeCase_ == 18) {
+       return (io.grpc.jchannelRpc.IsStateReq) oneType_;
+    }
+    return io.grpc.jchannelRpc.IsStateReq.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.IsStateReq isStateReq = 18;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.IsStateReqOrBuilder getIsStateReqOrBuilder() {
+    if (oneTypeCase_ == 18) {
+       return (io.grpc.jchannelRpc.IsStateReq) oneType_;
+    }
+    return io.grpc.jchannelRpc.IsStateReq.getDefaultInstance();
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -930,6 +1051,12 @@ private static final long serialVersionUID = 0L;
     }
     if (oneTypeCase_ == 16) {
       output.writeMessage(16, (io.grpc.jchannelRpc.GetDiscardOwnMsgReq) oneType_);
+    }
+    if (oneTypeCase_ == 17) {
+      output.writeMessage(17, (io.grpc.jchannelRpc.GetStateReq) oneType_);
+    }
+    if (oneTypeCase_ == 18) {
+      output.writeMessage(18, (io.grpc.jchannelRpc.IsStateReq) oneType_);
     }
     unknownFields.writeTo(output);
   }
@@ -1003,6 +1130,14 @@ private static final long serialVersionUID = 0L;
     if (oneTypeCase_ == 16) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(16, (io.grpc.jchannelRpc.GetDiscardOwnMsgReq) oneType_);
+    }
+    if (oneTypeCase_ == 17) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(17, (io.grpc.jchannelRpc.GetStateReq) oneType_);
+    }
+    if (oneTypeCase_ == 18) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(18, (io.grpc.jchannelRpc.IsStateReq) oneType_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -1085,6 +1220,14 @@ private static final long serialVersionUID = 0L;
         if (!getGetDiscardOwnMsgReq()
             .equals(other.getGetDiscardOwnMsgReq())) return false;
         break;
+      case 17:
+        if (!getGetStateReq()
+            .equals(other.getGetStateReq())) return false;
+        break;
+      case 18:
+        if (!getIsStateReq()
+            .equals(other.getIsStateReq())) return false;
+        break;
       case 0:
       default:
     }
@@ -1163,6 +1306,14 @@ private static final long serialVersionUID = 0L;
       case 16:
         hash = (37 * hash) + GETDISCARDOWNMSGREQ_FIELD_NUMBER;
         hash = (53 * hash) + getGetDiscardOwnMsgReq().hashCode();
+        break;
+      case 17:
+        hash = (37 * hash) + GETSTATEREQ_FIELD_NUMBER;
+        hash = (53 * hash) + getGetStateReq().hashCode();
+        break;
+      case 18:
+        hash = (37 * hash) + ISSTATEREQ_FIELD_NUMBER;
+        hash = (53 * hash) + getIsStateReq().hashCode();
         break;
       case 0:
       default:
@@ -1440,6 +1591,20 @@ private static final long serialVersionUID = 0L;
           result.oneType_ = getDiscardOwnMsgReqBuilder_.build();
         }
       }
+      if (oneTypeCase_ == 17) {
+        if (getStateReqBuilder_ == null) {
+          result.oneType_ = oneType_;
+        } else {
+          result.oneType_ = getStateReqBuilder_.build();
+        }
+      }
+      if (oneTypeCase_ == 18) {
+        if (isStateReqBuilder_ == null) {
+          result.oneType_ = oneType_;
+        } else {
+          result.oneType_ = isStateReqBuilder_.build();
+        }
+      }
       result.oneTypeCase_ = oneTypeCase_;
       onBuilt();
       return result;
@@ -1552,6 +1717,14 @@ private static final long serialVersionUID = 0L;
         }
         case GETDISCARDOWNMSGREQ: {
           mergeGetDiscardOwnMsgReq(other.getGetDiscardOwnMsgReq());
+          break;
+        }
+        case GETSTATEREQ: {
+          mergeGetStateReq(other.getGetStateReq());
+          break;
+        }
+        case ISSTATEREQ: {
+          mergeIsStateReq(other.getIsStateReq());
           break;
         }
         case ONETYPE_NOT_SET: {
@@ -2028,6 +2201,9 @@ private static final long serialVersionUID = 0L;
     private com.google.protobuf.SingleFieldBuilderV3<
         io.grpc.jchannelRpc.StateReq, io.grpc.jchannelRpc.StateReq.Builder, io.grpc.jchannelRpc.StateReqOrBuilder> stateReqBuilder_;
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateReq stateReq = 4;</code>
      * @return Whether the stateReq field is set.
      */
@@ -2036,6 +2212,9 @@ private static final long serialVersionUID = 0L;
       return oneTypeCase_ == 4;
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateReq stateReq = 4;</code>
      * @return The stateReq.
      */
@@ -2054,6 +2233,9 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateReq stateReq = 4;</code>
      */
     public Builder setStateReq(io.grpc.jchannelRpc.StateReq value) {
@@ -2070,6 +2252,9 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateReq stateReq = 4;</code>
      */
     public Builder setStateReq(
@@ -2084,6 +2269,9 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateReq stateReq = 4;</code>
      */
     public Builder mergeStateReq(io.grpc.jchannelRpc.StateReq value) {
@@ -2106,6 +2294,9 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateReq stateReq = 4;</code>
      */
     public Builder clearStateReq() {
@@ -2125,12 +2316,18 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateReq stateReq = 4;</code>
      */
     public io.grpc.jchannelRpc.StateReq.Builder getStateReqBuilder() {
       return getStateReqFieldBuilder().getBuilder();
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateReq stateReq = 4;</code>
      */
     @java.lang.Override
@@ -2145,6 +2342,9 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateReq stateReq = 4;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
@@ -2169,6 +2369,9 @@ private static final long serialVersionUID = 0L;
     private com.google.protobuf.SingleFieldBuilderV3<
         io.grpc.jchannelRpc.StateMsg_withTarget_1, io.grpc.jchannelRpc.StateMsg_withTarget_1.Builder, io.grpc.jchannelRpc.StateMsg_withTarget_1OrBuilder> stateMsg1Builder_;
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 5;</code>
      * @return Whether the stateMsg1 field is set.
      */
@@ -2177,6 +2380,9 @@ private static final long serialVersionUID = 0L;
       return oneTypeCase_ == 5;
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 5;</code>
      * @return The stateMsg1.
      */
@@ -2195,6 +2401,9 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 5;</code>
      */
     public Builder setStateMsg1(io.grpc.jchannelRpc.StateMsg_withTarget_1 value) {
@@ -2211,6 +2420,9 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 5;</code>
      */
     public Builder setStateMsg1(
@@ -2225,6 +2437,9 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 5;</code>
      */
     public Builder mergeStateMsg1(io.grpc.jchannelRpc.StateMsg_withTarget_1 value) {
@@ -2247,6 +2462,9 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 5;</code>
      */
     public Builder clearStateMsg1() {
@@ -2266,12 +2484,18 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 5;</code>
      */
     public io.grpc.jchannelRpc.StateMsg_withTarget_1.Builder getStateMsg1Builder() {
       return getStateMsg1FieldBuilder().getBuilder();
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 5;</code>
      */
     @java.lang.Override
@@ -2286,6 +2510,9 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 5;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
@@ -2310,6 +2537,9 @@ private static final long serialVersionUID = 0L;
     private com.google.protobuf.SingleFieldBuilderV3<
         io.grpc.jchannelRpc.StateMsg_withTarget_2, io.grpc.jchannelRpc.StateMsg_withTarget_2.Builder, io.grpc.jchannelRpc.StateMsg_withTarget_2OrBuilder> stateMsg2Builder_;
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 6;</code>
      * @return Whether the stateMsg2 field is set.
      */
@@ -2318,6 +2548,9 @@ private static final long serialVersionUID = 0L;
       return oneTypeCase_ == 6;
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 6;</code>
      * @return The stateMsg2.
      */
@@ -2336,6 +2569,9 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 6;</code>
      */
     public Builder setStateMsg2(io.grpc.jchannelRpc.StateMsg_withTarget_2 value) {
@@ -2352,6 +2588,9 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 6;</code>
      */
     public Builder setStateMsg2(
@@ -2366,6 +2605,9 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 6;</code>
      */
     public Builder mergeStateMsg2(io.grpc.jchannelRpc.StateMsg_withTarget_2 value) {
@@ -2388,6 +2630,9 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 6;</code>
      */
     public Builder clearStateMsg2() {
@@ -2407,12 +2652,18 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 6;</code>
      */
     public io.grpc.jchannelRpc.StateMsg_withTarget_2.Builder getStateMsg2Builder() {
       return getStateMsg2FieldBuilder().getBuilder();
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 6;</code>
      */
     @java.lang.Override
@@ -2427,6 +2678,9 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 6;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
@@ -3856,6 +4110,288 @@ private static final long serialVersionUID = 0L;
       oneTypeCase_ = 16;
       onChanged();;
       return getDiscardOwnMsgReqBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.GetStateReq, io.grpc.jchannelRpc.GetStateReq.Builder, io.grpc.jchannelRpc.GetStateReqOrBuilder> getStateReqBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.GetStateReq getStateReq = 17;</code>
+     * @return Whether the getStateReq field is set.
+     */
+    @java.lang.Override
+    public boolean hasGetStateReq() {
+      return oneTypeCase_ == 17;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetStateReq getStateReq = 17;</code>
+     * @return The getStateReq.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.GetStateReq getGetStateReq() {
+      if (getStateReqBuilder_ == null) {
+        if (oneTypeCase_ == 17) {
+          return (io.grpc.jchannelRpc.GetStateReq) oneType_;
+        }
+        return io.grpc.jchannelRpc.GetStateReq.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 17) {
+          return getStateReqBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.GetStateReq.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetStateReq getStateReq = 17;</code>
+     */
+    public Builder setGetStateReq(io.grpc.jchannelRpc.GetStateReq value) {
+      if (getStateReqBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        getStateReqBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 17;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetStateReq getStateReq = 17;</code>
+     */
+    public Builder setGetStateReq(
+        io.grpc.jchannelRpc.GetStateReq.Builder builderForValue) {
+      if (getStateReqBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        getStateReqBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 17;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetStateReq getStateReq = 17;</code>
+     */
+    public Builder mergeGetStateReq(io.grpc.jchannelRpc.GetStateReq value) {
+      if (getStateReqBuilder_ == null) {
+        if (oneTypeCase_ == 17 &&
+            oneType_ != io.grpc.jchannelRpc.GetStateReq.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.GetStateReq.newBuilder((io.grpc.jchannelRpc.GetStateReq) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 17) {
+          getStateReqBuilder_.mergeFrom(value);
+        }
+        getStateReqBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 17;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetStateReq getStateReq = 17;</code>
+     */
+    public Builder clearGetStateReq() {
+      if (getStateReqBuilder_ == null) {
+        if (oneTypeCase_ == 17) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 17) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        getStateReqBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetStateReq getStateReq = 17;</code>
+     */
+    public io.grpc.jchannelRpc.GetStateReq.Builder getGetStateReqBuilder() {
+      return getGetStateReqFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetStateReq getStateReq = 17;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.GetStateReqOrBuilder getGetStateReqOrBuilder() {
+      if ((oneTypeCase_ == 17) && (getStateReqBuilder_ != null)) {
+        return getStateReqBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 17) {
+          return (io.grpc.jchannelRpc.GetStateReq) oneType_;
+        }
+        return io.grpc.jchannelRpc.GetStateReq.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.GetStateReq getStateReq = 17;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.GetStateReq, io.grpc.jchannelRpc.GetStateReq.Builder, io.grpc.jchannelRpc.GetStateReqOrBuilder> 
+        getGetStateReqFieldBuilder() {
+      if (getStateReqBuilder_ == null) {
+        if (!(oneTypeCase_ == 17)) {
+          oneType_ = io.grpc.jchannelRpc.GetStateReq.getDefaultInstance();
+        }
+        getStateReqBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.GetStateReq, io.grpc.jchannelRpc.GetStateReq.Builder, io.grpc.jchannelRpc.GetStateReqOrBuilder>(
+                (io.grpc.jchannelRpc.GetStateReq) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 17;
+      onChanged();;
+      return getStateReqBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.IsStateReq, io.grpc.jchannelRpc.IsStateReq.Builder, io.grpc.jchannelRpc.IsStateReqOrBuilder> isStateReqBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.IsStateReq isStateReq = 18;</code>
+     * @return Whether the isStateReq field is set.
+     */
+    @java.lang.Override
+    public boolean hasIsStateReq() {
+      return oneTypeCase_ == 18;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.IsStateReq isStateReq = 18;</code>
+     * @return The isStateReq.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.IsStateReq getIsStateReq() {
+      if (isStateReqBuilder_ == null) {
+        if (oneTypeCase_ == 18) {
+          return (io.grpc.jchannelRpc.IsStateReq) oneType_;
+        }
+        return io.grpc.jchannelRpc.IsStateReq.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 18) {
+          return isStateReqBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.IsStateReq.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.IsStateReq isStateReq = 18;</code>
+     */
+    public Builder setIsStateReq(io.grpc.jchannelRpc.IsStateReq value) {
+      if (isStateReqBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        isStateReqBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 18;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.IsStateReq isStateReq = 18;</code>
+     */
+    public Builder setIsStateReq(
+        io.grpc.jchannelRpc.IsStateReq.Builder builderForValue) {
+      if (isStateReqBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        isStateReqBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 18;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.IsStateReq isStateReq = 18;</code>
+     */
+    public Builder mergeIsStateReq(io.grpc.jchannelRpc.IsStateReq value) {
+      if (isStateReqBuilder_ == null) {
+        if (oneTypeCase_ == 18 &&
+            oneType_ != io.grpc.jchannelRpc.IsStateReq.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.IsStateReq.newBuilder((io.grpc.jchannelRpc.IsStateReq) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 18) {
+          isStateReqBuilder_.mergeFrom(value);
+        }
+        isStateReqBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 18;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.IsStateReq isStateReq = 18;</code>
+     */
+    public Builder clearIsStateReq() {
+      if (isStateReqBuilder_ == null) {
+        if (oneTypeCase_ == 18) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 18) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        isStateReqBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.IsStateReq isStateReq = 18;</code>
+     */
+    public io.grpc.jchannelRpc.IsStateReq.Builder getIsStateReqBuilder() {
+      return getIsStateReqFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.IsStateReq isStateReq = 18;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.IsStateReqOrBuilder getIsStateReqOrBuilder() {
+      if ((oneTypeCase_ == 18) && (isStateReqBuilder_ != null)) {
+        return isStateReqBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 18) {
+          return (io.grpc.jchannelRpc.IsStateReq) oneType_;
+        }
+        return io.grpc.jchannelRpc.IsStateReq.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.IsStateReq isStateReq = 18;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.IsStateReq, io.grpc.jchannelRpc.IsStateReq.Builder, io.grpc.jchannelRpc.IsStateReqOrBuilder> 
+        getIsStateReqFieldBuilder() {
+      if (isStateReqBuilder_ == null) {
+        if (!(oneTypeCase_ == 18)) {
+          oneType_ = io.grpc.jchannelRpc.IsStateReq.getDefaultInstance();
+        }
+        isStateReqBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.IsStateReq, io.grpc.jchannelRpc.IsStateReq.Builder, io.grpc.jchannelRpc.IsStateReqOrBuilder>(
+                (io.grpc.jchannelRpc.IsStateReq) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 18;
+      onChanged();;
+      return isStateReqBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

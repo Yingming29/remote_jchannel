@@ -355,5 +355,35 @@ public interface ResponseOrBuilder extends
    */
   io.grpc.jchannelRpc.GetDiscardOwnMsgRepOrBuilder getGetDiscardOwnRepOrBuilder();
 
+  /**
+   * <code>.cn.yingming.grpc1.GetStateRep getStateRep = 21;</code>
+   * @return Whether the getStateRep field is set.
+   */
+  boolean hasGetStateRep();
+  /**
+   * <code>.cn.yingming.grpc1.GetStateRep getStateRep = 21;</code>
+   * @return The getStateRep.
+   */
+  io.grpc.jchannelRpc.GetStateRep getGetStateRep();
+  /**
+   * <code>.cn.yingming.grpc1.GetStateRep getStateRep = 21;</code>
+   */
+  io.grpc.jchannelRpc.GetStateRepOrBuilder getGetStateRepOrBuilder();
+
+  /**
+   * <code>.cn.yingming.grpc1.IsStateRep isStateRep = 22;</code>
+   * @return Whether the isStateRep field is set.
+   */
+  boolean hasIsStateRep();
+  /**
+   * <code>.cn.yingming.grpc1.IsStateRep isStateRep = 22;</code>
+   * @return The isStateRep.
+   */
+  io.grpc.jchannelRpc.IsStateRep getIsStateRep();
+  /**
+   * <code>.cn.yingming.grpc1.IsStateRep isStateRep = 22;</code>
+   */
+  io.grpc.jchannelRpc.IsStateRepOrBuilder getIsStateRepOrBuilder();
+
   public io.grpc.jchannelRpc.Response.OneTypeCase getOneTypeCase();
 }

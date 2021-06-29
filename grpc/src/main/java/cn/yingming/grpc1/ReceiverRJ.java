@@ -22,12 +22,12 @@ public class ReceiverRJ implements Receiver {
 
     @Override
     public void receive(Message msg) {
-        System.out.println(msg);
+        System.out.println("receive (Client-Receiver):" + msg);
     }
 
     @Override
     public void viewAccepted(View new_view) {
-        System.out.println("** Client View: " + new_view);
+        System.out.println("** Client View (Client-Receiver): " + new_view);
     }
 
     @Override

@@ -123,6 +123,8 @@ public class SimpleChatRJ {
                     System.out.println("getProperties() for Real JChannel Address (JChannel Server):" + remoteJChannel.getProperties());
                 } else if (line.startsWith("disconnect")) {
                     System.out.println("Disconnect" + this.remoteJChannel.disconnect());
+                } else if (line.equals("getState()")){
+                    System.out.println("getState() for remote real JChannel: " + remoteJChannel.getState());
                 } else{
                     try{
                         remoteJChannel.send(null, line);

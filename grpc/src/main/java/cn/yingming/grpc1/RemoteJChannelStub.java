@@ -72,6 +72,9 @@ public class RemoteJChannelStub {
             } else if(input.equals("getDiscardOwnMessage()")) {
                 GetDiscardOwnMsgReq discardMsgReq = GetDiscardOwnMsgReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString()).build();
                 return Request.newBuilder().setGetDiscardOwnMsgReq(discardMsgReq).build();
+            } else if(input.equals("getState()")) {
+                GetStateReq getStateReq = GetStateReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString()).build();
+                return Request.newBuilder().setGetStateReq(getStateReq).build();
             } else if(input.startsWith("setDiscardOwnMessage()")) {
                 String[] strs = input.split(" ");
                 boolean b = false;
@@ -116,6 +119,18 @@ public class RemoteJChannelStub {
                             .setIncludeProps(false).build();
                 }
                 return Request.newBuilder().setPrintProtoReq(subReq).build();
+            } else if(input.equals("isOpen()")){
+                IsStateReq req = IsStateReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString()).setType("isOpen").build();
+                return Request.newBuilder().setIsStateReq(req).build();
+            } else if(input.equals("isConnecting()")){
+                IsStateReq req = IsStateReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString()).setType("isConnecting").build();
+                return Request.newBuilder().setIsStateReq(req).build();
+            } else if(input.equals("isConnected()")){
+                IsStateReq req = IsStateReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString()).setType("isConnected").build();
+                return Request.newBuilder().setIsStateReq(req).build();
+            } else if(input.equals("isClosed()")){
+                IsStateReq req = IsStateReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString()).setType("isClosed").build();
+                return Request.newBuilder().setIsStateReq(req).build();
             }
         } else if(obj instanceof Message) {
             Message m = (Message) obj;
@@ -199,6 +214,13 @@ public class RemoteJChannelStub {
             synchronized (this.client.obj) {
                 this.client.obj.notify();
             }
+        } else if(response.hasGetStateRep()){
+            GetStateRep rep = response.getGetStateRep();
+            System.out.println("getState() response:" + rep);
+            this.client.state = rep.getState();
+            synchronized (this.client.obj) {
+                this.client.obj.notify();
+            }
         } else if(response.hasDumpStatsRep()){
             DumpStatsRep dumpRep = response.getDumpStatsRep();
             System.out.println("dumpStats() response:" + dumpRep);
@@ -245,6 +267,13 @@ public class RemoteJChannelStub {
             SetDiscardOwnMsgRep rep = response.getSetDiscardOwnRep();
             System.out.println("setDiscardOwnMessage() response:" + rep);
             this.client.discard_own_messages = rep.getDiscard();
+            synchronized (this.client.obj) {
+                this.client.obj.notify();
+            }
+        } else if(response.hasIsStateRep()){
+            IsStateRep rep = response.getIsStateRep();
+            System.out.println("isState(isOpen/isConnecting/isConnected/isClosed) response:" + rep);
+            this.client.isState = rep.getResult();
             synchronized (this.client.obj) {
                 this.client.obj.notify();
             }

@@ -53,46 +53,73 @@ public interface RequestOrBuilder extends
   io.grpc.jchannelRpc.DisconnectReqOrBuilder getDisconnectRequestOrBuilder();
 
   /**
+   * <pre>
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.StateReq stateReq = 4;</code>
    * @return Whether the stateReq field is set.
    */
   boolean hasStateReq();
   /**
+   * <pre>
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.StateReq stateReq = 4;</code>
    * @return The stateReq.
    */
   io.grpc.jchannelRpc.StateReq getStateReq();
   /**
+   * <pre>
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.StateReq stateReq = 4;</code>
    */
   io.grpc.jchannelRpc.StateReqOrBuilder getStateReqOrBuilder();
 
   /**
+   * <pre>
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 5;</code>
    * @return Whether the stateMsg1 field is set.
    */
   boolean hasStateMsg1();
   /**
+   * <pre>
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 5;</code>
    * @return The stateMsg1.
    */
   io.grpc.jchannelRpc.StateMsg_withTarget_1 getStateMsg1();
   /**
+   * <pre>
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 5;</code>
    */
   io.grpc.jchannelRpc.StateMsg_withTarget_1OrBuilder getStateMsg1OrBuilder();
 
   /**
+   * <pre>
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 6;</code>
    * @return Whether the stateMsg2 field is set.
    */
   boolean hasStateMsg2();
   /**
+   * <pre>
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 6;</code>
    * @return The stateMsg2.
    */
   io.grpc.jchannelRpc.StateMsg_withTarget_2 getStateMsg2();
   /**
+   * <pre>
+   * </pre>
+   *
    * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 6;</code>
    */
   io.grpc.jchannelRpc.StateMsg_withTarget_2OrBuilder getStateMsg2OrBuilder();
@@ -246,6 +273,36 @@ public interface RequestOrBuilder extends
    * <code>.cn.yingming.grpc1.GetDiscardOwnMsgReq getDiscardOwnMsgReq = 16;</code>
    */
   io.grpc.jchannelRpc.GetDiscardOwnMsgReqOrBuilder getGetDiscardOwnMsgReqOrBuilder();
+
+  /**
+   * <code>.cn.yingming.grpc1.GetStateReq getStateReq = 17;</code>
+   * @return Whether the getStateReq field is set.
+   */
+  boolean hasGetStateReq();
+  /**
+   * <code>.cn.yingming.grpc1.GetStateReq getStateReq = 17;</code>
+   * @return The getStateReq.
+   */
+  io.grpc.jchannelRpc.GetStateReq getGetStateReq();
+  /**
+   * <code>.cn.yingming.grpc1.GetStateReq getStateReq = 17;</code>
+   */
+  io.grpc.jchannelRpc.GetStateReqOrBuilder getGetStateReqOrBuilder();
+
+  /**
+   * <code>.cn.yingming.grpc1.IsStateReq isStateReq = 18;</code>
+   * @return Whether the isStateReq field is set.
+   */
+  boolean hasIsStateReq();
+  /**
+   * <code>.cn.yingming.grpc1.IsStateReq isStateReq = 18;</code>
+   * @return The isStateReq.
+   */
+  io.grpc.jchannelRpc.IsStateReq getIsStateReq();
+  /**
+   * <code>.cn.yingming.grpc1.IsStateReq isStateReq = 18;</code>
+   */
+  io.grpc.jchannelRpc.IsStateReqOrBuilder getIsStateReqOrBuilder();
 
   public io.grpc.jchannelRpc.Request.OneTypeCase getOneTypeCase();
 }

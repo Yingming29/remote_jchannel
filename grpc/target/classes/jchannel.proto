@@ -16,9 +16,9 @@ message Request{
     MessageReqRep messageReqRep = 1;
     ConnectReq connectRequest = 2;
     DisconnectReq disconnectRequest = 3;
-    StateReq stateReq = 4;
-    StateMsg_withTarget_1 stateMsg1 = 5;
-    StateMsg_withTarget_2 stateMsg2 = 6;
+    StateReq stateReq = 4;  //
+    StateMsg_withTarget_1 stateMsg1 = 5;//
+    StateMsg_withTarget_2 stateMsg2 = 6;//
     GetAddressReq getAddressReq = 7;
     GetNameReq getNameReq = 8;
     GetClusterNameReq getClusterNameReq = 9;
@@ -29,6 +29,8 @@ message Request{
     DumpStatsReq dumpStatsReq = 14;
     SetDiscardOwnMsgReq setDiscardOwnMsgReq = 15;
     GetDiscardOwnMsgReq getDiscardOwnMsgReq = 16;
+    GetStateReq getStateReq = 17;
+    IsStateReq isStateReq = 18;
   }
 }
 message Response{
@@ -53,7 +55,22 @@ message Response{
     DumpStatsRep dumpStatsRep = 18;
     SetDiscardOwnMsgRep setDiscardOwnRep = 19;
     GetDiscardOwnMsgRep getDiscardOwnRep = 20;
+    GetStateRep getStateRep = 21;
+    IsStateRep isStateRep = 22;
   }
+}
+message IsStateReq{
+  string jchannel_address = 1;
+  string type = 2;
+}
+message IsStateRep{
+  bool result = 1;
+}
+message GetStateReq{
+  string jchannel_address = 1;
+}
+message GetStateRep{
+  string state = 1;
 }
 message SetDiscardOwnMsgReq{
   string jchannal_address = 1;

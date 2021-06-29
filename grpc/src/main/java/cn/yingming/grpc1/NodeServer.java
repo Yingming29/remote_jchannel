@@ -337,6 +337,34 @@ public class NodeServer {
                         Response rep = Response.newBuilder().setSetDiscardOwnRep(discardRep).build();
                         System.out.println(rep);
                         responseObserver.onNext(rep);
+                    } else if (req.hasGetStateReq()){
+                        GetStateReq getStateReq = req.getGetStateReq();
+                        System.out.println("[grpc] Receive the getState() request for the JChannel-server state from JChannel-Client:"
+                                + getStateReq.getJchannelAddress());
+
+                        GetStateRep getStateRep = GetStateRep.newBuilder().setState(jchannel.channel.getState()).build();
+                        Response rep = Response.newBuilder().setGetStateRep(getStateRep).build();
+                        System.out.println(rep);
+                        responseObserver.onNext(rep);
+                    } else if (req.hasIsStateReq()){
+                        IsStateReq isReq = req.getIsStateReq();
+                        System.out.println("[grpc] Receive the isState() " + isReq.getType() + " request for the JChannel-server state from JChannel-Client:"
+                                + isReq.getJchannelAddress());
+                        String type = isReq.getType();
+                        boolean result = false;
+                        if (type.equals("isOpen")){
+                            result = jchannel.channel.isOpen();
+                        } else if (type.equals("isConnecting")){
+                            result = jchannel.channel.isConnecting();
+                        } else if (type.equals("isConnected")){
+                            result = jchannel.channel.isConnected();
+                        } else {
+                            result = jchannel.channel.isClosed();
+                        }
+                        IsStateRep isRep = IsStateRep.newBuilder().setResult(result).build();
+                        Response rep = Response.newBuilder().setIsStateRep(isRep).build();
+                        System.out.println(rep);
+                        responseObserver.onNext(rep);
                     } else if(req.hasGetPropertyReq()){
                         // getName() request
                         GetPropertyReq getPropertyReq = req.getGetPropertyReq();
