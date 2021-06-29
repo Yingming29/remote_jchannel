@@ -86,7 +86,7 @@ public class SimpleChatRJ {
                     System.out.println("getDiscardOwnMessage() for real JChannel Address (JChannel Server):" + remoteJChannel.getDiscardOwnMessages());
                 } else if(line.startsWith("setDiscardOwnMessage()")){
                     String[] strs = line.split(" ");
-                    if (strs.equals("true")){
+                    if (strs[1].equals("true")){
                         System.out.println("setDiscardOwnMessage(true) for real JChannel Address (JChannel Server):" + remoteJChannel.setDiscardOwnMessages(true));
                     } else {
                         System.out.println("setDiscardOwnMessage(false) for real JChannel Address (JChannel Server):" + remoteJChannel.setDiscardOwnMessages(false));
