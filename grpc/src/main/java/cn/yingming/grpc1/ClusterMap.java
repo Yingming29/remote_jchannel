@@ -22,13 +22,13 @@ public class ClusterMap implements Serializable {
     // the members list with join order.
     public LinkedList orderList;
     // message history
-    public LinkedList history;
+    // public LinkedList history;
     public ClusterMap(){
         this.map = new ConcurrentHashMap<>();
         this.viewNum = 0;
         this.lock = new ReentrantLock();
         this.orderList = new LinkedList<Address>();
-        this.history = new LinkedList<MessageReqRep>();
+        //this.history = new LinkedList<MessageReqRep>();
     }
     public ConcurrentHashMap getMap(){
         return this.map;
@@ -112,6 +112,7 @@ public class ClusterMap implements Serializable {
             lock.unlock();
         }
     }
+    /*
     public StateRep generateState(){
         StateRep rep;
         lock.lock();
@@ -125,6 +126,9 @@ public class ClusterMap implements Serializable {
         }
         return rep;
     }
+
+     */
+    /*
     public void addHistory(MessageReqRep msg){
         lock.lock();
         try{
@@ -133,4 +137,6 @@ public class ClusterMap implements Serializable {
             lock.unlock();
         }
     }
+
+     */
 }

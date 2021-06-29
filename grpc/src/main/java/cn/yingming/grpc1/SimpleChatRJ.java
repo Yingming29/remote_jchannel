@@ -125,6 +125,14 @@ public class SimpleChatRJ {
                     System.out.println("Disconnect" + this.remoteJChannel.disconnect());
                 } else if (line.equals("getState()")){
                     System.out.println("getState() for remote real JChannel: " + remoteJChannel.getState());
+                } else if (line.equals("isOpen()")){
+                    System.out.println("isOpen() for remote real JChannel: " + remoteJChannel.isOpen());
+                } else if (line.equals("isConnecting()")){
+                    System.out.println("isConnecting() for remote real JChannel: " + remoteJChannel.isConnecting());
+                } else if (line.equals("isConnected()")){
+                    System.out.println("isConnected() for remote real JChannel: " + remoteJChannel.isConnected());
+                } else if (line.equals("isClosed()")){
+                    System.out.println("isClosed() for remote real JChannel: " + remoteJChannel.isClosed());
                 } else{
                     try{
                         remoteJChannel.send(null, line);
