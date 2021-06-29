@@ -17,8 +17,6 @@ message Request{
     ConnectReq connectRequest = 2;
     DisconnectReq disconnectRequest = 3;
     StateReq stateReq = 4;  //
-    StateMsg_withTarget_1 stateMsg1 = 5;//
-    StateMsg_withTarget_2 stateMsg2 = 6;//
     GetAddressReq getAddressReq = 7;
     GetNameReq getNameReq = 8;
     GetClusterNameReq getClusterNameReq = 9;
@@ -43,8 +41,6 @@ message Response{
     ViewRep_server viewRep_server = 6;   // JChannel-server view
     UpdateNameCacheRep updateNameCache = 7;  // update the NameCache of JChannel-server
     StateRep stateRep = 8;
-    StateMsg_withTarget_1 stateMsg1 = 9;
-    StateMsg_withTarget_2 stateMsg2 = 10;
     GetAddressRep getAddressRep = 11;
     GetNameRep getNameRep = 12;
     GetClusterNameRep getClusterNameRep = 13;
@@ -204,22 +200,15 @@ message RepAsk{
   bool survival = 1;
 }
 message StateReq{
-  string jchannel_address = 1;
+  bytes jchannel_address = 1;
   bytes target = 2;
+  uint64 timeout = 3;
 }
 
 message StateRep{
-  bytes state = 1;
-}
-
-message StateMsg_withTarget_1{
   bytes jchannel_address = 1;
-  bytes target = 2;
+  bytes state = 2;
+  bytes target = 3;
 }
 
-message StateMsg_withTarget_2{
-  bytes jchannel_address = 3;
-  repeated MessageReqRep oneOfHistory = 4;
-  bytes target = 5;
-}
 

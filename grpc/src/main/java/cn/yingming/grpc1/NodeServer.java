@@ -184,30 +184,43 @@ public class NodeServer {
                         onCompleted();
                     } else if (req.hasStateReq()){
                         StateReq stateReq = req.getStateReq();
+                        UUID source = null;
+                        UUID target = null;
+                        try {
+                            source = Util.objectFromByteBuffer(req.getStateReq().getJchannelAddress().toByteArray());
+                            target = Util.objectFromByteBuffer(req.getStateReq().getTarget().toByteArray());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         System.out.println("[gRPC] Receive the getState() request for message history from a client.");
-                        System.out.println(stateReq.getJchannelAddress() + "calls getState() for cluster, " +
-                                stateReq.getCluster());
+                        System.out.println(source + "(JChannel-Client) calls getState(), target is " + target);
                         lock.lock();
                         try {
 
                             // generate the history from real JChannel
                             // ClusterMap cm = (ClusterMap) jchannel.serviceMap.get(stateReq.getCluster());
                             // StateRep stateRep = cm.generateState();
+                            if (target.equals(jchannel.channel.getAddress())){
+                                OutputStream out = new ByteArrayOutputStream();
 
-
-                            OutputStream out = new ByteArrayOutputStream();
-                            jchannel.getState(out);
-                            ByteArrayOutputStream out2 = (ByteArrayOutputStream) out;
-                            StateRep stateRep = StateRep.newBuilder().setState(ByteString.copyFrom(out2.toByteArray())).build();
-                            Response rep = Response.newBuilder()
-                                    .setStateRep(stateRep)
-                                    .build();
-                            // send to this client
-                            for (Address uuid : clients.keySet()) {
-                                if (uuid.toString().equals(req.getStateReq().getJchannelAddress())){
-                                    clients.get(uuid).onNext(rep);
-                                    System.out.println("state: " + rep);
+                                jchannel.getState(out);
+                                ByteArrayOutputStream out2 = (ByteArrayOutputStream) out;
+                                StateRep stateRep = StateRep.newBuilder().setState(ByteString.copyFrom(out2.toByteArray())).build();
+                                Response rep = Response.newBuilder()
+                                        .setStateRep(stateRep)
+                                        .build();
+                                // send to this client
+                                for (Address uuid : clients.keySet()) {
+                                    if (source.equals(uuid)){
+                                        clients.get(uuid).onNext(rep);
+                                        System.out.println("state: " + rep);
+                                    }
                                 }
+                            } else if (jchannel.channel.getView().containsMember(target)){
+
+
+                            } else {
+                                ClusterMap clusterObj = (ClusterMap) this.serviceMap.get("ClientCluster");
                             }
                         } catch (Exception e){
                             e.printStackTrace();
@@ -215,35 +228,7 @@ public class NodeServer {
                             lock.unlock();
                         }
 
-                    } else if (req.hasStateMsg2()){
-                        StateMsg_withTarget_2 msg = req.getStateMsg2();
-                        System.out.println("[gRPC] Receive the getState(target) result for message history from a client.");
-                        System.out.println(msg.getJchannelAddress() + " returns getState() result for cluster, " +
-                                msg.getCluster() + " for remote jchannel " + msg.getTarget());
-                        lock.lock();
-                        try{
-                            // forward msg to other JChannels
-                            forwardMsg(req);
-                            // send msg to its gRPC clients
-                            unicast_stateMsg2(msg);
-                        }finally {
-                            lock.unlock();
-                        }
-                    }else if (req.hasStateMsg1()){
-                        StateMsg_withTarget_1 msg = req.getStateMsg1();
-                        System.out.println("[gRPC] Receive the getState(target) request for message history from a client.");
-                        System.out.println(msg.getJchannelAddress() + " calls getState() for cluster, " +
-                                msg.getCluster() + " with target " + msg.getTarget());
-                        lock.lock();
-                        try{
-                            // forward msg to other JChannels
-                            forwardMsg(req);
-                            // send msg to its gRPC clients
-                            unicast_stateMsg1(msg);
-                        }finally {
-                            lock.unlock();
-                        }
-                    } else if (req.hasGetAddressReq()){
+                    }  else if (req.hasGetAddressReq()){
                         /*
                         Receive the getAddress() request for getting the real JChannel-Server's Address
                         If the real JChannel of node does not work, return a response with isWork "false".
@@ -636,9 +621,8 @@ public class NodeServer {
                 lock.unlock();
             }
         }
-        public void unicast_stateMsg2(StateMsg_withTarget_2 req){
-            String msgCluster = req.getCluster();
-            String msgDest = req.getTarget();
+        public void unicast_stateMsg2(StateReq req){
+
             lock.lock();
             try{
                 ClusterMap clusterObj = (ClusterMap) jchannel.serviceMap.get(msgCluster);

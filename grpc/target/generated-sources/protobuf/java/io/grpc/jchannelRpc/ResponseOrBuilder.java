@@ -176,36 +176,6 @@ public interface ResponseOrBuilder extends
   io.grpc.jchannelRpc.StateRepOrBuilder getStateRepOrBuilder();
 
   /**
-   * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
-   * @return Whether the stateMsg1 field is set.
-   */
-  boolean hasStateMsg1();
-  /**
-   * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
-   * @return The stateMsg1.
-   */
-  io.grpc.jchannelRpc.StateMsg_withTarget_1 getStateMsg1();
-  /**
-   * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
-   */
-  io.grpc.jchannelRpc.StateMsg_withTarget_1OrBuilder getStateMsg1OrBuilder();
-
-  /**
-   * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
-   * @return Whether the stateMsg2 field is set.
-   */
-  boolean hasStateMsg2();
-  /**
-   * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
-   * @return The stateMsg2.
-   */
-  io.grpc.jchannelRpc.StateMsg_withTarget_2 getStateMsg2();
-  /**
-   * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
-   */
-  io.grpc.jchannelRpc.StateMsg_withTarget_2OrBuilder getStateMsg2OrBuilder();
-
-  /**
    * <code>.cn.yingming.grpc1.GetAddressRep getAddressRep = 11;</code>
    * @return Whether the getAddressRep field is set.
    */

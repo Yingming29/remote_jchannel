@@ -160,34 +160,6 @@ private static final long serialVersionUID = 0L;
             oneTypeCase_ = 8;
             break;
           }
-          case 74: {
-            io.grpc.jchannelRpc.StateMsg_withTarget_1.Builder subBuilder = null;
-            if (oneTypeCase_ == 9) {
-              subBuilder = ((io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_).toBuilder();
-            }
-            oneType_ =
-                input.readMessage(io.grpc.jchannelRpc.StateMsg_withTarget_1.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom((io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_);
-              oneType_ = subBuilder.buildPartial();
-            }
-            oneTypeCase_ = 9;
-            break;
-          }
-          case 82: {
-            io.grpc.jchannelRpc.StateMsg_withTarget_2.Builder subBuilder = null;
-            if (oneTypeCase_ == 10) {
-              subBuilder = ((io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_).toBuilder();
-            }
-            oneType_ =
-                input.readMessage(io.grpc.jchannelRpc.StateMsg_withTarget_2.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom((io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_);
-              oneType_ = subBuilder.buildPartial();
-            }
-            oneTypeCase_ = 10;
-            break;
-          }
           case 90: {
             io.grpc.jchannelRpc.GetAddressRep.Builder subBuilder = null;
             if (oneTypeCase_ == 11) {
@@ -401,8 +373,6 @@ private static final long serialVersionUID = 0L;
     VIEWREP_SERVER(6),
     UPDATENAMECACHE(7),
     STATEREP(8),
-    STATEMSG1(9),
-    STATEMSG2(10),
     GETADDRESSREP(11),
     GETNAMEREP(12),
     GETCLUSTERNAMEREP(13),
@@ -440,8 +410,6 @@ private static final long serialVersionUID = 0L;
         case 6: return VIEWREP_SERVER;
         case 7: return UPDATENAMECACHE;
         case 8: return STATEREP;
-        case 9: return STATEMSG1;
-        case 10: return STATEMSG2;
         case 11: return GETADDRESSREP;
         case 12: return GETNAMEREP;
         case 13: return GETCLUSTERNAMEREP;
@@ -763,68 +731,6 @@ private static final long serialVersionUID = 0L;
        return (io.grpc.jchannelRpc.StateRep) oneType_;
     }
     return io.grpc.jchannelRpc.StateRep.getDefaultInstance();
-  }
-
-  public static final int STATEMSG1_FIELD_NUMBER = 9;
-  /**
-   * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
-   * @return Whether the stateMsg1 field is set.
-   */
-  @java.lang.Override
-  public boolean hasStateMsg1() {
-    return oneTypeCase_ == 9;
-  }
-  /**
-   * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
-   * @return The stateMsg1.
-   */
-  @java.lang.Override
-  public io.grpc.jchannelRpc.StateMsg_withTarget_1 getStateMsg1() {
-    if (oneTypeCase_ == 9) {
-       return (io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_;
-    }
-    return io.grpc.jchannelRpc.StateMsg_withTarget_1.getDefaultInstance();
-  }
-  /**
-   * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
-   */
-  @java.lang.Override
-  public io.grpc.jchannelRpc.StateMsg_withTarget_1OrBuilder getStateMsg1OrBuilder() {
-    if (oneTypeCase_ == 9) {
-       return (io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_;
-    }
-    return io.grpc.jchannelRpc.StateMsg_withTarget_1.getDefaultInstance();
-  }
-
-  public static final int STATEMSG2_FIELD_NUMBER = 10;
-  /**
-   * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
-   * @return Whether the stateMsg2 field is set.
-   */
-  @java.lang.Override
-  public boolean hasStateMsg2() {
-    return oneTypeCase_ == 10;
-  }
-  /**
-   * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
-   * @return The stateMsg2.
-   */
-  @java.lang.Override
-  public io.grpc.jchannelRpc.StateMsg_withTarget_2 getStateMsg2() {
-    if (oneTypeCase_ == 10) {
-       return (io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_;
-    }
-    return io.grpc.jchannelRpc.StateMsg_withTarget_2.getDefaultInstance();
-  }
-  /**
-   * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
-   */
-  @java.lang.Override
-  public io.grpc.jchannelRpc.StateMsg_withTarget_2OrBuilder getStateMsg2OrBuilder() {
-    if (oneTypeCase_ == 10) {
-       return (io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_;
-    }
-    return io.grpc.jchannelRpc.StateMsg_withTarget_2.getDefaultInstance();
   }
 
   public static final int GETADDRESSREP_FIELD_NUMBER = 11;
@@ -1237,12 +1143,6 @@ private static final long serialVersionUID = 0L;
     if (oneTypeCase_ == 8) {
       output.writeMessage(8, (io.grpc.jchannelRpc.StateRep) oneType_);
     }
-    if (oneTypeCase_ == 9) {
-      output.writeMessage(9, (io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_);
-    }
-    if (oneTypeCase_ == 10) {
-      output.writeMessage(10, (io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_);
-    }
     if (oneTypeCase_ == 11) {
       output.writeMessage(11, (io.grpc.jchannelRpc.GetAddressRep) oneType_);
     }
@@ -1319,14 +1219,6 @@ private static final long serialVersionUID = 0L;
     if (oneTypeCase_ == 8) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(8, (io.grpc.jchannelRpc.StateRep) oneType_);
-    }
-    if (oneTypeCase_ == 9) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(9, (io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_);
-    }
-    if (oneTypeCase_ == 10) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(10, (io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_);
     }
     if (oneTypeCase_ == 11) {
       size += com.google.protobuf.CodedOutputStream
@@ -1425,14 +1317,6 @@ private static final long serialVersionUID = 0L;
         if (!getStateRep()
             .equals(other.getStateRep())) return false;
         break;
-      case 9:
-        if (!getStateMsg1()
-            .equals(other.getStateMsg1())) return false;
-        break;
-      case 10:
-        if (!getStateMsg2()
-            .equals(other.getStateMsg2())) return false;
-        break;
       case 11:
         if (!getGetAddressRep()
             .equals(other.getGetAddressRep())) return false;
@@ -1527,14 +1411,6 @@ private static final long serialVersionUID = 0L;
       case 8:
         hash = (37 * hash) + STATEREP_FIELD_NUMBER;
         hash = (53 * hash) + getStateRep().hashCode();
-        break;
-      case 9:
-        hash = (37 * hash) + STATEMSG1_FIELD_NUMBER;
-        hash = (53 * hash) + getStateMsg1().hashCode();
-        break;
-      case 10:
-        hash = (37 * hash) + STATEMSG2_FIELD_NUMBER;
-        hash = (53 * hash) + getStateMsg2().hashCode();
         break;
       case 11:
         hash = (37 * hash) + GETADDRESSREP_FIELD_NUMBER;
@@ -1804,20 +1680,6 @@ private static final long serialVersionUID = 0L;
           result.oneType_ = stateRepBuilder_.build();
         }
       }
-      if (oneTypeCase_ == 9) {
-        if (stateMsg1Builder_ == null) {
-          result.oneType_ = oneType_;
-        } else {
-          result.oneType_ = stateMsg1Builder_.build();
-        }
-      }
-      if (oneTypeCase_ == 10) {
-        if (stateMsg2Builder_ == null) {
-          result.oneType_ = oneType_;
-        } else {
-          result.oneType_ = stateMsg2Builder_.build();
-        }
-      }
       if (oneTypeCase_ == 11) {
         if (getAddressRepBuilder_ == null) {
           result.oneType_ = oneType_;
@@ -1982,14 +1844,6 @@ private static final long serialVersionUID = 0L;
         }
         case STATEREP: {
           mergeStateRep(other.getStateRep());
-          break;
-        }
-        case STATEMSG1: {
-          mergeStateMsg1(other.getStateMsg1());
-          break;
-        }
-        case STATEMSG2: {
-          mergeStateMsg2(other.getStateMsg2());
           break;
         }
         case GETADDRESSREP: {
@@ -3358,288 +3212,6 @@ private static final long serialVersionUID = 0L;
       oneTypeCase_ = 8;
       onChanged();;
       return stateRepBuilder_;
-    }
-
-    private com.google.protobuf.SingleFieldBuilderV3<
-        io.grpc.jchannelRpc.StateMsg_withTarget_1, io.grpc.jchannelRpc.StateMsg_withTarget_1.Builder, io.grpc.jchannelRpc.StateMsg_withTarget_1OrBuilder> stateMsg1Builder_;
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
-     * @return Whether the stateMsg1 field is set.
-     */
-    @java.lang.Override
-    public boolean hasStateMsg1() {
-      return oneTypeCase_ == 9;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
-     * @return The stateMsg1.
-     */
-    @java.lang.Override
-    public io.grpc.jchannelRpc.StateMsg_withTarget_1 getStateMsg1() {
-      if (stateMsg1Builder_ == null) {
-        if (oneTypeCase_ == 9) {
-          return (io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_;
-        }
-        return io.grpc.jchannelRpc.StateMsg_withTarget_1.getDefaultInstance();
-      } else {
-        if (oneTypeCase_ == 9) {
-          return stateMsg1Builder_.getMessage();
-        }
-        return io.grpc.jchannelRpc.StateMsg_withTarget_1.getDefaultInstance();
-      }
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
-     */
-    public Builder setStateMsg1(io.grpc.jchannelRpc.StateMsg_withTarget_1 value) {
-      if (stateMsg1Builder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        oneType_ = value;
-        onChanged();
-      } else {
-        stateMsg1Builder_.setMessage(value);
-      }
-      oneTypeCase_ = 9;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
-     */
-    public Builder setStateMsg1(
-        io.grpc.jchannelRpc.StateMsg_withTarget_1.Builder builderForValue) {
-      if (stateMsg1Builder_ == null) {
-        oneType_ = builderForValue.build();
-        onChanged();
-      } else {
-        stateMsg1Builder_.setMessage(builderForValue.build());
-      }
-      oneTypeCase_ = 9;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
-     */
-    public Builder mergeStateMsg1(io.grpc.jchannelRpc.StateMsg_withTarget_1 value) {
-      if (stateMsg1Builder_ == null) {
-        if (oneTypeCase_ == 9 &&
-            oneType_ != io.grpc.jchannelRpc.StateMsg_withTarget_1.getDefaultInstance()) {
-          oneType_ = io.grpc.jchannelRpc.StateMsg_withTarget_1.newBuilder((io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_)
-              .mergeFrom(value).buildPartial();
-        } else {
-          oneType_ = value;
-        }
-        onChanged();
-      } else {
-        if (oneTypeCase_ == 9) {
-          stateMsg1Builder_.mergeFrom(value);
-        }
-        stateMsg1Builder_.setMessage(value);
-      }
-      oneTypeCase_ = 9;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
-     */
-    public Builder clearStateMsg1() {
-      if (stateMsg1Builder_ == null) {
-        if (oneTypeCase_ == 9) {
-          oneTypeCase_ = 0;
-          oneType_ = null;
-          onChanged();
-        }
-      } else {
-        if (oneTypeCase_ == 9) {
-          oneTypeCase_ = 0;
-          oneType_ = null;
-        }
-        stateMsg1Builder_.clear();
-      }
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
-     */
-    public io.grpc.jchannelRpc.StateMsg_withTarget_1.Builder getStateMsg1Builder() {
-      return getStateMsg1FieldBuilder().getBuilder();
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
-     */
-    @java.lang.Override
-    public io.grpc.jchannelRpc.StateMsg_withTarget_1OrBuilder getStateMsg1OrBuilder() {
-      if ((oneTypeCase_ == 9) && (stateMsg1Builder_ != null)) {
-        return stateMsg1Builder_.getMessageOrBuilder();
-      } else {
-        if (oneTypeCase_ == 9) {
-          return (io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_;
-        }
-        return io.grpc.jchannelRpc.StateMsg_withTarget_1.getDefaultInstance();
-      }
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_1 stateMsg1 = 9;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        io.grpc.jchannelRpc.StateMsg_withTarget_1, io.grpc.jchannelRpc.StateMsg_withTarget_1.Builder, io.grpc.jchannelRpc.StateMsg_withTarget_1OrBuilder> 
-        getStateMsg1FieldBuilder() {
-      if (stateMsg1Builder_ == null) {
-        if (!(oneTypeCase_ == 9)) {
-          oneType_ = io.grpc.jchannelRpc.StateMsg_withTarget_1.getDefaultInstance();
-        }
-        stateMsg1Builder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            io.grpc.jchannelRpc.StateMsg_withTarget_1, io.grpc.jchannelRpc.StateMsg_withTarget_1.Builder, io.grpc.jchannelRpc.StateMsg_withTarget_1OrBuilder>(
-                (io.grpc.jchannelRpc.StateMsg_withTarget_1) oneType_,
-                getParentForChildren(),
-                isClean());
-        oneType_ = null;
-      }
-      oneTypeCase_ = 9;
-      onChanged();;
-      return stateMsg1Builder_;
-    }
-
-    private com.google.protobuf.SingleFieldBuilderV3<
-        io.grpc.jchannelRpc.StateMsg_withTarget_2, io.grpc.jchannelRpc.StateMsg_withTarget_2.Builder, io.grpc.jchannelRpc.StateMsg_withTarget_2OrBuilder> stateMsg2Builder_;
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
-     * @return Whether the stateMsg2 field is set.
-     */
-    @java.lang.Override
-    public boolean hasStateMsg2() {
-      return oneTypeCase_ == 10;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
-     * @return The stateMsg2.
-     */
-    @java.lang.Override
-    public io.grpc.jchannelRpc.StateMsg_withTarget_2 getStateMsg2() {
-      if (stateMsg2Builder_ == null) {
-        if (oneTypeCase_ == 10) {
-          return (io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_;
-        }
-        return io.grpc.jchannelRpc.StateMsg_withTarget_2.getDefaultInstance();
-      } else {
-        if (oneTypeCase_ == 10) {
-          return stateMsg2Builder_.getMessage();
-        }
-        return io.grpc.jchannelRpc.StateMsg_withTarget_2.getDefaultInstance();
-      }
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
-     */
-    public Builder setStateMsg2(io.grpc.jchannelRpc.StateMsg_withTarget_2 value) {
-      if (stateMsg2Builder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        oneType_ = value;
-        onChanged();
-      } else {
-        stateMsg2Builder_.setMessage(value);
-      }
-      oneTypeCase_ = 10;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
-     */
-    public Builder setStateMsg2(
-        io.grpc.jchannelRpc.StateMsg_withTarget_2.Builder builderForValue) {
-      if (stateMsg2Builder_ == null) {
-        oneType_ = builderForValue.build();
-        onChanged();
-      } else {
-        stateMsg2Builder_.setMessage(builderForValue.build());
-      }
-      oneTypeCase_ = 10;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
-     */
-    public Builder mergeStateMsg2(io.grpc.jchannelRpc.StateMsg_withTarget_2 value) {
-      if (stateMsg2Builder_ == null) {
-        if (oneTypeCase_ == 10 &&
-            oneType_ != io.grpc.jchannelRpc.StateMsg_withTarget_2.getDefaultInstance()) {
-          oneType_ = io.grpc.jchannelRpc.StateMsg_withTarget_2.newBuilder((io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_)
-              .mergeFrom(value).buildPartial();
-        } else {
-          oneType_ = value;
-        }
-        onChanged();
-      } else {
-        if (oneTypeCase_ == 10) {
-          stateMsg2Builder_.mergeFrom(value);
-        }
-        stateMsg2Builder_.setMessage(value);
-      }
-      oneTypeCase_ = 10;
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
-     */
-    public Builder clearStateMsg2() {
-      if (stateMsg2Builder_ == null) {
-        if (oneTypeCase_ == 10) {
-          oneTypeCase_ = 0;
-          oneType_ = null;
-          onChanged();
-        }
-      } else {
-        if (oneTypeCase_ == 10) {
-          oneTypeCase_ = 0;
-          oneType_ = null;
-        }
-        stateMsg2Builder_.clear();
-      }
-      return this;
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
-     */
-    public io.grpc.jchannelRpc.StateMsg_withTarget_2.Builder getStateMsg2Builder() {
-      return getStateMsg2FieldBuilder().getBuilder();
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
-     */
-    @java.lang.Override
-    public io.grpc.jchannelRpc.StateMsg_withTarget_2OrBuilder getStateMsg2OrBuilder() {
-      if ((oneTypeCase_ == 10) && (stateMsg2Builder_ != null)) {
-        return stateMsg2Builder_.getMessageOrBuilder();
-      } else {
-        if (oneTypeCase_ == 10) {
-          return (io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_;
-        }
-        return io.grpc.jchannelRpc.StateMsg_withTarget_2.getDefaultInstance();
-      }
-    }
-    /**
-     * <code>.cn.yingming.grpc1.StateMsg_withTarget_2 stateMsg2 = 10;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        io.grpc.jchannelRpc.StateMsg_withTarget_2, io.grpc.jchannelRpc.StateMsg_withTarget_2.Builder, io.grpc.jchannelRpc.StateMsg_withTarget_2OrBuilder> 
-        getStateMsg2FieldBuilder() {
-      if (stateMsg2Builder_ == null) {
-        if (!(oneTypeCase_ == 10)) {
-          oneType_ = io.grpc.jchannelRpc.StateMsg_withTarget_2.getDefaultInstance();
-        }
-        stateMsg2Builder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            io.grpc.jchannelRpc.StateMsg_withTarget_2, io.grpc.jchannelRpc.StateMsg_withTarget_2.Builder, io.grpc.jchannelRpc.StateMsg_withTarget_2OrBuilder>(
-                (io.grpc.jchannelRpc.StateMsg_withTarget_2) oneType_,
-                getParentForChildren(),
-                isClean());
-        oneType_ = null;
-      }
-      oneTypeCase_ = 10;
-      onChanged();;
-      return stateMsg2Builder_;
     }
 
     private com.google.protobuf.SingleFieldBuilderV3<

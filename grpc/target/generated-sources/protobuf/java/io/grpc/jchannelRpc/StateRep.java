@@ -16,7 +16,9 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private StateRep() {
+    jchannelAddress_ = com.google.protobuf.ByteString.EMPTY;
     state_ = com.google.protobuf.ByteString.EMPTY;
+    target_ = com.google.protobuf.ByteString.EMPTY;
   }
 
   @java.lang.Override
@@ -51,7 +53,17 @@ private static final long serialVersionUID = 0L;
             break;
           case 10: {
 
+            jchannelAddress_ = input.readBytes();
+            break;
+          }
+          case 18: {
+
             state_ = input.readBytes();
+            break;
+          }
+          case 26: {
+
+            target_ = input.readBytes();
             break;
           }
           default: {
@@ -86,15 +98,37 @@ private static final long serialVersionUID = 0L;
             io.grpc.jchannelRpc.StateRep.class, io.grpc.jchannelRpc.StateRep.Builder.class);
   }
 
-  public static final int STATE_FIELD_NUMBER = 1;
+  public static final int JCHANNEL_ADDRESS_FIELD_NUMBER = 1;
+  private com.google.protobuf.ByteString jchannelAddress_;
+  /**
+   * <code>bytes jchannel_address = 1;</code>
+   * @return The jchannelAddress.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString getJchannelAddress() {
+    return jchannelAddress_;
+  }
+
+  public static final int STATE_FIELD_NUMBER = 2;
   private com.google.protobuf.ByteString state_;
   /**
-   * <code>bytes state = 1;</code>
+   * <code>bytes state = 2;</code>
    * @return The state.
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getState() {
     return state_;
+  }
+
+  public static final int TARGET_FIELD_NUMBER = 3;
+  private com.google.protobuf.ByteString target_;
+  /**
+   * <code>bytes target = 3;</code>
+   * @return The target.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString getTarget() {
+    return target_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -111,8 +145,14 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
+    if (!jchannelAddress_.isEmpty()) {
+      output.writeBytes(1, jchannelAddress_);
+    }
     if (!state_.isEmpty()) {
-      output.writeBytes(1, state_);
+      output.writeBytes(2, state_);
+    }
+    if (!target_.isEmpty()) {
+      output.writeBytes(3, target_);
     }
     unknownFields.writeTo(output);
   }
@@ -123,9 +163,17 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
+    if (!jchannelAddress_.isEmpty()) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeBytesSize(1, jchannelAddress_);
+    }
     if (!state_.isEmpty()) {
       size += com.google.protobuf.CodedOutputStream
-        .computeBytesSize(1, state_);
+        .computeBytesSize(2, state_);
+    }
+    if (!target_.isEmpty()) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeBytesSize(3, target_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -142,8 +190,12 @@ private static final long serialVersionUID = 0L;
     }
     io.grpc.jchannelRpc.StateRep other = (io.grpc.jchannelRpc.StateRep) obj;
 
+    if (!getJchannelAddress()
+        .equals(other.getJchannelAddress())) return false;
     if (!getState()
         .equals(other.getState())) return false;
+    if (!getTarget()
+        .equals(other.getTarget())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -155,8 +207,12 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
+    hash = (37 * hash) + JCHANNEL_ADDRESS_FIELD_NUMBER;
+    hash = (53 * hash) + getJchannelAddress().hashCode();
     hash = (37 * hash) + STATE_FIELD_NUMBER;
     hash = (53 * hash) + getState().hashCode();
+    hash = (37 * hash) + TARGET_FIELD_NUMBER;
+    hash = (53 * hash) + getTarget().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -290,7 +346,11 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      jchannelAddress_ = com.google.protobuf.ByteString.EMPTY;
+
       state_ = com.google.protobuf.ByteString.EMPTY;
+
+      target_ = com.google.protobuf.ByteString.EMPTY;
 
       return this;
     }
@@ -318,7 +378,9 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public io.grpc.jchannelRpc.StateRep buildPartial() {
       io.grpc.jchannelRpc.StateRep result = new io.grpc.jchannelRpc.StateRep(this);
+      result.jchannelAddress_ = jchannelAddress_;
       result.state_ = state_;
+      result.target_ = target_;
       onBuilt();
       return result;
     }
@@ -367,8 +429,14 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(io.grpc.jchannelRpc.StateRep other) {
       if (other == io.grpc.jchannelRpc.StateRep.getDefaultInstance()) return this;
+      if (other.getJchannelAddress() != com.google.protobuf.ByteString.EMPTY) {
+        setJchannelAddress(other.getJchannelAddress());
+      }
       if (other.getState() != com.google.protobuf.ByteString.EMPTY) {
         setState(other.getState());
+      }
+      if (other.getTarget() != com.google.protobuf.ByteString.EMPTY) {
+        setTarget(other.getTarget());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -399,9 +467,43 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    private com.google.protobuf.ByteString jchannelAddress_ = com.google.protobuf.ByteString.EMPTY;
+    /**
+     * <code>bytes jchannel_address = 1;</code>
+     * @return The jchannelAddress.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString getJchannelAddress() {
+      return jchannelAddress_;
+    }
+    /**
+     * <code>bytes jchannel_address = 1;</code>
+     * @param value The jchannelAddress to set.
+     * @return This builder for chaining.
+     */
+    public Builder setJchannelAddress(com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      jchannelAddress_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>bytes jchannel_address = 1;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearJchannelAddress() {
+      
+      jchannelAddress_ = getDefaultInstance().getJchannelAddress();
+      onChanged();
+      return this;
+    }
+
     private com.google.protobuf.ByteString state_ = com.google.protobuf.ByteString.EMPTY;
     /**
-     * <code>bytes state = 1;</code>
+     * <code>bytes state = 2;</code>
      * @return The state.
      */
     @java.lang.Override
@@ -409,7 +511,7 @@ private static final long serialVersionUID = 0L;
       return state_;
     }
     /**
-     * <code>bytes state = 1;</code>
+     * <code>bytes state = 2;</code>
      * @param value The state to set.
      * @return This builder for chaining.
      */
@@ -423,12 +525,46 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>bytes state = 1;</code>
+     * <code>bytes state = 2;</code>
      * @return This builder for chaining.
      */
     public Builder clearState() {
       
       state_ = getDefaultInstance().getState();
+      onChanged();
+      return this;
+    }
+
+    private com.google.protobuf.ByteString target_ = com.google.protobuf.ByteString.EMPTY;
+    /**
+     * <code>bytes target = 3;</code>
+     * @return The target.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString getTarget() {
+      return target_;
+    }
+    /**
+     * <code>bytes target = 3;</code>
+     * @param value The target to set.
+     * @return This builder for chaining.
+     */
+    public Builder setTarget(com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      target_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>bytes target = 3;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearTarget() {
+      
+      target_ = getDefaultInstance().getTarget();
       onChanged();
       return this;
     }

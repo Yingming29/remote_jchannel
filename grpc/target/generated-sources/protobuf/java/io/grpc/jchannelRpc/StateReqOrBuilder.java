@@ -8,20 +8,20 @@ public interface StateReqOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string jchannel_address = 1;</code>
+   * <code>bytes jchannel_address = 1;</code>
    * @return The jchannelAddress.
    */
-  java.lang.String getJchannelAddress();
-  /**
-   * <code>string jchannel_address = 1;</code>
-   * @return The bytes for jchannelAddress.
-   */
-  com.google.protobuf.ByteString
-      getJchannelAddressBytes();
+  com.google.protobuf.ByteString getJchannelAddress();
 
   /**
    * <code>bytes target = 2;</code>
    * @return The target.
    */
   com.google.protobuf.ByteString getTarget();
+
+  /**
+   * <code>uint64 timeout = 3;</code>
+   * @return The timeout.
+   */
+  long getTimeout();
 }

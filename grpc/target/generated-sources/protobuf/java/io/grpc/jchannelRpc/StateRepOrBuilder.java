@@ -8,8 +8,20 @@ public interface StateRepOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>bytes state = 1;</code>
+   * <code>bytes jchannel_address = 1;</code>
+   * @return The jchannelAddress.
+   */
+  com.google.protobuf.ByteString getJchannelAddress();
+
+  /**
+   * <code>bytes state = 2;</code>
    * @return The state.
    */
   com.google.protobuf.ByteString getState();
+
+  /**
+   * <code>bytes target = 3;</code>
+   * @return The target.
+   */
+  com.google.protobuf.ByteString getTarget();
 }
