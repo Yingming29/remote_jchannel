@@ -12,6 +12,7 @@ import org.jgroups.util.UUID;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -27,6 +28,7 @@ public class NodeJChannel implements Receiver{
     String grpcAddress;
     ConcurrentHashMap nodesMap;
     ConcurrentHashMap serviceMap;
+    LinkedList<Message> state;
 
     NodeJChannel(String node_name, String cluster_name, String grpcAddress) throws Exception {
         this.channel = new JChannel("grpc/protocols/udp.xml");
@@ -42,7 +44,7 @@ public class NodeJChannel implements Receiver{
         this.serviceMap.put("ClientCluster", new ClusterMap());
         // put itself into available nodes list
         this.nodesMap.put(this.channel.getAddress(), this.grpcAddress);
-
+        this.state = new LinkedList<>();
         System.out.println("[JChannel] The current nodes in node cluster: " + this.nodesMap);
     }
 
@@ -62,11 +64,15 @@ public class NodeJChannel implements Receiver{
             receiveProtobufMsg(msg);
         } else if (msg.getObject() instanceof MessageReqRep){
             System.out.println("Receive a MessageReqRep from other JChannel-server for sending Message.");
-
         } else if (msg.getObject() instanceof ChannelMsg){
             receiveChannelMsg(msg);
         } else if (msg.getObject() instanceof Request){
             receiveProtobufMsg(msg);
+        } else{
+            // receive common Message from other real common JChannels
+            synchronized (state){
+                state.add(msg);
+            }
         }
 
 
@@ -201,7 +207,19 @@ public class NodeJChannel implements Receiver{
                 lock.lock();
                 try{
                     ClusterMap cm = (ClusterMap) serviceMap.get("ClientCluster");
-                    cm.addHistory(msgReq);
+                    // cm.addHistory(msgReq);
+                    this.service.broadcast(msgReq);
+                    state.add(msgObj);
+                } finally {
+                    lock.unlock();
+                }
+            } else if (msgObj.getDest() == this.channel.getAddress()){
+                System.out.println("[JChannel] Receive a send() request for broadcast to JChannl-Clients, the Dest is equal to the Address of this JChannel.");
+                lock.lock();
+                try{
+                    ClusterMap cm = (ClusterMap) serviceMap.get("ClientCluster");
+                    // cm.addHistory(msgReq);
+                    state.add(msgObj);
                     this.service.broadcast(msgReq);
                 } finally {
                     lock.unlock();

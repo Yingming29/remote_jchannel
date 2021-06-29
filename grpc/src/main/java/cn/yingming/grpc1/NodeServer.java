@@ -187,9 +187,10 @@ public class NodeServer {
                                 stateReq.getCluster());
                         lock.lock();
                         try {
+                            /*
                             // generate the history
                             ClusterMap cm = (ClusterMap) jchannel.serviceMap.get(stateReq.getCluster());
-                            StateRep stateRep = cm.generateState();
+                            // StateRep stateRep = cm.generateState();
                             Response rep = Response.newBuilder()
                                     .setStateRep(stateRep)
                                     .build();
@@ -201,6 +202,8 @@ public class NodeServer {
                                     // System.out.println("rep: " + rep);
                                 }
                             }
+
+                             */
                         } finally {
                             lock.unlock();
                         }
@@ -422,7 +425,7 @@ public class NodeServer {
                             try{
                                 // add to history
                                 ClusterMap cm = (ClusterMap) jchannel.serviceMap.get("ClientCluster");
-                                cm.addHistory(msgReq);
+                                // cm.addHistory(msgReq);
                                 // forward msg to other nodes
                                 forwardMsg(req);
                                 // send msg to its gRPC clients // change
