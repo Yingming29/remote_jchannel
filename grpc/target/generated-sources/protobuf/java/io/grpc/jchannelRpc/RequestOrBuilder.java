@@ -202,5 +202,20 @@ public interface RequestOrBuilder extends
    */
   io.grpc.jchannelRpc.GetStatsReqOrBuilder getGetStatReqOrBuilder();
 
+  /**
+   * <code>.cn.yingming.grpc1.DumpStatsReq dumpStatsReq = 14;</code>
+   * @return Whether the dumpStatsReq field is set.
+   */
+  boolean hasDumpStatsReq();
+  /**
+   * <code>.cn.yingming.grpc1.DumpStatsReq dumpStatsReq = 14;</code>
+   * @return The dumpStatsReq.
+   */
+  io.grpc.jchannelRpc.DumpStatsReq getDumpStatsReq();
+  /**
+   * <code>.cn.yingming.grpc1.DumpStatsReq dumpStatsReq = 14;</code>
+   */
+  io.grpc.jchannelRpc.DumpStatsReqOrBuilder getDumpStatsReqOrBuilder();
+
   public io.grpc.jchannelRpc.Request.OneTypeCase getOneTypeCase();
 }

@@ -1,5 +1,6 @@
 package cn.yingming.grpc1;
 
+import io.grpc.jchannelRpc.DumpStatsReq;
 import org.jgroups.*;
 import org.jgroups.stack.AddressGenerator;
 import org.jgroups.stack.ProtocolStack;
@@ -37,10 +38,11 @@ public class RemoteJChannel extends JChannel {
     // whether stats?
     public boolean stats;
     // record for stats of remote jchannel
-    public ReceiverRJ receiver;
+    public Receiver receiver;
     public Object obj;
     public String remoteProtocolStack_string;
     public String property;
+    public Map<String, Map<String, Object>> statsMap;
 
     public RemoteJChannel(String address) throws Exception{
         this.address = address;
@@ -69,6 +71,7 @@ public class RemoteJChannel extends JChannel {
         this.remoteProtocolStack_string = null;
         this.remoteView = new View();
         this.property = null;
+        this.statsMap = null;
     }
 
     @Override
@@ -78,11 +81,6 @@ public class RemoteJChannel extends JChannel {
 
     @Override
     public JChannel setReceiver(Receiver r) {
-        throw new UnsupportedOperationException("RemoteJChannel does not have Receiver. " +
-                "receiver() does not return anything.");
-    }
-
-    public JChannel setReceiverRJ(ReceiverRJ r) {
         if (this.isWork.get()){
             System.out.println("The RemoteJChannel is working.");
         } else{
@@ -93,8 +91,12 @@ public class RemoteJChannel extends JChannel {
 
     @Override
     public JChannel receiver(Receiver r) {
-        throw new UnsupportedOperationException("RemoteJChannel does not have Receiver. " +
-                "receiver() does not return anything.");
+        if (this.isWork.get()){
+            System.out.println("The RemoteJChannel is working.");
+        } else{
+            this.receiver = r;
+        }
+        return this;
     }
 
     @Override
@@ -337,7 +339,7 @@ public class RemoteJChannel extends JChannel {
 
     // get the ClientCluster name
     public String getLocalClusterName(){
-        return this.isWork.get() != false ? this.cluster : null;
+        return this.isWork.get() ? this.cluster : null;
     }
 
     @Override
@@ -439,25 +441,58 @@ public class RemoteJChannel extends JChannel {
 
     @Override
     public Map<String, Map<String, Object>> dumpStats() {
-        throw new UnsupportedOperationException("RemoteJChannel does not have ProtocolStack.");
+        if (!isWork.get()){
+            System.out.println("The RemoteJChannel client does not work. Return null");
+            return null;
+        }
+        DumpStatsReq dumpStatsReq = DumpStatsReq.newBuilder().setJchannelAddress(this.jchannel_address.toString()).build();
+        this.clientStub.add_save(dumpStatsReq);
+        synchronized (obj){
+            try{
+                obj.wait(5000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return this.statsMap;
     }
 
     @Override
     public Map<String, Map<String, Object>> dumpStats(String protocol_name, List<String> attrs) {
-        throw new UnsupportedOperationException("RemoteJChannel does not have ProtocolStack.");
+        if (!isWork.get()){
+            System.out.println("The RemoteJChannel client does not work. Return null");
+            return null;
+        }
+        DumpStatsReq dumpStatsReq = DumpStatsReq.newBuilder().setProtocolName(protocol_name).addAllAttrs(attrs).setJchannelAddress(this.jchannel_address.toString()).build();
+        this.clientStub.add_save(dumpStatsReq);
+        synchronized (obj){
+            try{
+                obj.wait(5000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return this.statsMap;
     }
 
     @Override
     public Map<String, Map<String, Object>> dumpStats(String protocol_name) {
-        throw new UnsupportedOperationException("RemoteJChannel does not have ProtocolStack.");
+        if (!isWork.get()){
+            System.out.println("The RemoteJChannel client does not work. Return null");
+            return null;
+        }
+        DumpStatsReq dumpStatsReq = DumpStatsReq.newBuilder().setProtocolName(protocol_name).setJchannelAddress(this.jchannel_address.toString()).build();
+        this.clientStub.add_save(dumpStatsReq);
+        synchronized (obj){
+            try{
+                obj.wait(5000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return this.statsMap;
     }
 
-
-    // incomplete
-    // return object or print string?
-    public void remoteJChannelDumpStats(){
-         // return this.stats_obj;
-    }
 
     @Override
     public synchronized JChannel connect(String cluster_name) throws Exception {

@@ -230,6 +230,20 @@ private static final long serialVersionUID = 0L;
             oneTypeCase_ = 13;
             break;
           }
+          case 114: {
+            io.grpc.jchannelRpc.DumpStatsReq.Builder subBuilder = null;
+            if (oneTypeCase_ == 14) {
+              subBuilder = ((io.grpc.jchannelRpc.DumpStatsReq) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.DumpStatsReq.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.DumpStatsReq) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 14;
+            break;
+          }
           default: {
             if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -280,6 +294,7 @@ private static final long serialVersionUID = 0L;
     GETPROPERTYREQ(11),
     SETSTATSREQ(12),
     GETSTATREQ(13),
+    DUMPSTATSREQ(14),
     ONETYPE_NOT_SET(0);
     private final int value;
     private OneTypeCase(int value) {
@@ -310,6 +325,7 @@ private static final long serialVersionUID = 0L;
         case 11: return GETPROPERTYREQ;
         case 12: return SETSTATSREQ;
         case 13: return GETSTATREQ;
+        case 14: return DUMPSTATSREQ;
         case 0: return ONETYPE_NOT_SET;
         default: return null;
       }
@@ -728,6 +744,37 @@ private static final long serialVersionUID = 0L;
     return io.grpc.jchannelRpc.GetStatsReq.getDefaultInstance();
   }
 
+  public static final int DUMPSTATSREQ_FIELD_NUMBER = 14;
+  /**
+   * <code>.cn.yingming.grpc1.DumpStatsReq dumpStatsReq = 14;</code>
+   * @return Whether the dumpStatsReq field is set.
+   */
+  @java.lang.Override
+  public boolean hasDumpStatsReq() {
+    return oneTypeCase_ == 14;
+  }
+  /**
+   * <code>.cn.yingming.grpc1.DumpStatsReq dumpStatsReq = 14;</code>
+   * @return The dumpStatsReq.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.DumpStatsReq getDumpStatsReq() {
+    if (oneTypeCase_ == 14) {
+       return (io.grpc.jchannelRpc.DumpStatsReq) oneType_;
+    }
+    return io.grpc.jchannelRpc.DumpStatsReq.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.DumpStatsReq dumpStatsReq = 14;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.DumpStatsReqOrBuilder getDumpStatsReqOrBuilder() {
+    if (oneTypeCase_ == 14) {
+       return (io.grpc.jchannelRpc.DumpStatsReq) oneType_;
+    }
+    return io.grpc.jchannelRpc.DumpStatsReq.getDefaultInstance();
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -780,6 +827,9 @@ private static final long serialVersionUID = 0L;
     }
     if (oneTypeCase_ == 13) {
       output.writeMessage(13, (io.grpc.jchannelRpc.GetStatsReq) oneType_);
+    }
+    if (oneTypeCase_ == 14) {
+      output.writeMessage(14, (io.grpc.jchannelRpc.DumpStatsReq) oneType_);
     }
     unknownFields.writeTo(output);
   }
@@ -841,6 +891,10 @@ private static final long serialVersionUID = 0L;
     if (oneTypeCase_ == 13) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(13, (io.grpc.jchannelRpc.GetStatsReq) oneType_);
+    }
+    if (oneTypeCase_ == 14) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(14, (io.grpc.jchannelRpc.DumpStatsReq) oneType_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -911,6 +965,10 @@ private static final long serialVersionUID = 0L;
         if (!getGetStatReq()
             .equals(other.getGetStatReq())) return false;
         break;
+      case 14:
+        if (!getDumpStatsReq()
+            .equals(other.getDumpStatsReq())) return false;
+        break;
       case 0:
       default:
     }
@@ -977,6 +1035,10 @@ private static final long serialVersionUID = 0L;
       case 13:
         hash = (37 * hash) + GETSTATREQ_FIELD_NUMBER;
         hash = (53 * hash) + getGetStatReq().hashCode();
+        break;
+      case 14:
+        hash = (37 * hash) + DUMPSTATSREQ_FIELD_NUMBER;
+        hash = (53 * hash) + getDumpStatsReq().hashCode();
         break;
       case 0:
       default:
@@ -1233,6 +1295,13 @@ private static final long serialVersionUID = 0L;
           result.oneType_ = getStatReqBuilder_.build();
         }
       }
+      if (oneTypeCase_ == 14) {
+        if (dumpStatsReqBuilder_ == null) {
+          result.oneType_ = oneType_;
+        } else {
+          result.oneType_ = dumpStatsReqBuilder_.build();
+        }
+      }
       result.oneTypeCase_ = oneTypeCase_;
       onBuilt();
       return result;
@@ -1333,6 +1402,10 @@ private static final long serialVersionUID = 0L;
         }
         case GETSTATREQ: {
           mergeGetStatReq(other.getGetStatReq());
+          break;
+        }
+        case DUMPSTATSREQ: {
+          mergeDumpStatsReq(other.getDumpStatsReq());
           break;
         }
         case ONETYPE_NOT_SET: {
@@ -3214,6 +3287,147 @@ private static final long serialVersionUID = 0L;
       oneTypeCase_ = 13;
       onChanged();;
       return getStatReqBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.DumpStatsReq, io.grpc.jchannelRpc.DumpStatsReq.Builder, io.grpc.jchannelRpc.DumpStatsReqOrBuilder> dumpStatsReqBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.DumpStatsReq dumpStatsReq = 14;</code>
+     * @return Whether the dumpStatsReq field is set.
+     */
+    @java.lang.Override
+    public boolean hasDumpStatsReq() {
+      return oneTypeCase_ == 14;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.DumpStatsReq dumpStatsReq = 14;</code>
+     * @return The dumpStatsReq.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.DumpStatsReq getDumpStatsReq() {
+      if (dumpStatsReqBuilder_ == null) {
+        if (oneTypeCase_ == 14) {
+          return (io.grpc.jchannelRpc.DumpStatsReq) oneType_;
+        }
+        return io.grpc.jchannelRpc.DumpStatsReq.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 14) {
+          return dumpStatsReqBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.DumpStatsReq.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.DumpStatsReq dumpStatsReq = 14;</code>
+     */
+    public Builder setDumpStatsReq(io.grpc.jchannelRpc.DumpStatsReq value) {
+      if (dumpStatsReqBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        dumpStatsReqBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 14;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.DumpStatsReq dumpStatsReq = 14;</code>
+     */
+    public Builder setDumpStatsReq(
+        io.grpc.jchannelRpc.DumpStatsReq.Builder builderForValue) {
+      if (dumpStatsReqBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        dumpStatsReqBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 14;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.DumpStatsReq dumpStatsReq = 14;</code>
+     */
+    public Builder mergeDumpStatsReq(io.grpc.jchannelRpc.DumpStatsReq value) {
+      if (dumpStatsReqBuilder_ == null) {
+        if (oneTypeCase_ == 14 &&
+            oneType_ != io.grpc.jchannelRpc.DumpStatsReq.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.DumpStatsReq.newBuilder((io.grpc.jchannelRpc.DumpStatsReq) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 14) {
+          dumpStatsReqBuilder_.mergeFrom(value);
+        }
+        dumpStatsReqBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 14;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.DumpStatsReq dumpStatsReq = 14;</code>
+     */
+    public Builder clearDumpStatsReq() {
+      if (dumpStatsReqBuilder_ == null) {
+        if (oneTypeCase_ == 14) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 14) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        dumpStatsReqBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.DumpStatsReq dumpStatsReq = 14;</code>
+     */
+    public io.grpc.jchannelRpc.DumpStatsReq.Builder getDumpStatsReqBuilder() {
+      return getDumpStatsReqFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.DumpStatsReq dumpStatsReq = 14;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.DumpStatsReqOrBuilder getDumpStatsReqOrBuilder() {
+      if ((oneTypeCase_ == 14) && (dumpStatsReqBuilder_ != null)) {
+        return dumpStatsReqBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 14) {
+          return (io.grpc.jchannelRpc.DumpStatsReq) oneType_;
+        }
+        return io.grpc.jchannelRpc.DumpStatsReq.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.DumpStatsReq dumpStatsReq = 14;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.DumpStatsReq, io.grpc.jchannelRpc.DumpStatsReq.Builder, io.grpc.jchannelRpc.DumpStatsReqOrBuilder> 
+        getDumpStatsReqFieldBuilder() {
+      if (dumpStatsReqBuilder_ == null) {
+        if (!(oneTypeCase_ == 14)) {
+          oneType_ = io.grpc.jchannelRpc.DumpStatsReq.getDefaultInstance();
+        }
+        dumpStatsReqBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.DumpStatsReq, io.grpc.jchannelRpc.DumpStatsReq.Builder, io.grpc.jchannelRpc.DumpStatsReqOrBuilder>(
+                (io.grpc.jchannelRpc.DumpStatsReq) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 14;
+      onChanged();;
+      return dumpStatsReqBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

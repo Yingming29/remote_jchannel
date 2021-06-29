@@ -277,6 +277,29 @@ public class NodeServer {
                         System.out.println(rep);
                         responseObserver.onNext(rep);
 
+                    } else if(req.hasDumpStatsReq()){
+                        // getName() request
+                        DumpStatsReq dumpReq = req.getDumpStatsReq();
+                        System.out.println("[grpc] Receive the dumpStats() request for the JChannel-server name from JChannel-Client:"
+                                + dumpReq.getJchannelAddress());
+                        Map m = null;
+                        if (dumpReq.getAttrsList().size() == 0 && dumpReq.getProtocolName().equals("")){
+                            m = jchannel.channel.dumpStats();
+                        } else if (dumpReq.getAttrsList().size() == 0 && !dumpReq.getProtocolName().equals("")){
+                            m = jchannel.channel.dumpStats(dumpReq.getProtocolName());
+                        } else if (dumpReq.getAttrsList().size() > 0 && !dumpReq.getProtocolName().equals("")){
+                            List protocol_list = dumpReq.getAttrsList();
+                            m = jchannel.channel.dumpStats(dumpReq.getProtocolName(), protocol_list);
+                        } else {
+                            System.out.println("error dumpStats() with not correct data.");
+                            return;
+                        }
+                        byte[] b = UtilsRJ.serializeObj(m);
+                        DumpStatsRep dumpRep = DumpStatsRep.newBuilder().setSerializeMap(ByteString.copyFrom(b)).build();
+                        Response rep = Response.newBuilder().setDumpStatsRep(dumpRep).build();
+                        System.out.println(rep);
+                        responseObserver.onNext(rep);
+
                     } else if (req.hasGetStatReq()){
                         GetStatsReq getStatsReq = req.getGetStatReq();
                         System.out.println("[grpc] Receive the getStats() request for the JChannel-server name from JChannel-Client:"

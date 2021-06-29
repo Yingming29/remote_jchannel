@@ -116,6 +116,9 @@ public class RemoteJChannelStub {
             MessageReqRep msg = MessageReqRep.newBuilder().setMessageObj(ByteString.copyFrom(out.buffer())).setType(UtilsRJ.getMsgType(m)).build();
             Request req = Request.newBuilder().setMessageReqRep(msg).build();
             return req;
+        } else if (obj instanceof DumpStatsReq){
+            DumpStatsReq dumpReq = (DumpStatsReq) obj;
+            return Request.newBuilder().setDumpStatsReq(dumpReq).build();
         }
         return null;
     }
@@ -180,6 +183,13 @@ public class RemoteJChannelStub {
             GetNameRep getNameRep = response.getGetNameRep();
             System.out.println("getName() response:" + getNameRep);
             this.client.remoteName = getNameRep.getName();
+            synchronized (this.client.obj) {
+                this.client.obj.notify();
+            }
+        } else if(response.hasDumpStatsRep()){
+            DumpStatsRep dumpRep = response.getDumpStatsRep();
+            System.out.println("dumpStats() response:" + dumpRep);
+            this.client.statsMap = (Map<String, Map<String, Object>>) UtilsRJ.unserializeObj(dumpRep.getSerializeMap().toByteArray());
             synchronized (this.client.obj) {
                 this.client.obj.notify();
             }
@@ -254,7 +264,7 @@ public class RemoteJChannelStub {
             if (this.client.receiver != null) {
                 try {
                     Message msg = UtilsRJ.convertMessage(response.getMessageReqRep());
-                    this.client.receiver.receiveRJ(msg);
+                    this.client.receiver.receive(msg);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -301,7 +311,7 @@ public class RemoteJChannelStub {
             // change:  add receiver of remote// viewAccepted
             if (this.client.receiver != null) {
                 try {
-                    this.client.receiver.viewAcceptedRJ(new_view);
+                    this.client.receiver.viewAccepted(new_view);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -314,7 +324,8 @@ public class RemoteJChannelStub {
             //  + " jchannel address: " + msg_obj.getJchannelAddress());
             if (this.client.receiver != null) {
                 try {
-                    this.client.receiver.setStateRJ(state.getOneOfHistoryList());
+                    // change
+                    // this.client.receiver.setState(state.getOneOfHistoryList());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -334,7 +345,7 @@ public class RemoteJChannelStub {
                                 .setJchannelAddress(this.client.jchannel_address.toString())
                                 //.setSource(this.client.uuid)
                                 .setTarget(msg1.getJchannelAddress())
-                                .addAllOneOfHistory(this.client.receiver.getStateRJ())
+                                // .addAllOneOfHistory(this.client.receiver.getStateRJ())
                                 .build();
                         Request req = Request.newBuilder()
                                 .setStateMsg2(msg2)
@@ -352,7 +363,7 @@ public class RemoteJChannelStub {
             StateMsg_withTarget_2 msg = response.getStateMsg2();
             if (this.client.receiver != null) {
                 try {
-                    this.client.receiver.setStateRJ(msg.getOneOfHistoryList());
+                    // this.client.receiver.setStateRJ(msg.getOneOfHistoryList());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

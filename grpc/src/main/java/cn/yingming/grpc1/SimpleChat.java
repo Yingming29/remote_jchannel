@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.jgroups.*;
 import org.jgroups.stack.ProtocolStack;
@@ -20,6 +21,7 @@ public class SimpleChat extends JChannel implements Receiver{
 	private void start() throws Exception {
 		channel = new SimpleChat();
 		channel.setReceiver(this).connect("ChatCluster");
+		//channel.setStats(true);
 		eventLoop();
 		channel.close();
 	}
@@ -31,11 +33,9 @@ public class SimpleChat extends JChannel implements Receiver{
 	}
 	@Override
 	public void receive(Message msg) {
-		System.out.println("1?");
-		String line = msg.getSrc() + ":" + msg.getPayload();
-		System.out.println("Before decode:" + line);
-		System.out.println(msg.toString());
-
+		//String line = msg.getSrc() + ":" + msg.getPayload();
+		//System.out.println(line);
+		System.out.println(msg);
 		// String content = new String((byte[]) msg.getPayload());
 		// line = msg.getSrc() + ":" + content;
 		// System.out.println("After decode:" + line);
@@ -59,7 +59,6 @@ public class SimpleChat extends JChannel implements Receiver{
 		} catch(Exception e){
 			e.printStackTrace();
 		}
-
 		 */
 
 		// System.out.println(channel.printProtocolSpec(true));
@@ -77,7 +76,37 @@ public class SimpleChat extends JChannel implements Receiver{
 				if (line.startsWith("quit") || line.startsWith("exit")) {
 					break;
 				}
+				Message msg = new ObjectMessage(channel.view.getCoord(), line);
+				channel.send(msg);
+				System.out.println(channel.view.getCoord());
+				/*
+				Map<String,Map<String,Object>> m = channel.dumpStats();
+				for (String each:m.keySet()) {
+					for (String each2: m.get(each).keySet()){
+						if (!(m.get(each).get(each2) instanceof String)){
+							System.out.println(m.get(each).get(each2));
+							System.out.println(m.get(each).get(each2).getClass());
+						}
+					}
+				}
+				System.out.println("------------------");
+				System.out.println(m);
 				byte[] b = line.getBytes();
+				channel.send(null,b);
+
+				 */
+			/*
+				byte[] byte_map = UtilsRJ.serializeObj(m);
+
+				Object obj_map = UtilsRJ.unserializeObj(byte_map);
+				if (obj_map != null) {
+					System.out.println(obj_map.getClass());
+					System.out.println(obj_map);
+				}
+
+			 */
+
+
 				/*
 				Address add = this.generateAddress();
 				System.out.println(add);

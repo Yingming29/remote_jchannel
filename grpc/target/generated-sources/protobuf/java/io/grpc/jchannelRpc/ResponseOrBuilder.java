@@ -310,5 +310,20 @@ public interface ResponseOrBuilder extends
    */
   io.grpc.jchannelRpc.GetStatsRepOrBuilder getGetStatsRepOrBuilder();
 
+  /**
+   * <code>.cn.yingming.grpc1.DumpStatsRep dumpStatsRep = 18;</code>
+   * @return Whether the dumpStatsRep field is set.
+   */
+  boolean hasDumpStatsRep();
+  /**
+   * <code>.cn.yingming.grpc1.DumpStatsRep dumpStatsRep = 18;</code>
+   * @return The dumpStatsRep.
+   */
+  io.grpc.jchannelRpc.DumpStatsRep getDumpStatsRep();
+  /**
+   * <code>.cn.yingming.grpc1.DumpStatsRep dumpStatsRep = 18;</code>
+   */
+  io.grpc.jchannelRpc.DumpStatsRepOrBuilder getDumpStatsRepOrBuilder();
+
   public io.grpc.jchannelRpc.Response.OneTypeCase getOneTypeCase();
 }

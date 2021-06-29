@@ -6,6 +6,8 @@ import org.jgroups.util.UUID;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SimpleChatRJ {
 
@@ -16,7 +18,7 @@ public class SimpleChatRJ {
 
         receiver = new ReceiverRJ();
         remoteJChannel = new RemoteJChannel(server_address);
-        remoteJChannel.setReceiverRJ(receiver);
+        remoteJChannel.setReceiver(receiver);
         //remoteJChannel.setDiscardOwnMessages(true);
         //remoteJChannel.setStats(true);
         remoteJChannel.connect(cluster);
@@ -66,6 +68,19 @@ public class SimpleChatRJ {
                         System.out.println("setStats(true) for Real JChannel Address (JChannel Server):" + remoteJChannel.setStats(true));
                     } else if (strs[1].equals("false")){
                         System.out.println("setStats(false) for Real JChannel Address (JChannel Server):" + remoteJChannel.setStats(false));
+                    }
+                } else if (line.startsWith("dumpStats()")){
+                    String[] strs = line.split(" ");
+                    if (strs.length == 1){
+                        System.out.println("dumpStats() for real JChannel Address (JChannel Server):" + remoteJChannel.dumpStats());
+                    } else if (strs.length == 2){
+                        System.out.println("dumpStats(Protocol_name) for real JChannel (JChannel Server):"+remoteJChannel.dumpStats(strs[1]));
+                    } else if (strs.length > 2){
+                        ArrayList attr_list = new ArrayList<String>();
+                        for (int i = 2; i < strs.length; i++) {
+                            attr_list.add(strs[i]);
+                        }
+                        System.out.println("dumpStats(Protocol_name, attrs) for real JChannel (JChannel Server):" + remoteJChannel.dumpStats(strs[1], attr_list));
                     }
                 } else if (line.startsWith("unicast")) {
                     // example: unicast content server/client 1

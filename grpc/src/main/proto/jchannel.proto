@@ -26,6 +26,8 @@ message Request{
     GetPropertyReq getPropertyReq = 11;
     SetStatsReq setStatsReq = 12;
     GetStatsReq getStatReq = 13;
+    DumpStatsReq dumpStatsReq = 14;
+    DiscardOwnMsgReq discardOwnMsgReq = 15;
   }
 }
 message Response{
@@ -47,7 +49,24 @@ message Response{
     GetPropertyRep getPropertyRep = 15;
     SetStatsRep setStatsRep = 16;
     GetStatsRep getStatsRep = 17;
+    DumpStatsRep dumpStatsRep = 18;
+    DiscardOwnMsgRep discardOwnRep = 19;
   }
+}
+message DiscardOwnMsgReq{
+  string jchannal_address = 1;
+  bool discard = 2;
+}
+message DiscardOwnMsgRep{
+  bool discard = 1;
+}
+message DumpStatsReq{
+  string jchannel_address = 1;
+  string protocol_name = 2;
+  repeated string attrs = 3;
+}
+message DumpStatsRep{
+  bytes serializeMap = 1;
 }
 message GetStatsReq{
   string jchannel_address = 1;
