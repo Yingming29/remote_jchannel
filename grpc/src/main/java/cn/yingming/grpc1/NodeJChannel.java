@@ -71,6 +71,7 @@ public class NodeJChannel implements Receiver{
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            System.out.println("[JChannel] Receive a message from real common JChannel:" + msg);
             MessageReqRep msgRep = MessageReqRep.newBuilder().setType(UtilsRJ.getMsgType(msg)).setMessageObj(ByteString.copyFrom(b)).build();
             Response rep = Response.newBuilder().setMessageReqRep(msgRep).build();
             service.broadcastResponse(rep);
@@ -207,7 +208,7 @@ public class NodeJChannel implements Receiver{
             MessageReqRep msgReq = ((Request) msg.getObject()).getMessageReqRep();
             Message msgObj = UtilsRJ.convertMessage(msgReq);
             if (msgObj.getDest() == null){
-                System.out.println("[JChannel] Receive a shared send() request for broadcast to JChannl-Clients.");
+                System.out.println("[JChannel] Receive a shared send() request for broadcast to JChannl-Clients, dest of Message == null.");
                 lock.lock();
                 try{
                     ClusterMap cm = (ClusterMap) serviceMap.get("ClientCluster");
@@ -218,7 +219,7 @@ public class NodeJChannel implements Receiver{
                     lock.unlock();
                 }
             } else if (msgObj.getDest() == this.channel.getAddress()){
-                System.out.println("[JChannel] Receive a send() request for broadcast to JChannl-Clients, the Dest is equal to the Address of this JChannel.");
+                System.out.println("[JChannel] Receive a send() request for broadcast to JChannl-Clients, dest == the Address of this JChannel.");
                 lock.lock();
                 try{
                     ClusterMap cm = (ClusterMap) serviceMap.get("ClientCluster");

@@ -336,10 +336,11 @@ public class RemoteJChannelStub {
             // change to receiver, remove printMsg
             if (this.client.receiver != null) {
                 try {
-                    Message msg = UtilsRJ.convertMessage(response.getMessageReqRep());
+                    Message msg = Util.objectFromByteBuffer(response.getMessageReqRep().getMessageObj().toByteArray());
+                    // Message msg = UtilsRJ.convertMessage(response.getMessageReqRep());
                     this.client.receiver.receive(msg);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    // e.printStackTrace();
                 }
             } else {
                 System.out.println("Receive message, but RemoteJChannel does not have receiver.");

@@ -416,11 +416,17 @@ public class NodeServer {
                         Message msgObj = UtilsRJ.convertMessage(msgReq);
                         System.out.println("[grpc] Receive a Message from JChannel-client: " + msgObj);
                         Address dest = msgObj.getDest();
-
                         // dest == this JChannel-Server
-                        if (dest.equals(jchannel.channel.getAddress())){
+                        if (dest == null) {
+                            forwardMsg(req);
+                            forwardMsgToJChannel(msgObj);
+                        } else if (dest.equals(jchannel.channel.getAddress())){
                             // change
-                            broadcast(msgReq);
+                            try {
+                                jchannel.channel.send(jchannel.channel.getAddress(), msgReq);
+                            } catch (Exception e){
+                                e.printStackTrace();
+                            }
                             // dest == a JChannel-Client, which is connected to this JChannel-Server
                         } else if (clients.containsKey(dest)){
                             unicast(msgReq);
@@ -431,9 +437,20 @@ public class NodeServer {
                             } catch (Exception e){
                                 e.printStackTrace();
                             }
-                            // dest is a common JChannel, without
+                            // dest is a common JChannel, without having a gRPC address
                         } else if (!(jchannel.nodesMap.containsKey(dest)) && jchannel.channel.getView().containsMember(dest)){
-
+                            try {
+                                msgObj.setSrc(jchannel.channel.getAddress());
+                                jchannel.channel.send(msgObj);
+                            } catch (Exception e){
+                                e.printStackTrace();
+                            }
+                            // dest == a JChannel-Client, which is connected to other JChannel-Server
+                        } else if (!(clients.containsKey(dest) && !(jchannel.channel.getView().containsMember(dest)))){
+                            forwardMsg(req);
+                            // dest == all JChannel-Clients and all JChannel-Servers
+                        } else {
+                            System.out.println("[gRPC] Receive invalid message.");
                         }
                     }
                 }
@@ -449,9 +466,9 @@ public class NodeServer {
                         u.writeTo(out);
                         ChannelMsg channelMsg = ChannelMsg.newBuilder()
                                 .setType("[DisconnectNotGrace]").setContentByt(ByteString.copyFrom(out.buffer())).build();
-                        Message msg = new ObjectMessage(null, channelMsg);
-                        msg.setFlagIfAbsent(Message.TransientFlag.DONT_LOOPBACK);
-                        jchannel.channel.send(msg);
+                        // Message msg = new ObjectMessage(null, channelMsg);
+                        // msg.setFlagIfAbsent(Message.TransientFlag.DONT_LOOPBACK);
+                        forwardMsg(channelMsg);
                     } catch (Exception e) {
                         e.printStackTrace();
                     } finally {
@@ -710,18 +727,51 @@ public class NodeServer {
             }
         }
 
+        // send message to all common JChannels
+        protected void forwardMsgToJChannel(Message msg){
+            msg.setSrc(jchannel.channel.getAddress());
+            for (Address address : jchannel.channel.getView().getMembers()){
+                if (!jchannel.nodesMap.containsKey(address)){
+                    try {
+                        jchannel.channel.send(msg);
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        protected void forwardMsg(ChannelMsg chmsg){
+            Message msg = new ObjectMessage(null, chmsg);
+            // send messages exclude itself.
+            msg.setFlagIfAbsent(Message.TransientFlag.DONT_LOOPBACK);
+            for (Address address: jchannel.nodesMap.keySet()) {
+                try {
+                    msg.setDest(address);
+                    this.jchannel.channel.send(msg);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            System.out.println("forwardMsg (ChannelMsg) to other JChannel-Servers: " + chmsg);
+        }
         protected void forwardMsg(Request req){
             Message msg = new ObjectMessage(null, req);
             // send messages exclude itself.
             if (!req.hasMessageReqRep()){
                 msg.setFlagIfAbsent(Message.TransientFlag.DONT_LOOPBACK);
             }
-            try {
-                this.jchannel.channel.send(msg);
-            } catch (Exception e) {
-                e.printStackTrace();
+
+            for (Address address: jchannel.nodesMap.keySet()) {
+                try {
+                    msg.setDest(address);
+                    this.jchannel.channel.send(msg);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-            System.out.println("forwardMsg(Request req): " + req);
+
+            System.out.println("forwardMsg (Request req) to other JChannel-Servers: " + req);
         }
     }
 
