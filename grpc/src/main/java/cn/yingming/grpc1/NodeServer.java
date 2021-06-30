@@ -99,6 +99,12 @@ public class NodeServer {
             return new StreamObserver<Request>() {
                 @Override
                 public void onNext(Request req) {
+                    for (Object obj:jchannel.nodesMap.keySet()){
+                        if (jchannel.nodesMap.get(obj).equals("unknown")){
+                            jchannel.nodesMap.remove(obj);
+                            System.out.println("Remove a node in the NodeMap, which does not contain gRPC address.");
+                        }
+                    }
                     /* Condition1
                        Receive the connect() request.
                      */
@@ -409,34 +415,25 @@ public class NodeServer {
                         MessageReqRep msgReq = req.getMessageReqRep();
                         Message msgObj = UtilsRJ.convertMessage(msgReq);
                         System.out.println("[grpc] Receive a Message from JChannel-client: " + msgObj);
-                        // Type1, broadcast
-                        if (msgObj.getDest() == null){
-                            System.out.println("[gRPC] Broadcast in the client cluster. ");
-                            lock.lock();
-                            try{
-                                // add to history
-                                ClusterMap cm = (ClusterMap) jchannel.serviceMap.get("ClientCluster");
-                                // cm.addHistory(msgReq);
-                                // forward msg to other nodes
-                                forwardMsg(req);
-                                // send msg to its gRPC clients // change
-                                // broadcast(msgReq);
+                        Address dest = msgObj.getDest();
 
-                            }finally {
-                                lock.unlock();
+                        // dest == this JChannel-Server
+                        if (dest.equals(jchannel.channel.getAddress())){
+                            // change
+                            broadcast(msgReq);
+                            // dest == a JChannel-Client, which is connected to this JChannel-Server
+                        } else if (clients.containsKey(dest)){
+                            unicast(msgReq);
+                            // dest == a JChannel-Server having a gRPC address
+                        } else if (jchannel.nodesMap.containsKey(dest)){
+                            try {
+                                jchannel.channel.send(dest, msgReq);
+                            } catch (Exception e){
+                                e.printStackTrace();
                             }
-                        // Type2, unicast
-                        } else{
-                            System.out.println("[gRPC] Unicast in the client cluster " + ", to " + msgObj.getDest());
-                            lock.lock();
-                            try{
-                                // forward msg to other JChannels
-                                forwardMsg(req);
-                                // send msg to its gRPC clients
-                                unicast(msgReq);
-                            }finally {
-                                lock.unlock();
-                            }
+                            // dest is a common JChannel, without
+                        } else if (!(jchannel.nodesMap.containsKey(dest)) && jchannel.channel.getView().containsMember(dest)){
+
                         }
                     }
                 }

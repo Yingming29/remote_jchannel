@@ -23,7 +23,7 @@ public class NodeJChannel implements Receiver{
     ReentrantLock lock;
     NodeServer.JChannelsServiceImpl service;
     String grpcAddress;
-    ConcurrentHashMap nodesMap;
+    ConcurrentHashMap<Address, String> nodesMap;
     ConcurrentHashMap serviceMap;
     LinkedList<Message> state;
 
@@ -59,14 +59,21 @@ public class NodeJChannel implements Receiver{
         } else if (msg.getObject() instanceof UpdateRepBetweenNodes) {
             System.out.println("Receive the response from the first JChannel-server for updating the previous information of clients.");
             receiveProtobufMsg(msg);
-        } else if (msg.getObject() instanceof MessageReqRep){
-            System.out.println("Receive a MessageReqRep from other JChannel-server for sending Message.");
         } else if (msg.getObject() instanceof ChannelMsg){
             receiveChannelMsg(msg);
         } else if (msg.getObject() instanceof Request){
             receiveProtobufMsg(msg);
         } else{
             // receive common Message from other real common JChannels
+            byte[] b = null;
+            try {
+                b = Util.objectToByteBuffer(msg);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            MessageReqRep msgRep = MessageReqRep.newBuilder().setType(UtilsRJ.getMsgType(msg)).setMessageObj(ByteString.copyFrom(b)).build();
+            Response rep = Response.newBuilder().setMessageReqRep(msgRep).build();
+            service.broadcastResponse(rep);
             synchronized (state){
                 state.add(msg);
             }
@@ -396,7 +403,7 @@ public class NodeJChannel implements Receiver{
                 System.out.println("[JChannel] Store new node inf.");
                 List compare = ListUtils.subtract(currentView, currentNodesList);
                 for (int i = 0; i < compare.size(); i++) {
-                    this.nodesMap.put(compare.get(i), "unknown");
+                    this.nodesMap.put((Address) compare.get(i), "unknown");
                 }
                 System.out.println("[JChannel] The current nodes in node cluster: " + this.nodesMap);
                 sendMyself();
