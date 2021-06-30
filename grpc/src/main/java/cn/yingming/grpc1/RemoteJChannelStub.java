@@ -609,6 +609,7 @@ public class RemoteJChannelStub {
                 // check loop for connection problem and input content, and send request.
                 this.checkLoop(this.stub.observer);
                 // System.out.println("222" + client.down.get());
+                // wait... notify
                 // reconnect part.
                 if (!client.down.get()){
                     try{
@@ -646,23 +647,13 @@ public class RemoteJChannelStub {
                     // System.out.println("2"+ Thread.currentThread());
                     Request msgReq = judgeRequest(obj);
                     requestSender.onNext(msgReq);
-                    /*
-                    try{
-                        if (this.stub.client.stats){
-                            this.stub.client.stats_obj.addRecord(msgReq);
-                        }
-                    } catch (Exception e){
-                        e.printStackTrace();
-                    }
 
-                     */
                     stubLock.lock();
                     try {
                         client.msgList.remove(0);
                     } finally {
                         stubLock.unlock();
                     }
-
 
                 } else if (!client.isWork.get()) {
                     break;
