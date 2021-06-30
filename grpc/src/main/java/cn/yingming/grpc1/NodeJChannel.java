@@ -237,14 +237,28 @@ public class NodeJChannel implements Receiver{
     }
 
     public void setState(InputStream input) throws Exception{
+        ReentrantLock lock = new ReentrantLock();
         List<Message> list;
         list = (List<Message>) Util.objectFromStream(new DataInputStream(input));
-        synchronized (state){
+        lock.lock();
+        try{
             state.clear();
             state.addAll(list);
+            System.out.println(list.size() + " messages in chat history.");
+            list.forEach(System.out::println);
+            System.out.println("JChannel setState(), broadcast the state to its all JChannel-Clients.");
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            this.getState(out);
+            StateRep stateRep = StateRep.newBuilder().setState(ByteString.copyFrom(out.toByteArray())).build();
+            Response rep = Response.newBuilder()
+                    .setStateRep(stateRep)
+                    .build();
+            // send to this client
+            service.broadcastResponse(rep);
+        } finally {
+            lock.unlock();
         }
-        System.out.println(list.size() + " messages in chat history.");
-        list.forEach(System.out::println);
+
     }
 
     public void receiveChannelMsg(Message msg){

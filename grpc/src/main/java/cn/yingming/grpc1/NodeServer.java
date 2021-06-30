@@ -187,8 +187,8 @@ public class NodeServer {
                         UUID source = null;
                         UUID target = null;
                         try {
-                            source = Util.objectFromByteBuffer(req.getStateReq().getJchannelAddress().toByteArray());
-                            target = Util.objectFromByteBuffer(req.getStateReq().getTarget().toByteArray());
+                            source = Util.objectFromByteBuffer(stateReq.getJchannelAddress().toByteArray());
+                            target = Util.objectFromByteBuffer(stateReq.getTarget().toByteArray());
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -200,27 +200,26 @@ public class NodeServer {
                             // generate the history from real JChannel
                             // ClusterMap cm = (ClusterMap) jchannel.serviceMap.get(stateReq.getCluster());
                             // StateRep stateRep = cm.generateState();
-                            if (target.equals(jchannel.channel.getAddress())){
-                                OutputStream out = new ByteArrayOutputStream();
-
+                            if (target.equals(jchannel.channel.getAddress()) || target == null){
+                                ByteArrayOutputStream out = new ByteArrayOutputStream();
                                 jchannel.getState(out);
-                                ByteArrayOutputStream out2 = (ByteArrayOutputStream) out;
-                                StateRep stateRep = StateRep.newBuilder().setState(ByteString.copyFrom(out2.toByteArray())).build();
+                                StateRep stateRep = StateRep.newBuilder().setState(ByteString.copyFrom(out.toByteArray())).build();
                                 Response rep = Response.newBuilder()
                                         .setStateRep(stateRep)
                                         .build();
                                 // send to this client
-                                for (Address uuid : clients.keySet()) {
-                                    if (source.equals(uuid)){
-                                        clients.get(uuid).onNext(rep);
-                                        System.out.println("state: " + rep);
-                                    }
+                                broadcastResponse(rep);
+                            } else if (jchannel.channel.getView().containsMember(target) && !target.equals(jchannel.channel.getAddress())){
+                                // Invoke the real getState() of JChannel to other JChannel.
+                                if (stateReq.getTimeout() != 0) {
+                                    System.out.println("JChannel invokes getState(Target, Timeout)");
+                                    jchannel.channel.getState(target, stateReq.getTimeout());
+                                } else{
+                                    System.out.println("JChannel invokes getState(Target, Timeout(default))");
+                                    jchannel.channel.getState(target, 2000);
                                 }
-                            } else if (jchannel.channel.getView().containsMember(target)){
-
-
                             } else {
-                                ClusterMap clusterObj = (ClusterMap) this.serviceMap.get("ClientCluster");
+                                System.out.println("Invalid target Address of getState()");
                             }
                         } catch (Exception e){
                             e.printStackTrace();
@@ -621,6 +620,7 @@ public class NodeServer {
                 lock.unlock();
             }
         }
+        /*
         public void unicast_stateMsg2(StateReq req){
 
             lock.lock();
@@ -664,6 +664,8 @@ public class NodeServer {
                 lock.unlock();
             }
         }
+
+         */
 
         public void unicast(MessageReqRep req){
             String msgCluster = "ClientCluster";
