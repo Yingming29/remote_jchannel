@@ -123,6 +123,7 @@ public class NodeServer {
                             generated_name = Util.generateLocalName();
                             System.out.println("New connected JChannel-Client, the server generates an Address for it: " +
                                     generated_address + ", and logical name : " + generated_name);
+
                         } else{
                             // 1. if it is not first connect, it will contain a JChannelAddress property.
                             UUID u = new UUID();
@@ -566,6 +567,7 @@ public class NodeServer {
                 responseObserver.onNext(rep);
                 // String cluster, Address JChannel_address, String generated_name
                 // <cluster, <uuid, JChanner_address>>
+                System.out.println("before"+jchannel.serviceMap.get("ClientCluster"));
                 jchannel.connectCluster(req.getCluster(), generated_address, generated_name);
 
                 // return response for updating the available servers
@@ -634,52 +636,6 @@ public class NodeServer {
                 lock.unlock();
             }
         }
-        /*
-        public void unicast_stateMsg2(StateReq req){
-
-            lock.lock();
-            try{
-                ClusterMap clusterObj = (ClusterMap) jchannel.serviceMap.get(msgCluster);
-                Response msg = Response.newBuilder().setStateMsg2(req).build();
-                for (Address add : clients.keySet()){
-                    if (clusterObj.getMap().containsKey(add)){
-                        if (clusterObj.getMap().get(add).equals(msgDest)){
-                            clients.get(add).onNext(msg);
-                            System.out.println("[gRPC] Send a message for getState(target) result to a JChannel-Client, " + clusterObj.getMap().get(add));
-                        }
-                    }
-                }
-                System.out.println("One unicast for state msg2.");
-
-            } finally {
-                lock.unlock();
-            }
-
-        }
-
-        public void unicast_stateMsg1(StateMsg_withTarget_1 req){
-            String msgCluster = req.getCluster();
-            String msgDest = req.getTarget();
-            lock.lock();
-            try{
-                ClusterMap clusterObj = (ClusterMap) jchannel.serviceMap.get(msgCluster);
-                Response msg = Response.newBuilder().setStateMsg1(req).build();
-                for (Address add : clients.keySet()){
-                    if (clusterObj.getMap().containsKey(add)){
-                        if (clusterObj.getMap().get(add).equals(msgDest)){
-                            clients.get(add).onNext(msg);
-                            System.out.println("[gRPC] Send a message for getState(target) to a JChannel-Client, " + clusterObj.getMap().get(add));
-                        }
-                    }
-                }
-                System.out.println("One unicast for state msg1.");
-
-            } finally {
-                lock.unlock();
-            }
-        }
-
-         */
 
         public void unicast(MessageReqRep req){
             String msgCluster = "ClientCluster";
@@ -756,18 +712,30 @@ public class NodeServer {
             System.out.println("forwardMsg (ChannelMsg) to other JChannel-Servers: " + chmsg);
         }
         protected void forwardMsg(Request req){
+            System.out.println("forwardMsg request" + req);
             Message msg = new ObjectMessage(null, req);
             // send messages exclude itself.
+
             if (!req.hasMessageReqRep()){
                 msg.setFlagIfAbsent(Message.TransientFlag.DONT_LOOPBACK);
-            }
-
-            for (Address address: jchannel.nodesMap.keySet()) {
-                try {
-                    msg.setDest(address);
-                    this.jchannel.channel.send(msg);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                for (Address address: jchannel.nodesMap.keySet()) {
+                    try {
+                        msg.setDest(address);
+                        System.out.println("one send 1");
+                        this.jchannel.channel.send(msg);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            } else {
+                for (Address address: jchannel.nodesMap.keySet()) {
+                    try {
+                        msg.setDest(address);
+                        System.out.println("one send 2");
+                        this.jchannel.channel.send(msg);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 

@@ -48,6 +48,7 @@ public class NodeJChannel implements Receiver{
 
     @Override
     public void receive(Message msg) {
+        System.out.println("first" + msg);
         /** two conditions for receiving Message,
          * 1.receive the Message from other real JChannel. They do not send any Protobuf message type.
          * 2.receive the Message from other JChannel-server. They can send message, which contains Protobuf message object.
