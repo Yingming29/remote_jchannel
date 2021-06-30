@@ -1,5 +1,6 @@
 package cn.yingming.grpc1;
 
+import org.jgroups.Address;
 import org.jgroups.util.NameCache;
 import org.jgroups.util.UUID;
 
@@ -133,6 +134,18 @@ public class SimpleChatRJ {
                     System.out.println("isConnected() for remote real JChannel: " + remoteJChannel.isConnected());
                 } else if (line.equals("isClosed()")){
                     System.out.println("isClosed() for remote real JChannel: " + remoteJChannel.isClosed());
+                } else if (line.startsWith("getState() history")){
+                    // getState() history 1 1000
+                    String[] strs = line.split(" ");
+                    int index = Integer.parseInt(strs[2]);
+                    long timeout = Long.parseLong(strs[3]);
+                    Address target = remoteJChannel.remoteView.getMembers().get(index);
+                    try {
+                        System.out.println("getState() for remote real JChannel: " + remoteJChannel.getState(target, timeout));
+                        System.out.println("getState() target:" + target + ", timeout: " + timeout);
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
                 } else{
                     try{
                         remoteJChannel.send(null, line);

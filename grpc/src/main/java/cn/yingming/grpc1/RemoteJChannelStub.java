@@ -6,11 +6,11 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.jchannelRpc.*;
 import io.grpc.stub.StreamObserver;
 import org.jgroups.*;
-import org.jgroups.util.ByteArrayDataInputStream;
-import org.jgroups.util.ByteArrayDataOutputStream;
-import org.jgroups.util.NameCache;
+import org.jgroups.util.*;
 import org.jgroups.util.UUID;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -29,7 +29,6 @@ public class RemoteJChannelStub {
     private JChannelsServiceGrpc.JChannelsServiceStub asynStub;
     private StreamObserver observer;
     private Object obj;
-
 
     RemoteJChannelStub(RemoteJChannel client) {
         this.client = client;
@@ -131,6 +130,24 @@ public class RemoteJChannelStub {
             } else if(input.equals("isClosed()")){
                 IsStateReq req = IsStateReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString()).setType("isClosed").build();
                 return Request.newBuilder().setIsStateReq(req).build();
+            } else if(input.startsWith("getState()")){
+                String[] strs = input.split(" ");
+                Address source = this.client.jchannel_address;
+                Address target = null;
+                StateReq stateReq = null;
+                for (Address each:NameCache.getContents().keySet()) {
+                    if (NameCache.getContents().get(each).equals(strs[1])){
+                        target = each;
+                    }
+                }
+                try {
+                    stateReq = StateReq.newBuilder().setJchannelAddress(ByteString.copyFrom(Util.objectToByteBuffer(source)))
+                            .setTarget(ByteString.copyFrom(Util.objectToByteBuffer(target))).setTimeout(Long.parseLong(strs[2])).build();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+                System.out.println("getState()"+ stateReq);
+                return Request.newBuilder().setStateReq(stateReq).build();
             }
         } else if(obj instanceof Message) {
             Message m = (Message) obj;
@@ -378,16 +395,18 @@ public class RemoteJChannelStub {
             StateRep state = response.getStateRep();
             // System.out.println("JudgeResponse 0 conect:" + msg_obj.getContent()
             //  + " jchannel address: " + msg_obj.getJchannelAddress());
-            if (this.client.receiver != null) {
-                try {
-                    // change
-                    // this.client.receiver.setState(state.getOneOfHistoryList());
-                } catch (Exception e) {
-                    e.printStackTrace();
+            byte[] b = state.getState().toByteArray();
+            ByteArrayInputStream in = new ByteArrayInputStream(b);
+            try{
+                if (!(this.client.getReceiver() == null)){
+                    this.client.getReceiver().setState(in);
+                } else {
+                    System.out.println("[Stub] Receive a state (message history), but the JChannel-Client does not have Receiver.");
                 }
-            } else {
-                System.out.println("Receive state without target, but RemoteJChannel does not have receiver.");
+            } catch (Exception e){
+                e.printStackTrace();
             }
+
         }
     }
 

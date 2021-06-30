@@ -622,6 +622,9 @@ public class RemoteJChannel extends JChannel {
      * @return RemoteJChannel
      */
     public synchronized JChannel disconnect(){
+        if (!isWork.get()){
+            throw new NullPointerException("The RemoteJChannel does not work, cannot disconnect the connection.");
+        }
         ReentrantLock lock = new ReentrantLock();
         lock.lock();
         try{
@@ -638,6 +641,9 @@ public class RemoteJChannel extends JChannel {
      *
      */
     public synchronized void close(){
+        if (!isWork.get()){
+            throw new NullPointerException("The RemoteJChannel does not work, cannot close the connection.");
+        }
         ReentrantLock lock = new ReentrantLock();
         lock.lock();
         try{
@@ -653,6 +659,9 @@ public class RemoteJChannel extends JChannel {
      *
      */
     public JChannel send(Message msg) throws Exception {
+        if (!isWork.get()){
+            throw new NullPointerException("The RemoteJChannel does not work, cannot close the connection.");
+        }
         if(msg == null)
             throw new NullPointerException("msg is null");
         ReentrantLock lock = new ReentrantLock();
@@ -690,32 +699,13 @@ public class RemoteJChannel extends JChannel {
 
     @Override
     public JChannel getState(Address target, long timeout) throws Exception {
-        throw new UnsupportedOperationException("RemoteJChannel does not support this method." +
-                " Please use the getStateRJ(String target)");
-    }
-
-    @Override
-    public JChannel getState(Address target, long timeout, boolean useFlushIfPresent) throws Exception {
-        throw new UnsupportedOperationException("RemoteJChannel does not support this method." +
-                " Please use the getStateRJ(String target)");
-    }
-
-    // change the cmd ?
-    public JChannel getStateRJ(String target){
-        if (this.msgList == null){
-            throw new NullPointerException("The msgList is null.");
-        }
-        String cmd;
-        if (target == null || target.equals("")){
-            cmd = "getState() null";
-        } else{
-            cmd = "getState() " + target.trim();
+        if (!isWork.get()){
+            throw new NullPointerException("The RemoteJChannel does not work, cannot invoke getState().");
         }
         ReentrantLock lock = new ReentrantLock();
         lock.lock();
         try{
-             // System.out.println("Give a getStateRJ() cmd to stub.");
-            this.msgList.add(cmd);
+            this.msgList.add("getState() " + target.toString() + " " + timeout);
         } finally {
             lock.unlock();
         }
@@ -735,11 +725,6 @@ public class RemoteJChannel extends JChannel {
         }
 
         return sb.toString();
-    }
-
-    @Override
-    protected JChannel getState(Address target, long timeout, Callable<Boolean> flushInvoker) throws Exception {
-        throw new UnsupportedOperationException("RemoteJChannel does not support this method.");
     }
 
     @Override

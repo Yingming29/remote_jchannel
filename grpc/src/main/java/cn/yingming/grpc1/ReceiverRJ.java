@@ -8,13 +8,17 @@ import org.jgroups.Message;
 import org.jgroups.Receiver;
 import org.jgroups.View;
 import org.jgroups.util.MessageBatch;
+import org.jgroups.util.Util;
 
+import java.io.DataInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class ReceiverRJ implements Receiver {
-    final LinkedList<Message> state;
+    final List<Message> state;
 
     public ReceiverRJ() {
         this.state = new LinkedList<Message>();
@@ -42,7 +46,18 @@ public class ReceiverRJ implements Receiver {
 
     @Override
     public void setState(InputStream input) throws Exception {
-        throw new UnsupportedOperationException("Not support.");
+        ReentrantLock lock = new ReentrantLock();
+        List<Message> list;
+        list = (List<Message>) Util.objectFromStream(new DataInputStream(input));
+        lock.lock();
+        try {
+            state.clear();
+            state.addAll(list);
+            System.out.println(list.size() + " messages in chat history.");
+            list.forEach(System.out::println);
+        } finally {
+            lock.unlock();
+        }
     }
 
     @Override

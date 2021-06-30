@@ -13,14 +13,13 @@ import org.jgroups.util.*;
 
 public class SimpleChat extends JChannel implements Receiver{
 	SimpleChat channel;
-	String user_name = System.getProperty("user.name", "n/a");
 
 	public SimpleChat() throws Exception {
 	}
 
 	private void start() throws Exception {
 		channel = new SimpleChat();
-		channel.setReceiver(this).connect("ChatCluster");
+		channel.setReceiver(this).connect("Node3");
 		//channel.setStats(true);
 		eventLoop();
 		channel.close();
@@ -76,9 +75,8 @@ public class SimpleChat extends JChannel implements Receiver{
 				if (line.startsWith("quit") || line.startsWith("exit")) {
 					break;
 				}
-				Message msg = new ObjectMessage(channel.view.getCoord(), line);
+				Message msg = new ObjectMessage(null, line);
 				channel.send(msg);
-				System.out.println(channel.view.getCoord());
 				/*
 				Map<String,Map<String,Object>> m = channel.dumpStats();
 				for (String each:m.keySet()) {
