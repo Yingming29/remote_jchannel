@@ -332,6 +332,10 @@ public class NodeJChannel implements Receiver{
                 } else{
                     // condition 1.2 changed server list, update list and broadcast update servers
                     this.nodesMap.put(msg.getSrc(), new_add);
+                    if (nodesMap.size() >=2 ){
+                        System.out.println("notify");
+                        nodesMap.notify();
+                    }
                     System.out.println("[JChannel] Receive a confirmation from a node, update server map.");
                     System.out.println("[JChannel] After updating: " + this.nodesMap);
                     UpdateRep updateMsg = UpdateRep.newBuilder()
@@ -341,13 +345,6 @@ public class NodeJChannel implements Receiver{
                             .setUpdateResponse(updateMsg)
                             .build();
                     this.service.broadcastResponse(broMsg);
-                }
-            }
-
-            if (nodesMap.size() == 2){
-                synchronized (wait_obj){
-                    System.out.println("notify");
-                    wait_obj.notify();
                 }
             }
         }
@@ -375,14 +372,20 @@ public class NodeJChannel implements Receiver{
         System.out.println(" nodemap:" + nodesMap);
         if (nodesMap.size() <= 1){
             System.out.println("<= 1" + nodesMap);
-            synchronized (wait_obj){
+            synchronized (nodesMap){
                 try{
                     System.out.println("wait");
-                    wait_obj.wait(10000);
+                    nodesMap.wait(2000);
                 } catch (Exception e){
                     e.printStackTrace();
                 }
             }
+            /*
+            if (nodesMap.size() <= 1){
+                throw new IllegalArgumentException("Do not have enough JChannel-Server.");
+            }
+
+             */
         }
         if (!this.channel.getAddress().equals(this.channel.getView().getCoord())){
             ReentrantLock lock = new ReentrantLock();

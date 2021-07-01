@@ -721,15 +721,17 @@ public class NodeServer {
             }
         }
         protected void forwardMsg(ChannelMsg chmsg){
-            Message msg = new ObjectMessage(null, chmsg);
             // send messages exclude itself.
-            msg.setFlagIfAbsent(Message.TransientFlag.DONT_LOOPBACK);
             for (Address address: jchannel.nodesMap.keySet()) {
-                try {
-                    msg.setDest(address);
-                    this.jchannel.channel.send(msg);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if(!address.equals(jchannel.channel.getAddress())) {
+                    try {
+
+                        Message msg = new ObjectMessage(address, chmsg);
+                        msg.setDest(address);
+                        this.jchannel.channel.send(msg);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -737,10 +739,10 @@ public class NodeServer {
         }
 
         protected void forwadMsgToServer(MessageReqRep msgReq){
-            Message msg = new ObjectMessage(null, msgReq);
+
             for (Address address: jchannel.nodesMap.keySet()) {
                 try {
-                    msg.setDest(address);
+                    Message msg = new ObjectMessage(address, msgReq);
                     System.out.println("Forward a message for Request(MessageReqRep) to a JChannel-Server, " + address + ", the Message: " + msg);
                     this.jchannel.channel.send(msg);
                 } catch (Exception e) {
@@ -761,14 +763,13 @@ public class NodeServer {
              */
         }
         protected void forwardMsg(Request req){
-            Message msg = new ObjectMessage(null, req);
             // forward Request for client information to other JChannel-Servers excluding itself, e.g. connectRequest, disconnectRequest.
             if (!req.hasMessageReqRep()){
                 for (Address address: jchannel.nodesMap.keySet()) {
                     if(!address.equals(jchannel.channel.getAddress())){
                         try {
-                            msg.setDest(address);
-                            System.out.println("Forward a message for Request(not MessageReqRep) to a JChannel-Server.");
+                            Message msg = new ObjectMessage(address, req);
+                            System.out.println("Forward a message for Request(not MessageReqRep) to a JChannel-Server, dest:" + msg);
                             this.jchannel.channel.send(msg);
                         } catch (Exception e) {
                             e.printStackTrace();
