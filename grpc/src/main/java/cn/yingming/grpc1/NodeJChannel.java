@@ -64,6 +64,9 @@ public class NodeJChannel implements Receiver{
             receiveChannelMsg(msg);
         } else if (msg.getObject() instanceof Request){
             receiveProtobufMsg(msg);
+        } else if (msg.getObject() instanceof MessageReqRep){
+            System.out.println("Receive a MessageReqRep");
+            receiveMessageReqRep(msg.getObject());
         } else{
             // receive common Message from other real common JChannels
             byte[] b = null;
@@ -83,6 +86,17 @@ public class NodeJChannel implements Receiver{
 
 
         // define receive string and byte for other
+    }
+
+    private void receiveMessageReqRep(MessageReqRep msg){
+        Message msg_test = UtilsRJ.convertMessage(msg);
+        if (msg_test.getDest() == this.channel.getAddress()){System.out.println("receiveMessageReqRep: " + msg_test);
+            Response rep = Response.newBuilder().setMessageReqRep(msg).build();
+            service.broadcastResponse(rep);
+        } else{
+            System.out.println("[JChannel] Receive a message for unicast to a JChannel-Client.");
+            this.service.unicast(msg);
+        }
     }
 
     private void receiveProtobufMsg(Message msg){
@@ -205,35 +219,6 @@ public class NodeJChannel implements Receiver{
                 e.printStackTrace();
             }
             disconnectCluster(disReq.getCluster(), u);
-        } else if (msg.getObject() instanceof Request && ((Request) msg.getObject()).hasMessageReqRep()){
-            MessageReqRep msgReq = ((Request) msg.getObject()).getMessageReqRep();
-            Message msgObj = UtilsRJ.convertMessage(msgReq);
-            if (msgObj.getDest() == null){
-                System.out.println("[JChannel] Receive a shared send() request for broadcast to JChannl-Clients, dest of Message == null.");
-                lock.lock();
-                try{
-                    ClusterMap cm = (ClusterMap) serviceMap.get("ClientCluster");
-                    // cm.addHistory(msgReq);
-                    this.service.broadcast(msgReq);
-                    state.add(msgObj);
-                } finally {
-                    lock.unlock();
-                }
-            } else if (msgObj.getDest() == this.channel.getAddress()){
-                System.out.println("[JChannel] Receive a send() request for broadcast to JChannl-Clients, dest == the Address of this JChannel.");
-                lock.lock();
-                try{
-                    ClusterMap cm = (ClusterMap) serviceMap.get("ClientCluster");
-                    // cm.addHistory(msgReq);
-                    state.add(msgObj);
-                    this.service.broadcast(msgReq);
-                } finally {
-                    lock.unlock();
-                }
-            } else {
-                System.out.println("[JChannel] Receive a shared send() request for unicast to a JChannl-Client.");
-                this.service.unicast(msgReq);
-            }
         }
     }
 
