@@ -24,8 +24,10 @@ public class NodeJChannel implements Receiver{
     NodeServer.JChannelsServiceImpl service;
     String grpcAddress;
     ConcurrentHashMap<Address, String> nodesMap;
-    ConcurrentHashMap serviceMap;
+    ConcurrentHashMap<String, ClusterMap> serviceMap;
     LinkedList<String> state;
+    ArrayList<Address> savedServerList;
+    Object wait_obj;
 
     NodeJChannel(String node_name, String cluster_name, String grpcAddress) throws Exception {
         this.channel = new JChannel("grpc/protocols/udp.xml");
@@ -34,17 +36,28 @@ public class NodeJChannel implements Receiver{
         this.cluster_name = cluster_name;
         this.grpcAddress = grpcAddress;
         this.nodesMap = new ConcurrentHashMap<>();
-        this.channel.setReceiver(this).connect(cluster_name);
         this.lock = new ReentrantLock();
         this.service = null;
+        this.wait_obj = new Object();
         this.serviceMap = new ConcurrentHashMap<String, ClusterMap>();
         this.serviceMap.put("ClientCluster", new ClusterMap());
-        // put itself into available nodes list
+        this.channel.setReceiver(this).connect(cluster_name);
+        System.out.println(Thread.currentThread().toString());
         this.nodesMap.put(this.channel.getAddress(), this.grpcAddress);
         this.state = new LinkedList<>();
+        this.savedServerList = new ArrayList<>();
         System.out.println("[JChannel] The current nodes in node cluster: " + this.nodesMap);
+        // this.test_sleep();
+        this.testMethod();
     }
 
+    public void test_sleep(){
+        try{
+            Thread.sleep(1000);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void receive(Message msg) {
@@ -128,28 +141,25 @@ public class NodeJChannel implements Receiver{
             UpdateReqBetweenNodes req = msg.getObject();
             ByteArrayDataInputStream in = new ByteArrayDataInputStream(req.getAddress().toByteArray());
             UUID u = new UUID();
-            Address address = (Address) u;
             lock.lock();
             try{
                 u.readFrom(in);
-                if (NameCache.getContents().containsKey(address)){
+                if (NameCache.getContents().containsKey(u)){
                     System.out.println("Confirm that the JChannel' Address in the existing NameCache.");
                     // generate message for the requester, NameCacheRep, ViewRep of clients,
                     UpdateNameCacheRep nameCacheRep = this.service.generateNameCacheMsg();
-                    // changed: not null , here
-                    ClusterMap clusterInf = (ClusterMap) this.serviceMap.get("ClientCluster");
+                    ClusterMap clusterInf = this.serviceMap.get("ClientCluster");
                     ViewRep viewRep = null;
                     UpdateRepBetweenNodes rep;
                     if (clusterInf.getCreator() != null){
                         viewRep = clusterInf.generateView();
                     }
-                    // StateRep stateRep = clusterInf.generateState(); change
                     if (clusterInf.getCreator() != null) {
                         rep = UpdateRepBetweenNodes.newBuilder().setClientView(viewRep)
                                 .setNameCache(nameCacheRep).build();
-                        System.out.println("!=null");
+                        System.out.println("Client Cluster != null");
                     } else{
-                        System.out.println("= null");
+                        System.out.println("Client Cluster == null");
                         rep = UpdateRepBetweenNodes.newBuilder().setNameCache(nameCacheRep).build();
                     }
                     Message msgRep = new ObjectMessage(msg.getSrc(), rep);
@@ -166,10 +176,19 @@ public class NodeJChannel implements Receiver{
             }
 
         } else if (msg.getObject() instanceof UpdateRepBetweenNodes) {
+
             UpdateRepBetweenNodes rep = msg.getObject();
+            System.out.println("UpdateRepBetweenNodes Test: " + rep.getClientView());
+            System.out.println("000000000000000");
+            if (rep.hasClientView()){
+                System.out.println(true);
+            } else {
+                System.out.println(false);
+            }
+            System.out.println("000000000000000");
             ViewRep view_rep = rep.getClientView();
             UpdateNameCacheRep nameCacheRep = rep.getNameCache();
-            StateRep stateRep = rep.getClientState();
+            // StateRep stateRep = rep.getClientState();
             // 1. update NameCache
             List<ByteString> addressList = nameCacheRep.getAddressList();
             List<String> nameList = nameCacheRep.getLogicalNameList();
@@ -198,7 +217,7 @@ public class NodeJChannel implements Receiver{
                 this.serviceMap.put("ClientCluster", clusterInf);
                 System.out.println(1);
             } else{
-                clusterInf = (ClusterMap) this.serviceMap.get("ClientCluster");
+                clusterInf = this.serviceMap.get("ClientCluster");
                 System.out.println(2);
             }
             View v = new View();
@@ -302,8 +321,8 @@ public class NodeJChannel implements Receiver{
 
                 String new_add = cmsg.getContentStr();
                 boolean same = false;
-                for (Object add : this.nodesMap.keySet()) {
-                    if (add.toString().equals(msg.getSrc().toString())&&this.nodesMap.get(add).equals(new_add)){
+                for (Address add : this.nodesMap.keySet()) {
+                    if (add.equals(msg.getSrc()) && this.nodesMap.get(add).equals(new_add)){
                         same = true;
                     }
                 }
@@ -323,7 +342,13 @@ public class NodeJChannel implements Receiver{
                             .build();
                     this.service.broadcastResponse(broMsg);
                 }
-                // condition 2, connect() request
+            }
+
+            if (nodesMap.size() == 2){
+                synchronized (wait_obj){
+                    System.out.println("notify");
+                    wait_obj.notify();
+                }
             }
         }
     }
@@ -343,11 +368,56 @@ public class NodeJChannel implements Receiver{
         this.service = gRPCservice;
     }
 
+    private void testMethod(){
+        if (channel.getAddress().equals(channel.getView().getCoord())){
+            return;
+        }
+        System.out.println(" nodemap:" + nodesMap);
+        if (nodesMap.size() <= 1){
+            System.out.println("<= 1" + nodesMap);
+            synchronized (wait_obj){
+                try{
+                    System.out.println("wait");
+                    wait_obj.wait(10000);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        if (!this.channel.getAddress().equals(this.channel.getView().getCoord())){
+            ReentrantLock lock = new ReentrantLock();
+            lock.lock();
+            try {
+                for (Address address: this.channel.getView().getMembers()) {
+                    // && !this.nodesMap.get(address).equals("unknown")
+                    System.out.println(address);
+                    if (this.nodesMap.containsKey(address) && !address.equals(this.channel.getAddress())){
+                        UUID u = (UUID) this.channel.getAddress();
+                        ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
+                        u.writeTo(out);
+                        byte[] b = out.buffer();
+                        UpdateReqBetweenNodes req = UpdateReqBetweenNodes.newBuilder().setAddress(ByteString.copyFrom(b)).build();
+                        System.out.println("send a request to a JChannel-Server");
+                        this.channel.send(address, req);
+                        break;
+                    }
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            finally {
+                lock.unlock();
+            }
+        }
+
+    }
+
 
     // update the view of nodes
     @Override
     public void viewAccepted(View new_view) {
         System.out.println("** JChannel Node view: " + new_view);
+        System.out.println(Thread.currentThread().toString() + "viewaccepted");
         /* When the view is changed by any action, it will send its address to other jchannels
         and update its nodesList.
          */
@@ -383,27 +453,11 @@ public class NodeJChannel implements Receiver{
     public void checkClusterMap(View view){
         // this first startup
         // whether is the coordinator
-        if (this.serviceMap == null){
-            if (view.getMembers().get(0).toString().equals(this.channel.getAddress().toString())){
-                System.out.println("[JChannel] This is the coordinator of the node cluster.");
-            } else {
-                ReentrantLock lock = new ReentrantLock();
-                lock.lock();
-                try {
-                    UUID u = (UUID) this.channel.getAddress();
-                    ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
-                    u.writeTo(out);
-                    byte[] b = out.buffer();
-                    UpdateReqBetweenNodes req = UpdateReqBetweenNodes.newBuilder().setAddress(ByteString.copyFrom(b)).build();
-                    this.channel.send(view.getCoord(), req);
-                } catch (Exception e){
-                    e.printStackTrace();
-                }
-                finally {
-                    lock.unlock();
-                }
-
-            }
+        if (view.getMembers().get(0).equals(this.channel.getAddress())){
+            System.out.println("[JChannel] This is the coordinator of the node cluster.");
+        } else {
+            // send a UpdateRequest to
+            System.out.println("Not coordinator of cluster.");
         }
     }
 
@@ -413,9 +467,12 @@ public class NodeJChannel implements Receiver{
             if (currentView.size() > currentNodesList.size()) {
                 System.out.println("[JChannel] Store new node inf.");
                 List compare = ListUtils.subtract(currentView, currentNodesList);
+                /*
                 for (int i = 0; i < compare.size(); i++) {
                     this.nodesMap.put((Address) compare.get(i), "unknown");
                 }
+
+                 */
                 System.out.println("[JChannel] The current nodes in node cluster: " + this.nodesMap);
                 sendMyself();
             } else if (currentView.size() < currentNodesList.size()) {

@@ -74,19 +74,6 @@ private static final long serialVersionUID = 0L;
 
             break;
           }
-          case 26: {
-            io.grpc.jchannelRpc.StateRep.Builder subBuilder = null;
-            if (clientState_ != null) {
-              subBuilder = clientState_.toBuilder();
-            }
-            clientState_ = input.readMessage(io.grpc.jchannelRpc.StateRep.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom(clientState_);
-              clientState_ = subBuilder.buildPartial();
-            }
-
-            break;
-          }
           default: {
             if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -183,44 +170,6 @@ private static final long serialVersionUID = 0L;
     return getClientView();
   }
 
-  public static final int CLIENTSTATE_FIELD_NUMBER = 3;
-  private io.grpc.jchannelRpc.StateRep clientState_;
-  /**
-   * <pre>
-   * the state (message history) of clients?
-   * </pre>
-   *
-   * <code>.cn.yingming.grpc1.StateRep clientState = 3;</code>
-   * @return Whether the clientState field is set.
-   */
-  @java.lang.Override
-  public boolean hasClientState() {
-    return clientState_ != null;
-  }
-  /**
-   * <pre>
-   * the state (message history) of clients?
-   * </pre>
-   *
-   * <code>.cn.yingming.grpc1.StateRep clientState = 3;</code>
-   * @return The clientState.
-   */
-  @java.lang.Override
-  public io.grpc.jchannelRpc.StateRep getClientState() {
-    return clientState_ == null ? io.grpc.jchannelRpc.StateRep.getDefaultInstance() : clientState_;
-  }
-  /**
-   * <pre>
-   * the state (message history) of clients?
-   * </pre>
-   *
-   * <code>.cn.yingming.grpc1.StateRep clientState = 3;</code>
-   */
-  @java.lang.Override
-  public io.grpc.jchannelRpc.StateRepOrBuilder getClientStateOrBuilder() {
-    return getClientState();
-  }
-
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -241,9 +190,6 @@ private static final long serialVersionUID = 0L;
     if (clientView_ != null) {
       output.writeMessage(2, getClientView());
     }
-    if (clientState_ != null) {
-      output.writeMessage(3, getClientState());
-    }
     unknownFields.writeTo(output);
   }
 
@@ -260,10 +206,6 @@ private static final long serialVersionUID = 0L;
     if (clientView_ != null) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(2, getClientView());
-    }
-    if (clientState_ != null) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(3, getClientState());
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -290,11 +232,6 @@ private static final long serialVersionUID = 0L;
       if (!getClientView()
           .equals(other.getClientView())) return false;
     }
-    if (hasClientState() != other.hasClientState()) return false;
-    if (hasClientState()) {
-      if (!getClientState()
-          .equals(other.getClientState())) return false;
-    }
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -313,10 +250,6 @@ private static final long serialVersionUID = 0L;
     if (hasClientView()) {
       hash = (37 * hash) + CLIENTVIEW_FIELD_NUMBER;
       hash = (53 * hash) + getClientView().hashCode();
-    }
-    if (hasClientState()) {
-      hash = (37 * hash) + CLIENTSTATE_FIELD_NUMBER;
-      hash = (53 * hash) + getClientState().hashCode();
     }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
@@ -463,12 +396,6 @@ private static final long serialVersionUID = 0L;
         clientView_ = null;
         clientViewBuilder_ = null;
       }
-      if (clientStateBuilder_ == null) {
-        clientState_ = null;
-      } else {
-        clientState_ = null;
-        clientStateBuilder_ = null;
-      }
       return this;
     }
 
@@ -504,11 +431,6 @@ private static final long serialVersionUID = 0L;
         result.clientView_ = clientView_;
       } else {
         result.clientView_ = clientViewBuilder_.build();
-      }
-      if (clientStateBuilder_ == null) {
-        result.clientState_ = clientState_;
-      } else {
-        result.clientState_ = clientStateBuilder_.build();
       }
       onBuilt();
       return result;
@@ -563,9 +485,6 @@ private static final long serialVersionUID = 0L;
       }
       if (other.hasClientView()) {
         mergeClientView(other.getClientView());
-      }
-      if (other.hasClientState()) {
-        mergeClientState(other.getClientState());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -868,161 +787,6 @@ private static final long serialVersionUID = 0L;
         clientView_ = null;
       }
       return clientViewBuilder_;
-    }
-
-    private io.grpc.jchannelRpc.StateRep clientState_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-        io.grpc.jchannelRpc.StateRep, io.grpc.jchannelRpc.StateRep.Builder, io.grpc.jchannelRpc.StateRepOrBuilder> clientStateBuilder_;
-    /**
-     * <pre>
-     * the state (message history) of clients?
-     * </pre>
-     *
-     * <code>.cn.yingming.grpc1.StateRep clientState = 3;</code>
-     * @return Whether the clientState field is set.
-     */
-    public boolean hasClientState() {
-      return clientStateBuilder_ != null || clientState_ != null;
-    }
-    /**
-     * <pre>
-     * the state (message history) of clients?
-     * </pre>
-     *
-     * <code>.cn.yingming.grpc1.StateRep clientState = 3;</code>
-     * @return The clientState.
-     */
-    public io.grpc.jchannelRpc.StateRep getClientState() {
-      if (clientStateBuilder_ == null) {
-        return clientState_ == null ? io.grpc.jchannelRpc.StateRep.getDefaultInstance() : clientState_;
-      } else {
-        return clientStateBuilder_.getMessage();
-      }
-    }
-    /**
-     * <pre>
-     * the state (message history) of clients?
-     * </pre>
-     *
-     * <code>.cn.yingming.grpc1.StateRep clientState = 3;</code>
-     */
-    public Builder setClientState(io.grpc.jchannelRpc.StateRep value) {
-      if (clientStateBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        clientState_ = value;
-        onChanged();
-      } else {
-        clientStateBuilder_.setMessage(value);
-      }
-
-      return this;
-    }
-    /**
-     * <pre>
-     * the state (message history) of clients?
-     * </pre>
-     *
-     * <code>.cn.yingming.grpc1.StateRep clientState = 3;</code>
-     */
-    public Builder setClientState(
-        io.grpc.jchannelRpc.StateRep.Builder builderForValue) {
-      if (clientStateBuilder_ == null) {
-        clientState_ = builderForValue.build();
-        onChanged();
-      } else {
-        clientStateBuilder_.setMessage(builderForValue.build());
-      }
-
-      return this;
-    }
-    /**
-     * <pre>
-     * the state (message history) of clients?
-     * </pre>
-     *
-     * <code>.cn.yingming.grpc1.StateRep clientState = 3;</code>
-     */
-    public Builder mergeClientState(io.grpc.jchannelRpc.StateRep value) {
-      if (clientStateBuilder_ == null) {
-        if (clientState_ != null) {
-          clientState_ =
-            io.grpc.jchannelRpc.StateRep.newBuilder(clientState_).mergeFrom(value).buildPartial();
-        } else {
-          clientState_ = value;
-        }
-        onChanged();
-      } else {
-        clientStateBuilder_.mergeFrom(value);
-      }
-
-      return this;
-    }
-    /**
-     * <pre>
-     * the state (message history) of clients?
-     * </pre>
-     *
-     * <code>.cn.yingming.grpc1.StateRep clientState = 3;</code>
-     */
-    public Builder clearClientState() {
-      if (clientStateBuilder_ == null) {
-        clientState_ = null;
-        onChanged();
-      } else {
-        clientState_ = null;
-        clientStateBuilder_ = null;
-      }
-
-      return this;
-    }
-    /**
-     * <pre>
-     * the state (message history) of clients?
-     * </pre>
-     *
-     * <code>.cn.yingming.grpc1.StateRep clientState = 3;</code>
-     */
-    public io.grpc.jchannelRpc.StateRep.Builder getClientStateBuilder() {
-      
-      onChanged();
-      return getClientStateFieldBuilder().getBuilder();
-    }
-    /**
-     * <pre>
-     * the state (message history) of clients?
-     * </pre>
-     *
-     * <code>.cn.yingming.grpc1.StateRep clientState = 3;</code>
-     */
-    public io.grpc.jchannelRpc.StateRepOrBuilder getClientStateOrBuilder() {
-      if (clientStateBuilder_ != null) {
-        return clientStateBuilder_.getMessageOrBuilder();
-      } else {
-        return clientState_ == null ?
-            io.grpc.jchannelRpc.StateRep.getDefaultInstance() : clientState_;
-      }
-    }
-    /**
-     * <pre>
-     * the state (message history) of clients?
-     * </pre>
-     *
-     * <code>.cn.yingming.grpc1.StateRep clientState = 3;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        io.grpc.jchannelRpc.StateRep, io.grpc.jchannelRpc.StateRep.Builder, io.grpc.jchannelRpc.StateRepOrBuilder> 
-        getClientStateFieldBuilder() {
-      if (clientStateBuilder_ == null) {
-        clientStateBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            io.grpc.jchannelRpc.StateRep, io.grpc.jchannelRpc.StateRep.Builder, io.grpc.jchannelRpc.StateRepOrBuilder>(
-                getClientState(),
-                getParentForChildren(),
-                isClean());
-        clientState_ = null;
-      }
-      return clientStateBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

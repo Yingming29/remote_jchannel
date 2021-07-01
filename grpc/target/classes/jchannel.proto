@@ -119,7 +119,6 @@ message UpdateReqBetweenNodes{
 message UpdateRepBetweenNodes{
   UpdateNameCacheRep nameCache = 1;  // update the existing NameChe, contains JChannel-client and JChannel-server?
   ViewRep clientView = 2;
-  StateRep clientState = 3;  // the state (message history) of clients?
 }
 message UpdateNameCacheRep{
   repeated bytes address = 1;

@@ -48,31 +48,4 @@ public interface UpdateRepBetweenNodesOrBuilder extends
    * <code>.cn.yingming.grpc1.ViewRep clientView = 2;</code>
    */
   io.grpc.jchannelRpc.ViewRepOrBuilder getClientViewOrBuilder();
-
-  /**
-   * <pre>
-   * the state (message history) of clients?
-   * </pre>
-   *
-   * <code>.cn.yingming.grpc1.StateRep clientState = 3;</code>
-   * @return Whether the clientState field is set.
-   */
-  boolean hasClientState();
-  /**
-   * <pre>
-   * the state (message history) of clients?
-   * </pre>
-   *
-   * <code>.cn.yingming.grpc1.StateRep clientState = 3;</code>
-   * @return The clientState.
-   */
-  io.grpc.jchannelRpc.StateRep getClientState();
-  /**
-   * <pre>
-   * the state (message history) of clients?
-   * </pre>
-   *
-   * <code>.cn.yingming.grpc1.StateRep clientState = 3;</code>
-   */
-  io.grpc.jchannelRpc.StateRepOrBuilder getClientStateOrBuilder();
 }

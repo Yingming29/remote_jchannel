@@ -85,6 +85,7 @@ public class ClusterMap implements Serializable {
     }
 
     public void setFromView(View view){
+        System.out.println("set the client view from the updating message.");
         lock.lock();
         try{
             this.viewNum = (int) view.getViewId().getId();
