@@ -14,6 +14,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -207,7 +208,7 @@ public class NodeServer {
                             // generate the history from real JChannel
                             // ClusterMap cm = (ClusterMap) jchannel.serviceMap.get(stateReq.getCluster());
                             // StateRep stateRep = cm.generateState();
-                            if (target.equals(jchannel.channel.getAddress()) || target == null){
+                            if (target.equals(jchannel.channel.getAddress())){
                                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                                 jchannel.getState(out);
                                 StateRep stateRep = StateRep.newBuilder().setState(ByteString.copyFrom(out.toByteArray())).build();
@@ -419,9 +420,16 @@ public class NodeServer {
                         Address dest = msgObj.getDest();
                         // dest == all JChannel-Servers and common JChannels
                         if (dest == null) {
-                            System.out.println("Send 1");
-                            forwadMsgToServer(msgReq);
-                            forwardMsgToJChannel(msgObj);
+                            ReentrantLock lock = new ReentrantLock();
+                            lock.lock();
+                            try{
+                                System.out.println("Send 1");
+                                forwadMsgToServer(msgReq);
+                                forwardMsgToJChannel(msgObj);
+                            } finally {
+                                lock.unlock();
+                            }
+
                             // dest == this JChannel-Server
                         } else if (dest.equals(jchannel.channel.getAddress())){
                             System.out.println("Send 2");
@@ -576,7 +584,7 @@ public class NodeServer {
                 responseObserver.onNext(rep);
                 // String cluster, Address JChannel_address, String generated_name
                 // <cluster, <uuid, JChanner_address>>
-                System.out.println("before"+jchannel.serviceMap.get("ClientCluster"));
+                System.out.println("before join: "+ jchannel.serviceMap.get("ClientCluster"));
                 jchannel.connectCluster(req.getCluster(), generated_address, generated_name);
 
                 // return response for updating the available servers
@@ -695,15 +703,20 @@ public class NodeServer {
         // send message to all common JChannels
         protected void forwardMsgToJChannel(Message msg){
             msg.setSrc(jchannel.channel.getAddress());
+            List<Address> list = new ArrayList<>();
             for (Address address : jchannel.channel.getView().getMembers()){
                 if (!jchannel.nodesMap.containsKey(address)){
-                    try {
-                        msg.setDest(address);
-                        System.out.println("forwardMsgToJChannel"+ msg);
-                        jchannel.channel.send(msg);
-                    } catch (Exception e){
-                        e.printStackTrace();
-                    }
+                    list.add(address);
+                }
+            }
+            System.out.println("The current real common JChannel" + list);
+            for (Address address:list) {
+                try {
+                    msg.setDest(address);
+                    jchannel.channel.send(msg);
+                    System.out.println("forwardMsgToJChannel"+ msg);
+                } catch (Exception e){
+                    e.printStackTrace();
                 }
             }
         }
@@ -735,6 +748,7 @@ public class NodeServer {
                 }
             }
             System.out.println("forwardMsg (Request req) to other JChannel-Servers: " + msgReq);
+            /*
             MessageReqRep mes = msgReq;
             try{
                 // Message msg_test = Util.objectFromByteBuffer(mes.getMessageObj().toByteArray());
@@ -743,6 +757,8 @@ public class NodeServer {
             } catch (Exception e){
                 e.printStackTrace();
             }
+
+             */
         }
         protected void forwardMsg(Request req){
             Message msg = new ObjectMessage(null, req);

@@ -25,7 +25,7 @@ public class NodeJChannel implements Receiver{
     String grpcAddress;
     ConcurrentHashMap<Address, String> nodesMap;
     ConcurrentHashMap serviceMap;
-    LinkedList<Message> state;
+    LinkedList<String> state;
 
     NodeJChannel(String node_name, String cluster_name, String grpcAddress) throws Exception {
         this.channel = new JChannel("grpc/protocols/udp.xml");
@@ -95,8 +95,9 @@ public class NodeJChannel implements Receiver{
             MessageReqRep msgRep = MessageReqRep.newBuilder().setType(UtilsRJ.getMsgType(msg)).setMessageObj(ByteString.copyFrom(b)).build();
             Response rep = Response.newBuilder().setMessageReqRep(msgRep).build();
             service.broadcastResponse(rep);
+            String line = msg.getSrc() + ": " + msg.getPayload();
             synchronized (state){
-                state.add(msg);
+                state.add(line);
             }
         }
 
@@ -110,6 +111,10 @@ public class NodeJChannel implements Receiver{
             System.out.println("receiveMessageReqRep( broadcast): " + msg_test);
             Response rep = Response.newBuilder().setMessageReqRep(msg).build();
             service.broadcastResponse(rep);
+            synchronized (state){
+                String line = msg_test.getSrc() + ": " + msg_test.getPayload();
+                state.add(line);
+            }
         } else{
             System.out.println("[JChannel] Receive a message for unicast to a JChannel-Client.");
             this.service.unicast(msg);
@@ -249,15 +254,15 @@ public class NodeJChannel implements Receiver{
 
     public void setState(InputStream input) throws Exception{
         ReentrantLock lock = new ReentrantLock();
-        List<Message> list;
-        list = (List<Message>) Util.objectFromStream(new DataInputStream(input));
+        List<String> list;
+        list = (List<String>) Util.objectFromStream(new DataInputStream(input));
         lock.lock();
         try{
             state.clear();
             state.addAll(list);
             System.out.println(list.size() + " messages in chat history.");
             list.forEach(System.out::println);
-            /*
+
             System.out.println("JChannel setState(), broadcast the state to its all JChannel-Clients.");
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             this.getState(out);
@@ -268,7 +273,6 @@ public class NodeJChannel implements Receiver{
             // send to this client
             service.broadcastResponse(rep);
 
-             */
         } finally {
             lock.unlock();
         }

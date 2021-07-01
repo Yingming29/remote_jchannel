@@ -18,15 +18,19 @@ import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ReceiverRJ implements Receiver {
-    final List<Message> state;
+    final List<String> state;
 
     public ReceiverRJ() {
-        this.state = new LinkedList<Message>();
+        this.state = new LinkedList<String>();
     }
 
     @Override
     public void receive(Message msg) {
-        System.out.println(msg.getSrc() + ": " + msg.getPayload());
+        String line = msg.getSrc() + ": " + msg.getPayload();
+        System.out.println(line);
+        synchronized (state){
+            state.add(line);
+        }
     }
 
     @Override
@@ -47,8 +51,8 @@ public class ReceiverRJ implements Receiver {
     @Override
     public void setState(InputStream input) throws Exception {
         ReentrantLock lock = new ReentrantLock();
-        List<Message> list;
-        list = (List<Message>) Util.objectFromStream(new DataInputStream(input));
+        List<String> list;
+        list = (List<String>) Util.objectFromStream(new DataInputStream(input));
         lock.lock();
         try {
             state.clear();

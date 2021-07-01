@@ -15,7 +15,7 @@ import org.jgroups.util.*;
 public class SimpleChat implements Receiver{
 
 	JChannel channel;
-	final List<Message> state = new LinkedList<Message>();
+	final List<String> state = new LinkedList<String>();
 
 	private void start() throws Exception {
 		channel = new JChannel();
@@ -31,9 +31,10 @@ public class SimpleChat implements Receiver{
 	}
 	@Override
 	public void receive(Message msg) {
-		System.out.println(msg.getSrc() + ": " + msg.getPayload());
+		String line = msg.getSrc() + ": " + msg.getPayload();
+		System.out.println(line);
 		synchronized (state){
-			state.add(msg);
+			state.add(line);
 		}
 	}
 	@Override
@@ -44,8 +45,8 @@ public class SimpleChat implements Receiver{
 	}
 	@Override
 	public void setState(InputStream input) throws Exception{
-		List<Message> list;
-		list = (List<Message>)Util.objectFromStream(new DataInputStream(input));
+		List<String> list;
+		list = (List<String>)Util.objectFromStream(new DataInputStream(input));
 		synchronized (state){
 			state.clear();
 			state.addAll(list);
@@ -68,7 +69,7 @@ public class SimpleChat implements Receiver{
 				}
 
 				// Different input for demo
-				if (line.startsWith("TO")){
+				if (line.startsWith("to")){
 					String[] strs = line.split(" ");
 					int target_index = Integer.parseInt(strs[1]);
 					Address target = channel.getView().getMembers().get(target_index);
