@@ -698,6 +698,8 @@ public class NodeServer {
             for (Address address : jchannel.channel.getView().getMembers()){
                 if (!jchannel.nodesMap.containsKey(address)){
                     try {
+                        msg.setDest(address);
+                        System.out.println("forwardMsgToJChannel"+ msg);
                         jchannel.channel.send(msg);
                     } catch (Exception e){
                         e.printStackTrace();

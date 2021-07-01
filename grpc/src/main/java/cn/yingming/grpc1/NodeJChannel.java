@@ -70,12 +70,28 @@ public class NodeJChannel implements Receiver{
         } else{
             // receive common Message from other real common JChannels
             byte[] b = null;
+            /*
             try {
-                b = Util.objectToByteBuffer(msg);
+                ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
+                msg.writeTo(out);
+                out.buffer();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println("[JChannel] Receive a message from real common JChannel:" + msg);
+
+             */
+
+            try {
+                Message new_msg = msg.copy(true, false);
+                //b = Util.objectToByteBuffer(new_msg);
+                ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
+                new_msg.writeTo(out);
+                b = out.buffer();
+                System.out.println("new " + new_msg);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println("[JChannel] Receive a message from real common JChannel: " + b);
             MessageReqRep msgRep = MessageReqRep.newBuilder().setType(UtilsRJ.getMsgType(msg)).setMessageObj(ByteString.copyFrom(b)).build();
             Response rep = Response.newBuilder().setMessageReqRep(msgRep).build();
             service.broadcastResponse(rep);
@@ -90,7 +106,8 @@ public class NodeJChannel implements Receiver{
 
     private void receiveMessageReqRep(MessageReqRep msg){
         Message msg_test = UtilsRJ.convertMessage(msg);
-        if (msg_test.getDest() == this.channel.getAddress()){System.out.println("receiveMessageReqRep: " + msg_test);
+        if (msg_test.getDest() == this.channel.getAddress() || msg_test.getDest() == null){
+            System.out.println("receiveMessageReqRep( broadcast): " + msg_test);
             Response rep = Response.newBuilder().setMessageReqRep(msg).build();
             service.broadcastResponse(rep);
         } else{

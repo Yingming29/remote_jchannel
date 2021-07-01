@@ -1,8 +1,10 @@
 package cn.yingming.grpc1;
 
 import io.grpc.jchannelRpc.MessageReqRep;
+import io.grpc.netty.shaded.io.netty.handler.codec.MessageAggregator;
 import org.jgroups.*;
 import org.jgroups.util.ByteArrayDataInputStream;
+import org.jgroups.util.Util;
 
 import java.io.*;
 import java.util.List;
@@ -54,12 +56,19 @@ public class UtilsRJ {
             } else if (type.equals("NioMessage")){
                 msg = new NioMessage();
                 msg.readFrom(in);
+            } else {
+                throw new ClassNotFoundException("Not found suitable Message type");
+            }
+        } catch (Exception e){
+            // e.printStackTrace();
+        }
+        try{
+            if (msg == null){
+                msg = Util.objectFromByteBuffer(req.getMessageObj().toByteArray());
             }
         } catch (Exception e){
             e.printStackTrace();
         }
-
-
         return msg;
     }
 
