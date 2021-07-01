@@ -257,6 +257,7 @@ public class NodeJChannel implements Receiver{
             state.addAll(list);
             System.out.println(list.size() + " messages in chat history.");
             list.forEach(System.out::println);
+            /*
             System.out.println("JChannel setState(), broadcast the state to its all JChannel-Clients.");
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             this.getState(out);
@@ -266,6 +267,8 @@ public class NodeJChannel implements Receiver{
                     .build();
             // send to this client
             service.broadcastResponse(rep);
+
+             */
         } finally {
             lock.unlock();
         }

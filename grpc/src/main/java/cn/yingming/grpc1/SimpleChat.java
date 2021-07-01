@@ -1,9 +1,10 @@
 package cn.yingming.grpc1;
 
-import java.io.BufferedReader;
+import java.io.*;
 
-import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.jgroups.*;
@@ -11,16 +12,15 @@ import org.jgroups.stack.ProtocolStack;
 import org.jgroups.util.*;
 
 
-public class SimpleChat extends JChannel implements Receiver{
-	SimpleChat channel;
+public class SimpleChat implements Receiver{
 
-	public SimpleChat() throws Exception {
-	}
+	JChannel channel;
+	final List<Message> state = new LinkedList<Message>();
 
 	private void start() throws Exception {
-		channel = new SimpleChat();
-		channel.setReceiver(this).connect("Node3");
-		//channel.setStats(true);
+		channel = new JChannel();
+		channel.setReceiver(this).connect("NodeCluster");
+		channel.getState(null, 1000);
 		eventLoop();
 		channel.close();
 	}
@@ -32,7 +32,28 @@ public class SimpleChat extends JChannel implements Receiver{
 	@Override
 	public void receive(Message msg) {
 		System.out.println(msg.getSrc() + ": " + msg.getPayload());
+		synchronized (state){
+			state.add(msg);
+		}
 	}
+	@Override
+	public void getState(OutputStream output) throws Exception{
+		synchronized (state){
+			Util.objectToStream(state, new DataOutputStream(output));
+		}
+	}
+	@Override
+	public void setState(InputStream input) throws Exception{
+		List<Message> list;
+		list = (List<Message>)Util.objectFromStream(new DataInputStream(input));
+		synchronized (state){
+			state.clear();
+			state.addAll(list);
+		}
+		System.out.println(list.size() + " messages in chat history.");
+		list.forEach(System.out::println);
+	}
+
 
 	private void eventLoop() {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));

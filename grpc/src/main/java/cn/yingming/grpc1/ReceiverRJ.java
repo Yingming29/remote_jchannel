@@ -26,7 +26,7 @@ public class ReceiverRJ implements Receiver {
 
     @Override
     public void receive(Message msg) {
-        System.out.println("receive (Client-Receiver):" + msg);
+        System.out.println(msg.getSrc() + ": " + msg.getPayload());
     }
 
     @Override
