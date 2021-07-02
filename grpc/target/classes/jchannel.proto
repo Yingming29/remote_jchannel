@@ -1,0 +1,213 @@
+syntax = "proto3";
+option java_multiple_files = true;
+option java_package = "io.grpc.jchannelRpc";
+option java_outer_classname = "JChannelRpc";
+option objc_class_prefix = "YINGMING";
+package cn.yingming.grpc1;
+
+service JChannelsService{
+  rpc connect(stream Request) returns (stream Response) {
+  }
+  rpc ask(ReqAsk) returns (RepAsk) {
+  }
+}
+message Request{
+  oneof oneType{
+    MessageReqRep messageReqRep = 1;
+    ConnectReq connectRequest = 2;
+    DisconnectReq disconnectRequest = 3;
+    StateReq stateReq = 4;  //
+    GetAddressReq getAddressReq = 7;
+    GetNameReq getNameReq = 8;
+    GetClusterNameReq getClusterNameReq = 9;
+    PrintProtocolSpecReq printProtoReq = 10;
+    GetPropertyReq getPropertyReq = 11;
+    SetStatsReq setStatsReq = 12;
+    GetStatsReq getStatReq = 13;
+    DumpStatsReq dumpStatsReq = 14;
+    SetDiscardOwnMsgReq setDiscardOwnMsgReq = 15;
+    GetDiscardOwnMsgReq getDiscardOwnMsgReq = 16;
+    GetStateReq getStateReq = 17;
+    IsStateReq isStateReq = 18;
+  }
+}
+message Response{
+  oneof oneType{
+    MessageReqRep messageReqRep = 1;
+    ConnectRep connectResponse = 2;
+    DisconnectRep disconnectResponse = 3;
+    UpdateRep updateResponse = 4;  // update available grpc addresses of nodes
+    ViewRep viewResponse = 5;   //  JChannel-client view
+    ViewRep_server viewRep_server = 6;   // JChannel-server view
+    UpdateNameCacheRep updateNameCache = 7;  // update the NameCache of JChannel-server
+    StateRep stateRep = 8;
+    GetAddressRep getAddressRep = 11;
+    GetNameRep getNameRep = 12;
+    GetClusterNameRep getClusterNameRep = 13;
+    PrintProtocolSpecRep printProtoRep = 14;
+    GetPropertyRep getPropertyRep = 15;
+    SetStatsRep setStatsRep = 16;
+    GetStatsRep getStatsRep = 17;
+    DumpStatsRep dumpStatsRep = 18;
+    SetDiscardOwnMsgRep setDiscardOwnRep = 19;
+    GetDiscardOwnMsgRep getDiscardOwnRep = 20;
+    GetStateRep getStateRep = 21;
+    IsStateRep isStateRep = 22;
+  }
+}
+message IsStateReq{
+  string jchannel_address = 1;
+  string type = 2;
+}
+message IsStateRep{
+  bool result = 1;
+}
+message GetStateReq{
+  string jchannel_address = 1;
+}
+message GetStateRep{
+  string state = 1;
+}
+message SetDiscardOwnMsgReq{
+  string jchannal_address = 1;
+  bool discard = 2;
+}
+message SetDiscardOwnMsgRep{
+  bool discard = 1;
+}
+message GetDiscardOwnMsgReq{
+  string jchannel_address = 1;
+}
+message GetDiscardOwnMsgRep{
+  bool discard = 1;
+}
+message DumpStatsReq{
+  string jchannel_address = 1;
+  string protocol_name = 2;
+  repeated string attrs = 3;
+}
+message DumpStatsRep{
+  bytes serializeMap = 1;
+}
+message GetStatsReq{
+  string jchannel_address = 1;
+}
+message GetStatsRep{
+  bool stats = 1;
+}
+message SetStatsReq{
+  string jchannel_address = 1;
+  bool stats = 2;
+}
+message SetStatsRep{
+  bool stats = 1;
+}
+message GetPropertyReq{
+  string jchannel_address = 1;
+}
+message GetPropertyRep{
+  string properties = 1;
+}
+message ChannelMsg{
+  string type = 1;
+  string content_str = 2;
+  bytes content_byt = 3;
+}
+message UpdateReqBetweenNodes{
+  bytes address = 1;
+}
+message UpdateRepBetweenNodes{
+  UpdateNameCacheRep nameCache = 1;  // update the existing NameChe, contains JChannel-client and JChannel-server?
+  ViewRep clientView = 2;
+}
+message UpdateNameCacheRep{
+  repeated bytes address = 1;
+  repeated string logical_name = 2;
+}
+message PrintProtocolSpecReq{
+  string jchannel_address = 1;
+  bool include_props = 2;
+}
+message PrintProtocolSpecRep{
+  string protocolStackSpec = 1;
+}
+message GetClusterNameReq{
+  string jchannel_address = 1;
+}
+message GetClusterNameRep{
+  string cluster_name = 1;
+}
+message GetNameReq{
+  string jchannel_address = 1;
+}
+message GetNameRep{
+  string name = 1;
+}
+message GetAddressReq{
+  string jchannel_address = 1;
+}
+message GetAddressRep{
+  bytes address = 1;
+  bool isWork = 2;
+  string other = 3;
+}
+message ViewRep_server{
+  string sender = 1; // string of Address of real JChannel server who sends this View message
+  bytes view_byte = 2;
+}
+message ViewRep{
+  bytes view = 1;
+}
+// update the available servers list
+message UpdateRep{
+  string addresses = 1;
+}
+message MessageReqRep{
+  bytes messageObj = 1;
+  string type = 2;
+}
+// connect() of JChannel, create a bidirectional streaming of grpc
+message ConnectReq {
+  string cluster = 1;     // cluster
+  string timestamp = 2;
+  bool reconnect = 3;         // reconnect and jchannel_address will be used in the reconnection part.
+  string logical_name = 4;
+  bytes jchann_address_byte = 5;
+}
+// the first time the client connects to the JChannel-server, the server will create an Address and a logical name for it.
+//
+message ConnectRep {
+  bool result = 1;
+  bytes address = 2;    // generated Address object's byte
+  string logical_name = 3;   // generated Address 'logical name
+}
+
+// disconnect()
+message DisconnectReq{
+  bytes jchannel_address = 1;
+  string cluster = 2;
+  string timestamp = 3;
+}
+message DisconnectRep{
+  bool result = 1;
+}
+// The messages used for the try connection.
+message ReqAsk {
+  string source = 1;
+}
+message RepAsk{
+  bool survival = 1;
+}
+message StateReq{
+  bytes jchannel_address = 1;
+  bytes target = 2;
+  uint64 timeout = 3;
+}
+
+message StateRep{
+  bytes jchannel_address = 1;
+  bytes state = 2;
+  bytes target = 3;
+}
+
+

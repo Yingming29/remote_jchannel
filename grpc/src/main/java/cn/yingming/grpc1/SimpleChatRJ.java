@@ -12,13 +12,13 @@ import java.util.List;
 
 public class SimpleChatRJ {
 
-    RemoteJChannel remoteJChannel;
+    JChannelClient remoteJChannel;
     ReceiverRJ receiver;
 
     private void start(String server_address, String cluster) throws Exception{
 
         receiver = new ReceiverRJ();
-        remoteJChannel = new RemoteJChannel(server_address);
+        remoteJChannel = new JChannelClient(server_address);
         remoteJChannel.setReceiver(receiver);
         //remoteJChannel.setDiscardOwnMessages(true);
         //remoteJChannel.setStats(true);

@@ -87,13 +87,15 @@ public class NodeServer {
     // gRPC service
     class JChannelsServiceImpl extends JChannelsServiceGrpc.JChannelsServiceImplBase {
         // HashMap for storing the clients, includes uuid and StreamObserver.
-        private final ConcurrentHashMap<Address, StreamObserver<Response>> clients = new ConcurrentHashMap<>();
-        protected final ReentrantLock lock = new ReentrantLock();
+        private final ConcurrentHashMap<Address, StreamObserver<Response>> clients;
+        protected final ReentrantLock lock;
         NodeJChannel jchannel;
 
         // Constructor with JChannel for calling send() method.
         private JChannelsServiceImpl(NodeJChannel jchannel) throws Exception {
             this.jchannel = jchannel;
+            this.lock = new ReentrantLock();
+            this.clients = new ConcurrentHashMap<>();
         }
         // service 1, bi-directional streaming rpc
         public StreamObserver<Request> connect(StreamObserver<Response> responseObserver){

@@ -18,9 +18,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class RemoteJChannelStub {
+public class JChannelClientStub {
 
-    public RemoteJChannel client;
+    public JChannelClient client;
 
     private ReentrantLock stubLock;
     public ArrayList serverList;
@@ -30,7 +30,7 @@ public class RemoteJChannelStub {
     private StreamObserver observer;
     private Object obj;
 
-    RemoteJChannelStub(RemoteJChannel client) {
+    JChannelClientStub(JChannelClient client) {
         this.client = client;
         this.stubLock = new ReentrantLock();
         this.serverList = new ArrayList<String>();
@@ -411,7 +411,7 @@ public class RemoteJChannelStub {
         }
     }
 
-    private StreamObserver startGrpc(AtomicBoolean isWork, RemoteJChannel client) {
+    private StreamObserver startGrpc(AtomicBoolean isWork, JChannelClient client) {
 
         ReentrantLock lock = new ReentrantLock();
         // Service 1
@@ -573,9 +573,9 @@ public class RemoteJChannelStub {
     class Control implements Runnable {
         ArrayList sharedList;
         AtomicBoolean isWork;
-        RemoteJChannelStub stub;
+        JChannelClientStub stub;
         AtomicBoolean down;
-        public Control(ArrayList sharedList, AtomicBoolean isWork, AtomicBoolean down,RemoteJChannelStub stub) {
+        public Control(ArrayList sharedList, AtomicBoolean isWork, AtomicBoolean down, JChannelClientStub stub) {
             this.sharedList = sharedList;
             this.isWork = isWork;
             this.stub = stub;

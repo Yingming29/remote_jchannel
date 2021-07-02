@@ -4,13 +4,12 @@ cn/yingming/grpc1/NodeServer$1.class
 io/grpc/jchannelRpc/SetStatsRep.class
 io/grpc/jchannelRpc/GetStateReq$Builder.class
 io/grpc/jchannelRpc/GetStateRepOrBuilder.class
-cn/yingming/grpc1/RemoteJChannelStub$Control.class
 io/grpc/jchannelRpc/DumpStatsRep$1.class
 io/grpc/jchannelRpc/GetDiscardOwnMsgRep$1.class
 io/grpc/jchannelRpc/JChannelsServiceGrpc$MethodHandlers.class
 io/grpc/jchannelRpc/JChannelsServiceGrpc$1.class
 io/grpc/jchannelRpc/SetDiscardOwnMsgReq$1.class
-cn/yingming/grpc1/RemoteJChannelStub$1.class
+cn/yingming/grpc1/JChannelClientStub$1.class
 io/grpc/jchannelRpc/GetStateReqOrBuilder.class
 io/grpc/jchannelRpc/IsStateReq$Builder.class
 cn/yingming/grpc1/SubJChannel.class
@@ -21,11 +20,11 @@ io/grpc/jchannelRpc/JChannelsServiceGrpc$JChannelsServiceStub.class
 cn/yingming/grpc1/SimpleChatRJ.class
 io/grpc/jchannelRpc/DumpStatsReq$Builder.class
 io/grpc/jchannelRpc/SetStatsReq$1.class
+cn/yingming/grpc1/JChannelClientStub.class
 io/grpc/jchannelRpc/GetStateRep$Builder.class
 io/grpc/jchannelRpc/GetStatsReq.class
 io/grpc/jchannelRpc/GetDiscardOwnMsgRep$Builder.class
 io/grpc/jchannelRpc/GetStateReq$1.class
-cn/yingming/grpc1/RemoteJChannel.class
 io/grpc/jchannelRpc/GetDiscardOwnMsgRep.class
 io/grpc/jchannelRpc/IsStateReq$1.class
 io/grpc/jchannelRpc/DumpStatsRep$Builder.class
@@ -42,6 +41,7 @@ io/grpc/jchannelRpc/GetPropertyRep.class
 io/grpc/jchannelRpc/GetStatsRep$Builder.class
 io/grpc/jchannelRpc/DumpStatsReq.class
 io/grpc/jchannelRpc/IsStateRep$1.class
+cn/yingming/grpc1/JChannelClient.class
 io/grpc/jchannelRpc/MessageReqRepOrBuilder.class
 io/grpc/jchannelRpc/GetPropertyReq.class
 io/grpc/jchannelRpc/SetStatsReqOrBuilder.class
@@ -74,6 +74,7 @@ io/grpc/jchannelRpc/DumpStatsReq$1.class
 io/grpc/jchannelRpc/GetStatsReq$1.class
 io/grpc/jchannelRpc/JChannelsServiceGrpc$JChannelsServiceFileDescriptorSupplier.class
 io/grpc/jchannelRpc/SetStatsRep$Builder.class
+cn/yingming/grpc1/JChannelClientStub$Control.class
 io/grpc/jchannelRpc/GetDiscardOwnMsgReq$Builder.class
 io/grpc/jchannelRpc/SetStatsRepOrBuilder.class
 io/grpc/jchannelRpc/SetStatsReq.class
@@ -88,7 +89,6 @@ io/grpc/jchannelRpc/JChannelsServiceGrpc$JChannelsServiceImplBase.class
 io/grpc/jchannelRpc/GetStateReq.class
 io/grpc/jchannelRpc/JChannelsServiceGrpc$JChannelsServiceMethodDescriptorSupplier.class
 io/grpc/jchannelRpc/GetPropertyRep$1.class
-cn/yingming/grpc1/RemoteJChannelStub.class
 io/grpc/jchannelRpc/GetDiscardOwnMsgReq$1.class
 cn/yingming/grpc1/NodeServer$ClientAddInterceptor.class
 io/grpc/jchannelRpc/GetStatsRepOrBuilder.class

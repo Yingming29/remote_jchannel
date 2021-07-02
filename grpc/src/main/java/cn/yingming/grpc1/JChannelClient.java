@@ -2,18 +2,13 @@ package cn.yingming.grpc1;
 
 import io.grpc.jchannelRpc.DumpStatsReq;
 import org.jgroups.*;
-import org.jgroups.stack.AddressGenerator;
-import org.jgroups.stack.ProtocolStack;
-import org.jgroups.util.*;
 
 import java.util.*;
-import java.util.UUID;
-import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.function.Consumer;
 
-public class RemoteJChannel extends JChannel {
+
+public class JChannelClient{
     // address is the grpc server target
     public String address;
     // name and remote name
@@ -28,7 +23,7 @@ public class RemoteJChannel extends JChannel {
     public Address real_jchannel_address;
     public AtomicBoolean isWork;
     public ArrayList msgList;
-    public RemoteJChannelStub clientStub;
+    public JChannelClientStub clientStub;
     public AtomicBoolean down;
     // client view and remote server view
     public View view;
@@ -46,7 +41,7 @@ public class RemoteJChannel extends JChannel {
     public String state;
     public boolean isState;
 
-    public RemoteJChannel(String address) throws Exception{
+    public JChannelClient(String address) throws Exception{
         this.address = address;
         // as the source of the RemoteJChannel
         this.name = null;
@@ -77,13 +72,11 @@ public class RemoteJChannel extends JChannel {
         this.state = null;
     }
 
-    @Override
     public Receiver getReceiver() {
         return this.receiver;
     }
 
-    @Override
-    public JChannel setReceiver(Receiver r) {
+    public JChannelClient setReceiver(Receiver r) {
         if (this.isWork.get()){
             System.out.println("The RemoteJChannel is working.");
         } else{
@@ -92,8 +85,7 @@ public class RemoteJChannel extends JChannel {
         return this;
     }
 
-    @Override
-    public JChannel receiver(Receiver r) {
+    public JChannelClient receiver(Receiver r) {
         if (this.isWork.get()){
             System.out.println("The RemoteJChannel is working.");
         } else{
@@ -102,7 +94,6 @@ public class RemoteJChannel extends JChannel {
         return this;
     }
 
-    @Override
     /** getAddress() -> address()
      * address() is a remote grpc call. get the Address of remote JChannel (real JChannel)
      */
@@ -110,7 +101,6 @@ public class RemoteJChannel extends JChannel {
         return address();
     }
 
-    @Override
     /** grpc call for the Address of remote JChannel (real jchannel)  -> return result by grpc
      * @return Address, the Address of the remote JChannel (real JChannel) of this client.
      */
@@ -175,12 +165,10 @@ public class RemoteJChannel extends JChannel {
         return this.remoteName;
     }
 
-    @Override
     // setName
     public JChannel name(String name) {
         throw new UnsupportedOperationException("RemoteJChannel client cannot setName() and name(String name).");
     }
-    @Override
     /**
      * getClusterName() is a remote grpc call. get the remote JChannel's cluster, e.g. NodeCluster
      * @return String, the cluster name of remote JChannel.
@@ -189,13 +177,12 @@ public class RemoteJChannel extends JChannel {
         return this.getClusterName();
     }
 
-    @Override
+
     public View getView() {
         throw new UnsupportedOperationException("RemoteJChannel does not have View object. " +
                 "Please use new method getRemoteJChannelView().");
     }
 
-    @Override
     public View view() {
         throw new UnsupportedOperationException("RemoteJChannel does not have View object. " +
                 "Please use new method remoteJChannelView().");
@@ -208,7 +195,7 @@ public class RemoteJChannel extends JChannel {
     public View remoteJChannelView(){
         return this.isWork.get() ? this.view : null;
     }
-    @Override
+
     public boolean getStats() {
         if (!isWork.get()){
             System.out.println("The RemoteJChannel client does not start work. Return false");
@@ -224,7 +211,7 @@ public class RemoteJChannel extends JChannel {
         }
         return this.stats;
     }
-    @Override
+
     public boolean stats() {
         if (!isWork.get()){
             System.out.println("The RemoteJChannel client does not start work. Return false");
@@ -240,8 +227,8 @@ public class RemoteJChannel extends JChannel {
         }
         return this.stats;
     }
-    @Override
-    public JChannel setStats(boolean stats) {
+
+    public JChannelClient setStats(boolean stats) {
         if (!isWork.get()){
             System.out.println("The RemoteJChannel client does not start work.");
             return this;
@@ -260,8 +247,8 @@ public class RemoteJChannel extends JChannel {
         }
         return this;
     }
-    @Override
-    public JChannel stats(boolean stats) {
+
+    public JChannelClient stats(boolean stats) {
         if (!isWork.get()){
             System.out.println("The RemoteJChannel client does not start work.");
             return this;
@@ -280,7 +267,7 @@ public class RemoteJChannel extends JChannel {
         }
         return this;
     }
-    @Override
+
     public boolean getDiscardOwnMessages() {
         if (!isWork.get()){
             System.out.println("The RemoteJChannel client does not start work.");
@@ -297,8 +284,8 @@ public class RemoteJChannel extends JChannel {
         return this.discard_own_messages;
     }
 
-    @Override
-    public JChannel setDiscardOwnMessages(boolean flag) {
+
+    public JChannelClient setDiscardOwnMessages(boolean flag) {
         if (!isWork.get()){
             System.out.println("The RemoteJChannel client does not start work.");
             return this;
@@ -314,7 +301,7 @@ public class RemoteJChannel extends JChannel {
         return this;
     }
 
-    @Override
+
     /*
     The methods returns the Address String of remote real JChannel.
      */
@@ -330,7 +317,7 @@ public class RemoteJChannel extends JChannel {
         return real_jchannel_address != null ? real_jchannel_address.toString() : "n/a";
     }
 
-    @Override
+
     /*
     The methods returns the Address String of remote real JChannel.
      */
@@ -346,7 +333,7 @@ public class RemoteJChannel extends JChannel {
         return real_jchannel_address instanceof org.jgroups.util.UUID ? ((org.jgroups.util.UUID)real_jchannel_address).toStringLong() : null;
     }
 
-    @Override
+
     public String getClusterName() {
         if (!isWork.get() && !down.get()){
             System.out.println("The RemoteJChannel client does not start work. Return null");
@@ -368,7 +355,7 @@ public class RemoteJChannel extends JChannel {
         return this.isWork.get() ? this.cluster : null;
     }
 
-    @Override
+
     public String getViewAsString() {
         if (isWork.get() && this.view != null){
             return this.view.toString();
@@ -377,7 +364,7 @@ public class RemoteJChannel extends JChannel {
         }
     }
 
-    @Override
+
     public String getState() {
         if (!isWork.get() && !down.get()){
             System.out.println("The RemoteJChannel client does not start work. Return null");
@@ -393,7 +380,7 @@ public class RemoteJChannel extends JChannel {
         }
         return this.state;
     }
-    @Override
+
     public boolean isOpen() {
         if (!isWork.get() && !down.get()){
             System.out.println("The RemoteJChannel client does not start work. Return null");
@@ -410,7 +397,7 @@ public class RemoteJChannel extends JChannel {
         return this.isState;
     }
 
-    @Override
+
     // change
     public boolean isConnected() {
         if (!isWork.get() && !down.get()){
@@ -428,7 +415,7 @@ public class RemoteJChannel extends JChannel {
         return this.isState;
     }
 
-    @Override
+
     public boolean isConnecting() {
         if (!isWork.get() && !down.get()){
             System.out.println("The RemoteJChannel client does not start work. Return null");
@@ -445,7 +432,7 @@ public class RemoteJChannel extends JChannel {
         return this.isState;
     }
 
-    @Override
+
     public boolean isClosed() {
         if (!isWork.get() && !down.get()){
             System.out.println("The RemoteJChannel client does not start work. Return null");
@@ -466,7 +453,7 @@ public class RemoteJChannel extends JChannel {
         return Version.printDescription();
     }
 
-    @Override
+
     public String getProperties() {
         if (!isWork.get() && !down.get()){
             System.out.println("The RemoteJChannel client does not start work. Return null");
@@ -483,7 +470,7 @@ public class RemoteJChannel extends JChannel {
         return this.property;
     }
 
-    @Override
+
     public String printProtocolSpec(boolean include_props) {
         this.clientStub.add_save("printProtocolSpec() " + include_props);
         synchronized (obj){
@@ -497,7 +484,7 @@ public class RemoteJChannel extends JChannel {
     }
 
 
-    @Override
+
     public Map<String, Map<String, Object>> dumpStats() {
         if (!isWork.get()){
             System.out.println("The RemoteJChannel client does not work. Return null");
@@ -515,7 +502,7 @@ public class RemoteJChannel extends JChannel {
         return this.statsMap;
     }
 
-    @Override
+
     public Map<String, Map<String, Object>> dumpStats(String protocol_name, List<String> attrs) {
         if (!isWork.get()){
             System.out.println("The RemoteJChannel client does not work. Return null");
@@ -533,7 +520,7 @@ public class RemoteJChannel extends JChannel {
         return this.statsMap;
     }
 
-    @Override
+
     public Map<String, Map<String, Object>> dumpStats(String protocol_name) {
         if (!isWork.get()){
             System.out.println("The RemoteJChannel client does not work. Return null");
@@ -552,15 +539,14 @@ public class RemoteJChannel extends JChannel {
     }
 
 
-    @Override
-    public synchronized JChannel connect(String cluster_name) throws Exception {
+    public synchronized JChannelClient connect(String cluster_name) throws Exception {
         if (cluster_name == null || cluster_name.equals("")){
             throw new IllegalArgumentException("The cluster_name cannot be null.");
         }
         this.cluster = cluster_name;
         boolean checkResult = this.checkProperty();
         if (checkResult){
-            this.clientStub = new RemoteJChannelStub(this);
+            this.clientStub = new JChannelClientStub(this);
             this.clientStub.startStub();
             return this;
         } else{
@@ -570,6 +556,7 @@ public class RemoteJChannel extends JChannel {
     }
 
     // target is the address of grpc server.
+    /*
     public synchronized JChannel connect(String cluster_name, String target) throws Exception {
         if (cluster_name == null || cluster_name.equals("")){
             throw new IllegalArgumentException("The cluster_name cannot be null.");
@@ -588,6 +575,8 @@ public class RemoteJChannel extends JChannel {
                     "because the RemoteJchannel miss some properties.");
         }
     }
+
+     */
     // the cluster can be changed to null, because they connects to one cluster
     private boolean checkProperty(){
         if (this.address == null || this.address.equals("")){
@@ -603,6 +592,7 @@ public class RemoteJChannel extends JChannel {
         }
     }
 
+    /*
     @Override
     protected synchronized JChannel connect(String cluster_name, boolean useFlushIfPresent) throws Exception {
         throw new UnsupportedOperationException("RemoteJChannel does not support this connect().");
@@ -616,12 +606,14 @@ public class RemoteJChannel extends JChannel {
     public synchronized JChannel connect(String cluster_name, Address target, long timeout, boolean useFlushIfPresent) throws Exception {
         throw new UnsupportedOperationException("RemoteJChannel does not support this connect().");
     }
-    @Override
+
+     */
+
     /**
      * send disconnect request to JChannel-server
      * @return RemoteJChannel
      */
-    public synchronized JChannel disconnect(){
+    public synchronized JChannelClient disconnect(){
         if (!isWork.get()){
             throw new NullPointerException("The RemoteJChannel does not work, cannot disconnect the connection.");
         }
@@ -635,7 +627,7 @@ public class RemoteJChannel extends JChannel {
         }
         return this;
     }
-    @Override
+
     /**
      * send disconnect request to JChannel-server
      *
@@ -654,11 +646,11 @@ public class RemoteJChannel extends JChannel {
         }
 
     }
-    @Override
+
     /** Send a Message object to remote JChannel.
      *
      */
-    public JChannel send(Message msg) throws Exception {
+    public JChannelClient send(Message msg) throws Exception {
         if (!isWork.get()){
             throw new NullPointerException("The RemoteJChannel does not work, cannot close the connection.");
         }
@@ -674,31 +666,32 @@ public class RemoteJChannel extends JChannel {
 
         return this;
     }
-    @Override
+
     /** Send an object to remote JChannel with an Address dest
      *
      */
-    public JChannel send(Address dst, Object obj) throws Exception {
+    public JChannelClient send(Address dst, Object obj) throws Exception {
         Message msg=new ObjectMessage(dst, obj);
         return send(msg);
     }
-    @Override
+
     /** Send a byte array to remote JChannel with an Address dest
      *
      */
-    public JChannel send(Address dst, byte[] buf) throws Exception {
+    public JChannelClient send(Address dst, byte[] buf) throws Exception {
         return send(new BytesMessage(dst, buf));
     }
-    @Override
+
     /** Send an byte array with offset and length to remote JChannel with an Address dest
      *
      */
-    public JChannel send(Address dst, byte[] buf, int offset, int length) throws Exception {
+    public JChannelClient send(Address dst, byte[] buf, int offset, int length) throws Exception {
         return send(new BytesMessage(dst, buf, offset, length));
     }
 
-    @Override
-    public JChannel getState(Address target, long timeout) throws Exception {
+
+    // change
+    public JChannelClient getState(Address target, long timeout) throws Exception {
         if (!isWork.get()){
             throw new NullPointerException("The RemoteJChannel does not work, cannot invoke getState().");
         }
@@ -712,10 +705,10 @@ public class RemoteJChannel extends JChannel {
         return this;
     }
 
-    @Override
+
     public String toString(boolean details) {
         StringBuilder sb = new StringBuilder();
-        sb.append("JChannel address=").append(this.jchannel_address).append('\n').append("cluster_name=").append(this.cluster).append('\n').append("my_view=").append(this.view.toString()).append('\n').append("state=").append(this.getState()).append('\n');
+        sb.append("JChannel-Client address=").append(this.jchannel_address).append('\n').append("cluster_name=").append(this.cluster).append('\n').append("my_view=").append(this.view.toString()).append('\n').append("state=").append(this.getState()).append('\n');
         if (details) {
             sb.append("discard_own_messages=").append(this.discard_own_messages).append('\n');
             sb.append("state_transfer_supported=").append("Not support").append('\n');
@@ -727,25 +720,25 @@ public class RemoteJChannel extends JChannel {
         return sb.toString();
     }
 
-    @Override
-    protected JChannel checkClosed() {
-        if (!this.down.get()) {
+
+    protected JChannelClient checkClosed() {
+        if (!this.isWork.get()) {
             throw new IllegalStateException("channel is closed");
         } else {
             return this;
         }
     }
 
-    @Override
-    protected JChannel checkClosedOrNotConnected() {
-        if (!this.down.get()) {
+
+    protected JChannelClient checkClosedOrNotConnected() {
+        if (!this.isWork.get()) {
             throw new IllegalStateException("channel is closed");
         } else {
             return this;
         }
     }
-    @Override
-    protected JChannel _close(boolean disconnect) {
+
+    protected JChannelClient _close(boolean disconnect) {
         if (!this.down.get()) {
             return this;
         } else {
@@ -755,17 +748,10 @@ public class RemoteJChannel extends JChannel {
             return this;
         }
     }
-    @Override
+
     protected Address determineCoordinator() {
         if (!isWork.get() && !down.get()){
             return this.remoteView.getCoord();
-        } else {
-            return null;
-        }
-    }
-    protected Address determineClientCoordinator() {
-        if (!isWork.get() && !down.get()){
-            return this.view.getCoord();
         } else {
             return null;
         }

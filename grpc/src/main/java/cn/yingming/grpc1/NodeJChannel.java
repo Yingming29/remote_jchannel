@@ -49,6 +49,7 @@ public class NodeJChannel implements Receiver{
         System.out.println("[JChannel] The current nodes in node cluster: " + this.nodesMap);
         // this.test_sleep();
         this.testMethod();
+        this.channel.getState(null, 2000);
     }
 
     public void test_sleep(){
@@ -272,6 +273,7 @@ public class NodeJChannel implements Receiver{
     }
 
     public void setState(InputStream input) throws Exception{
+
         ReentrantLock lock = new ReentrantLock();
         List<String> list;
         list = (List<String>) Util.objectFromStream(new DataInputStream(input));
