@@ -135,7 +135,13 @@ public class SimpleChatRJ {
                     System.out.println("isConnected() for remote real JChannel: " + remoteJChannel.isConnected());
                 } else if (line.equals("isClosed()")){
                     System.out.println("isClosed() for remote real JChannel: " + remoteJChannel.isClosed());
-                } else if (line.startsWith("getState() history")){
+                }
+                /*
+                else if (line.equals("getState() history null")){
+                    System.out.println("getState(null) for remote real JChannel: " + remoteJChannel.getState(null, 2000));
+                }  null
+                 */
+                else if (line.startsWith("getState() history")){
                     // getState() history 1 1000
                     String[] strs = line.split(" ");
                     int index = Integer.parseInt(strs[2]);

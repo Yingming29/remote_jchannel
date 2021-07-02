@@ -156,5 +156,17 @@ public class Test {
                 .setDiscard(false).setJchannalAddress("address String").build();
         System.out.println(discardMsgReq);
 
+        System.out.println("================================");
+        List<String> test_list = new LinkedList<String>();
+        test_list.add("1");
+        test_list.add("2");
+        test_list.add("3");
+        System.out.println("Print1: " + test_list);
+
+        byte[] test_byte = Util.objectToByteBuffer(test_list);
+        System.out.println(test_byte);
+
+        List<String> test_list2 = (List<String>) Util.objectFromByteBuffer(test_byte);
+        System.out.println(test_list2);
     }
 }

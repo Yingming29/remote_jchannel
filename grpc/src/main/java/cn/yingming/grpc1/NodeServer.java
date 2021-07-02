@@ -219,13 +219,13 @@ public class NodeServer {
                                         .build();
                                 // send to this client
                                 broadcastResponse(rep);
-                            } else if (jchannel.channel.getView().containsMember(target) && !target.equals(jchannel.channel.getAddress())){
+                            } else if ((jchannel.channel.getView().containsMember(target) && !target.equals(jchannel.channel.getAddress())) || target.equals(null)){
                                 // Invoke the real getState() of JChannel to other JChannel.
                                 if (stateReq.getTimeout() != 0) {
                                     System.out.println("JChannel invokes getState(Target, Timeout)");
                                     jchannel.channel.getState(target, stateReq.getTimeout());
                                 } else{
-                                    System.out.println("JChannel invokes getState(Target, Timeout(default))");
+                                    System.out.println("JChannel invokes getState(Target, Timeout(default 2000))");
                                     jchannel.channel.getState(target, 2000);
                                 }
                             } else {
@@ -645,15 +645,29 @@ public class NodeServer {
 
         // Broadcast the messages for updating addresses of servers
         protected void broadcastResponse(Response message){
-            lock.lock();
-            try{
-                // Iteration of StreamObserver for broadcast message.
+            if (clients.size() != 0){
                 for (Address u : clients.keySet()){
                     clients.get(u).onNext(message);
                 }
-            } finally {
-                lock.unlock();
+            } else {
+                System.out.println("The size of connecting clients is 0.");
             }
+            /*
+            if (clients.size() != 0){
+                lock.lock();
+                try{
+                    // Iteration of StreamObserver for broadcast message.
+                    for (Address u : clients.keySet()){
+                        clients.get(u).onNext(message);
+                    }
+                } finally {
+                    lock.unlock();
+                }
+            } else {
+                System.out.println("The size of connecting clients is 0.");
+            }
+
+             */
         }
 
         public void unicast(MessageReqRep req){

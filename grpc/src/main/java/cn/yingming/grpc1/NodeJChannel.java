@@ -277,28 +277,26 @@ public class NodeJChannel implements Receiver{
         ReentrantLock lock = new ReentrantLock();
         List<String> list;
         list = (List<String>) Util.objectFromStream(new DataInputStream(input));
-        lock.lock();
-        try{
+        synchronized (state){
             state.clear();
             state.addAll(list);
             System.out.println(list.size() + " messages in chat history.");
             list.forEach(System.out::println);
 
-            System.out.println("JChannel setState(), broadcast the state to its all JChannel-Clients.");
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            this.getState(out);
-            StateRep stateRep = StateRep.newBuilder().setState(ByteString.copyFrom(out.toByteArray())).build();
-            Response rep = Response.newBuilder()
-                    .setStateRep(stateRep)
-                    .build();
-            // send to this client
-            service.broadcastResponse(rep);
-
-        } finally {
-            lock.unlock();
+            if (this.service != null) {
+                System.out.println("JChannel setState(), broadcast the state to its all JChannel-Clients.");
+                byte[] state_byte = Util.objectToByteBuffer(state);
+                StateRep stateRep = StateRep.newBuilder().setState(ByteString.copyFrom(state_byte)).build();
+                Response rep = Response.newBuilder()
+                        .setStateRep(stateRep)
+                        .build();
+                // send to this client
+                System.out.println(rep);
+                service.broadcastResponse(rep);
+            }
         }
-
     }
+
 
     public void receiveChannelMsg(Message msg){
         ChannelMsg cmsg = msg.getObject();
