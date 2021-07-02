@@ -701,25 +701,21 @@ public class NodeServer {
         }
 
         // send message to all common JChannels
-        protected void forwardMsgToJChannel(Message msg){
-            msg.setSrc(jchannel.channel.getAddress());
-            List<Address> list = new ArrayList<>();
-            for (Address address : jchannel.channel.getView().getMembers()){
-                if (!jchannel.nodesMap.containsKey(address)){
-                    list.add(address);
-                }
-            }
-            System.out.println("The current real common JChannel" + list);
-            for (Address address:list) {
-                try {
-                    msg.setDest(address);
-                    jchannel.channel.send(msg);
-                    System.out.println("forwardMsgToJChannel"+ msg);
-                } catch (Exception e){
-                    e.printStackTrace();
+        protected void forwardMsgToJChannel(Message msg) {
+            Address src = this.jchannel.channel.getAddress();
+            for (Address address : jchannel.channel.getView().getMembers()) {
+                if (!jchannel.nodesMap.containsKey(address)) {
+                    try {
+                        Message new_msg = UtilsRJ.cloneMessage(msg, src, address);
+                        jchannel.channel.send(new_msg);
+                        System.out.println("forwardMsgToJChannel"+ new_msg);
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
             }
         }
+
         protected void forwardMsg(ChannelMsg chmsg){
             // send messages exclude itself.
             for (Address address: jchannel.nodesMap.keySet()) {

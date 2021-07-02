@@ -82,7 +82,7 @@ public class RemoteJChannelStub {
                 }
                 SetDiscardOwnMsgReq discardMsgReq = SetDiscardOwnMsgReq.newBuilder()
                         .setDiscard(b).setJchannalAddress(this.client.jchannel_address.toString()).build();
-                System.out.println(discardMsgReq);
+                //System.out.println(discardMsgReq);
                 return Request.newBuilder().setSetDiscardOwnMsgReq(discardMsgReq).build();
             } else if(input.equals("getStats()")){
                 GetStatsReq getStatsReq = GetStatsReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString()).build();
@@ -93,7 +93,7 @@ public class RemoteJChannelStub {
                         .build();
                 return Request.newBuilder().setGetNameReq(getNameReq).build();
             } else if(input.startsWith("setStats()")){
-                System.out.println(input);
+                //System.out.println(input);
                 SetStatsReq setStatsReq = null;
                 if (input.equals("setStats() true")){
                     setStatsReq = SetStatsReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString()).setStats(true).build();
@@ -146,7 +146,7 @@ public class RemoteJChannelStub {
                 } catch (Exception e){
                     e.printStackTrace();
                 }
-                System.out.println("getState()"+ stateReq);
+                //System.out.println("getState()"+ stateReq);
                 return Request.newBuilder().setStateReq(stateReq).build();
             }
         } else if(obj instanceof Message) {
@@ -308,7 +308,7 @@ public class RemoteJChannelStub {
                 } catch (Exception e){
                     e.printStackTrace();
                 }
-                System.out.println("A pair of Address and logical name: " + u + ", " + nameList.get(i));
+                //System.out.println("A pair of Address and logical name: " + u + ", " + nameList.get(i));
                 stubLock.lock();
                 try {
                     NameCache.add(u, nameList.get(i));
@@ -419,7 +419,7 @@ public class RemoteJChannelStub {
 
             @Override
             public void onNext(Response response) {
-                System.out.println(response);
+                //System.out.println(response);
                 judgeResponse(response);
             }
 

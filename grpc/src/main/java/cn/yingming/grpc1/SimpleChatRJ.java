@@ -105,6 +105,7 @@ public class SimpleChatRJ {
                         }
                     } else if (strs[2].equals("client")){
                         try{
+                            // change
                             remoteJChannel.send(this.remoteJChannel.view.getMembers().get(index), strs[1]);
                         } catch (Exception e){
                             e.printStackTrace();

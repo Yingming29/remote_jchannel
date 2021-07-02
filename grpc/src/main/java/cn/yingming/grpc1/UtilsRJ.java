@@ -30,6 +30,41 @@ public class UtilsRJ {
         }
     }
 
+    //
+    public static Message cloneMessage(Message msg, Address src, Address dest){
+        if (msg instanceof BytesMessage){
+            Message new_msg = new BytesMessage();
+            new_msg.setSrc(src).setDest(dest).setPayload(msg.getPayload());
+            return new_msg;
+        } else if (msg instanceof ObjectMessage){
+            Message new_msg = new ObjectMessage();
+            new_msg.setSrc(src).setDest(dest).setPayload(msg.getPayload());
+            return new_msg;
+        } else if (msg instanceof CompositeMessage){
+            Message new_msg = new CompositeMessage();
+            new_msg.setSrc(src).setDest(dest).setPayload(msg.getPayload());
+            return new_msg;
+        } else if (msg instanceof EmptyMessage){
+            Message new_msg = new EmptyMessage();
+            new_msg.setSrc(src).setDest(dest).setPayload(msg.getPayload());
+            return new_msg;
+        } else if (msg instanceof FragmentedMessage){
+            Message new_msg = new FragmentedMessage();
+            new_msg.setSrc(src).setDest(dest).setPayload(msg.getPayload());
+            return new_msg;
+        } else if (msg instanceof LongMessage){
+            Message new_msg = new LongMessage();
+            new_msg.setSrc(src).setDest(dest).setPayload(msg.getPayload());
+            return new_msg;
+        } else if (msg instanceof NioMessage){
+            Message new_msg = new NioMessage();
+            new_msg.setSrc(src).setDest(dest).setPayload(msg.getPayload());
+            return new_msg;
+        } else{
+            return null;
+        }
+    }
+
     public static Message convertMessage(MessageReqRep req){
         String type = req.getType();
         ByteArrayDataInputStream in = new ByteArrayDataInputStream(req.getMessageObj().toByteArray());
