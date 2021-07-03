@@ -213,7 +213,7 @@ public class NodeServer {
                         lock.lock();
                         try {
                             // generate the history from real JChannel
-                            if (target == null){
+                            if (target == null && !jchannel.channel.getAddress().equals(jchannel.channel.getView().getCoord())){
                                 if (stateReq.getTimeout() != 0) {
                                     System.out.println("[JChannel-Server] JChannel invokes getState(null, Timeout)");
                                     jchannel.channel.getState(null, stateReq.getTimeout());
@@ -221,6 +221,13 @@ public class NodeServer {
                                     System.out.println("[JChannel-Server] JChannel invokes getState(null, Timeout(default 2000))");
                                     jchannel.channel.getState(null, 2000);
                                 }
+                            } else if (target == null && jchannel.channel.getAddress().equals(jchannel.channel.getView().getCoord())){
+                                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                                jchannel.getState(out);
+                                StateRep stateRep = StateRep.newBuilder().setState(ByteString.copyFrom(out.toByteArray())).build();
+                                Response rep = Response.newBuilder()
+                                        .setStateRep(stateRep)
+                                        .build();
                             } else if (target.equals(jchannel.channel.getAddress())){
                                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                                 jchannel.getState(out);
@@ -618,7 +625,7 @@ public class NodeServer {
                 byte[] v_byte = vOutStream.buffer();
                 ViewRep_server view_rep = ViewRep_server.newBuilder().setSender(jchannel.channel.address().toString()).setViewByte(ByteString.copyFrom(v_byte)).build();
                 Response rep_broView = Response.newBuilder().setViewRepServer(view_rep).build();
-                broadcastResponse(rep_broView);
+                unicastRep(rep_broView, generated_address);
                 System.out.println("[gRPC-Server] Return a message for the JChannel-Server view.");
                 System.out.println(rep_broView);
             }
