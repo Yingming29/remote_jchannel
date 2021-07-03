@@ -26,7 +26,6 @@ public class NodeServer {
     private int port;
     private Server server;
     //  Node name, cluster name, JChannel of node
-    String nodeName;
     String jClusterName;
     NodeJChannel jchannel;
     JChannelsServiceImpl gRPCservice;
@@ -35,12 +34,11 @@ public class NodeServer {
     public NodeServer(int port, String jClusterName) throws Exception {
         // port, name, and cluster name of this node
         this.port = port;
-        this.nodeName = nodeName;
         this.jClusterName = jClusterName;
         // not useful, store clients address.
         this.ips = new ConcurrentHashMap<>();
         // create JChannel given node name and cluster name
-        this.jchannel = new NodeJChannel(nodeName, jClusterName, "127.0.0.1:" + port);
+        this.jchannel = new NodeJChannel(jClusterName, "127.0.0.1:" + port);
         // create grpc server, and its service is given the jchannel for calling send() method on jchannel.
         this.gRPCservice = new JChannelsServiceImpl(this.jchannel);
         this.server = ServerBuilder.forPort(port)
@@ -51,7 +49,9 @@ public class NodeServer {
 
     // Start grpc
     private void start() throws Exception {
-        // Give the entry of gRPC for calling broadcast().
+        // start the JChannel and join to a cluster
+
+        // Give the entry of gRPC for calling broadcast method of grpc server.
         this.giveEntry(this.gRPCservice);
         this.server.start();
         System.out.println("---gRPC Server Starts.---");
@@ -210,7 +210,15 @@ public class NodeServer {
                             // generate the history from real JChannel
                             // ClusterMap cm = (ClusterMap) jchannel.serviceMap.get(stateReq.getCluster());
                             // StateRep stateRep = cm.generateState();
-                            if (target.equals(jchannel.channel.getAddress())){
+                            if (target == null){
+                                if (stateReq.getTimeout() != 0) {
+                                    System.out.println("JChannel invokes getState(null, Timeout)");
+                                    jchannel.channel.getState(null, stateReq.getTimeout());
+                                } else{
+                                    System.out.println("JChannel invokes getState(null, Timeout(default 2000))");
+                                    jchannel.channel.getState(null, 2000);
+                                }
+                            } else if (target.equals(jchannel.channel.getAddress())){
                                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                                 jchannel.getState(out);
                                 StateRep stateRep = StateRep.newBuilder().setState(ByteString.copyFrom(out.toByteArray())).build();
@@ -219,7 +227,7 @@ public class NodeServer {
                                         .build();
                                 // send to this client
                                 broadcastResponse(rep);
-                            } else if ((jchannel.channel.getView().containsMember(target) && !target.equals(jchannel.channel.getAddress())) || target.equals(null)){
+                            } else if (jchannel.channel.getView().containsMember(target) && !target.equals(jchannel.channel.getAddress())){
                                 // Invoke the real getState() of JChannel to other JChannel.
                                 if (stateReq.getTimeout() != 0) {
                                     System.out.println("JChannel invokes getState(Target, Timeout)");
@@ -471,7 +479,7 @@ public class NodeServer {
                             System.out.println("[gRPC] Receive invalid message.");
                         }
                     } else{
-                        System.out.println("onNext(): Invalid message, check.");
+                        System.out.println("onNext(): Invalid message.");
                     }
                 }
                 // can add an automatic deleting the cancelled client.
@@ -484,8 +492,9 @@ public class NodeServer {
                         ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
                         UUID u = (UUID) add;
                         u.writeTo(out);
-                        ChannelMsg channelMsg = ChannelMsg.newBuilder()
+                        ExchangeMsg exchangeMsg = ExchangeMsg.newBuilder()
                                 .setType("[DisconnectNotGrace]").setContentByt(ByteString.copyFrom(out.buffer())).build();
+                        ChannelMsg channelMsg = ChannelMsg.newBuilder().setExchangeMsg(exchangeMsg).build();
                         // Message msg = new ObjectMessage(null, channelMsg);
                         // msg.setFlagIfAbsent(Message.TransientFlag.DONT_LOOPBACK);
                         forwardMsg(channelMsg);
@@ -644,30 +653,14 @@ public class NodeServer {
         }
 
         // Broadcast the messages for updating addresses of servers
-        protected void broadcastResponse(Response message){
+        protected void broadcastResponse(Response rep){
             if (clients.size() != 0){
                 for (Address u : clients.keySet()){
-                    clients.get(u).onNext(message);
+                    clients.get(u).onNext(rep);
                 }
             } else {
                 System.out.println("The size of connecting clients is 0.");
             }
-            /*
-            if (clients.size() != 0){
-                lock.lock();
-                try{
-                    // Iteration of StreamObserver for broadcast message.
-                    for (Address u : clients.keySet()){
-                        clients.get(u).onNext(message);
-                    }
-                } finally {
-                    lock.unlock();
-                }
-            } else {
-                System.out.println("The size of connecting clients is 0.");
-            }
-
-             */
         }
 
         public void unicast(MessageReqRep req){

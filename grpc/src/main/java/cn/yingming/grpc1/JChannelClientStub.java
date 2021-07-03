@@ -159,8 +159,7 @@ public class JChannelClientStub {
                 e.printStackTrace();
             }
             MessageReqRep msg = MessageReqRep.newBuilder().setMessageObj(ByteString.copyFrom(out.buffer())).setType(UtilsRJ.getMsgType(m)).build();
-            Request req = Request.newBuilder().setMessageReqRep(msg).build();
-            return req;
+            return Request.newBuilder().setMessageReqRep(msg).build();
         } else if (obj instanceof DumpStatsReq){
             DumpStatsReq dumpReq = (DumpStatsReq) obj;
             return Request.newBuilder().setDumpStatsReq(dumpReq).build();

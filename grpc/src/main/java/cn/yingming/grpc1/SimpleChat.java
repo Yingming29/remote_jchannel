@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import io.grpc.jchannelRpc.ChannelMsg;
 import org.jgroups.*;
 import org.jgroups.stack.ProtocolStack;
 import org.jgroups.util.*;
@@ -27,7 +28,6 @@ public class SimpleChat implements Receiver{
 	@Override
 	public void viewAccepted(View new_view) {
 		System.out.println("** view: " + new_view);
-
 	}
 	@Override
 	public void receive(Message msg) {
@@ -36,15 +36,29 @@ public class SimpleChat implements Receiver{
 		synchronized (state){
 			state.add(line);
 		}
+		/*
+		if (msg.getObject() instanceof ChannelMsg){
+			System.out.println("Receive a message for grpc address, drop it.");
+		} else {
+			String line = msg.getSrc() + ": " + msg.getPayload();
+			System.out.println(line);
+			synchronized (state){
+				state.add(line);
+			}
+		}
+
+		 */
 	}
 	@Override
 	public void getState(OutputStream output) throws Exception{
+		System.out.println("Provide a state.");
 		synchronized (state){
 			Util.objectToStream(state, new DataOutputStream(output));
 		}
 	}
 	@Override
 	public void setState(InputStream input) throws Exception{
+		System.out.println("Receive a state.");
 		List<String> list;
 		list = (List<String>)Util.objectFromStream(new DataInputStream(input));
 		synchronized (state){

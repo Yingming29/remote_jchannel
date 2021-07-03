@@ -16,9 +16,6 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private ChannelMsg() {
-    type_ = "";
-    contentStr_ = "";
-    contentByt_ = com.google.protobuf.ByteString.EMPTY;
   }
 
   @java.lang.Override
@@ -52,20 +49,45 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
-
-            type_ = s;
+            io.grpc.jchannelRpc.ExchangeMsg.Builder subBuilder = null;
+            if (oneTypeCase_ == 1) {
+              subBuilder = ((io.grpc.jchannelRpc.ExchangeMsg) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.ExchangeMsg.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.ExchangeMsg) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 1;
             break;
           }
           case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
-
-            contentStr_ = s;
+            io.grpc.jchannelRpc.UpdateReqBetweenNodes.Builder subBuilder = null;
+            if (oneTypeCase_ == 2) {
+              subBuilder = ((io.grpc.jchannelRpc.UpdateReqBetweenNodes) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.UpdateReqBetweenNodes.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.UpdateReqBetweenNodes) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 2;
             break;
           }
           case 26: {
-
-            contentByt_ = input.readBytes();
+            io.grpc.jchannelRpc.UpdateRepBetweenNodes.Builder subBuilder = null;
+            if (oneTypeCase_ == 3) {
+              subBuilder = ((io.grpc.jchannelRpc.UpdateRepBetweenNodes) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.UpdateRepBetweenNodes.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.UpdateRepBetweenNodes) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 3;
             break;
           }
           default: {
@@ -100,91 +122,140 @@ private static final long serialVersionUID = 0L;
             io.grpc.jchannelRpc.ChannelMsg.class, io.grpc.jchannelRpc.ChannelMsg.Builder.class);
   }
 
-  public static final int TYPE_FIELD_NUMBER = 1;
-  private volatile java.lang.Object type_;
-  /**
-   * <code>string type = 1;</code>
-   * @return The type.
-   */
-  @java.lang.Override
-  public java.lang.String getType() {
-    java.lang.Object ref = type_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      type_ = s;
-      return s;
+  private int oneTypeCase_ = 0;
+  private java.lang.Object oneType_;
+  public enum OneTypeCase
+      implements com.google.protobuf.Internal.EnumLite,
+          com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+    EXCHANGEMSG(1),
+    UPDATEREQBETWEENNODES(2),
+    UPDATEREPBETWEENNODES(3),
+    ONETYPE_NOT_SET(0);
+    private final int value;
+    private OneTypeCase(int value) {
+      this.value = value;
     }
-  }
-  /**
-   * <code>string type = 1;</code>
-   * @return The bytes for type.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getTypeBytes() {
-    java.lang.Object ref = type_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      type_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
+    /**
+     * @param value The number of the enum to look for.
+     * @return The enum associated with the given number.
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static OneTypeCase valueOf(int value) {
+      return forNumber(value);
     }
+
+    public static OneTypeCase forNumber(int value) {
+      switch (value) {
+        case 1: return EXCHANGEMSG;
+        case 2: return UPDATEREQBETWEENNODES;
+        case 3: return UPDATEREPBETWEENNODES;
+        case 0: return ONETYPE_NOT_SET;
+        default: return null;
+      }
+    }
+    public int getNumber() {
+      return this.value;
+    }
+  };
+
+  public OneTypeCase
+  getOneTypeCase() {
+    return OneTypeCase.forNumber(
+        oneTypeCase_);
   }
 
-  public static final int CONTENT_STR_FIELD_NUMBER = 2;
-  private volatile java.lang.Object contentStr_;
+  public static final int EXCHANGEMSG_FIELD_NUMBER = 1;
   /**
-   * <code>string content_str = 2;</code>
-   * @return The contentStr.
+   * <code>.cn.yingming.grpc1.ExchangeMsg exchangeMsg = 1;</code>
+   * @return Whether the exchangeMsg field is set.
    */
   @java.lang.Override
-  public java.lang.String getContentStr() {
-    java.lang.Object ref = contentStr_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      contentStr_ = s;
-      return s;
-    }
+  public boolean hasExchangeMsg() {
+    return oneTypeCase_ == 1;
   }
   /**
-   * <code>string content_str = 2;</code>
-   * @return The bytes for contentStr.
+   * <code>.cn.yingming.grpc1.ExchangeMsg exchangeMsg = 1;</code>
+   * @return The exchangeMsg.
    */
   @java.lang.Override
-  public com.google.protobuf.ByteString
-      getContentStrBytes() {
-    java.lang.Object ref = contentStr_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      contentStr_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
+  public io.grpc.jchannelRpc.ExchangeMsg getExchangeMsg() {
+    if (oneTypeCase_ == 1) {
+       return (io.grpc.jchannelRpc.ExchangeMsg) oneType_;
     }
+    return io.grpc.jchannelRpc.ExchangeMsg.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.ExchangeMsg exchangeMsg = 1;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.ExchangeMsgOrBuilder getExchangeMsgOrBuilder() {
+    if (oneTypeCase_ == 1) {
+       return (io.grpc.jchannelRpc.ExchangeMsg) oneType_;
+    }
+    return io.grpc.jchannelRpc.ExchangeMsg.getDefaultInstance();
   }
 
-  public static final int CONTENT_BYT_FIELD_NUMBER = 3;
-  private com.google.protobuf.ByteString contentByt_;
+  public static final int UPDATEREQBETWEENNODES_FIELD_NUMBER = 2;
   /**
-   * <code>bytes content_byt = 3;</code>
-   * @return The contentByt.
+   * <code>.cn.yingming.grpc1.UpdateReqBetweenNodes updateReqBetweenNodes = 2;</code>
+   * @return Whether the updateReqBetweenNodes field is set.
    */
   @java.lang.Override
-  public com.google.protobuf.ByteString getContentByt() {
-    return contentByt_;
+  public boolean hasUpdateReqBetweenNodes() {
+    return oneTypeCase_ == 2;
+  }
+  /**
+   * <code>.cn.yingming.grpc1.UpdateReqBetweenNodes updateReqBetweenNodes = 2;</code>
+   * @return The updateReqBetweenNodes.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.UpdateReqBetweenNodes getUpdateReqBetweenNodes() {
+    if (oneTypeCase_ == 2) {
+       return (io.grpc.jchannelRpc.UpdateReqBetweenNodes) oneType_;
+    }
+    return io.grpc.jchannelRpc.UpdateReqBetweenNodes.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.UpdateReqBetweenNodes updateReqBetweenNodes = 2;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.UpdateReqBetweenNodesOrBuilder getUpdateReqBetweenNodesOrBuilder() {
+    if (oneTypeCase_ == 2) {
+       return (io.grpc.jchannelRpc.UpdateReqBetweenNodes) oneType_;
+    }
+    return io.grpc.jchannelRpc.UpdateReqBetweenNodes.getDefaultInstance();
+  }
+
+  public static final int UPDATEREPBETWEENNODES_FIELD_NUMBER = 3;
+  /**
+   * <code>.cn.yingming.grpc1.UpdateRepBetweenNodes updateRepBetweenNodes = 3;</code>
+   * @return Whether the updateRepBetweenNodes field is set.
+   */
+  @java.lang.Override
+  public boolean hasUpdateRepBetweenNodes() {
+    return oneTypeCase_ == 3;
+  }
+  /**
+   * <code>.cn.yingming.grpc1.UpdateRepBetweenNodes updateRepBetweenNodes = 3;</code>
+   * @return The updateRepBetweenNodes.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.UpdateRepBetweenNodes getUpdateRepBetweenNodes() {
+    if (oneTypeCase_ == 3) {
+       return (io.grpc.jchannelRpc.UpdateRepBetweenNodes) oneType_;
+    }
+    return io.grpc.jchannelRpc.UpdateRepBetweenNodes.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.UpdateRepBetweenNodes updateRepBetweenNodes = 3;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.UpdateRepBetweenNodesOrBuilder getUpdateRepBetweenNodesOrBuilder() {
+    if (oneTypeCase_ == 3) {
+       return (io.grpc.jchannelRpc.UpdateRepBetweenNodes) oneType_;
+    }
+    return io.grpc.jchannelRpc.UpdateRepBetweenNodes.getDefaultInstance();
   }
 
   private byte memoizedIsInitialized = -1;
@@ -201,14 +272,14 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getTypeBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, type_);
+    if (oneTypeCase_ == 1) {
+      output.writeMessage(1, (io.grpc.jchannelRpc.ExchangeMsg) oneType_);
     }
-    if (!getContentStrBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, contentStr_);
+    if (oneTypeCase_ == 2) {
+      output.writeMessage(2, (io.grpc.jchannelRpc.UpdateReqBetweenNodes) oneType_);
     }
-    if (!contentByt_.isEmpty()) {
-      output.writeBytes(3, contentByt_);
+    if (oneTypeCase_ == 3) {
+      output.writeMessage(3, (io.grpc.jchannelRpc.UpdateRepBetweenNodes) oneType_);
     }
     unknownFields.writeTo(output);
   }
@@ -219,15 +290,17 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getTypeBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, type_);
-    }
-    if (!getContentStrBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, contentStr_);
-    }
-    if (!contentByt_.isEmpty()) {
+    if (oneTypeCase_ == 1) {
       size += com.google.protobuf.CodedOutputStream
-        .computeBytesSize(3, contentByt_);
+        .computeMessageSize(1, (io.grpc.jchannelRpc.ExchangeMsg) oneType_);
+    }
+    if (oneTypeCase_ == 2) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(2, (io.grpc.jchannelRpc.UpdateReqBetweenNodes) oneType_);
+    }
+    if (oneTypeCase_ == 3) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(3, (io.grpc.jchannelRpc.UpdateRepBetweenNodes) oneType_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -244,12 +317,23 @@ private static final long serialVersionUID = 0L;
     }
     io.grpc.jchannelRpc.ChannelMsg other = (io.grpc.jchannelRpc.ChannelMsg) obj;
 
-    if (!getType()
-        .equals(other.getType())) return false;
-    if (!getContentStr()
-        .equals(other.getContentStr())) return false;
-    if (!getContentByt()
-        .equals(other.getContentByt())) return false;
+    if (!getOneTypeCase().equals(other.getOneTypeCase())) return false;
+    switch (oneTypeCase_) {
+      case 1:
+        if (!getExchangeMsg()
+            .equals(other.getExchangeMsg())) return false;
+        break;
+      case 2:
+        if (!getUpdateReqBetweenNodes()
+            .equals(other.getUpdateReqBetweenNodes())) return false;
+        break;
+      case 3:
+        if (!getUpdateRepBetweenNodes()
+            .equals(other.getUpdateRepBetweenNodes())) return false;
+        break;
+      case 0:
+      default:
+    }
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -261,12 +345,22 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + TYPE_FIELD_NUMBER;
-    hash = (53 * hash) + getType().hashCode();
-    hash = (37 * hash) + CONTENT_STR_FIELD_NUMBER;
-    hash = (53 * hash) + getContentStr().hashCode();
-    hash = (37 * hash) + CONTENT_BYT_FIELD_NUMBER;
-    hash = (53 * hash) + getContentByt().hashCode();
+    switch (oneTypeCase_) {
+      case 1:
+        hash = (37 * hash) + EXCHANGEMSG_FIELD_NUMBER;
+        hash = (53 * hash) + getExchangeMsg().hashCode();
+        break;
+      case 2:
+        hash = (37 * hash) + UPDATEREQBETWEENNODES_FIELD_NUMBER;
+        hash = (53 * hash) + getUpdateReqBetweenNodes().hashCode();
+        break;
+      case 3:
+        hash = (37 * hash) + UPDATEREPBETWEENNODES_FIELD_NUMBER;
+        hash = (53 * hash) + getUpdateRepBetweenNodes().hashCode();
+        break;
+      case 0:
+      default:
+    }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -400,12 +494,8 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      type_ = "";
-
-      contentStr_ = "";
-
-      contentByt_ = com.google.protobuf.ByteString.EMPTY;
-
+      oneTypeCase_ = 0;
+      oneType_ = null;
       return this;
     }
 
@@ -432,9 +522,28 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public io.grpc.jchannelRpc.ChannelMsg buildPartial() {
       io.grpc.jchannelRpc.ChannelMsg result = new io.grpc.jchannelRpc.ChannelMsg(this);
-      result.type_ = type_;
-      result.contentStr_ = contentStr_;
-      result.contentByt_ = contentByt_;
+      if (oneTypeCase_ == 1) {
+        if (exchangeMsgBuilder_ == null) {
+          result.oneType_ = oneType_;
+        } else {
+          result.oneType_ = exchangeMsgBuilder_.build();
+        }
+      }
+      if (oneTypeCase_ == 2) {
+        if (updateReqBetweenNodesBuilder_ == null) {
+          result.oneType_ = oneType_;
+        } else {
+          result.oneType_ = updateReqBetweenNodesBuilder_.build();
+        }
+      }
+      if (oneTypeCase_ == 3) {
+        if (updateRepBetweenNodesBuilder_ == null) {
+          result.oneType_ = oneType_;
+        } else {
+          result.oneType_ = updateRepBetweenNodesBuilder_.build();
+        }
+      }
+      result.oneTypeCase_ = oneTypeCase_;
       onBuilt();
       return result;
     }
@@ -483,16 +592,22 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(io.grpc.jchannelRpc.ChannelMsg other) {
       if (other == io.grpc.jchannelRpc.ChannelMsg.getDefaultInstance()) return this;
-      if (!other.getType().isEmpty()) {
-        type_ = other.type_;
-        onChanged();
-      }
-      if (!other.getContentStr().isEmpty()) {
-        contentStr_ = other.contentStr_;
-        onChanged();
-      }
-      if (other.getContentByt() != com.google.protobuf.ByteString.EMPTY) {
-        setContentByt(other.getContentByt());
+      switch (other.getOneTypeCase()) {
+        case EXCHANGEMSG: {
+          mergeExchangeMsg(other.getExchangeMsg());
+          break;
+        }
+        case UPDATEREQBETWEENNODES: {
+          mergeUpdateReqBetweenNodes(other.getUpdateReqBetweenNodes());
+          break;
+        }
+        case UPDATEREPBETWEENNODES: {
+          mergeUpdateRepBetweenNodes(other.getUpdateRepBetweenNodes());
+          break;
+        }
+        case ONETYPE_NOT_SET: {
+          break;
+        }
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -522,191 +637,443 @@ private static final long serialVersionUID = 0L;
       }
       return this;
     }
+    private int oneTypeCase_ = 0;
+    private java.lang.Object oneType_;
+    public OneTypeCase
+        getOneTypeCase() {
+      return OneTypeCase.forNumber(
+          oneTypeCase_);
+    }
 
-    private java.lang.Object type_ = "";
-    /**
-     * <code>string type = 1;</code>
-     * @return The type.
-     */
-    public java.lang.String getType() {
-      java.lang.Object ref = type_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        type_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string type = 1;</code>
-     * @return The bytes for type.
-     */
-    public com.google.protobuf.ByteString
-        getTypeBytes() {
-      java.lang.Object ref = type_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        type_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string type = 1;</code>
-     * @param value The type to set.
-     * @return This builder for chaining.
-     */
-    public Builder setType(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      type_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string type = 1;</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearType() {
-      
-      type_ = getDefaultInstance().getType();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string type = 1;</code>
-     * @param value The bytes for type to set.
-     * @return This builder for chaining.
-     */
-    public Builder setTypeBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      type_ = value;
+    public Builder clearOneType() {
+      oneTypeCase_ = 0;
+      oneType_ = null;
       onChanged();
       return this;
     }
 
-    private java.lang.Object contentStr_ = "";
-    /**
-     * <code>string content_str = 2;</code>
-     * @return The contentStr.
-     */
-    public java.lang.String getContentStr() {
-      java.lang.Object ref = contentStr_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        contentStr_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string content_str = 2;</code>
-     * @return The bytes for contentStr.
-     */
-    public com.google.protobuf.ByteString
-        getContentStrBytes() {
-      java.lang.Object ref = contentStr_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        contentStr_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string content_str = 2;</code>
-     * @param value The contentStr to set.
-     * @return This builder for chaining.
-     */
-    public Builder setContentStr(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      contentStr_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string content_str = 2;</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearContentStr() {
-      
-      contentStr_ = getDefaultInstance().getContentStr();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string content_str = 2;</code>
-     * @param value The bytes for contentStr to set.
-     * @return This builder for chaining.
-     */
-    public Builder setContentStrBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      contentStr_ = value;
-      onChanged();
-      return this;
-    }
 
-    private com.google.protobuf.ByteString contentByt_ = com.google.protobuf.ByteString.EMPTY;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.ExchangeMsg, io.grpc.jchannelRpc.ExchangeMsg.Builder, io.grpc.jchannelRpc.ExchangeMsgOrBuilder> exchangeMsgBuilder_;
     /**
-     * <code>bytes content_byt = 3;</code>
-     * @return The contentByt.
+     * <code>.cn.yingming.grpc1.ExchangeMsg exchangeMsg = 1;</code>
+     * @return Whether the exchangeMsg field is set.
      */
     @java.lang.Override
-    public com.google.protobuf.ByteString getContentByt() {
-      return contentByt_;
+    public boolean hasExchangeMsg() {
+      return oneTypeCase_ == 1;
     }
     /**
-     * <code>bytes content_byt = 3;</code>
-     * @param value The contentByt to set.
-     * @return This builder for chaining.
+     * <code>.cn.yingming.grpc1.ExchangeMsg exchangeMsg = 1;</code>
+     * @return The exchangeMsg.
      */
-    public Builder setContentByt(com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      contentByt_ = value;
-      onChanged();
+    @java.lang.Override
+    public io.grpc.jchannelRpc.ExchangeMsg getExchangeMsg() {
+      if (exchangeMsgBuilder_ == null) {
+        if (oneTypeCase_ == 1) {
+          return (io.grpc.jchannelRpc.ExchangeMsg) oneType_;
+        }
+        return io.grpc.jchannelRpc.ExchangeMsg.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 1) {
+          return exchangeMsgBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.ExchangeMsg.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.ExchangeMsg exchangeMsg = 1;</code>
+     */
+    public Builder setExchangeMsg(io.grpc.jchannelRpc.ExchangeMsg value) {
+      if (exchangeMsgBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        exchangeMsgBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 1;
       return this;
     }
     /**
-     * <code>bytes content_byt = 3;</code>
-     * @return This builder for chaining.
+     * <code>.cn.yingming.grpc1.ExchangeMsg exchangeMsg = 1;</code>
      */
-    public Builder clearContentByt() {
-      
-      contentByt_ = getDefaultInstance().getContentByt();
-      onChanged();
+    public Builder setExchangeMsg(
+        io.grpc.jchannelRpc.ExchangeMsg.Builder builderForValue) {
+      if (exchangeMsgBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        exchangeMsgBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 1;
       return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.ExchangeMsg exchangeMsg = 1;</code>
+     */
+    public Builder mergeExchangeMsg(io.grpc.jchannelRpc.ExchangeMsg value) {
+      if (exchangeMsgBuilder_ == null) {
+        if (oneTypeCase_ == 1 &&
+            oneType_ != io.grpc.jchannelRpc.ExchangeMsg.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.ExchangeMsg.newBuilder((io.grpc.jchannelRpc.ExchangeMsg) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 1) {
+          exchangeMsgBuilder_.mergeFrom(value);
+        }
+        exchangeMsgBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 1;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.ExchangeMsg exchangeMsg = 1;</code>
+     */
+    public Builder clearExchangeMsg() {
+      if (exchangeMsgBuilder_ == null) {
+        if (oneTypeCase_ == 1) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 1) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        exchangeMsgBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.ExchangeMsg exchangeMsg = 1;</code>
+     */
+    public io.grpc.jchannelRpc.ExchangeMsg.Builder getExchangeMsgBuilder() {
+      return getExchangeMsgFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.ExchangeMsg exchangeMsg = 1;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.ExchangeMsgOrBuilder getExchangeMsgOrBuilder() {
+      if ((oneTypeCase_ == 1) && (exchangeMsgBuilder_ != null)) {
+        return exchangeMsgBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 1) {
+          return (io.grpc.jchannelRpc.ExchangeMsg) oneType_;
+        }
+        return io.grpc.jchannelRpc.ExchangeMsg.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.ExchangeMsg exchangeMsg = 1;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.ExchangeMsg, io.grpc.jchannelRpc.ExchangeMsg.Builder, io.grpc.jchannelRpc.ExchangeMsgOrBuilder> 
+        getExchangeMsgFieldBuilder() {
+      if (exchangeMsgBuilder_ == null) {
+        if (!(oneTypeCase_ == 1)) {
+          oneType_ = io.grpc.jchannelRpc.ExchangeMsg.getDefaultInstance();
+        }
+        exchangeMsgBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.ExchangeMsg, io.grpc.jchannelRpc.ExchangeMsg.Builder, io.grpc.jchannelRpc.ExchangeMsgOrBuilder>(
+                (io.grpc.jchannelRpc.ExchangeMsg) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 1;
+      onChanged();;
+      return exchangeMsgBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.UpdateReqBetweenNodes, io.grpc.jchannelRpc.UpdateReqBetweenNodes.Builder, io.grpc.jchannelRpc.UpdateReqBetweenNodesOrBuilder> updateReqBetweenNodesBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.UpdateReqBetweenNodes updateReqBetweenNodes = 2;</code>
+     * @return Whether the updateReqBetweenNodes field is set.
+     */
+    @java.lang.Override
+    public boolean hasUpdateReqBetweenNodes() {
+      return oneTypeCase_ == 2;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.UpdateReqBetweenNodes updateReqBetweenNodes = 2;</code>
+     * @return The updateReqBetweenNodes.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.UpdateReqBetweenNodes getUpdateReqBetweenNodes() {
+      if (updateReqBetweenNodesBuilder_ == null) {
+        if (oneTypeCase_ == 2) {
+          return (io.grpc.jchannelRpc.UpdateReqBetweenNodes) oneType_;
+        }
+        return io.grpc.jchannelRpc.UpdateReqBetweenNodes.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 2) {
+          return updateReqBetweenNodesBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.UpdateReqBetweenNodes.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.UpdateReqBetweenNodes updateReqBetweenNodes = 2;</code>
+     */
+    public Builder setUpdateReqBetweenNodes(io.grpc.jchannelRpc.UpdateReqBetweenNodes value) {
+      if (updateReqBetweenNodesBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        updateReqBetweenNodesBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 2;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.UpdateReqBetweenNodes updateReqBetweenNodes = 2;</code>
+     */
+    public Builder setUpdateReqBetweenNodes(
+        io.grpc.jchannelRpc.UpdateReqBetweenNodes.Builder builderForValue) {
+      if (updateReqBetweenNodesBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        updateReqBetweenNodesBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 2;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.UpdateReqBetweenNodes updateReqBetweenNodes = 2;</code>
+     */
+    public Builder mergeUpdateReqBetweenNodes(io.grpc.jchannelRpc.UpdateReqBetweenNodes value) {
+      if (updateReqBetweenNodesBuilder_ == null) {
+        if (oneTypeCase_ == 2 &&
+            oneType_ != io.grpc.jchannelRpc.UpdateReqBetweenNodes.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.UpdateReqBetweenNodes.newBuilder((io.grpc.jchannelRpc.UpdateReqBetweenNodes) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 2) {
+          updateReqBetweenNodesBuilder_.mergeFrom(value);
+        }
+        updateReqBetweenNodesBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 2;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.UpdateReqBetweenNodes updateReqBetweenNodes = 2;</code>
+     */
+    public Builder clearUpdateReqBetweenNodes() {
+      if (updateReqBetweenNodesBuilder_ == null) {
+        if (oneTypeCase_ == 2) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 2) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        updateReqBetweenNodesBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.UpdateReqBetweenNodes updateReqBetweenNodes = 2;</code>
+     */
+    public io.grpc.jchannelRpc.UpdateReqBetweenNodes.Builder getUpdateReqBetweenNodesBuilder() {
+      return getUpdateReqBetweenNodesFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.UpdateReqBetweenNodes updateReqBetweenNodes = 2;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.UpdateReqBetweenNodesOrBuilder getUpdateReqBetweenNodesOrBuilder() {
+      if ((oneTypeCase_ == 2) && (updateReqBetweenNodesBuilder_ != null)) {
+        return updateReqBetweenNodesBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 2) {
+          return (io.grpc.jchannelRpc.UpdateReqBetweenNodes) oneType_;
+        }
+        return io.grpc.jchannelRpc.UpdateReqBetweenNodes.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.UpdateReqBetweenNodes updateReqBetweenNodes = 2;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.UpdateReqBetweenNodes, io.grpc.jchannelRpc.UpdateReqBetweenNodes.Builder, io.grpc.jchannelRpc.UpdateReqBetweenNodesOrBuilder> 
+        getUpdateReqBetweenNodesFieldBuilder() {
+      if (updateReqBetweenNodesBuilder_ == null) {
+        if (!(oneTypeCase_ == 2)) {
+          oneType_ = io.grpc.jchannelRpc.UpdateReqBetweenNodes.getDefaultInstance();
+        }
+        updateReqBetweenNodesBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.UpdateReqBetweenNodes, io.grpc.jchannelRpc.UpdateReqBetweenNodes.Builder, io.grpc.jchannelRpc.UpdateReqBetweenNodesOrBuilder>(
+                (io.grpc.jchannelRpc.UpdateReqBetweenNodes) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 2;
+      onChanged();;
+      return updateReqBetweenNodesBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.UpdateRepBetweenNodes, io.grpc.jchannelRpc.UpdateRepBetweenNodes.Builder, io.grpc.jchannelRpc.UpdateRepBetweenNodesOrBuilder> updateRepBetweenNodesBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.UpdateRepBetweenNodes updateRepBetweenNodes = 3;</code>
+     * @return Whether the updateRepBetweenNodes field is set.
+     */
+    @java.lang.Override
+    public boolean hasUpdateRepBetweenNodes() {
+      return oneTypeCase_ == 3;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.UpdateRepBetweenNodes updateRepBetweenNodes = 3;</code>
+     * @return The updateRepBetweenNodes.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.UpdateRepBetweenNodes getUpdateRepBetweenNodes() {
+      if (updateRepBetweenNodesBuilder_ == null) {
+        if (oneTypeCase_ == 3) {
+          return (io.grpc.jchannelRpc.UpdateRepBetweenNodes) oneType_;
+        }
+        return io.grpc.jchannelRpc.UpdateRepBetweenNodes.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 3) {
+          return updateRepBetweenNodesBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.UpdateRepBetweenNodes.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.UpdateRepBetweenNodes updateRepBetweenNodes = 3;</code>
+     */
+    public Builder setUpdateRepBetweenNodes(io.grpc.jchannelRpc.UpdateRepBetweenNodes value) {
+      if (updateRepBetweenNodesBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        updateRepBetweenNodesBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 3;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.UpdateRepBetweenNodes updateRepBetweenNodes = 3;</code>
+     */
+    public Builder setUpdateRepBetweenNodes(
+        io.grpc.jchannelRpc.UpdateRepBetweenNodes.Builder builderForValue) {
+      if (updateRepBetweenNodesBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        updateRepBetweenNodesBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 3;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.UpdateRepBetweenNodes updateRepBetweenNodes = 3;</code>
+     */
+    public Builder mergeUpdateRepBetweenNodes(io.grpc.jchannelRpc.UpdateRepBetweenNodes value) {
+      if (updateRepBetweenNodesBuilder_ == null) {
+        if (oneTypeCase_ == 3 &&
+            oneType_ != io.grpc.jchannelRpc.UpdateRepBetweenNodes.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.UpdateRepBetweenNodes.newBuilder((io.grpc.jchannelRpc.UpdateRepBetweenNodes) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 3) {
+          updateRepBetweenNodesBuilder_.mergeFrom(value);
+        }
+        updateRepBetweenNodesBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 3;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.UpdateRepBetweenNodes updateRepBetweenNodes = 3;</code>
+     */
+    public Builder clearUpdateRepBetweenNodes() {
+      if (updateRepBetweenNodesBuilder_ == null) {
+        if (oneTypeCase_ == 3) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 3) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        updateRepBetweenNodesBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.UpdateRepBetweenNodes updateRepBetweenNodes = 3;</code>
+     */
+    public io.grpc.jchannelRpc.UpdateRepBetweenNodes.Builder getUpdateRepBetweenNodesBuilder() {
+      return getUpdateRepBetweenNodesFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.UpdateRepBetweenNodes updateRepBetweenNodes = 3;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.UpdateRepBetweenNodesOrBuilder getUpdateRepBetweenNodesOrBuilder() {
+      if ((oneTypeCase_ == 3) && (updateRepBetweenNodesBuilder_ != null)) {
+        return updateRepBetweenNodesBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 3) {
+          return (io.grpc.jchannelRpc.UpdateRepBetweenNodes) oneType_;
+        }
+        return io.grpc.jchannelRpc.UpdateRepBetweenNodes.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.UpdateRepBetweenNodes updateRepBetweenNodes = 3;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.UpdateRepBetweenNodes, io.grpc.jchannelRpc.UpdateRepBetweenNodes.Builder, io.grpc.jchannelRpc.UpdateRepBetweenNodesOrBuilder> 
+        getUpdateRepBetweenNodesFieldBuilder() {
+      if (updateRepBetweenNodesBuilder_ == null) {
+        if (!(oneTypeCase_ == 3)) {
+          oneType_ = io.grpc.jchannelRpc.UpdateRepBetweenNodes.getDefaultInstance();
+        }
+        updateRepBetweenNodesBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.UpdateRepBetweenNodes, io.grpc.jchannelRpc.UpdateRepBetweenNodes.Builder, io.grpc.jchannelRpc.UpdateRepBetweenNodesOrBuilder>(
+                (io.grpc.jchannelRpc.UpdateRepBetweenNodes) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 3;
+      onChanged();;
+      return updateRepBetweenNodesBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

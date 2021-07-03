@@ -698,7 +698,11 @@ public class JChannelClient{
         ReentrantLock lock = new ReentrantLock();
         lock.lock();
         try{
-            this.msgList.add("getState() " + target.toString() + " " + timeout);
+            if (target == null){
+                this.msgList.add("getState() " + "null" + " " + timeout);
+            } else {
+                this.msgList.add("getState() " + target.toString() + " " + timeout);
+            }
         } finally {
             lock.unlock();
         }

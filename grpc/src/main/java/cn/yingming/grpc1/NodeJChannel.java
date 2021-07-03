@@ -2,6 +2,7 @@ package cn.yingming.grpc1;
 
 import com.google.protobuf.ByteString;
 import com.sun.jdi.event.ExceptionEvent;
+import io.grpc.Channel;
 import io.grpc.jchannelRpc.*;
 import org.apache.commons.collections.ListUtils;
 import org.jgroups.*;
@@ -11,14 +12,12 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class NodeJChannel implements Receiver{
     JChannel channel;
     String user_name;
-    String node_name;
     String cluster_name;
     ReentrantLock lock;
     NodeServer.JChannelsServiceImpl service;
@@ -26,55 +25,37 @@ public class NodeJChannel implements Receiver{
     ConcurrentHashMap<Address, String> nodesMap;
     ConcurrentHashMap<String, ClusterMap> serviceMap;
     LinkedList<String> state;
-    ArrayList<Address> savedServerList;
-    Object wait_obj;
 
-    NodeJChannel(String node_name, String cluster_name, String grpcAddress) throws Exception {
+    NodeJChannel(String cluster_name, String grpcAddress) throws Exception {
         this.channel = new JChannel("grpc/protocols/udp.xml");
         this.user_name = System.getProperty("user.name", "n/a");
-        this.node_name = node_name;
         this.cluster_name = cluster_name;
         this.grpcAddress = grpcAddress;
         this.nodesMap = new ConcurrentHashMap<>();
         this.lock = new ReentrantLock();
         this.service = null;
-        this.wait_obj = new Object();
-        this.serviceMap = new ConcurrentHashMap<String, ClusterMap>();
+        this.state = new LinkedList<>();
+        this.serviceMap = new ConcurrentHashMap<>();
+    }
+    public void start() throws Exception {
+        System.out.println("---JChannel Starts.---");
         this.serviceMap.put("ClientCluster", new ClusterMap());
         this.channel.setReceiver(this).connect(cluster_name);
-        System.out.println(Thread.currentThread().toString());
         this.nodesMap.put(this.channel.getAddress(), this.grpcAddress);
-        this.state = new LinkedList<>();
-        this.savedServerList = new ArrayList<>();
         System.out.println("[JChannel] The current nodes in node cluster: " + this.nodesMap);
-        // this.test_sleep();
-        this.testMethod();
+        this.updateMethod();
+        // ?
         this.channel.getState(null, 2000);
-    }
-
-    public void test_sleep(){
-        try{
-            Thread.sleep(1000);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
     @Override
     public void receive(Message msg) {
-        System.out.println("first" + msg);
         /** two conditions for receiving Message,
          * 1.receive the Message from other real JChannel. They do not send any Protobuf message type.
          * 2.receive the Message from other JChannel-server. They can send message, which contains Protobuf message object.
          *
          */
-        if (msg.getObject() instanceof UpdateReqBetweenNodes){
-            System.out.println("Receive the request from other JChannel-server for updating the previous information of clients.");
-            receiveProtobufMsg(msg);
-        } else if (msg.getObject() instanceof UpdateRepBetweenNodes) {
-            System.out.println("Receive the response from the first JChannel-server for updating the previous information of clients.");
-            receiveProtobufMsg(msg);
-        } else if (msg.getObject() instanceof ChannelMsg){
+        if (msg.getObject() instanceof ChannelMsg){
             receiveChannelMsg(msg);
         } else if (msg.getObject() instanceof Request){
             receiveProtobufMsg(msg);
@@ -84,28 +65,16 @@ public class NodeJChannel implements Receiver{
         } else{
             // receive common Message from other real common JChannels
             byte[] b = null;
-            /*
-            try {
-                ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
-                msg.writeTo(out);
-                out.buffer();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-             */
-
             try {
                 Message new_msg = msg.copy(true, false);
-                //b = Util.objectToByteBuffer(new_msg);
                 ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
                 new_msg.writeTo(out);
                 b = out.buffer();
-                System.out.println("new " + new_msg);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println("[JChannel] Receive a message from real common JChannel: " + b);
+            System.out.println("[JChannel-Server] Receive a message from a real common JChannel: " + b);
+            System.out.println("[JChannel-Server] Broadcast this message to all clients connecting to this JChannel-Server.");
             MessageReqRep msgRep = MessageReqRep.newBuilder().setType(UtilsRJ.getMsgType(msg)).setMessageObj(ByteString.copyFrom(b)).build();
             Response rep = Response.newBuilder().setMessageReqRep(msgRep).build();
             service.broadcastResponse(rep);
@@ -136,104 +105,7 @@ public class NodeJChannel implements Receiver{
     }
 
     private void receiveProtobufMsg(Message msg){
-        // update client information request
-        if (msg.getObject() instanceof UpdateReqBetweenNodes){
-            // check the Address of requester
-            UpdateReqBetweenNodes req = msg.getObject();
-            ByteArrayDataInputStream in = new ByteArrayDataInputStream(req.getAddress().toByteArray());
-            UUID u = new UUID();
-            lock.lock();
-            try{
-                u.readFrom(in);
-                if (NameCache.getContents().containsKey(u)){
-                    System.out.println("Confirm that the JChannel' Address in the existing NameCache.");
-                    // generate message for the requester, NameCacheRep, ViewRep of clients,
-                    UpdateNameCacheRep nameCacheRep = this.service.generateNameCacheMsg();
-                    ClusterMap clusterInf = this.serviceMap.get("ClientCluster");
-                    ViewRep viewRep = null;
-                    UpdateRepBetweenNodes rep;
-                    if (clusterInf.getCreator() != null){
-                        viewRep = clusterInf.generateView();
-                    }
-                    if (clusterInf.getCreator() != null) {
-                        rep = UpdateRepBetweenNodes.newBuilder().setClientView(viewRep)
-                                .setNameCache(nameCacheRep).build();
-                        System.out.println("Client Cluster != null");
-                    } else{
-                        System.out.println("Client Cluster == null");
-                        rep = UpdateRepBetweenNodes.newBuilder().setNameCache(nameCacheRep).build();
-                    }
-                    Message msgRep = new ObjectMessage(msg.getSrc(), rep);
-                    this.channel.send(msgRep);
-                    System.out.println("UpdateRepBetweenNodes: " + rep);
-                    System.out.println("The JChannel-server provides updating information for other new JChannel-server.");
-                } else{
-                    throw new IllegalArgumentException("The JChannel does not exist in the NameCache.");
-                }
-            } catch (Exception e){
-                e.printStackTrace();
-            } finally {
-                lock.unlock();
-            }
-
-        } else if (msg.getObject() instanceof UpdateRepBetweenNodes) {
-
-            UpdateRepBetweenNodes rep = msg.getObject();
-            System.out.println("UpdateRepBetweenNodes Test: " + rep.getClientView());
-            System.out.println("000000000000000");
-            if (rep.hasClientView()){
-                System.out.println(true);
-            } else {
-                System.out.println(false);
-            }
-            System.out.println("000000000000000");
-            ViewRep view_rep = rep.getClientView();
-            UpdateNameCacheRep nameCacheRep = rep.getNameCache();
-            // StateRep stateRep = rep.getClientState();
-            // 1. update NameCache
-            List<ByteString> addressList = nameCacheRep.getAddressList();
-            List<String> nameList = nameCacheRep.getLogicalNameList();
-            for (int i = 0; i < addressList.size(); i++) {
-                ByteString bs = addressList.get(i);
-                byte[] byte_address = bs.toByteArray();
-                UUID u = new UUID();
-                ByteArrayDataInputStream in = new ByteArrayDataInputStream(byte_address);
-                try {
-                    u.readFrom(in);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                System.out.println("A pair of Address and logical name: " + u + ", " + nameList.get(i));
-                lock.lock();
-                try {
-                    NameCache.add(u, nameList.get(i));
-                } finally {
-                    lock.unlock();
-                }
-            }
-            // 2.update client view
-            ClusterMap clusterInf = null;
-            if (this.serviceMap.size() == 0){
-                clusterInf = new ClusterMap();
-                this.serviceMap.put("ClientCluster", clusterInf);
-                System.out.println(1);
-            } else{
-                clusterInf = this.serviceMap.get("ClientCluster");
-                System.out.println(2);
-            }
-            View v = new View();
-            ByteArrayDataInputStream in = new ByteArrayDataInputStream(view_rep.getView().toByteArray());
-            try {
-                v.readFrom(in);
-                clusterInf.setFromView(v);
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-            System.out.println(v);
-            // 3. update state of client
-            // clusterInf.history = stateRep; change
-
-        } else if (msg.getObject() instanceof Request && ((Request) msg.getObject()).hasConnectRequest()){
+        if (msg.getObject() instanceof Request && ((Request) msg.getObject()).hasConnectRequest()){
             ConnectReq conReq = ((Request) msg.getObject()).getConnectRequest();
             System.out.println("[JChannel] Receive a shared connect() request for updating th cluster information.");
             System.out.println("here:" + conReq);
@@ -300,53 +172,157 @@ public class NodeJChannel implements Receiver{
 
     public void receiveChannelMsg(Message msg){
         ChannelMsg cmsg = msg.getObject();
-        if (cmsg.getType().equals("[DisconnectNotGrace]")){
+        if (cmsg.hasExchangeMsg()){
+            ExchangeMsg exMsg = cmsg.getExchangeMsg();
+            if (exMsg.getType().equals("[DisconnectNotGrace]")){
+                UUID u = new UUID();
+                ByteArrayDataInputStream in = new ByteArrayDataInputStream(exMsg.getContentByt().toByteArray());
+                ReentrantLock sublock = new ReentrantLock();
+                sublock.lock();
+                try {
+                    System.out.println("[JChannel-Server] Receive a message from other JChannel-Server for not graceful disconnect of a client.");
+                    u.readFrom(in);
+                    disconnectClusterNoGraceful(u);
+                } catch (Exception e){
+                    e.printStackTrace();
+                } finally {
+                    sublock.unlock();
+                }
+            } else if (exMsg.getType().equals("grpcAddress")){
+                synchronized (this.nodesMap){
+                    // update the grpc addresses of other JChannel-Server
+                    String new_add = exMsg.getContentStr();
+                    boolean same = false;
+                    for (Address add : this.nodesMap.keySet()) {
+                        if (add.equals(msg.getSrc()) && this.nodesMap.get(add).equals(new_add)){
+                            same = true;
+                        }
+                    }
+                    // condition 1.1, no change
+                    if (same){
+                        System.out.println("[JChannel-Server] Receive a grpc address from other JChannel-Server, " +
+                                "but it is existing in the server-address Map, no change.");
+                    } else{
+                        // condition 1.2 changed server list, update list and broadcast update servers
+                        this.nodesMap.put(msg.getSrc(), new_add);
+                        if (nodesMap.size() >=2 ){
+                            System.out.println("notify");
+                            nodesMap.notify();
+                        }
+                        System.out.println("[JChannel-Server] Receive a grpc address from other JChannel-Server, update server-address Map.");
+                        System.out.println("[JChannel-Server] After updating: " + this.nodesMap);
+                        UpdateRep updateMsg = UpdateRep.newBuilder()
+                                .setAddresses(generateAddMsg())
+                                .build();
+                        Response broMsg = Response.newBuilder()
+                                .setUpdateResponse(updateMsg)
+                                .build();
+                        this.service.broadcastResponse(broMsg);
+                    }
+                }
+            } else {
+                System.out.println("Invalid type of Exchange message");
+            }
+        } else if(cmsg.hasUpdateReqBetweenNodes()){
+            // update client information request
+            // check the Address of requester
+            System.out.println("[JChannel-Server] Receive a");
+            UpdateReqBetweenNodes req = cmsg.getUpdateReqBetweenNodes();
+            ByteArrayDataInputStream in = new ByteArrayDataInputStream(req.getAddress().toByteArray());
             UUID u = new UUID();
-            ByteArrayDataInputStream in = new ByteArrayDataInputStream(cmsg.getContentByt().toByteArray());
-            ReentrantLock sublock = new ReentrantLock();
-            sublock.lock();
-            try {
-                System.out.println("disconnect 1");
+            lock.lock();
+            try{
                 u.readFrom(in);
-                disconnectClusterNoGraceful(u);
+                if (nodesMap.contains(u) && u.equals(msg.getSrc())){
+                    System.out.println("");
+                    // generate message for the requester, NameCacheRep, ViewRep of clients,
+                    UpdateNameCacheRep nameCacheRep = this.service.generateNameCacheMsg();
+                    ClusterMap clusterInf = this.serviceMap.get("ClientCluster");
+                    ViewRep viewRep = null;
+                    UpdateRepBetweenNodes rep;
+                    if (clusterInf.getCreator() != null){
+                        viewRep = clusterInf.generateView();
+                    }
+                    if (clusterInf.getCreator() != null) {
+                        rep = UpdateRepBetweenNodes.newBuilder().setClientView(viewRep)
+                                .setNameCache(nameCacheRep).build();
+                        System.out.println("Client Cluster != null");
+                    } else{
+                        System.out.println("Client Cluster == null");
+                        rep = UpdateRepBetweenNodes.newBuilder().setNameCache(nameCacheRep).build();
+                    }
+                    Message msgRep = new ObjectMessage(msg.getSrc(), rep);
+                    this.channel.send(msgRep);
+                    System.out.println("UpdateRepBetweenNodes: " + rep);
+                    System.out.println("The JChannel-server provides updating information for other new JChannel-server.");
+                } else{
+                    throw new IllegalArgumentException("The JChannel does not exist in the NameCache.");
+                }
             } catch (Exception e){
                 e.printStackTrace();
             } finally {
-                sublock.unlock();
+                lock.unlock();
             }
-            System.out.println("[JChannel] Receive a shared not graceful disconnect() request for updating th cluster information.");
-        } if (cmsg.getType().equals("grpcAddress")){
-            synchronized (this.nodesMap){
-                // condition 1, update server messgage
+            /*
+            else if (msg.getObject() instanceof UpdateRepBetweenNodes) {
 
-                String new_add = cmsg.getContentStr();
-                boolean same = false;
-                for (Address add : this.nodesMap.keySet()) {
-                    if (add.equals(msg.getSrc()) && this.nodesMap.get(add).equals(new_add)){
-                        same = true;
+                UpdateRepBetweenNodes rep = msg.getObject();
+                System.out.println("UpdateRepBetweenNodes Test: " + rep.getClientView());
+                System.out.println("000000000000000");
+                if (rep.hasClientView()){
+                    System.out.println(true);
+                } else {
+                    System.out.println(false);
+                }
+                System.out.println("000000000000000");
+                ViewRep view_rep = rep.getClientView();
+                UpdateNameCacheRep nameCacheRep = rep.getNameCache();
+                // StateRep stateRep = rep.getClientState();
+                // 1. update NameCache
+                List<ByteString> addressList = nameCacheRep.getAddressList();
+                List<String> nameList = nameCacheRep.getLogicalNameList();
+                for (int i = 0; i < addressList.size(); i++) {
+                    ByteString bs = addressList.get(i);
+                    byte[] byte_address = bs.toByteArray();
+                    UUID u = new UUID();
+                    ByteArrayDataInputStream in = new ByteArrayDataInputStream(byte_address);
+                    try {
+                        u.readFrom(in);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("A pair of Address and logical name: " + u + ", " + nameList.get(i));
+                    lock.lock();
+                    try {
+                        NameCache.add(u, nameList.get(i));
+                    } finally {
+                        lock.unlock();
                     }
                 }
-                // condition 1.1, no change
-                if (same){
-                    System.out.println("[JChannel] Receive a confirmation from a node, but no change.");
+                // 2.update client view
+                ClusterMap clusterInf = null;
+                if (this.serviceMap.size() == 0){
+                    clusterInf = new ClusterMap();
+                    this.serviceMap.put("ClientCluster", clusterInf);
+                    System.out.println(1);
                 } else{
-                    // condition 1.2 changed server list, update list and broadcast update servers
-                    this.nodesMap.put(msg.getSrc(), new_add);
-                    if (nodesMap.size() >=2 ){
-                        System.out.println("notify");
-                        nodesMap.notify();
-                    }
-                    System.out.println("[JChannel] Receive a confirmation from a node, update server map.");
-                    System.out.println("[JChannel] After updating: " + this.nodesMap);
-                    UpdateRep updateMsg = UpdateRep.newBuilder()
-                            .setAddresses(generateAddMsg())
-                            .build();
-                    Response broMsg = Response.newBuilder()
-                            .setUpdateResponse(updateMsg)
-                            .build();
-                    this.service.broadcastResponse(broMsg);
+                    clusterInf = this.serviceMap.get("ClientCluster");
+                    System.out.println(2);
                 }
+                View v = new View();
+                ByteArrayDataInputStream in = new ByteArrayDataInputStream(view_rep.getView().toByteArray());
+                try {
+                    v.readFrom(in);
+                    clusterInf.setFromView(v);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+                System.out.println(v);
+                // 3. update state of client
+                // clusterInf.history = stateRep; change
+
             }
+            */
         }
     }
 
@@ -365,11 +341,10 @@ public class NodeJChannel implements Receiver{
         this.service = gRPCservice;
     }
 
-    private void testMethod(){
+    private void updateMethod(){
         if (channel.getAddress().equals(channel.getView().getCoord())){
             return;
         }
-        System.out.println(" nodemap:" + nodesMap);
         if (nodesMap.size() <= 1){
             System.out.println("<= 1" + nodesMap);
             synchronized (nodesMap){
@@ -380,19 +355,12 @@ public class NodeJChannel implements Receiver{
                     e.printStackTrace();
                 }
             }
-            /*
-            if (nodesMap.size() <= 1){
-                throw new IllegalArgumentException("Do not have enough JChannel-Server.");
-            }
-
-             */
         }
         if (!this.channel.getAddress().equals(this.channel.getView().getCoord())){
             ReentrantLock lock = new ReentrantLock();
             lock.lock();
             try {
                 for (Address address: this.channel.getView().getMembers()) {
-                    // && !this.nodesMap.get(address).equals("unknown")
                     System.out.println(address);
                     if (this.nodesMap.containsKey(address) && !address.equals(this.channel.getAddress())){
                         UUID u = (UUID) this.channel.getAddress();
@@ -400,7 +368,7 @@ public class NodeJChannel implements Receiver{
                         u.writeTo(out);
                         byte[] b = out.buffer();
                         UpdateReqBetweenNodes req = UpdateReqBetweenNodes.newBuilder().setAddress(ByteString.copyFrom(b)).build();
-                        System.out.println("send a request to a JChannel-Server");
+                        System.out.println("[JChannel-Server] Send a request to a JChannel-Server for update date.");
                         this.channel.send(address, req);
                         break;
                     }
@@ -499,18 +467,18 @@ public class NodeJChannel implements Receiver{
     }
 
     public void sendMyself(){
-        // send the address of its gRPC server address/port
-        ChannelMsg cmsg = ChannelMsg.newBuilder().setType("grpcAddress").setContentStr(this.grpcAddress).build();
+        // send the address of its gRPC server address
+        ExchangeMsg exMsg = ExchangeMsg.newBuilder().setType("grpcAddress").setContentStr(this.grpcAddress).build();
+        ChannelMsg cmsg = ChannelMsg.newBuilder().setExchangeMsg(exMsg).build();
         Message msg = new ObjectMessage(null, cmsg);
         // send messages exclude itself.
-        // maybe change because the stats and discardOwnMessage
         msg.setFlagIfAbsent(Message.TransientFlag.DONT_LOOPBACK);
         try{
-            System.out.println("[JChannel] Send the grpc address of my self.");
             this.channel.send(msg);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("[JChannel-Server] Send the grpc address(" + this.grpcAddress + "of this JChannel-Server.");
     }
     // add view action and forward
     public void connectCluster(String cluster, Address address, String name){

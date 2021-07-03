@@ -8,32 +8,49 @@ public interface ChannelMsgOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string type = 1;</code>
-   * @return The type.
+   * <code>.cn.yingming.grpc1.ExchangeMsg exchangeMsg = 1;</code>
+   * @return Whether the exchangeMsg field is set.
    */
-  java.lang.String getType();
+  boolean hasExchangeMsg();
   /**
-   * <code>string type = 1;</code>
-   * @return The bytes for type.
+   * <code>.cn.yingming.grpc1.ExchangeMsg exchangeMsg = 1;</code>
+   * @return The exchangeMsg.
    */
-  com.google.protobuf.ByteString
-      getTypeBytes();
+  io.grpc.jchannelRpc.ExchangeMsg getExchangeMsg();
+  /**
+   * <code>.cn.yingming.grpc1.ExchangeMsg exchangeMsg = 1;</code>
+   */
+  io.grpc.jchannelRpc.ExchangeMsgOrBuilder getExchangeMsgOrBuilder();
 
   /**
-   * <code>string content_str = 2;</code>
-   * @return The contentStr.
+   * <code>.cn.yingming.grpc1.UpdateReqBetweenNodes updateReqBetweenNodes = 2;</code>
+   * @return Whether the updateReqBetweenNodes field is set.
    */
-  java.lang.String getContentStr();
+  boolean hasUpdateReqBetweenNodes();
   /**
-   * <code>string content_str = 2;</code>
-   * @return The bytes for contentStr.
+   * <code>.cn.yingming.grpc1.UpdateReqBetweenNodes updateReqBetweenNodes = 2;</code>
+   * @return The updateReqBetweenNodes.
    */
-  com.google.protobuf.ByteString
-      getContentStrBytes();
+  io.grpc.jchannelRpc.UpdateReqBetweenNodes getUpdateReqBetweenNodes();
+  /**
+   * <code>.cn.yingming.grpc1.UpdateReqBetweenNodes updateReqBetweenNodes = 2;</code>
+   */
+  io.grpc.jchannelRpc.UpdateReqBetweenNodesOrBuilder getUpdateReqBetweenNodesOrBuilder();
 
   /**
-   * <code>bytes content_byt = 3;</code>
-   * @return The contentByt.
+   * <code>.cn.yingming.grpc1.UpdateRepBetweenNodes updateRepBetweenNodes = 3;</code>
+   * @return Whether the updateRepBetweenNodes field is set.
    */
-  com.google.protobuf.ByteString getContentByt();
+  boolean hasUpdateRepBetweenNodes();
+  /**
+   * <code>.cn.yingming.grpc1.UpdateRepBetweenNodes updateRepBetweenNodes = 3;</code>
+   * @return The updateRepBetweenNodes.
+   */
+  io.grpc.jchannelRpc.UpdateRepBetweenNodes getUpdateRepBetweenNodes();
+  /**
+   * <code>.cn.yingming.grpc1.UpdateRepBetweenNodes updateRepBetweenNodes = 3;</code>
+   */
+  io.grpc.jchannelRpc.UpdateRepBetweenNodesOrBuilder getUpdateRepBetweenNodesOrBuilder();
+
+  public io.grpc.jchannelRpc.ChannelMsg.OneTypeCase getOneTypeCase();
 }

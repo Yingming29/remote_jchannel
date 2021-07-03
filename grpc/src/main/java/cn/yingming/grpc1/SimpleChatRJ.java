@@ -144,9 +144,15 @@ public class SimpleChatRJ {
                 else if (line.startsWith("getState() history")){
                     // getState() history 1 1000
                     String[] strs = line.split(" ");
-                    int index = Integer.parseInt(strs[2]);
+                    Address target = null;
+                    if (strs[2].equals("null")){
+                        target = null;
+                    } else {
+                        int index = Integer.parseInt(strs[2]);
+                        target = remoteJChannel.remoteView.getMembers().get(index);
+                    }
                     long timeout = Long.parseLong(strs[3]);
-                    Address target = remoteJChannel.remoteView.getMembers().get(index);
+
                     try {
                         System.out.println("getState() for remote real JChannel: " + remoteJChannel.getState(target, timeout));
                         System.out.println("getState() target:" + target + ", timeout: " + timeout);

@@ -109,6 +109,13 @@ message GetPropertyRep{
   string properties = 1;
 }
 message ChannelMsg{
+  oneof oneType{
+    ExchangeMsg exchangeMsg = 1;
+    UpdateReqBetweenNodes updateReqBetweenNodes = 2;
+    UpdateRepBetweenNodes updateRepBetweenNodes = 3;
+  }
+}
+message ExchangeMsg{
   string type = 1;
   string content_str = 2;
   bytes content_byt = 3;
