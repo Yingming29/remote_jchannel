@@ -130,23 +130,29 @@ public class JChannelClientStub {
             } else if(input.equals("isClosed()")){
                 IsStateReq req = IsStateReq.newBuilder().setJchannelAddress(this.client.jchannel_address.toString()).setType("isClosed").build();
                 return Request.newBuilder().setIsStateReq(req).build();
-            } else if(input.startsWith("getState()")){
+            } else if(input.startsWith("getState()")) {
                 String[] strs = input.split(" ");
                 Address source = this.client.jchannel_address;
                 Address target = null;
                 StateReq stateReq = null;
-                for (Address each:NameCache.getContents().keySet()) {
-                    if (NameCache.getContents().get(each).equals(strs[1])){
+                for (Address each : NameCache.getContents().keySet()) {
+                    if (NameCache.getContents().get(each).equals(strs[1])) {
                         target = each;
                     }
                 }
                 try {
-                    stateReq = StateReq.newBuilder().setJchannelAddress(ByteString.copyFrom(Util.objectToByteBuffer(source)))
-                            .setTarget(ByteString.copyFrom(Util.objectToByteBuffer(target))).setTimeout(Long.parseLong(strs[2])).build();
+                    if (target == null) {
+                        stateReq = StateReq.newBuilder().setJchannelAddress(ByteString.copyFrom(Util.objectToByteBuffer(source)))
+                                .setTimeout(Long.parseLong(strs[2])).build();
+                    } else {
+                        stateReq = StateReq.newBuilder().setJchannelAddress(ByteString.copyFrom(Util.objectToByteBuffer(source)))
+                                .setTarget(ByteString.copyFrom(Util.objectToByteBuffer(target))).setTimeout(Long.parseLong(strs[2])).build();
+                    }
                 } catch (Exception e){
                     e.printStackTrace();
                 }
-                //System.out.println("getState()"+ stateReq);
+
+                 //System.out.println("getState()"+ stateReq);
                 return Request.newBuilder().setStateReq(stateReq).build();
             }
         } else if(obj instanceof Message) {
@@ -330,7 +336,15 @@ public class JChannelClientStub {
             } finally {
                 stubLock.unlock();
             }
-            System.out.println("View of JChannel-node(Receiver of JChannel-client?): " + this.client.remoteView);
+            if (this.client.receiver != null) {
+                try {
+                    this.client.receiver.viewAccepted(new_view);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("Receive view, but RemoteJChannel does not have receiver.");
+            }
         } else if (response.hasMessageReqRep()) {
             // change to receiver, remove printMsg
             if (this.client.receiver != null) {
@@ -368,28 +382,12 @@ public class JChannelClientStub {
             stubLock.lock();
             try {
                 new_view.readFrom(v_in);
-            } catch (Exception e){
                 this.client.view = new_view;
+                System.out.println("** JChannel-Client View (in the client stub): " + new_view);
+            } catch (Exception e){
                 e.printStackTrace();
             } finally {
                 stubLock.unlock();
-            }
-            // cheng :  remove the stats and discardOwnMessage on the JChannel Client //////////add 1 view num in the record stats
-            /*
-            if (this.client.stats) {
-                this.client.stats_obj.addViewSize();
-            }
-
-             */
-            // change:  add receiver of remote// viewAccepted
-            if (this.client.receiver != null) {
-                try {
-                    this.client.receiver.viewAccepted(new_view);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else {
-                System.out.println("Receive view, but RemoteJChannel does not have receiver.");
             }
         } else if (response.hasStateRep()) {
             StateRep state = response.getStateRep();

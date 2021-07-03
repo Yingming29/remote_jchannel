@@ -198,7 +198,12 @@ public class NodeServer {
                         UUID target = null;
                         try {
                             source = Util.objectFromByteBuffer(stateReq.getJchannelAddress().toByteArray());
-                            target = Util.objectFromByteBuffer(stateReq.getTarget().toByteArray());
+                            if (stateReq.getTarget().isEmpty()){
+                                target = null;
+                                System.out.println("target is null");
+                            } else {
+                                target = Util.objectFromByteBuffer(stateReq.getTarget().toByteArray());
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -470,8 +475,8 @@ public class NodeServer {
                             }
                             // dest == a JChannel-Client, which is connected to other JChannel-Server
                         } else if (!(clients.containsKey(dest) && !(jchannel.channel.getView().containsMember(dest)))){
-                            System.out.println("[gRPC-Server] The Message will be unicast to a clients connecting to other server.");
-                            forwardMsg(req);
+                            System.out.println("[gRPC-Server] The Message will be unicast to a client connecting to other server.");
+                            forwadMsgToServer(req.getMessageReqRep());
                         } else {
                             System.out.println("[gRPC-Server] Receive invalid message.");
                         }
@@ -755,7 +760,6 @@ public class NodeServer {
                     }
                 }
             }
-
             System.out.println("[JChannel-Server] Forward a message for Request(not MessageReqRep) to other JChannel-Servers: " + req);
         }
     }

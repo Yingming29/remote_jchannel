@@ -35,7 +35,7 @@ public class ReceiverRJ implements Receiver {
 
     @Override
     public void viewAccepted(View new_view) {
-        System.out.println("** Client View (Client-Receiver): " + new_view);
+        System.out.println("** JChannel-Server View (on the Client-Receiver): " + new_view);
     }
 
     @Override

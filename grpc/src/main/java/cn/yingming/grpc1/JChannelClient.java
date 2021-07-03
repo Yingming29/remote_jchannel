@@ -51,7 +51,7 @@ public class JChannelClient{
         this.jchannel_address = null;
         this.real_jchannel_address = null;
         this.clientStub = null;
-        this.view = null;
+        this.view = new View();
         // whether the grpc connection work
         this.isWork = new AtomicBoolean(false);
         // whether shutdown the RemoteJChannel

@@ -89,8 +89,10 @@ public class NodeJChannel implements Receiver{
 
     private void receiveMessageReqRep(MessageReqRep msg){
         Message msg_test = UtilsRJ.convertMessage(msg);
-        if (msg_test.getDest() == this.channel.getAddress() || msg_test.getDest() == null){
-            System.out.println("[JChannel-Server] Receive a message from other JChannel-Server for broadcast: " + msg_test);
+        System.out.println(msg_test.getDest());
+        System.out.println(this.channel.getAddress());
+        if (msg_test.getDest().equals(this.channel.getAddress()) || msg_test.getDest() == null){
+            System.out.println("[JChannel-Server] Receive a message from a JChannel-Server for broadcast: " + msg_test);
             Response rep = Response.newBuilder().setMessageReqRep(msg).build();
             service.broadcastResponse(rep);
             synchronized (state){
