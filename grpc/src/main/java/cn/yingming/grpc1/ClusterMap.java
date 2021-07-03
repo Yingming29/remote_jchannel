@@ -85,7 +85,7 @@ public class ClusterMap implements Serializable {
     }
 
     public void setFromView(View view){
-        System.out.println("set the client view from the updating message.");
+        System.out.println("[JChannel-Server] Set the JChannel-Client view from the update response.");
         lock.lock();
         try{
             this.viewNum = (int) view.getViewId().getId();
@@ -93,20 +93,18 @@ public class ClusterMap implements Serializable {
                 orderList.add(view.getMembersRaw()[i]);
                 map.put(view.getMembersRaw()[i], view.getMembersRaw()[i].toString());
             }
-            System.out.println("[JChannel] Update the client view information, " + view);
-            System.out.println("setFromView: " + this.orderList);
+            System.out.println("[JChannel-Server] Update the client view information, " + view);
         } finally {
             lock.unlock();
         }
     }
     public void addMember(Address address){
-        System.out.println("add member in the map:" + map);
         lock.lock();
         try{
             if (!this.orderList.contains(address)){
                 this.orderList.add(address);
             } else{
-                System.out.println("The jchannel address of remote jchannel is existing in the cluster information." +
+                System.out.println("The address of JChannel-Client is existing in the cluster information." +
                         " Because it reconnects to this cluster.");
             }
         } finally {

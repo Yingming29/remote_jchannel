@@ -50,7 +50,7 @@ public class NodeServer {
     // Start grpc
     private void start() throws Exception {
         // start the JChannel and join to a cluster
-
+        this.jchannel.start();
         // Give the entry of gRPC for calling broadcast method of grpc server.
         this.giveEntry(this.gRPCservice);
         this.server.start();
@@ -113,8 +113,8 @@ public class NodeServer {
                      */
                     System.out.println(req);
                     if (req.hasConnectRequest()){
-                        System.out.println("[gRPC] Receive the connect() request from a client.");
-                        System.out.println("A JChannel-client connects to this JChannel-node (JChannel-server), " +
+                        System.out.println("[gRPC-Server] Receive the connect() request from a client.");
+                        System.out.println("[gRPC-Server] A JChannel-client connects to this JChannel-node (JChannel-server), " +
                                 req.getConnectRequest().getCluster());
                         // Description: connect(String cluster) request:
                         Address generated_address = null;
@@ -124,7 +124,7 @@ public class NodeServer {
                             // for the requester with the first connect to JChannel-node.
                             generated_address = UUID.randomUUID();
                             generated_name = Util.generateLocalName();
-                            System.out.println("New connected JChannel-Client, the server generates an Address for it: " +
+                            System.out.println("[gRPC-Server] New connected JChannel-Client, the server generates an Address for it: " +
                                     generated_address + ", and logical name : " + generated_name);
 
                         } else{
@@ -138,7 +138,7 @@ public class NodeServer {
                             }
                             generated_address = u;
                             generated_name = req.getConnectRequest().getLogicalName();
-                            System.out.println("A reconnecting JChannel-Client, Address: " +
+                            System.out.println("[gRPC-Server] A reconnecting JChannel-Client, Address: " +
                                     generated_address + ", and logical name : " + generated_name);
                         }
                         // 2. Store the responseObserver of the client. Map<Address, streamObserver>
@@ -165,8 +165,8 @@ public class NodeServer {
                         Receive the disconnect() request.
                      */
                     } else if (req.hasDisconnectRequest()){
-                        System.out.println("[gRPC] Receive the disconnect() request from a client.");
-                        System.out.println(req.getDisconnectRequest().getJchannelAddress() + " quits the cluster, " +
+                        System.out.println("[gRPC-Server] Receive the disconnect() request from a client.");
+                        System.out.println("[gRPC-Server] " + req.getDisconnectRequest().getJchannelAddress() + " quits the cluster, " +
                                 req.getDisconnectRequest().getCluster());
                         ByteArrayDataInputStream in = new ByteArrayDataInputStream(req.getDisconnectRequest().getJchannelAddress().toByteArray());
                         UUID u = new UUID();
@@ -202,20 +202,18 @@ public class NodeServer {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        System.out.println("[gRPC] Receive the getState() request for message history from a client.");
-                        System.out.println(source + "(JChannel-Client) calls getState(), target is " + target);
+                        System.out.println("[gRPC-Server] Receive the getState() request for message history from a client.");
+                        System.out.println("[gRPC-Server] " + source + "(JChannel-Client) calls getState(), target is " + target + ", tiemout is "
+                                + stateReq.getTimeout());
                         lock.lock();
                         try {
-
                             // generate the history from real JChannel
-                            // ClusterMap cm = (ClusterMap) jchannel.serviceMap.get(stateReq.getCluster());
-                            // StateRep stateRep = cm.generateState();
                             if (target == null){
                                 if (stateReq.getTimeout() != 0) {
-                                    System.out.println("JChannel invokes getState(null, Timeout)");
+                                    System.out.println("[JChannel-Server] JChannel invokes getState(null, Timeout)");
                                     jchannel.channel.getState(null, stateReq.getTimeout());
                                 } else{
-                                    System.out.println("JChannel invokes getState(null, Timeout(default 2000))");
+                                    System.out.println("[JChannel-Server] JChannel invokes getState(null, Timeout(default 2000))");
                                     jchannel.channel.getState(null, 2000);
                                 }
                             } else if (target.equals(jchannel.channel.getAddress())){
@@ -230,14 +228,14 @@ public class NodeServer {
                             } else if (jchannel.channel.getView().containsMember(target) && !target.equals(jchannel.channel.getAddress())){
                                 // Invoke the real getState() of JChannel to other JChannel.
                                 if (stateReq.getTimeout() != 0) {
-                                    System.out.println("JChannel invokes getState(Target, Timeout)");
+                                    System.out.println("[JChannel-Server] JChannel invokes getState(Target, Timeout)");
                                     jchannel.channel.getState(target, stateReq.getTimeout());
                                 } else{
-                                    System.out.println("JChannel invokes getState(Target, Timeout(default 2000))");
+                                    System.out.println("[JChannel-Server] JChannel invokes getState(Target, Timeout(default 2000))");
                                     jchannel.channel.getState(target, 2000);
                                 }
                             } else {
-                                System.out.println("Invalid target Address of getState()");
+                                System.out.println("[gRPC-Server] Invalid target Address of getState()");
                             }
                         } catch (Exception e){
                             e.printStackTrace();
@@ -251,7 +249,7 @@ public class NodeServer {
                         If the real JChannel of node does not work, return a response with isWork "false".
                         */
                         GetAddressReq getAddressReq = req.getGetAddressReq();
-                        System.out.println("[grpc] Receive the getAddress() request for the JChannel-server Address from JChannel-Client:"
+                        System.out.println("[gRPC-Server] Receive the getAddress() request for the JChannel-server Address from JChannel-Client:"
                                 + getAddressReq.getJchannelAddress());
                         GetAddressRep getAddressRep;
                         if (jchannel.channel.getAddress() != null){
@@ -278,7 +276,7 @@ public class NodeServer {
                     } else if(req.hasGetNameReq()){
                         // getName() request
                         GetNameReq getNameReq = req.getGetNameReq();
-                        System.out.println("[grpc] Receive the getName() request for the JChannel-server DumpStats from JChannel-Client:"
+                        System.out.println("[gRPC-Server] Receive the getName() request for the JChannel-server DumpStats from JChannel-Client:"
                                 + getNameReq.getJchannelAddress());
                         GetNameRep getNameRep;
                         if (jchannel.channel.getName() != null){
@@ -293,7 +291,7 @@ public class NodeServer {
                     } else if(req.hasDumpStatsReq()){
                         // getName() request
                         DumpStatsReq dumpReq = req.getDumpStatsReq();
-                        System.out.println("[grpc] Receive the dumpStats() request for the JChannel-server DumpStats from JChannel-Client:"
+                        System.out.println("[gRPC-Server] Receive the dumpStats() request for the JChannel-server DumpStats from JChannel-Client:"
                                 + dumpReq.getJchannelAddress());
                         Map m = null;
                         if (dumpReq.getAttrsList().size() == 0 && dumpReq.getProtocolName().equals("")){
@@ -304,7 +302,7 @@ public class NodeServer {
                             List protocol_list = dumpReq.getAttrsList();
                             m = jchannel.channel.dumpStats(dumpReq.getProtocolName(), protocol_list);
                         } else {
-                            System.out.println("error dumpStats() with not correct data.");
+                            System.out.println("[gRPC-Server] error dumpStats() with not correct data.");
                             return;
                         }
                         byte[] b = UtilsRJ.serializeObj(m);
@@ -315,7 +313,7 @@ public class NodeServer {
 
                     } else if (req.hasGetStatReq()){
                         GetStatsReq getStatsReq = req.getGetStatReq();
-                        System.out.println("[grpc] Receive the getStats() request for the JChannel-server stats from JChannel-Client:"
+                        System.out.println("[gRPC-Server] Receive the getStats() request for the JChannel-server stats from JChannel-Client:"
                                 + getStatsReq.getJchannelAddress());
                         GetStatsRep getStatsRep = GetStatsRep.newBuilder().setStats(jchannel.channel.getStats()).build();
                         Response rep = Response.newBuilder().setGetStatsRep(getStatsRep).build();
@@ -323,7 +321,7 @@ public class NodeServer {
                         responseObserver.onNext(rep);
                     } else if (req.hasSetStatsReq()){
                         SetStatsReq setStatsReq = req.getSetStatsReq();
-                        System.out.println("[grpc] Receive the setStats() request for the JChannel-server stats from JChannel-Client:"
+                        System.out.println("[gRPC-Server] Receive the setStats() request for the JChannel-server stats from JChannel-Client:"
                                 + setStatsReq.getJchannelAddress());
                         jchannel.channel.setStats(setStatsReq.getStats());
                         SetStatsRep setStatsRep = SetStatsRep.newBuilder().setStats(jchannel.channel.stats()).build();
@@ -332,7 +330,7 @@ public class NodeServer {
                         responseObserver.onNext(rep);
                     } else if (req.hasGetDiscardOwnMsgReq()){
                         GetDiscardOwnMsgReq getDiscardOwnMsgReq = req.getGetDiscardOwnMsgReq();
-                        System.out.println("[grpc] Receive the getDiscardOwnMessage() request for the JChannel-server DiscardOwnMessage from JChannel-Client:"
+                        System.out.println("[gRPC-Server] Receive the getDiscardOwnMessage() request for the JChannel-server DiscardOwnMessage from JChannel-Client:"
                                 + getDiscardOwnMsgReq.getJchannelAddress());
                         GetDiscardOwnMsgRep discardRep = GetDiscardOwnMsgRep.newBuilder()
                                 .setDiscard(jchannel.channel.getDiscardOwnMessages()).build();
@@ -341,7 +339,7 @@ public class NodeServer {
                         responseObserver.onNext(rep);
                     } else if (req.hasSetDiscardOwnMsgReq()){
                         SetDiscardOwnMsgReq setDiscardOwnMsgReq = req.getSetDiscardOwnMsgReq();
-                        System.out.println("[grpc] Receive the setDiscardOwnMessage() request for the JChannel-server DiscardOwnMessage from JChannel-Client:"
+                        System.out.println("[gRPC-Server] Receive the setDiscardOwnMessage() request for the JChannel-server DiscardOwnMessage from JChannel-Client:"
                                 + setDiscardOwnMsgReq.getJchannalAddress());
                         jchannel.channel.setDiscardOwnMessages(setDiscardOwnMsgReq.getDiscard());
                         SetDiscardOwnMsgRep discardRep = SetDiscardOwnMsgRep.newBuilder()
@@ -351,7 +349,7 @@ public class NodeServer {
                         responseObserver.onNext(rep);
                     } else if (req.hasGetStateReq()){
                         GetStateReq getStateReq = req.getGetStateReq();
-                        System.out.println("[grpc] Receive the getState() request for the JChannel-server state from JChannel-Client:"
+                        System.out.println("[gRPC-Server] Receive the getState() request for the JChannel-server state from JChannel-Client:"
                                 + getStateReq.getJchannelAddress());
 
                         GetStateRep getStateRep = GetStateRep.newBuilder().setState(jchannel.channel.getState()).build();
@@ -360,7 +358,7 @@ public class NodeServer {
                         responseObserver.onNext(rep);
                     } else if (req.hasIsStateReq()){
                         IsStateReq isReq = req.getIsStateReq();
-                        System.out.println("[grpc] Receive the isState() " + isReq.getType() + " request for the JChannel-server state from JChannel-Client:"
+                        System.out.println("[gRPC-Server] Receive the isState() " + isReq.getType() + " request for the JChannel-server state from JChannel-Client:"
                                 + isReq.getJchannelAddress());
                         String type = isReq.getType();
                         boolean result = false;
@@ -380,7 +378,7 @@ public class NodeServer {
                     } else if(req.hasGetPropertyReq()){
                         // getName() request
                         GetPropertyReq getPropertyReq = req.getGetPropertyReq();
-                        System.out.println("[grpc] Receive the getProperties() request for the JChannel-server property from JChannel-Client:"
+                        System.out.println("[gRPC-Server] Receive the getProperties() request for the JChannel-server property from JChannel-Client:"
                                 + getPropertyReq.getJchannelAddress());
                         GetPropertyRep getPropertyRep;
                         Response rep;
@@ -397,7 +395,7 @@ public class NodeServer {
                     } else if(req.hasGetClusterNameReq()){
                         // getClusterName() request
                         GetClusterNameReq clusterReq = req.getGetClusterNameReq();
-                        System.out.println("[grpc] Receive the getClusterName() request for the JChannel-server cluster name from JChannel-Client:"
+                        System.out.println("[gRPC-Server] Receive the getClusterName() request for the JChannel-server cluster name from JChannel-Client:"
                                 + clusterReq.getJchannelAddress());
                         GetClusterNameRep getClusterNameRep;
                         if (jchannel.channel.getClusterName() != null){
@@ -412,7 +410,7 @@ public class NodeServer {
                     } else if(req.hasPrintProtoReq()){
                         // getClusterName() request
                         PrintProtocolSpecReq printProtoReq = req.getPrintProtoReq();
-                        System.out.println("[grpc] Receive the printProtocolSpec() request for the JChannel-server ProtocolSpec from JChannel-Client:"
+                        System.out.println("[gRPC-Server] Receive the printProtocolSpec() request for the JChannel-server ProtocolSpec from JChannel-Client:"
                                 + printProtoReq.getJchannelAddress());
                         PrintProtocolSpecRep printProtoRep = PrintProtocolSpecRep.newBuilder()
                                 .setProtocolStackSpec(jchannel.channel.printProtocolSpec(printProtoReq.getIncludeProps())).build();
@@ -426,7 +424,7 @@ public class NodeServer {
                          */
                         MessageReqRep msgReq = req.getMessageReqRep();
                         Message msgObj = UtilsRJ.convertMessage(msgReq);
-                        System.out.println("[grpc] Receive a Message from JChannel-client: " + msgObj);
+                        System.out.println("[gRPC-Server] Receive a Message from JChannel-client: " + msgObj);
                         Address dest = msgObj.getDest();
                         // dest == all JChannel-Servers and common JChannels
                         if (dest == null) {
