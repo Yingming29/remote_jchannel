@@ -63,6 +63,7 @@ public class NodeJChannel implements Receiver{
             receiveMessageReqRep(msg.getObject());
         } else{
             // receive common Message from other real common JChannels
+            System.out.println("[JChannel-Server] Receive a message from a real common JChannel: " + msg);
             byte[] b = null;
             try {
                 Message new_msg = msg.copy(true, false);
@@ -72,8 +73,7 @@ public class NodeJChannel implements Receiver{
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println("[JChannel-Server] Receive a message from a real common JChannel: " + b);
-            System.out.println("[JChannel-Server] Broadcast this message to all clients connecting to this JChannel-Server.");
+
             MessageReqRep msgRep = MessageReqRep.newBuilder().setType(UtilsRJ.getMsgType(msg)).setMessageObj(ByteString.copyFrom(b)).build();
             Response rep = Response.newBuilder().setMessageReqRep(msgRep).build();
             service.broadcastResponse(rep);
@@ -375,7 +375,7 @@ public class NodeJChannel implements Receiver{
     // update the view of nodes
     @Override
     public void viewAccepted(View new_view) {
-        System.out.println("** JChannel Node view: " + new_view);
+        System.out.println("** JChannel-Server view: " + new_view);
         System.out.println(Thread.currentThread().toString() + "viewaccepted");
         /* When the view is changed by any action, it will send its address to other jchannels
         and update its nodesList.
@@ -413,10 +413,10 @@ public class NodeJChannel implements Receiver{
         // this first startup
         // whether is the coordinator
         if (view.getMembers().get(0).equals(this.channel.getAddress())){
-            System.out.println("[JChannel] This is the coordinator of the node cluster.");
+            System.out.println("[JChannel-Server] This is the coordinator of the node cluster.");
         } else {
             // send a UpdateRequest to
-            System.out.println("Not coordinator of cluster.");
+            System.out.println("[JChannel-Server] Not coordinator of cluster.");
         }
     }
 
@@ -424,7 +424,7 @@ public class NodeJChannel implements Receiver{
         // add node
         synchronized (this.nodesMap) {
             if (currentView.size() > currentNodesList.size()) {
-                System.out.println("[JChannel] Store new node inf.");
+                System.out.println("[JChannel-Server] Store new node inf.");
                 List compare = ListUtils.subtract(currentView, currentNodesList);
                 /*
                 for (int i = 0; i < compare.size(); i++) {
@@ -432,15 +432,15 @@ public class NodeJChannel implements Receiver{
                 }
 
                  */
-                System.out.println("[JChannel] The current nodes in node cluster: " + this.nodesMap);
+                System.out.println("[JChannel-Server] The current nodes in node cluster: " + this.nodesMap);
                 sendMyself();
             } else if (currentView.size() < currentNodesList.size()) {
-                System.out.println("[JChannel] Remove cancelled node inf.");
+                System.out.println("[JChannel-Server]Remove cancelled node inf.");
                 List compare = ListUtils.subtract(currentNodesList, currentView);
                 for (int i = 0; i < compare.size(); i++) {
                     this.nodesMap.remove(compare.get(i));
                 }
-                System.out.println("[JChannel] The current nodes in node cluster: " + this.nodesMap);
+                System.out.println("[JChannel-Server] The current nodes in node cluster: " + this.nodesMap);
                 UpdateRep updateMsg = UpdateRep.newBuilder()
                         .setAddresses(generateAddMsg())
                         .build();
@@ -449,7 +449,7 @@ public class NodeJChannel implements Receiver{
                         .build();
                 this.service.broadcastResponse(broMsg);
             } else {
-                System.out.println("[JChannel] The current nodes does not change.");
+                System.out.println("[JChannel-Server] The current nodes does not change.");
             }
         }
     }
@@ -466,28 +466,27 @@ public class NodeJChannel implements Receiver{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("[JChannel-Server] Send the grpc address(" + this.grpcAddress + "of this JChannel-Server.");
+        System.out.println("[JChannel-Server] Send the grpc address(" + this.grpcAddress + ") of this JChannel-Server to cluster .");
     }
     // add view action and forward
     public void connectCluster(String cluster, Address address, String name){
         lock.lock();
         try{
             // create the cluster or connect an existing cluster.
-            System.out.println(address + "(" +  name + ") connects to client cluster: " + cluster);
+            System.out.println("[gRPC-Server] " + address + "(" +  name + ") connects to client cluster: " + cluster);
             // create new cluster object and set it as the creator
-            ClusterMap clusterObj = (ClusterMap) this.serviceMap.get("ClientCluster");
+            ClusterMap clusterObj = this.serviceMap.get("ClientCluster");
             clusterObj.getMap().put(address, name);
             clusterObj.addMember(address);
             clusterObj.addViewNum();
-            // change:   update namecache to its clients
             NameCache.add(address, name);
             UpdateNameCacheRep updateName = this.service.generateNameCacheMsg();
             Response rep = Response.newBuilder().setUpdateNameCache(updateName).build();
             // here, the two broadcast()'s target is different, broadcastView() has a specific client-client.
             this.service.broadcastResponse(rep);
+            System.out.println("[gRPC-Server] Return a message for updating NameCache.");
             ViewRep viewRep= clusterObj.generateView();
-            System.out.println("connectCluster corrdinator:" + clusterObj.getCreator());
-            // changed : generate new namecache and broadcast
+            System.out.println("[gRPC-Server] Return a message for Client view.");
             this.service.broadcastView(viewRep, cluster);
         } catch (Exception e){
             e.printStackTrace();

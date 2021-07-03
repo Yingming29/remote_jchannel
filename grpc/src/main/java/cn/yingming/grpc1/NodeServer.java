@@ -431,7 +431,7 @@ public class NodeServer {
                             ReentrantLock lock = new ReentrantLock();
                             lock.lock();
                             try{
-                                System.out.println("Send 1");
+                                System.out.println("[gRPC-Server] The Message will be broadcast.");
                                 forwadMsgToServer(msgReq);
                                 forwardMsgToJChannel(msgObj);
                             } finally {
@@ -440,7 +440,7 @@ public class NodeServer {
 
                             // dest == this JChannel-Server
                         } else if (dest.equals(jchannel.channel.getAddress())){
-                            System.out.println("Send 2");
+                            System.out.println("[gRPC-Server] The Message will be broadcast to all clients connecting to this server.");
                             // change
                             try {
                                 jchannel.channel.send(jchannel.channel.getAddress(), msgReq);
@@ -448,12 +448,12 @@ public class NodeServer {
                                 e.printStackTrace();
                             }
                             // dest == a JChannel-Client, which is connected to this JChannel-Server
-                        } else if (clients.containsKey(dest) && !dest.equals(jchannel.channel.getAddress())){
-                            System.out.println("Send 3");
+                        } else if (clients.containsKey(dest)){
+                            System.out.println("[gRPC-Server] The Message will be unicast to a client connecting to this server.");
                             unicast(msgReq);
                             // dest == a JChannel-Server having a gRPC address
                         } else if (jchannel.nodesMap.containsKey(dest)){
-                            System.out.println("Send 4");
+                            System.out.println("[gRPC-Server] The Message will be unicast to a JChannel-Server.");
                             try {
                                 jchannel.channel.send(dest, msgReq);
                             } catch (Exception e){
@@ -461,7 +461,7 @@ public class NodeServer {
                             }
                             // dest is a common JChannel, without having a gRPC address
                         } else if (!(jchannel.nodesMap.containsKey(dest)) && jchannel.channel.getView().containsMember(dest)){
-                            System.out.println("Send 5");
+                            System.out.println("[gRPC-Server] The Message will be unicast to a common JChannel.");
                             try {
                                 msgObj.setSrc(jchannel.channel.getAddress());
                                 jchannel.channel.send(msgObj);
@@ -470,14 +470,13 @@ public class NodeServer {
                             }
                             // dest == a JChannel-Client, which is connected to other JChannel-Server
                         } else if (!(clients.containsKey(dest) && !(jchannel.channel.getView().containsMember(dest)))){
-                            System.out.println("Send 6");
+                            System.out.println("[gRPC-Server] The Message will be unicast to a clients connecting to other server.");
                             forwardMsg(req);
                         } else {
-                            System.out.println("Send 7");
-                            System.out.println("[gRPC] Receive invalid message.");
+                            System.out.println("[gRPC-Server] Receive invalid message.");
                         }
                     } else{
-                        System.out.println("onNext(): Invalid message.");
+                        System.out.println("[gRPC-Server] Invalid message.");
                     }
                 }
                 // can add an automatic deleting the cancelled client.
@@ -555,7 +554,7 @@ public class NodeServer {
         /* The unary rpc, the response of ask rpc call method for the try connection from clients.
          */
         public void ask(ReqAsk req, StreamObserver<RepAsk> responseObserver){
-            System.out.println("[gRPC] Receive an ask request for reconnection.");
+            System.out.println("[gRPC-Server] Receive an ask request for reconnection.");
             RepAsk askMsg = RepAsk.newBuilder().setSurvival(true).build();
             responseObserver.onNext(askMsg);
             responseObserver.onCompleted();
@@ -571,6 +570,7 @@ public class NodeServer {
                  */
                 // using the generated Address by this JChannel-server as key, responseObserver as value
                 clients.put(generated_address, responseObserver);
+                System.out.println("[gRPC-Server] Store the new client.");
                 // convert generated Address to byte and generate ConnectResponse
                 ByteArrayDataOutputStream outputStream = new ByteArrayDataOutputStream();
                 byte[] address_byte = null;
@@ -591,9 +591,7 @@ public class NodeServer {
                         .build();
                 // return (send) the ConnectResponse to that JChannel-client
                 responseObserver.onNext(rep);
-                // String cluster, Address JChannel_address, String generated_name
-                // <cluster, <uuid, JChanner_address>>
-                System.out.println("before join: "+ jchannel.serviceMap.get("ClientCluster"));
+                System.out.println("[gRPC-Server] Return a connect() response to the new client.");
                 jchannel.connectCluster(req.getCluster(), generated_address, generated_name);
 
                 // return response for updating the available servers
@@ -604,13 +602,7 @@ public class NodeServer {
                         .setUpdateResponse(updateRep)
                         .build();
                 responseObserver.onNext(rep2);
-                // generate and update the current NameCache to the client
-                /*  changed here
-                UpdateNameCacheRep nameCacheRep = generateNameCacheMsg();
-                Response rep3 = Response.newBuilder().setUpdateNameCache(nameCacheRep).build();
-                responseObserver.onNext(rep3);
-                 */
-                // Copy and send a JChannel-server View to the client
+                System.out.println("[gRPC-Server] Return a message for the current available gRPC addresses of servers.");
                 View view = jchannel.channel.getView();
                 ByteArrayDataOutputStream vOutStream = new ByteArrayDataOutputStream();
                 try {
@@ -622,6 +614,7 @@ public class NodeServer {
                 ViewRep_server view_rep = ViewRep_server.newBuilder().setSender(jchannel.channel.address().toString()).setViewByte(ByteString.copyFrom(v_byte)).build();
                 Response rep_broView = Response.newBuilder().setViewRepServer(view_rep).build();
                 broadcastResponse(rep_broView);
+                System.out.println("[gRPC-Server] Return a message for the JChannel-Server view.");
                 System.out.println(rep_broView);
             }
             // 3. run finally, confirm the lock will be unlock.
@@ -631,52 +624,30 @@ public class NodeServer {
             }
         }
 
-        // Broadcast messages from its clients.
-        public void broadcast(MessageReqRep req){
-            lock.lock();
-            try{
-                Response rep = Response.newBuilder().setMessageReqRep(req).build();
-                ClusterMap clusterObj = (ClusterMap) jchannel.serviceMap.get("ClientCluster");
-                for (Address add : clients.keySet()){
-                    if (clusterObj.getMap().containsKey(add)){
-                        clients.get(add).onNext(rep);
-                        System.out.println("[gRPC] Send message to a JChannel-Client, " + clusterObj.getMap().get(add));
-                    }
-                }
-                System.out.println("One broadcast for message successfully.");
-                System.out.println(rep);
-            } finally {
-                lock.unlock();
-            }
-        }
-
         // Broadcast the messages for updating addresses of servers
         protected void broadcastResponse(Response rep){
+            System.out.println("[gRPC-Server] Broadcast this message to all clients connecting to this server.");
             if (clients.size() != 0){
                 for (Address u : clients.keySet()){
                     clients.get(u).onNext(rep);
                 }
             } else {
-                System.out.println("The size of connecting clients is 0.");
+                System.out.println("[gRPC-Server] The size of connecting clients is 0.");
             }
         }
 
         public void unicast(MessageReqRep req){
-            String msgCluster = "ClientCluster";
             lock.lock();
             try{
                 Response rep = Response.newBuilder().setMessageReqRep(req).build();
-                ClusterMap clusterObj = (ClusterMap) jchannel.serviceMap.get(msgCluster);
                 Message msgObj = UtilsRJ.convertMessage(rep.getMessageReqRep());
                 for (Address add : clients.keySet()){
-                    if (clusterObj.getMap().containsKey(add)){
-                        if (clusterObj.getMap().get(add).equals(msgObj.getDest().toString())){
-                            clients.get(add).onNext(rep);
-                            System.out.println("[gRPC] Send message to a JChannel-Client, " + msgObj.getDest().toString());
-                        }
+                    if (add.equals(msgObj.getDest())){
+                        clients.get(add).onNext(rep);
+                        System.out.println("[gRPC-Server] Send message to a JChannel-Client, " + msgObj.getDest());
                     }
                 }
-                System.out.println("One unicast for message successfully.");
+                System.out.println("[gRPC-Server] One unicast for message successfully.");
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -692,15 +663,13 @@ public class NodeServer {
                 Response rep = Response.newBuilder()
                         .setViewResponse(videRep)
                         .build();
-                ClusterMap clusterObj = (ClusterMap) jchannel.serviceMap.get(cluster);
+                //ClusterMap clusterObj = (ClusterMap) jchannel.serviceMap.get(cluster);
                 for (Address add : clients.keySet()){
-                    if (clusterObj.getMap().containsKey(add)){
-                        clients.get(add).onNext(rep);
-                        System.out.println("Send view to a JChannel-Client, " + clusterObj.getMap().get(add));
-                    }
+                    clients.get(add).onNext(rep);
+                    System.out.println("[gRPC-Server] Send view to a JChannel-Client, " + add);
                 }
-                System.out.println("One broadcast for view successfully.");
-                System.out.println(rep.toString());
+                System.out.println("[gRPC-Server] One broadcast for view successfully.");
+                System.out.println(rep);
 
             } finally {
                 lock.unlock();
@@ -715,12 +684,12 @@ public class NodeServer {
                     try {
                         Message new_msg = UtilsRJ.cloneMessage(msg, src, address);
                         jchannel.channel.send(new_msg);
-                        System.out.println("forwardMsgToJChannel"+ new_msg);
                     } catch (Exception e){
                         e.printStackTrace();
                     }
                 }
             }
+            System.out.println("[JChannel-Server] Send a message to all commom JChannels.");
         }
 
         protected void forwardMsg(ChannelMsg chmsg){
@@ -746,24 +715,13 @@ public class NodeServer {
             for (Address address: jchannel.nodesMap.keySet()) {
                 try {
                     Message msg = new ObjectMessage(address, msgReq);
-                    System.out.println("Forward a message for Request(MessageReqRep) to a JChannel-Server, " + address + ", the Message: " + msg);
+                    System.out.println("[JChannel-Server] Forward a message for Request(MessageReqRep) to a JChannel-Server, " + address + ", the Message: " + msg);
                     this.jchannel.channel.send(msg);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-            System.out.println("forwardMsg (Request req) to other JChannel-Servers: " + msgReq);
-            /*
-            MessageReqRep mes = msgReq;
-            try{
-                // Message msg_test = Util.objectFromByteBuffer(mes.getMessageObj().toByteArray());
-                Message msg_test = UtilsRJ.convertMessage(mes);
-                System.out.println("Test: " + msg_test);
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-
-             */
+            System.out.println("[JChannel-Server] Forward a message for Request(MessageReqRep) to other JChannel-Servers: " + msgReq);
         }
         protected void forwardMsg(Request req){
             // forward Request for client information to other JChannel-Servers excluding itself, e.g. connectRequest, disconnectRequest.
@@ -772,15 +730,16 @@ public class NodeServer {
                     if(!address.equals(jchannel.channel.getAddress())){
                         try {
                             Message msg = new ObjectMessage(address, req);
-                            System.out.println("Forward a message for Request(not MessageReqRep) to a JChannel-Server, dest:" + msg);
+                            System.out.println("[JChannel-Server] Forward a message for Request(not MessageReqRep) to a JChannel-Server, dest:" + msg);
                             this.jchannel.channel.send(msg);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 }
-                // forward MessageReqRep to other JChannel-Servers or common JChannels
             }
+
+            System.out.println("[JChannel-Server] Forward a message for Request(not MessageReqRep) to other JChannel-Servers: " + req);
         }
     }
 

@@ -25,7 +25,7 @@ public class ClusterMap implements Serializable {
     // public LinkedList history;
     public ClusterMap(){
         this.map = new ConcurrentHashMap<>();
-        this.viewNum = 0;
+        this.viewNum = -1;
         this.lock = new ReentrantLock();
         this.orderList = new LinkedList<Address>();
         //this.history = new LinkedList<MessageReqRep>();
@@ -60,9 +60,6 @@ public class ClusterMap implements Serializable {
     }
     // generate a client view.
     public ViewRep generateView(){
-        System.out.println("generateView test print: " + this.getCreator());
-        System.out.println("generateView test print: " + this.orderList);
-        System.out.println("generateView test print: " + this.map);
         ViewRep view_rep = null;
         this.lock.lock();
         try{
@@ -72,7 +69,7 @@ public class ClusterMap implements Serializable {
             view.writeTo(vOutStream);
             byte[] v_byte = vOutStream.buffer();
             view_rep = ViewRep.newBuilder().setView(ByteString.copyFrom(v_byte)).build();
-            System.out.println("[JChannel] Generate the current client view, " + view);
+            System.out.println("[gRPC-Server] Generate the current client view, " + view);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
