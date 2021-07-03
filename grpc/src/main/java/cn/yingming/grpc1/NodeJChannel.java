@@ -231,7 +231,16 @@ public class NodeJChannel implements Receiver{
             lock.lock();
             try{
                 u.readFrom(in);
-                if (nodesMap.contains(u) && u.equals(msg.getSrc())){
+                Address address = (Address) u;
+                for (Address each:nodesMap.keySet()) {
+                    System.out.println(each);
+                    System.out.println(u);
+                    System.out.println("-----");
+                    if (each.equals(u)){
+                        System.out.println("true");
+                    }
+                }
+                if (nodesMap.keySet().contains(u)){
                     System.out.println("[JChannel-Server] Confirm the requester is a JChannel-Server");
                     // generate message for the requester, NameCacheRep, ViewRep of clients,
                     UpdateNameCacheRep nameCacheRep = this.service.generateNameCacheMsg();
@@ -249,7 +258,8 @@ public class NodeJChannel implements Receiver{
                         System.out.println("Client Cluster == null");
                         rep = UpdateRepBetweenNodes.newBuilder().setNameCache(nameCacheRep).build();
                     }
-                    Message msgRep = new ObjectMessage(msg.getSrc(), rep);
+                    ChannelMsg cmsgRep = ChannelMsg.newBuilder().setUpdateRepBetweenNodes(rep).build();
+                    Message msgRep = new ObjectMessage(msg.getSrc(), cmsgRep);
                     this.channel.send(msgRep);
                     System.out.println("UpdateRepBetweenNodes: " + rep);
                     System.out.println("The JChannel-server provides updating date for the new JChannel-server.");
@@ -356,8 +366,9 @@ public class NodeJChannel implements Receiver{
                         u.writeTo(out);
                         byte[] b = out.buffer();
                         UpdateReqBetweenNodes req = UpdateReqBetweenNodes.newBuilder().setAddress(ByteString.copyFrom(b)).build();
+                        ChannelMsg cmsg = ChannelMsg.newBuilder().setUpdateReqBetweenNodes(req).build();
                         System.out.println("[JChannel-Server] Send a request to a JChannel-Server for update date.");
-                        this.channel.send(address, req);
+                        this.channel.send(address, cmsg);
                         break;
                     }
                 }

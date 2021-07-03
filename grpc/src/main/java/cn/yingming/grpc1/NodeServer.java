@@ -223,8 +223,8 @@ public class NodeServer {
                                 Response rep = Response.newBuilder()
                                         .setStateRep(stateRep)
                                         .build();
-                                // send to this client
-                                broadcastResponse(rep);
+                                // unicast the state to a JChannel-Client
+                                unicastRep(rep, source);
                             } else if (jchannel.channel.getView().containsMember(target) && !target.equals(jchannel.channel.getAddress())){
                                 // Invoke the real getState() of JChannel to other JChannel.
                                 if (stateReq.getTimeout() != 0) {
@@ -635,8 +635,25 @@ public class NodeServer {
                 System.out.println("[gRPC-Server] The size of connecting clients is 0.");
             }
         }
+        protected void unicastRep(Response response, Address dest){
+            lock.lock();
+            try{
+                for (Address add : clients.keySet()){
+                    if (add.equals(dest)){
+                        clients.get(add).onNext(response);
+                        System.out.println("[gRPC-Server] Send message to a JChannel-Client, " + dest);
+                    }
+                }
+                System.out.println("[gRPC-Server] One unicast for message successfully.");
 
-        public void unicast(MessageReqRep req){
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
+        }
+
+        protected void unicast(MessageReqRep req){
             lock.lock();
             try{
                 Response rep = Response.newBuilder().setMessageReqRep(req).build();
