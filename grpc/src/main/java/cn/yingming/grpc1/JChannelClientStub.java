@@ -34,7 +34,7 @@ public class JChannelClientStub {
         this.client = client;
         this.stubLock = new ReentrantLock();
         this.serverList = new ArrayList<String>();
-        this.channel = ManagedChannelBuilder.forTarget(client.address).usePlaintext().build();
+        this.channel = ManagedChannelBuilder.forTarget(client.grpc_address).usePlaintext().build();
         this.asynStub = JChannelsServiceGrpc.newStub(this.channel);
         this.blockingStub = JChannelsServiceGrpc.newBlockingStub(this.channel);
         this.observer = null;
@@ -174,7 +174,7 @@ public class JChannelClientStub {
     }
 
     public void setGeneratedAddress(ConnectRep connectRep) {
-        if (connectRep.getAddress().equals("")) {
+        if (connectRep.getAddress().isEmpty()) {
             throw new IllegalArgumentException("The ConnectResponse does not have generated Address.");
         } else {
             this.stubLock.lock();
@@ -182,19 +182,20 @@ public class JChannelClientStub {
                 UUID u = new UUID();
                 ByteArrayDataInputStream in = new ByteArrayDataInputStream(connectRep.getAddress().toByteArray());
                 u.readFrom(in);
-                // three properties:
+                // set properties generated:
+                // local Address, logical name, NameCache.
                 this.client.jchannel_address = u;
                 this.client.name = connectRep.getLogicalName();
                 client.isWork.set(true);
                 client.down.set(true);
                 NameCache.add(this.client.jchannel_address, this.client.name);
-                System.out.println("setGeneratedAddress() prints NameCache: " + NameCache.printCache());
+                // System.out.println("setGeneratedAddress() prints NameCache: " + NameCache.printCache());
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
                 this.stubLock.unlock();
             }
-            System.out.println("[Stub]: Receive the connect response with generated Address, Address = " +
+            System.out.println("[Stub]: Receive the connect response with generated Address, logical name = " +
                     this.client.jchannel_address);
             synchronized (this.client.down) {
                 this.client.down.notify();
@@ -213,7 +214,7 @@ public class JChannelClientStub {
             }
         } else if(response.hasGetAddressRep()){
             GetAddressRep getAddressRep = response.getGetAddressRep();
-            System.out.println("getAddress() response:" + getAddressRep);
+            // System.out.println("getAddress() response:" + getAddressRep);
             if (!getAddressRep.getIsWork()){
                 this.client.real_jchannel_address = null;
             } else{
@@ -231,28 +232,33 @@ public class JChannelClientStub {
             }
         } else if(response.hasGetNameRep()){
             GetNameRep getNameRep = response.getGetNameRep();
-            System.out.println("getName() response:" + getNameRep);
+            // System.out.println("getName() response:" + getNameRep);
             this.client.remoteName = getNameRep.getName();
             synchronized (this.client.obj) {
                 this.client.obj.notify();
             }
         } else if(response.hasGetStateRep()){
             GetStateRep rep = response.getGetStateRep();
-            System.out.println("getState() response:" + rep);
+            // System.out.println("getState() response:" + rep);
             this.client.state = rep.getState();
             synchronized (this.client.obj) {
                 this.client.obj.notify();
             }
         } else if(response.hasDumpStatsRep()){
             DumpStatsRep dumpRep = response.getDumpStatsRep();
-            System.out.println("dumpStats() response:" + dumpRep);
-            this.client.statsMap = (Map<String, Map<String, Object>>) UtilsRJ.unserializeObj(dumpRep.getSerializeMap().toByteArray());
+           //  System.out.println("dumpStats() response:" + dumpRep);
+            // this.client.statsMap = (Map<String, Map<String, Object>>) UtilsRJ.unserializeObj(dumpRep.getSerializeMap().toByteArray());
+            try{
+                this.client.statsMap = Util.objectFromByteBuffer(dumpRep.getSerializeMap().toByteArray());
+            } catch (Exception e){
+                e.printStackTrace();
+            }
             synchronized (this.client.obj) {
                 this.client.obj.notify();
             }
         } else if(response.hasGetClusterNameRep()){
             GetClusterNameRep rep = response.getGetClusterNameRep();
-            System.out.println("getCluster() response:" + rep);
+           // System.out.println("getCluster() response:" + rep);
             this.client.remoteCluster = rep.getClusterName();
             synchronized (this.client.obj) {
                 this.client.obj.notify();
@@ -554,8 +560,8 @@ public class JChannelClientStub {
             boolean tryResult = tryOneConnect();
             // using try result to judge
             if (tryResult) {
-                client.address = newAdd;
-                System.out.println("[Reconnection]: Reconnect successfully to server-" + client.address);
+                client.grpc_address = newAdd;
+                System.out.println("[Reconnection]: Reconnect successfully to server-" + client.grpc_address);
                 return true;
             }
             // maximum reconnection time

@@ -1,8 +1,6 @@
 package cn.yingming.grpc1;
 
 import com.google.protobuf.ByteString;
-import com.sun.jdi.event.ExceptionEvent;
-import io.grpc.Channel;
 import io.grpc.jchannelRpc.*;
 import org.apache.commons.collections.ListUtils;
 import org.jgroups.*;
@@ -16,15 +14,15 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class NodeJChannel implements Receiver{
-    JChannel channel;
-    String user_name;
-    String cluster_name;
-    ReentrantLock lock;
-    NodeServer.JChannelsServiceImpl service;
-    String grpcAddress;
-    ConcurrentHashMap<Address, String> nodesMap;
-    ConcurrentHashMap<String, ClusterMap> serviceMap;
-    LinkedList<String> state;
+    public JChannel channel;
+    private String user_name;
+    private String cluster_name;
+    private ReentrantLock lock;
+    private NodeServer.JChannelsServiceImpl service;
+    private String grpcAddress;
+    public ConcurrentHashMap<Address, String> nodesMap;
+    public ConcurrentHashMap<String, ClusterMap> serviceMap;
+    public LinkedList<String> state;
 
     NodeJChannel(String cluster_name, String grpcAddress) throws Exception {
         this.channel = new JChannel("grpc/protocols/udp.xml");
@@ -42,7 +40,7 @@ public class NodeJChannel implements Receiver{
         this.serviceMap.put("ClientCluster", new ClusterMap());
         this.channel.setReceiver(this).connect(cluster_name);
         this.nodesMap.put(this.channel.getAddress(), this.grpcAddress);
-        System.out.println("[JChannel] The current nodes in node cluster: " + this.nodesMap);
+        System.out.println("[JChannel-Server] The current nodes in node cluster: " + this.nodesMap);
         this.updateMethod();
         // ?
         this.channel.getState(null, 2000);

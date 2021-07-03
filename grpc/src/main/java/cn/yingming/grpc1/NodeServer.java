@@ -10,11 +10,8 @@ import org.jgroups.ObjectMessage;
 import org.jgroups.View;
 import org.jgroups.util.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,20 +22,19 @@ public class NodeServer {
     //  Port and server object of grpc server
     private int port;
     private Server server;
-    //  Node name, cluster name, JChannel of node
-    String jClusterName;
-    NodeJChannel jchannel;
-    JChannelsServiceImpl gRPCservice;
-    // <no, ip>, it stores all ip address for clients, who are connecting to this server. not useful.
+    // <no, ip>, it stores all ip address for clients, who are connecting to this server, not useful.
     private ConcurrentHashMap<Integer, String> ips;
-    public NodeServer(int port, String jClusterName) throws Exception {
-        // port, name, and cluster name of this node
+    //  cluster name of JChannel-Server
+    private NodeJChannel jchannel;
+    private JChannelsServiceImpl gRPCservice;
+
+    public NodeServer(int port, String cluster_name) throws Exception {
+        // port, cluster name of the server
         this.port = port;
-        this.jClusterName = jClusterName;
         // not useful, store clients address.
         this.ips = new ConcurrentHashMap<>();
         // create JChannel given node name and cluster name
-        this.jchannel = new NodeJChannel(jClusterName, "127.0.0.1:" + port);
+        this.jchannel = new NodeJChannel(cluster_name, "127.0.0.1:" + port);
         // create grpc server, and its service is given the jchannel for calling send() method on jchannel.
         this.gRPCservice = new JChannelsServiceImpl(this.jchannel);
         this.server = ServerBuilder.forPort(port)

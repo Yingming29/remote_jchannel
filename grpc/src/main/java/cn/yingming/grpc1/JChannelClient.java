@@ -9,8 +9,14 @@ import java.util.concurrent.locks.ReentrantLock;
 
 
 public class JChannelClient{
+    public Receiver receiver;
+    public final Object obj;
+    public AtomicBoolean isWork;
+    public ArrayList msgList;
+    public JChannelClientStub clientStub;
+    public AtomicBoolean down;
     // address is the grpc server target
-    public String address;
+    public String grpc_address;
     // name and remote name
     // name can be removed?
     public String name;
@@ -21,10 +27,6 @@ public class JChannelClient{
     // client and remote JChannel Address
     public Address jchannel_address;
     public Address real_jchannel_address;
-    public AtomicBoolean isWork;
-    public ArrayList msgList;
-    public JChannelClientStub clientStub;
-    public AtomicBoolean down;
     // client view and remote server view
     public View view;
     public View remoteView;
@@ -32,21 +34,18 @@ public class JChannelClient{
     public boolean discard_own_messages;
     // whether stats?
     public boolean stats;
-    // record for stats of remote jchannel
-    public Receiver receiver;
-    public Object obj;
     public String remoteProtocolStack_string;
     public String property;
     public Map<String, Map<String, Object>> statsMap;
     public String state;
     public boolean isState;
 
-    public JChannelClient(String address) throws Exception{
-        this.address = address;
+    public JChannelClient(String grpc_address) throws Exception{
+        this.grpc_address = grpc_address;
         // as the source of the RemoteJChannel
         this.name = null;
         this.cluster = null;
-        this.msgList = new ArrayList<Object>();
+        this.msgList = new ArrayList<>();
         // generated fake address.
         this.jchannel_address = null;
         this.real_jchannel_address = null;
@@ -579,7 +578,7 @@ public class JChannelClient{
      */
     // the cluster can be changed to null, because they connects to one cluster
     private boolean checkProperty(){
-        if (this.address == null || this.address.equals("")){
+        if (this.grpc_address == null || this.grpc_address.equals("")){
             throw new IllegalStateException("The address (for grpc server) of RemoteJChannel is null.");
         } else if (this.cluster == null || this.cluster.equals("")){
             throw new IllegalStateException("The cluster of RemoteJChannel is null.");
@@ -717,7 +716,7 @@ public class JChannelClient{
             sb.append("discard_own_messages=").append(this.discard_own_messages).append('\n');
             sb.append("state_transfer_supported=").append("Not support").append('\n');
             sb.append("props=").append("Not support").append('\n');
-            sb.append("grpc server address=").append(this.address).append('\n');
+            sb.append("grpc server address=").append(this.grpc_address).append('\n');
             sb.append("available grpc server addresses=").append(this.clientStub.serverList.toString()).append('\n');
         }
 
