@@ -736,7 +736,7 @@ public class NodeServer {
         }
 
         protected void forwadMsgToServer(MessageReqRep msgReq){
-
+            System.out.println("Test: the current NodeMap members:" + jchannel.nodesMap);
             for (Address address: jchannel.nodesMap.keySet()) {
                 try {
                     Message msg = new ObjectMessage(address, msgReq);

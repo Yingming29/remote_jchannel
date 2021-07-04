@@ -12,7 +12,7 @@ public class JChannelClient{
     public Receiver receiver;
     public final Object obj;
     public AtomicBoolean isWork;
-    public ArrayList msgList;
+    public LinkedList<Object> msgList;
     public JChannelClientStub clientStub;
     public AtomicBoolean down;
     // address is the grpc server target
@@ -45,7 +45,7 @@ public class JChannelClient{
         // as the source of the RemoteJChannel
         this.name = null;
         this.cluster = null;
-        this.msgList = new ArrayList<>();
+        this.msgList = new LinkedList<>();
         // generated fake address.
         this.jchannel_address = null;
         this.real_jchannel_address = null;

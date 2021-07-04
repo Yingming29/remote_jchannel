@@ -22,23 +22,22 @@ public class JChannelClientStub {
 
     public JChannelClient client;
 
-    private ReentrantLock stubLock;
-    public ArrayList serverList;
+    private final ReentrantLock stubLock;
+    public ArrayList<String> serverList;
     public ManagedChannel channel;
     private JChannelsServiceGrpc.JChannelsServiceBlockingStub blockingStub;
     private JChannelsServiceGrpc.JChannelsServiceStub asynStub;
     private StreamObserver observer;
-    private Object obj;
+
 
     JChannelClientStub(JChannelClient client) {
         this.client = client;
         this.stubLock = new ReentrantLock();
-        this.serverList = new ArrayList<String>();
+        this.serverList = new ArrayList<>();
         this.channel = ManagedChannelBuilder.forTarget(client.grpc_address).usePlaintext().build();
         this.asynStub = JChannelsServiceGrpc.newStub(this.channel);
         this.blockingStub = JChannelsServiceGrpc.newBlockingStub(this.channel);
         this.observer = null;
-        this.obj = new Object();
     }
 
     public Request judgeRequest(Object obj) {
@@ -247,9 +246,8 @@ public class JChannelClientStub {
         } else if(response.hasDumpStatsRep()){
             DumpStatsRep dumpRep = response.getDumpStatsRep();
            //  System.out.println("dumpStats() response:" + dumpRep);
-            // this.client.statsMap = (Map<String, Map<String, Object>>) UtilsRJ.unserializeObj(dumpRep.getSerializeMap().toByteArray());
             try{
-                this.client.statsMap = Util.objectFromByteBuffer(dumpRep.getSerializeMap().toByteArray());
+                this.client.statsMap = (Map<String, Map<String, Object>>) UtilsRJ.unserializeObj(dumpRep.getSerializeMap().toByteArray());
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -265,42 +263,42 @@ public class JChannelClientStub {
             }
         } else if(response.hasPrintProtoRep()){
             PrintProtocolSpecRep rep = response.getPrintProtoRep();
-            System.out.println("printProtocolSpec() response:" + rep);
+            //System.out.println("printProtocolSpec() response:" + rep);
             this.client.remoteProtocolStack_string = rep.getProtocolStackSpec();
             synchronized (this.client.obj) {
                 this.client.obj.notify();
             }
         } else if(response.hasSetStatsRep()){
             SetStatsRep rep = response.getSetStatsRep();
-            System.out.println("setStats() response:" + rep);
+            //System.out.println("setStats() response:" + rep);
             this.client.stats = rep.getStats();
             synchronized (this.client.obj) {
                 this.client.obj.notify();
             }
         } else if(response.hasGetPropertyRep()){
             GetPropertyRep rep = response.getGetPropertyRep();
-            System.out.println("getProperties() response:" + rep);
+           // System.out.println("getProperties() response:" + rep);
             this.client.property = rep.getProperties();
             synchronized (this.client.obj) {
                 this.client.obj.notify();
             }
         } else if(response.hasGetDiscardOwnRep()){
             GetDiscardOwnMsgRep rep = response.getGetDiscardOwnRep();
-            System.out.println("getDiscardOwnMessage() response:" + rep);
+            //System.out.println("getDiscardOwnMessage() response:" + rep);
             this.client.discard_own_messages = rep.getDiscard();
             synchronized (this.client.obj) {
                 this.client.obj.notify();
             }
         } else if(response.hasSetDiscardOwnRep()){
             SetDiscardOwnMsgRep rep = response.getSetDiscardOwnRep();
-            System.out.println("setDiscardOwnMessage() response:" + rep);
+            //System.out.println("setDiscardOwnMessage() response:" + rep);
             this.client.discard_own_messages = rep.getDiscard();
             synchronized (this.client.obj) {
                 this.client.obj.notify();
             }
         } else if(response.hasIsStateRep()){
             IsStateRep rep = response.getIsStateRep();
-            System.out.println("isState(isOpen/isConnecting/isConnected/isClosed) response:" + rep);
+            //System.out.println("isState(isOpen/isConnecting/isConnected/isClosed) response:" + rep);
             this.client.isState = rep.getResult();
             synchronized (this.client.obj) {
                 this.client.obj.notify();
@@ -366,7 +364,7 @@ public class JChannelClientStub {
             }
         } else if (response.hasGetStatsRep()) {
             GetStatsRep rep = response.getGetStatsRep();
-            System.out.println("getStats() response:" + rep);
+            // System.out.println("getStats() response:" + rep);
             this.client.stats = rep.getStats();
             synchronized (this.client.obj) {
                 this.client.obj.notify();
@@ -415,7 +413,6 @@ public class JChannelClientStub {
     }
 
     private StreamObserver startGrpc(AtomicBoolean isWork, JChannelClient client) {
-
         ReentrantLock lock = new ReentrantLock();
         // Service 1
         StreamObserver<Request> requestStreamObserver = asynStub.connect(new StreamObserver<Response>() {
@@ -447,7 +444,6 @@ public class JChannelClientStub {
             }
         });
         return requestStreamObserver;
-
     }
 
 
@@ -574,11 +570,11 @@ public class JChannelClientStub {
     }
 
     class Control implements Runnable {
-        ArrayList sharedList;
+        LinkedList<Object> sharedList;
         AtomicBoolean isWork;
         JChannelClientStub stub;
         AtomicBoolean down;
-        public Control(ArrayList sharedList, AtomicBoolean isWork, AtomicBoolean down, JChannelClientStub stub) {
+        public Control(LinkedList<Object> sharedList, AtomicBoolean isWork, AtomicBoolean down, JChannelClientStub stub) {
             this.sharedList = sharedList;
             this.isWork = isWork;
             this.stub = stub;

@@ -25,8 +25,7 @@ public class SimpleChatRJ {
         remoteJChannel.connect(cluster);
         //remoteJChannel.getStateRJ(state_target);
         eventLoop();
-        //remoteJChannel.close();
-        //System.out.println(remoteJChannel.remoteJChannelDumpStats());
+        remoteJChannel.close();
     }
 
     private void eventLoop(){
