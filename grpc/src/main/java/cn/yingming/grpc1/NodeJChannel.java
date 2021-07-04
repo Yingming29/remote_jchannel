@@ -115,6 +115,24 @@ public class NodeJChannel implements Receiver{
         System.out.println("Test3, the current NodeMap:" + nodesMap);
     }
 
+    public void checkNodes(){
+        synchronized (nodesMap){
+            for (Address each: nodesMap.keySet()){
+                if (nodesMap.get(each) == null){
+                   System.out.println("Found null in the node map");
+                   nodesMap.remove(each);
+                } else if (!nodesMap.get(each).startsWith("127.0.0.1")){
+                    System.out.println("Found BUG 11111111111111111111111.");
+                    nodesMap.remove(each);
+                }
+                if (!this.channel.getView().containsMember(each)){
+                    System.out.println("FOund Bug222222222222222222222");
+                    System.out.println("Test4: " + nodesMap);
+                }
+            }
+        }
+    }
+
     private void receiveConDiscon(Message msg){
         if (msg.getObject() instanceof Request && ((Request) msg.getObject()).hasConnectRequest()){
             ConnectReq conReq = ((Request) msg.getObject()).getConnectRequest();

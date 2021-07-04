@@ -224,6 +224,7 @@ public class NodeServer {
                                 Response rep = Response.newBuilder()
                                         .setStateRep(stateRep)
                                         .build();
+                                unicastRep(rep, source);
                             } else if (target.equals(jchannel.channel.getAddress())){
                                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                                 jchannel.getState(out);
@@ -703,6 +704,7 @@ public class NodeServer {
 
         // send message to all common JChannels
         protected void forwardMsgToJChannel(Message msg) {
+            jchannel.checkNodes();
             Address src = this.jchannel.channel.getAddress();
             for (Address address : jchannel.channel.getView().getMembers()) {
                 if (!jchannel.nodesMap.containsKey(address)) {
@@ -718,6 +720,7 @@ public class NodeServer {
         }
 
         protected void forwardMsg(ChannelMsg chmsg){
+            jchannel.checkNodes();
             // send messages exclude itself.
             for (Address address: jchannel.nodesMap.keySet()) {
                 if(!address.equals(jchannel.channel.getAddress())) {
@@ -737,6 +740,7 @@ public class NodeServer {
 
         protected void forwadMsgToServer(MessageReqRep msgReq){
             System.out.println("Test: the current NodeMap members:" + jchannel.nodesMap);
+            jchannel.checkNodes();
             for (Address address: jchannel.nodesMap.keySet()) {
                 try {
                     Message msg = new ObjectMessage(address, msgReq);
@@ -749,6 +753,7 @@ public class NodeServer {
             System.out.println("[JChannel-Server] Forward a message for Request(MessageReqRep) to other JChannel-Servers: " + msgReq);
         }
         protected void forwardMsg(Request req){
+            jchannel.checkNodes();
             // forward Request for client information to other JChannel-Servers excluding itself, e.g. connectRequest, disconnectRequest.
             if (!req.hasMessageReqRep()){
                 for (Address address: jchannel.nodesMap.keySet()) {
