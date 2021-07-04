@@ -2,6 +2,7 @@ package cn.yingming.grpc1;
 
 import java.io.*;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,6 +32,7 @@ public class SimpleChat implements Receiver{
 	}
 	@Override
 	public void receive(Message msg) {
+		System.out.println(msg);
 		String line = msg.getSrc() + ": " + msg.getPayload();
 		System.out.println(line);
 		synchronized (state){
@@ -90,6 +92,29 @@ public class SimpleChat implements Receiver{
 					Message msg = new ObjectMessage(target, line);
 					System.out.println("Send a Message to a JChannel." + msg);
 					channel.send(msg);
+				} else if (line.startsWith("msg1")){
+					Message msg1 = new BytesMessage(null, "byte".getBytes());
+					System.out.println("Send a Message all members." + msg1);
+					channel.send(msg1);
+				} else if (line.startsWith("msg2")){
+					long long_num = 100000L;
+					Message msg2 = new LongMessage(null, long_num);
+					System.out.println("Send a Message all members." + msg2);
+					channel.send(msg2);
+				} else if (line.startsWith("msg3")){
+					Message subMsg = new ObjectMessage(null, "subMessage");
+					Message msg3 = new CompositeMessage(null, subMsg, subMsg, subMsg);
+					System.out.println("Send a Message all members." + msg3);
+					channel.send(msg3);
+				} else if (line.startsWith("msg4")){
+					Message msg4 = new EmptyMessage(null);
+					System.out.println("Send a Message all members." + msg4);
+					channel.send(msg4);
+				} else if (line.startsWith("msg5")){
+					ByteBuffer bb = ByteBuffer.wrap("byte".getBytes());
+					Message msg5 = new NioMessage(null, bb);
+					System.out.println("Send a Message all members." + msg5);
+					channel.send(msg5);
 				} else {
 					Message msg = new ObjectMessage(null, line);
 					System.out.println("Send a Message all members." + msg);

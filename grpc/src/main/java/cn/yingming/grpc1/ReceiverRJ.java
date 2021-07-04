@@ -26,6 +26,7 @@ public class ReceiverRJ implements Receiver {
 
     @Override
     public void receive(Message msg) {
+        System.out.println(msg);
         String line = msg.getSrc() + ": " + msg.getPayload();
         System.out.println(line);
         synchronized (state){

@@ -38,7 +38,13 @@ public class SimpleChatRJ {
                 if (line.startsWith("quit") || line.startsWith("exit")){
                     break;
                 }
-                if (line.startsWith("getLocalAddress()")){
+                if (line.equals("testSome")){
+                    System.out.println("Test some remote grpc methods:");
+                    System.out.println("getAddress() for JChannel-Server Address:" + remoteJChannel.getAddress());
+                    System.out.println("getAddressAsString() for JChannel-Server Address:" + remoteJChannel.getAddressAsString());
+                    System.out.println("getAddressAsUUID() for JChannel-Server Address:" + remoteJChannel.getAddressAsUUID());
+                    System.out.println("getName() for JChannel-Server Name:" + remoteJChannel.getName());
+                } else if (line.startsWith("getLocalAddress()")){
                     System.out.println("Client Address:" + remoteJChannel.getLocalAddress());
                 } else if(line.startsWith("getRemoteAddress()")){
                     System.out.println("Real JChannel Address (JChannel Server):" + remoteJChannel.getAddress());

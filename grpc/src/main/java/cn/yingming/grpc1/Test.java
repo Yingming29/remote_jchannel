@@ -168,5 +168,25 @@ public class Test {
 
         List<String> test_list2 = (List<String>) Util.objectFromByteBuffer(test_byte);
         System.out.println(test_list2);
+
+
+        System.out.println("=============");
+        long long_num = 10000L;
+        Message long_msg = new LongMessage(null, long_num);
+        System.out.println(long_msg);
+        ByteArrayDataOutputStream long_out = new ByteArrayDataOutputStream();
+        long_msg.writeTo(long_out);
+        byte[] long_byte = long_out.buffer();
+
+        System.out.println("Convert");
+        ByteArrayDataInputStream in = new ByteArrayDataInputStream(long_byte);
+        Message new_long_msg = new LongMessage();
+        new_long_msg.readFrom(in);
+        System.out.println(new_long_msg);
+
+        byte[] long_byte2 = Util.objectToByteBuffer(long_msg);
+        System.out.println("Convert2");
+        Message new_long_msg2 = Util.objectFromByteBuffer(long_byte2);
+        System.out.println(new_long_msg2);
     }
 }
