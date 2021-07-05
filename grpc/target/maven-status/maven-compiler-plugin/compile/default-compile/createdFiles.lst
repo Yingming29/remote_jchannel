@@ -60,6 +60,7 @@ io/grpc/jchannelRpc/MessageReqRep$Builder.class
 io/grpc/jchannelRpc/GetPropertyRep$Builder.class
 io/grpc/jchannelRpc/ExchangeMsgOrBuilder.class
 io/grpc/jchannelRpc/MessageReqRep.class
+cn/yingming/grpc1/UtilsRJ.class
 io/grpc/jchannelRpc/DumpStatsRep.class
 cn/yingming/grpc1/NodeServer$JChannelsServiceImpl.class
 io/grpc/jchannelRpc/JChannelsServiceGrpc.class
