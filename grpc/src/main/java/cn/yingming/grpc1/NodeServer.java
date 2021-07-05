@@ -4,10 +4,7 @@ import com.google.protobuf.ByteString;
 import io.grpc.*;
 import io.grpc.jchannelRpc.*;
 import io.grpc.stub.StreamObserver;
-import org.jgroups.Address;
-import org.jgroups.Message;
-import org.jgroups.ObjectMessage;
-import org.jgroups.View;
+import org.jgroups.*;
 import org.jgroups.util.*;
 
 import java.io.ByteArrayOutputStream;
@@ -710,8 +707,17 @@ public class NodeServer {
             for (Address address : jchannel.channel.getView().getMembers()) {
                 if (!jchannel.nodesMap.containsKey(address)) {
                     try {
-                        Message new_msg = msg.copy(true, false);
-                        new_msg.setSrc(src).setDest(address);
+                        Message new_msg = null;
+                        if (msg.getType() == 4){
+                            System.out.println("ForwardMsgToJChannel old:" + msg + ",  " + msg.getFlags() + ", " + msg.getHeaders());
+                            Message longMsg = (LongMessage) msg;
+                            new_msg = new LongMessage(address, longMsg.getObject());
+                            new_msg.setSrc(src);
+                            System.out.println("ForwardMsgToJChannel new:" + new_msg + ",  " + new_msg.getFlags() + ", " + new_msg.getHeaders());
+                        } else {
+                            new_msg = msg.copy(true, false);
+                            new_msg.setSrc(src).setDest(address);
+                        }
                         // Message new_msg = UtilsRJ.cloneMessage(msg, src, address);
                         jchannel.channel.send(new_msg);
                     } catch (Exception e){

@@ -216,7 +216,6 @@ public class Test {
         System.out.println("================");
         Message longTest = new LongMessage(null, long_num);
         System.out.println(longTest);
-        Message long_msg_new = null;
         ByteArrayDataOutputStream out_long = new ByteArrayDataOutputStream();
         try {
             longTest.writeTo(out_long);
@@ -224,7 +223,7 @@ public class Test {
             e.printStackTrace();
         }
         MessageReqRep msg_long_test = MessageReqRep.newBuilder().setMessageObj(ByteString.copyFrom(out_long.buffer())).setType(4).build();
-        System.out.println("Convert");
+        System.out.println("--convert----");
         Message new_long_test = UtilsRJ.convertMessage(msg_long_test);
         System.out.println(new_long_test);
     }

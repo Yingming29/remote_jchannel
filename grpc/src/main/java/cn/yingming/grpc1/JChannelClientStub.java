@@ -372,11 +372,9 @@ public class JChannelClientStub {
                 try {
                     // Message msg = Util.objectFromByteBuffer(response.getMessageReqRep().getMessageObj().toByteArray());
                     if (response.getMessageReqRep().getType() == 4){
-                        /*
-                        Message msg = Util.objectFromByteBuffer(response.getMessageReqRep().getMessageObj().toByteArray());
-                        this.client.receiver.receive(msg);
 
-                         */
+                        //Message msg = Util.objectFromByteBuffer(response.getMessageReqRep().getMessageObj().toByteArray());
+                        //this.client.receiver.receive(msg);
                         Message msg = UtilsRJ.convertMessage(response.getMessageReqRep());
                         this.client.receiver.receive(msg);
                     } else {

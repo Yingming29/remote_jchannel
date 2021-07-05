@@ -183,7 +183,6 @@ public class SimpleChatRJ {
                     Message msg4 = new LongMessage(null, long_num);
                     System.out.println("Message Test:" + msg4);
                     remoteJChannel.send(msg4);
-                    System.out.println(msg4);
                 } else if (line.startsWith("msg5")){
                     Message subMsg1 = new ObjectMessage(null, "subMessage");
                     Message subMsg2 = new ObjectMessage(null, "subMessage");

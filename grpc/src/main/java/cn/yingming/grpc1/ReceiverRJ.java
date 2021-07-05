@@ -4,9 +4,7 @@ import io.grpc.jchannelRpc.MessageReqRep;
 import io.grpc.jchannelRpc.Response;
 import io.grpc.jchannelRpc.StateRep;
 import io.grpc.jchannelRpc.ViewRep;
-import org.jgroups.Message;
-import org.jgroups.Receiver;
-import org.jgroups.View;
+import org.jgroups.*;
 import org.jgroups.util.MessageBatch;
 import org.jgroups.util.Util;
 
@@ -27,6 +25,16 @@ public class ReceiverRJ implements Receiver {
     @Override
     public void receive(Message msg) {
         System.out.println(msg);
+        if (msg instanceof EmptyMessage){
+            System.out.println("EmptyMessage");
+        } else if (msg instanceof CompositeMessage){
+            CompositeMessage compMsg = (CompositeMessage) msg;
+            System.out.println("CompositeMessage");
+            compMsg.forEach(System.out::println);
+        } else if (msg instanceof BytesMessage){
+            System.out.println("BYtesMessage");
+            System.out.println(msg.getPayload().toString());
+        }
         /*
         String line = msg.getSrc() + ": " + msg.getPayload();
         System.out.println(line);

@@ -32,7 +32,7 @@ public class UtilsRJ {
     */
 
     //
-
+    /*
     public static Message cloneMessage(Message msg, Address src, Address dest){
         if (msg instanceof BytesMessage){
             Message new_msg = new BytesMessage();
@@ -63,6 +63,8 @@ public class UtilsRJ {
         }
     }
 
+     */
+
 
     public static Message convertMessage(MessageReqRep req){
         int type = req.getType();
@@ -82,13 +84,38 @@ public class UtilsRJ {
                 msg = new ObjectMessage();
                 msg.readFrom(in);
             } else if (type == 4){
+                /*
                 try{
                     msg = new LongMessage();
                     msg.readFrom(in);
+                    // System.out.println("here" + msg);
                 } catch (Exception e) {
-                    //e.printStackTrace();
+                    e.printStackTrace();
                     return Util.objectFromByteBuffer(req.getMessageObj().toByteArray());
                 }
+                 */
+                Message mid = null;
+                try {
+                    mid = Util.objectFromByteBuffer(req.getMessageObj().toByteArray());
+                } catch (Exception e){
+                    // e.printStackTrace();
+                    mid = new LongMessage();
+                    mid.readFrom(in);
+                }
+                msg = new LongMessage(mid.getDest(), mid.getObject());
+                msg.setSrc(mid.src());
+                return msg;
+                /*
+                if (mid != null){
+                    msg = new LongMessage(mid.getDest(), mid.getObject());
+                    msg.setSrc(mid.src());
+                    System.out.println("mid:" + msg);
+                    return msg;
+                } else {
+                    throw new ClassNotFoundException("LongMessage error.");
+                }
+
+                 */
             } else if (type == 5){
                 msg = new CompositeMessage();
                 msg.readFrom(in);
