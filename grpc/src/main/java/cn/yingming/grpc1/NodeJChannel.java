@@ -89,7 +89,9 @@ public class NodeJChannel implements Receiver{
                 if (msg.getType() == 4){
                     long num = ((LongMessage) msg).getValue();
                     Message new_long = new LongMessage(msg.getDest(), num);
+                    System.out.println("old:" + msg + ",  " + msg.getFlags() + ", " + msg.getHeaders());
                     new_long.setSrc(msg.getSrc());
+                    System.out.println("new:" + new_long + ",  " + new_long.getFlags() + ", " + msg.getHeaders());
                     b = Util.objectToByteBuffer(new_long);
                 } else {
                     Message new_msg = msg.copy(true, false);

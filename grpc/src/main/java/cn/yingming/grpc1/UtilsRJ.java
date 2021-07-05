@@ -6,6 +6,7 @@ import org.jgroups.util.ByteArrayDataInputStream;
 import org.jgroups.util.Util;
 
 import java.io.*;
+import java.util.concurrent.ExecutionException;
 
 public class UtilsRJ {
     /*
@@ -81,9 +82,13 @@ public class UtilsRJ {
                 msg = new ObjectMessage();
                 msg.readFrom(in);
             } else if (type == 4){
-                msg = new LongMessage();
-                msg.readFrom(in);
-                // return Util.objectFromByteBuffer(req.getMessageObj().toByteArray());
+                try{
+                    msg = new LongMessage();
+                    msg.readFrom(in);
+                } catch (Exception e) {
+                    //e.printStackTrace();
+                    return Util.objectFromByteBuffer(req.getMessageObj().toByteArray());
+                }
             } else if (type == 5){
                 msg = new CompositeMessage();
                 msg.readFrom(in);
