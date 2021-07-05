@@ -640,6 +640,7 @@ public class NodeServer {
                 for (Address u : clients.keySet()){
                     clients.get(u).onNext(rep);
                 }
+                System.out.println(rep);
             } else {
                 System.out.println("[gRPC-Server] The size of connecting clients is 0.");
             }
@@ -744,7 +745,8 @@ public class NodeServer {
             for (Address address: jchannel.nodesMap.keySet()) {
                 try {
                     Message msg = new ObjectMessage(address, msgReq);
-                    System.out.println("[JChannel-Server] Forward a message for Request(MessageReqRep) to a JChannel-Server, " + address + ", the Message: " + msg);
+                    System.out.println("[JChannel-Server] Forward a message for Request(MessageReqRep) to a JChannel-Server, "
+                            + address + ", the Message: " + msg);
                     this.jchannel.channel.send(msg);
                 } catch (Exception e) {
                     e.printStackTrace();

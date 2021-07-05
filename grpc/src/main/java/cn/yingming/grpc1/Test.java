@@ -204,5 +204,13 @@ public class Test {
         System.out.println(type_test6.getType());
         int int_x = type_test6.getType();
         System.out.println(int_x);
+
+        System.out.println("================");
+        Message whole_msg = new ObjectMessage(null, "111111111111111111");
+        Message fragmented_msg = new FragmentedMessage(whole_msg, 0, 20);
+        Message fragmented_msg2 = new FragmentedMessage(whole_msg, 100, 20);
+        System.out.println(whole_msg);
+        System.out.println(fragmented_msg);
+        System.out.println(fragmented_msg2);
     }
 }

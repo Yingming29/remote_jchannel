@@ -51,7 +51,7 @@ public class NodeJChannel implements Receiver{
          * 2.receive the Message from other JChannel-server. They can send message, which contains Protobuf message object.
          *
          */
-        if(msg instanceof ObjectMessage){
+        if(msg.getType() == 3){
             if (msg.getObject() instanceof ChannelMsg){
                 receiveChannelMsg(msg);
             } else if (msg.getObject() instanceof Request){
@@ -75,22 +75,21 @@ public class NodeJChannel implements Receiver{
                 MessageReqRep msgRep = MessageReqRep.newBuilder().setType(msg.getType()).setMessageObj(ByteString.copyFrom(b)).build();
                 Response rep = Response.newBuilder().setMessageReqRep(msgRep).build();
                 service.broadcastResponse(rep);
-                String line = msg.getSrc() + ": " + msg.getPayload();
+                String line = msg.toString();
                 synchronized (state){
                     state.add(line);
                 }
             }
-        } else if (msg instanceof LongMessage || msg instanceof CompositeMessage || msg instanceof EmptyMessage || msg instanceof BytesMessage ||msg instanceof NioMessage){
+        } else if (msg.getType() !=3 && 0 <= msg.getType() && msg.getType() < 6){
             // receive common Message from other real common JChannels
             System.out.println("[JChannel-Server] Receive a message from a common JChannel: " + msg);
             System.out.println("Message type num:" + msg.getType() + ", " + msg.getClass());
             byte[] b = null;
             try {
-                if (msg instanceof LongMessage){
+                if (msg.getType() == 4){
                     long num = ((LongMessage) msg).getValue();
                     Message new_long = new LongMessage(msg.getDest(), num);
                     new_long.setSrc(msg.getSrc());
-                    System.out.println(new_long);
                     b = Util.objectToByteBuffer(new_long);
                 } else {
                     Message new_msg = msg.copy(true, false);
@@ -105,38 +104,40 @@ public class NodeJChannel implements Receiver{
             MessageReqRep msgRep = MessageReqRep.newBuilder().setType(msg.getType()).setMessageObj(ByteString.copyFrom(b)).build();
             Response rep = Response.newBuilder().setMessageReqRep(msgRep).build();
             service.broadcastResponse(rep);
-            String line = msg.getSrc() + ": " + msg.getPayload();
+            String line = msg.toString();
             synchronized (state){
                 state.add(line);
             }
+        } else {
+            System.out.println("[JChannel-Server] Receive an invalid Message type.");
         }
 
     }
 
     private void receiveMessageReqRep(MessageReqRep msg){
-
-        Message msg_test = UtilsRJ.convertMessage(msg);
-        System.out.println("Receive a MessageReqRep, the dest is " + msg_test.getDest());
-        System.out.println("The Address of the JChannel: " +this.channel.getAddress());
-        if (msg_test.getDest() == null){
-            System.out.println("null here ");
-            System.out.println("[JChannel-Server] Receive a message from a JChannel-Server for broadcast: " + msg_test);
+        Message dese_msg = UtilsRJ.convertMessage(msg);
+        System.out.println("[JChannel-Server] Receive a MessageReqRep, the dest is " + dese_msg.getDest());
+        if (dese_msg.getDest() == null){
+            // System.out.println("null here ");
+            System.out.println("[JChannel-Server] Receive a message from a JChannel-Server for broadcast: " + dese_msg);
             Response rep = Response.newBuilder().setMessageReqRep(msg).build();
             service.broadcastResponse(rep);
             synchronized (state){
-                String line = msg_test.getSrc() + ": " + msg_test.getPayload();
+                //String line = msg_test.getSrc() + ": " + msg_test.getPayload();
+                String line = dese_msg.toString();
                 state.add(line);
             }
-        } else if (msg_test.getDest().equals(this.channel.getAddress())){
-            System.out.println("[JChannel-Server] Receive a message from a JChannel-Server for broadcast: " + msg_test);
+        } else if (dese_msg.getDest().equals(this.channel.getAddress())){
+            System.out.println("[JChannel-Server] Receive a message from a JChannel-Server for unicast to this JChannel-Server (contain its all clients): " + dese_msg);
             Response rep = Response.newBuilder().setMessageReqRep(msg).build();
             service.broadcastResponse(rep);
             synchronized (state){
-                String line = msg_test.getSrc() + ": " + msg_test.getPayload();
+                //String line = msg_test.getSrc() + ": " + msg_test.getPayload();
+                String line = dese_msg.toString();
                 state.add(line);
             }
         } else{
-            System.out.println("[JChannel] Receive a message from other JChannel-Server for unicast to a JChannel-Client:" + msg_test);
+            System.out.println("[JChannel] Receive a message from other JChannel-Server for unicast to a JChannel-Client:" + dese_msg);
             this.service.unicast(msg);
         }
 
@@ -147,14 +148,14 @@ public class NodeJChannel implements Receiver{
         synchronized (nodesMap){
             for (Address each: nodesMap.keySet()){
                 if (nodesMap.get(each) == null){
-                   System.out.println("Found null in the node map");
+                   System.out.println("[JChannel-Server] Found null in the node map and delete it.");
                    nodesMap.remove(each);
                 } else if (!nodesMap.get(each).startsWith("127.0.0.1")){
-                    System.out.println("Found BUG 11111111111111111111111.");
+                    System.out.println("[JChannel-Server] Found invalid grpc address and delete it.");
                     nodesMap.remove(each);
                 }
                 if (!this.channel.getView().containsMember(each)){
-                    System.out.println("FOund Bug222222222222222222222");
+                    System.out.println("[JChannel-Server] Found invalid JChannel.");
                     System.out.println("Test4: " + nodesMap);
                 }
             }
@@ -452,7 +453,7 @@ public class NodeJChannel implements Receiver{
         List<Address> currentView = new_view.getMembers();
         List<Address> currentNodesList = new ArrayList<>(this.nodesMap.keySet());
         compareNodes(currentView, currentNodesList);
-        checkClusterMap(new_view);
+        // checkClusterMap(new_view);
 
         if (this.service != null){
             UpdateNameCacheRep nameCacheRep = this.service.generateNameCacheMsg();
@@ -472,11 +473,9 @@ public class NodeJChannel implements Receiver{
             ViewRep_server view_rep = ViewRep_server.newBuilder().setSender(this.channel.address().toString()).setViewByte(ByteString.copyFrom(v_byte)).build();
             Response rep = Response.newBuilder().setViewRepServer(view_rep).build();
             service.broadcastResponse(rep);
-            System.out.println(rep);
-
         }
     }
-
+    /*
     public void checkClusterMap(View view){
         // this first startup
         // whether is the coordinator
@@ -487,6 +486,8 @@ public class NodeJChannel implements Receiver{
             System.out.println("[JChannel-Server] Not coordinator of cluster.");
         }
     }
+
+     */
 
     public void compareNodes(List<Address> currentView, List<Address> currentNodesList){
         // add node

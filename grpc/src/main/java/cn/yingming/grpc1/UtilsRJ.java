@@ -84,31 +84,18 @@ public class UtilsRJ {
                 msg = new ObjectMessage();
                 msg.readFrom(in);
             } else if (type == 4){
-                Message long_msg = Util.objectFromByteBuffer(req.getMessageObj().toByteArray());
-                return long_msg;
+                return Util.objectFromByteBuffer(req.getMessageObj().toByteArray());
             } else if (type == 5){
                 msg = new CompositeMessage();
                 msg.readFrom(in);
             }  else if (type == 6){
-                msg = new FragmentedMessage();
-                msg.readFrom(in);
+                throw new UnsupportedOperationException("Not support Fragmented Message.");
             }  else {
                 throw new ClassNotFoundException("Invalid Message type.");
             }
         } catch (Exception e){
             e.printStackTrace();
         }
-        // what is the usage of this part?
-        /*
-        try{
-            if (msg == null){
-                msg = Util.objectFromByteBuffer(req.getMessageObj().toByteArray());
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-         */
         return msg;
     }
 

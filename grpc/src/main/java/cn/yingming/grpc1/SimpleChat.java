@@ -90,31 +90,43 @@ public class SimpleChat implements Receiver{
 					int target_index = Integer.parseInt(strs[1]);
 					Address target = channel.getView().getMembers().get(target_index);
 					Message msg = new ObjectMessage(target, line);
-					System.out.println("Send a Message to a JChannel." + msg);
+					System.out.println("Message Test:" + msg);
 					channel.send(msg);
+				} else if (line.startsWith("msg0")){
+					Message msg0 = new BytesMessage(null, "byte".getBytes());
+					System.out.println("Message Test:" + msg0);
+					channel.send(msg0);
 				} else if (line.startsWith("msg1")){
-					Message msg1 = new BytesMessage(null, "byte".getBytes());
-					System.out.println("Send a Message all members." + msg1);
+					ByteBuffer bb = ByteBuffer.wrap("byte".getBytes());
+					Message msg1 = new NioMessage(null, bb);
+					System.out.println("Message Test:" + msg1);
 					channel.send(msg1);
 				} else if (line.startsWith("msg2")){
-					long long_num = 100000L;
-					Message msg2 = new LongMessage(null, long_num);
-					System.out.println("Send a Message all members." + msg2);
+					Message msg2 = new EmptyMessage(null);
+					System.out.println("Message Test:" + msg2);
 					channel.send(msg2);
 				} else if (line.startsWith("msg3")){
-					Message subMsg = new ObjectMessage(null, "subMessage");
-					Message msg3 = new CompositeMessage(null, subMsg, subMsg, subMsg);
-					System.out.println("Send a Message all members." + msg3);
+					String obj = "msg3 Object";
+					Message msg3 = new ObjectMessage(null, obj);
+					System.out.println("Message Test:" + msg3);
 					channel.send(msg3);
 				} else if (line.startsWith("msg4")){
-					Message msg4 = new EmptyMessage(null);
-					System.out.println("Send a Message all members." + msg4);
+					long long_num = 100000L;
+					Message msg4 = new LongMessage(null, long_num);
+					System.out.println("Message Test:" + msg4);
 					channel.send(msg4);
 				} else if (line.startsWith("msg5")){
-					ByteBuffer bb = ByteBuffer.wrap("byte".getBytes());
-					Message msg5 = new NioMessage(null, bb);
-					System.out.println("Send a Message all members." + msg5);
+					Message subMsg1 = new ObjectMessage(null, "subMessage");
+					Message subMsg2 = new ObjectMessage(null, "subMessage");
+					Message subMsg3 = new ObjectMessage(null, "subMessage");
+					Message msg5 = new CompositeMessage(null, subMsg1, subMsg2, subMsg3);
+					System.out.println("Message Test:" + msg5);
 					channel.send(msg5);
+				} else if (line.startsWith("msg6")){
+					Message original_msg = new ObjectMessage(null, "originalMessageStringObj");
+					Message msg6 = new FragmentedMessage(original_msg, 0, 200);
+					System.out.println("Message Test:" + msg6);
+					channel.send(msg6);
 				} else {
 					Message msg = new ObjectMessage(null, line);
 					System.out.println("Send a Message all members." + msg);
