@@ -8,6 +8,7 @@ import org.jgroups.util.Util;
 import java.io.*;
 
 public class UtilsRJ {
+    /*
     public static String getMsgType(Message msg){
         if (msg instanceof BytesMessage){
             return "BytesMessage";
@@ -27,6 +28,7 @@ public class UtilsRJ {
             return null;
         }
     }
+    */
 
     //
     public static Message cloneMessage(Message msg, Address src, Address dest){
@@ -64,37 +66,40 @@ public class UtilsRJ {
     }
 
     public static Message convertMessage(MessageReqRep req){
-        String type = req.getType();
+        int type = req.getType();
         ByteArrayDataInputStream in = new ByteArrayDataInputStream(req.getMessageObj().toByteArray());
         Message msg = null;
         try{
-            if (type.equals("BytesMessage")){
+
+            if (type == 0){
                 msg = new BytesMessage();
                 msg.readFrom(in);
-            } else if (type.equals("ObjectMessage")){
-                msg = new ObjectMessage();
-                msg.readFrom(in);
-            } else if (type.equals("CompositeMessage")){
-                msg = new CompositeMessage();
-                msg.readFrom(in);
-            } else if (type.equals("EmptyMessage")){
-                msg = new EmptyMessage();
-                msg.readFrom(in);
-            } else if (type.equals("FragmentedMessage")){
-                msg = new FragmentedMessage();
-                msg.readFrom(in);
-            } else if (type.equals("LongMessage")){
-                msg = new LongMessage();
-                msg.readFrom(in);
-            } else if (type.equals("NioMessage")){
+            } else if (type == 1){
                 msg = new NioMessage();
                 msg.readFrom(in);
-            } else {
-                throw new ClassNotFoundException("Not found suitable Message type");
+            } else if (type == 2){
+                msg = new EmptyMessage();
+                msg.readFrom(in);
+            } else if (type == 3){
+                msg = new ObjectMessage();
+                msg.readFrom(in);
+            } else if (type == 4){
+                Message long_msg = Util.objectFromByteBuffer(req.getMessageObj().toByteArray());
+                return long_msg;
+            } else if (type == 5){
+                msg = new CompositeMessage();
+                msg.readFrom(in);
+            }  else if (type == 6){
+                msg = new FragmentedMessage();
+                msg.readFrom(in);
+            }  else {
+                throw new ClassNotFoundException("Invalid Message type.");
             }
         } catch (Exception e){
-            // e.printStackTrace();
+            e.printStackTrace();
         }
+        // what is the usage of this part?
+        /*
         try{
             if (msg == null){
                 msg = Util.objectFromByteBuffer(req.getMessageObj().toByteArray());
@@ -102,6 +107,8 @@ public class UtilsRJ {
         } catch (Exception e){
             e.printStackTrace();
         }
+
+         */
         return msg;
     }
 

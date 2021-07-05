@@ -188,5 +188,21 @@ public class Test {
         System.out.println("Convert2");
         Message new_long_msg2 = Util.objectFromByteBuffer(long_byte2);
         System.out.println(new_long_msg2);
+
+        System.out.println("================");
+        Message type_test = new ObjectMessage(null, "typeString");
+        System.out.println(type_test.getType());
+        Message type_test2 = new LongMessage();
+        System.out.println(type_test2.getType());
+        Message type_test3 = new BytesMessage();
+        System.out.println(type_test3.getType());
+        Message type_test4 = new NioMessage();
+        System.out.println(type_test4.getType());
+        Message type_test5 = new FragmentedMessage();
+        System.out.println(type_test5.getType());
+        Message type_test6 = new EmptyMessage();
+        System.out.println(type_test6.getType());
+        int int_x = type_test6.getType();
+        System.out.println(int_x);
     }
 }

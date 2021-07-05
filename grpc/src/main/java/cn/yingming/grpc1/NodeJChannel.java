@@ -51,10 +51,39 @@ public class NodeJChannel implements Receiver{
          * 2.receive the Message from other JChannel-server. They can send message, which contains Protobuf message object.
          *
          */
-        System.out.println(UtilsRJ.getMsgType(msg));
-        if (msg instanceof LongMessage || msg instanceof BytesMessage || msg instanceof CompositeMessage || msg instanceof EmptyMessage || msg instanceof NioMessage){
+        if(msg instanceof ObjectMessage){
+            if (msg.getObject() instanceof ChannelMsg){
+                receiveChannelMsg(msg);
+            } else if (msg.getObject() instanceof Request){
+                receiveConDiscon(msg);
+            } else if (msg.getObject() instanceof MessageReqRep){
+                receiveMessageReqRep(msg.getObject());
+            } else {
+                // receive common Message from other real common JChannels
+                System.out.println("[JChannel-Server] Receive a message from a real common JChannel: " + msg);
+                System.out.println("Message type num:" + msg.getType() + ", " + msg.getClass());
+                byte[] b = null;
+                try {
+                    Message new_msg = msg.copy(true, false);
+                    ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
+                    new_msg.writeTo(out);
+                    b = out.buffer();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                MessageReqRep msgRep = MessageReqRep.newBuilder().setType(msg.getType()).setMessageObj(ByteString.copyFrom(b)).build();
+                Response rep = Response.newBuilder().setMessageReqRep(msgRep).build();
+                service.broadcastResponse(rep);
+                String line = msg.getSrc() + ": " + msg.getPayload();
+                synchronized (state){
+                    state.add(line);
+                }
+            }
+        } else if (msg instanceof LongMessage || msg instanceof CompositeMessage || msg instanceof EmptyMessage || msg instanceof BytesMessage ||msg instanceof NioMessage){
             // receive common Message from other real common JChannels
-            System.out.println("[JChannel-Server] Receive a message from a real common JChannel: " + msg);
+            System.out.println("[JChannel-Server] Receive a message from a common JChannel: " + msg);
+            System.out.println("Message type num:" + msg.getType() + ", " + msg.getClass());
             byte[] b = null;
             try {
                 if (msg instanceof LongMessage){
@@ -63,53 +92,17 @@ public class NodeJChannel implements Receiver{
                     new_long.setSrc(msg.getSrc());
                     System.out.println(new_long);
                     b = Util.objectToByteBuffer(new_long);
-
-                    System.out.println("----Test-----");
-                    Message msg_test1 = Util.objectFromByteBuffer(b);
-                    System.out.println(msg_test1);
                 } else {
                     Message new_msg = msg.copy(true, false);
                     ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
                     new_msg.writeTo(out);
                     b = out.buffer();
                 }
-
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-
-            MessageReqRep msgRep = MessageReqRep.newBuilder().setType(UtilsRJ.getMsgType(msg)).setMessageObj(ByteString.copyFrom(b)).build();
-            System.out.println("----Test2-----");
-            Message msg_test2 = UtilsRJ.convertMessage(msgRep);
-            System.out.println(msg_test2);
-
-            Response rep = Response.newBuilder().setMessageReqRep(msgRep).build();
-            service.broadcastResponse(rep);
-            String line = msg.getSrc() + ": " + msg.getPayload();
-            synchronized (state){
-                state.add(line);
-            }
-        }
-        if (msg.getObject() instanceof ChannelMsg){
-            receiveChannelMsg(msg);
-        } else if (msg.getObject() instanceof Request){
-            receiveConDiscon(msg);
-        } else if (msg.getObject() instanceof MessageReqRep){
-            receiveMessageReqRep(msg.getObject());
-        } else {
-            // receive common Message from other real common JChannels
-            System.out.println("[JChannel-Server] Receive a message from a real common JChannel: " + msg);
-            byte[] b = null;
-            try {
-                Message new_msg = msg.copy(true, false);
-                ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
-                new_msg.writeTo(out);
-                b = out.buffer();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            MessageReqRep msgRep = MessageReqRep.newBuilder().setType(UtilsRJ.getMsgType(msg)).setMessageObj(ByteString.copyFrom(b)).build();
+            MessageReqRep msgRep = MessageReqRep.newBuilder().setType(msg.getType()).setMessageObj(ByteString.copyFrom(b)).build();
             Response rep = Response.newBuilder().setMessageReqRep(msgRep).build();
             service.broadcastResponse(rep);
             String line = msg.getSrc() + ": " + msg.getPayload();
@@ -118,10 +111,6 @@ public class NodeJChannel implements Receiver{
             }
         }
 
-        System.out.println("Test2, the current NodeMap:" + nodesMap);
-
-
-        // define receive string and byte for other
     }
 
     private void receiveMessageReqRep(MessageReqRep msg){

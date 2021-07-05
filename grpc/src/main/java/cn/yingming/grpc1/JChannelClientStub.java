@@ -163,7 +163,7 @@ public class JChannelClientStub {
             } catch (Exception e){
                 e.printStackTrace();
             }
-            MessageReqRep msg = MessageReqRep.newBuilder().setMessageObj(ByteString.copyFrom(out.buffer())).setType(UtilsRJ.getMsgType(m)).build();
+            MessageReqRep msg = MessageReqRep.newBuilder().setMessageObj(ByteString.copyFrom(out.buffer())).setType(m.getType()).build();
             return Request.newBuilder().setMessageReqRep(msg).build();
         } else if (obj instanceof DumpStatsReq){
             DumpStatsReq dumpReq = (DumpStatsReq) obj;
@@ -354,10 +354,20 @@ public class JChannelClientStub {
             if (this.client.receiver != null) {
                 try {
                     // Message msg = Util.objectFromByteBuffer(response.getMessageReqRep().getMessageObj().toByteArray());
-                    Message msg = UtilsRJ.convertMessage(response.getMessageReqRep());
-                    this.client.receiver.receive(msg);
+                    if (response.getMessageReqRep().getType() == 4){
+                        /*
+                        Message msg = Util.objectFromByteBuffer(response.getMessageReqRep().getMessageObj().toByteArray());
+                        this.client.receiver.receive(msg);
+
+                         */
+                        Message msg = UtilsRJ.convertMessage(response.getMessageReqRep());
+                        this.client.receiver.receive(msg);
+                    } else {
+                        Message msg = UtilsRJ.convertMessage(response.getMessageReqRep());
+                        this.client.receiver.receive(msg);
+                    }
                 } catch (Exception e) {
-                    // e.printStackTrace();
+                    e.printStackTrace();
                 }
             } else {
                 System.out.println("Receive message, but RemoteJChannel does not have receiver.");

@@ -21,16 +21,19 @@ public class ReceiverRJ implements Receiver {
     final List<String> state;
 
     public ReceiverRJ() {
-        this.state = new LinkedList<String>();
+        this.state = new LinkedList<>();
     }
 
     @Override
     public void receive(Message msg) {
         System.out.println(msg);
+        /*
         String line = msg.getSrc() + ": " + msg.getPayload();
         System.out.println(line);
+
+         */
         synchronized (state){
-            state.add(line);
+            state.add(msg.toString());
         }
     }
 

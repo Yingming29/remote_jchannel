@@ -338,7 +338,7 @@ public final class JChannelRpc {
       "(\t\022\021\n\tview_byte\030\002 \001(\014\"\027\n\007ViewRep\022\014\n\004view" +
       "\030\001 \001(\014\"\036\n\tUpdateRep\022\021\n\taddresses\030\001 \001(\t\"1" +
       "\n\rMessageReqRep\022\022\n\nmessageObj\030\001 \001(\014\022\014\n\004t" +
-      "ype\030\002 \001(\t\"v\n\nConnectReq\022\017\n\007cluster\030\001 \001(\t" +
+      "ype\030\002 \001(\005\"v\n\nConnectReq\022\017\n\007cluster\030\001 \001(\t" +
       "\022\021\n\ttimestamp\030\002 \001(\t\022\021\n\treconnect\030\003 \001(\010\022\024" +
       "\n\014logical_name\030\004 \001(\t\022\033\n\023jchann_address_b" +
       "yte\030\005 \001(\014\"C\n\nConnectRep\022\016\n\006result\030\001 \001(\010\022" +
