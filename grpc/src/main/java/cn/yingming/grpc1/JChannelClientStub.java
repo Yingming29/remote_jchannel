@@ -157,12 +157,29 @@ public class JChannelClientStub {
         } else if(obj instanceof Message) {
             Message m = (Message) obj;
             m.setSrc(client.jchannel_address);
+
             ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
             try {
                 m.writeTo(out);
             } catch (Exception e){
                 e.printStackTrace();
             }
+            if (m.getType() == 4){
+                try{
+                    byte[] long_byte = Util.objectToByteBuffer(m);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            /*
+            try{
+                MessageReqRep msg = MessageReqRep.newBuilder().setMessageObj(ByteString.copyFrom(Util.objectToByteBuffer(m))).setType(m.getType()).build();
+                return Request.newBuilder().setMessageReqRep(msg).build();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+
+             */
             MessageReqRep msg = MessageReqRep.newBuilder().setMessageObj(ByteString.copyFrom(out.buffer())).setType(m.getType()).build();
             return Request.newBuilder().setMessageReqRep(msg).build();
         } else if (obj instanceof DumpStatsReq){

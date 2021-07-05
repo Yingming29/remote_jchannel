@@ -31,6 +31,7 @@ public class UtilsRJ {
     */
 
     //
+
     public static Message cloneMessage(Message msg, Address src, Address dest){
         if (msg instanceof BytesMessage){
             Message new_msg = new BytesMessage();
@@ -42,17 +43,13 @@ public class UtilsRJ {
             return new_msg;
         } else if (msg instanceof CompositeMessage){
             Message new_msg = new CompositeMessage();
-            new_msg.setSrc(src).setDest(dest).setPayload(msg.getPayload());
+            new_msg.setSrc(src).setDest(dest);
             return new_msg;
         } else if (msg instanceof EmptyMessage){
             Message new_msg = new EmptyMessage();
             new_msg.setSrc(src).setDest(dest).setPayload(msg.getPayload());
             return new_msg;
-        } else if (msg instanceof FragmentedMessage){
-            Message new_msg = new FragmentedMessage();
-            new_msg.setSrc(src).setDest(dest).setPayload(msg.getPayload());
-            return new_msg;
-        } else if (msg instanceof LongMessage){
+        }  else if (msg instanceof LongMessage){
             Message new_msg = new LongMessage();
             new_msg.setSrc(src).setDest(dest).setPayload(msg.getPayload());
             return new_msg;
@@ -65,12 +62,12 @@ public class UtilsRJ {
         }
     }
 
+
     public static Message convertMessage(MessageReqRep req){
         int type = req.getType();
         ByteArrayDataInputStream in = new ByteArrayDataInputStream(req.getMessageObj().toByteArray());
         Message msg = null;
         try{
-
             if (type == 0){
                 msg = new BytesMessage();
                 msg.readFrom(in);
@@ -84,7 +81,9 @@ public class UtilsRJ {
                 msg = new ObjectMessage();
                 msg.readFrom(in);
             } else if (type == 4){
-                return Util.objectFromByteBuffer(req.getMessageObj().toByteArray());
+                msg = new LongMessage();
+                msg.readFrom(in);
+                // return Util.objectFromByteBuffer(req.getMessageObj().toByteArray());
             } else if (type == 5){
                 msg = new CompositeMessage();
                 msg.readFrom(in);

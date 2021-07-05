@@ -710,7 +710,9 @@ public class NodeServer {
             for (Address address : jchannel.channel.getView().getMembers()) {
                 if (!jchannel.nodesMap.containsKey(address)) {
                     try {
-                        Message new_msg = UtilsRJ.cloneMessage(msg, src, address);
+                        Message new_msg = msg.copy(true, false);
+                        new_msg.setSrc(src).setDest(address);
+                        // Message new_msg = UtilsRJ.cloneMessage(msg, src, address);
                         jchannel.channel.send(new_msg);
                     } catch (Exception e){
                         e.printStackTrace();

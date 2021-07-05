@@ -493,15 +493,14 @@ public class NodeJChannel implements Receiver{
         // add node
         synchronized (this.nodesMap) {
             if (currentView.size() > currentNodesList.size()) {
-                System.out.println("[JChannel-Server] Store new node inf.");
-                List<Address> compare = ListUtils.subtract(currentView, currentNodesList);
+                // System.out.println("[JChannel-Server] Store new node inf.");
                 System.out.println("[JChannel-Server] The current nodes in node cluster: " + this.nodesMap);
                 sendMyself();
             } else if (currentView.size() < currentNodesList.size()) {
-                System.out.println("[JChannel-Server]Remove cancelled node inf.");
-                List compare = ListUtils.subtract(currentNodesList, currentView);
-                for (int i = 0; i < compare.size(); i++) {
-                    this.nodesMap.remove(compare.get(i));
+                System.out.println("[JChannel-Server] Remove cancelled node inf.");
+                List<Address> compare = ListUtils.subtract(currentNodesList, currentView);
+                for (Address each:compare) {
+                    this.nodesMap.remove(each);
                 }
                 System.out.println("[JChannel-Server] The current nodes in node cluster: " + this.nodesMap);
                 UpdateRep updateMsg = UpdateRep.newBuilder()

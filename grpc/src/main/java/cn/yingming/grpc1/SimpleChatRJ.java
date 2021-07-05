@@ -1,12 +1,13 @@
 package cn.yingming.grpc1;
 
-import org.jgroups.Address;
+import org.jgroups.*;
 import org.jgroups.util.NameCache;
 import org.jgroups.util.UUID;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -141,13 +142,7 @@ public class SimpleChatRJ {
                     System.out.println("isConnected() for remote real JChannel: " + remoteJChannel.isConnected());
                 } else if (line.equals("isClosed()")){
                     System.out.println("isClosed() for remote real JChannel: " + remoteJChannel.isClosed());
-                }
-                /*
-                else if (line.equals("getState() history null")){
-                    System.out.println("getState(null) for remote real JChannel: " + remoteJChannel.getState(null, 2000));
-                }  null
-                 */
-                else if (line.startsWith("getState() history")){
+                } else if (line.startsWith("getState() history")){
                     // getState() history 1 1000
                     String[] strs = line.split(" ");
                     Address target = null;
@@ -165,6 +160,37 @@ public class SimpleChatRJ {
                     } catch (Exception e){
                         e.printStackTrace();
                     }
+                } else if (line.startsWith("msg0")){
+                    Message msg0 = new BytesMessage(null, "byte".getBytes());
+                    System.out.println("Message Test:" + msg0);
+                    remoteJChannel.send(msg0);
+                } else if (line.startsWith("msg1")){
+                    ByteBuffer bb = ByteBuffer.wrap("byte".getBytes());
+                    Message msg1 = new NioMessage(null, bb);
+                    System.out.println("Message Test:" + msg1);
+                    remoteJChannel.send(msg1);
+                } else if (line.startsWith("msg2")){
+                    Message msg2 = new EmptyMessage(null);
+                    System.out.println("Message Test:" + msg2);
+                    remoteJChannel.send(msg2);
+                } else if (line.startsWith("msg3")){
+                    String obj = "msg3 Object";
+                    Message msg3 = new ObjectMessage(null, obj);
+                    System.out.println("Message Test:" + msg3);
+                    remoteJChannel.send(msg3);
+                } else if (line.startsWith("msg4")){
+                    long long_num = 100000L;
+                    Message msg4 = new LongMessage(null, long_num);
+                    System.out.println("Message Test:" + msg4);
+                    remoteJChannel.send(msg4);
+                    System.out.println(msg4);
+                } else if (line.startsWith("msg5")){
+                    Message subMsg1 = new ObjectMessage(null, "subMessage");
+                    Message subMsg2 = new ObjectMessage(null, "subMessage");
+                    Message subMsg3 = new ObjectMessage(null, "subMessage");
+                    Message msg5 = new CompositeMessage(null, subMsg1, subMsg2, subMsg3);
+                    System.out.println("Message Test:" + msg5);
+                    remoteJChannel.send(msg5);
                 } else{
                     try{
                         remoteJChannel.send(null, line);
@@ -174,6 +200,8 @@ public class SimpleChatRJ {
                 }
 
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

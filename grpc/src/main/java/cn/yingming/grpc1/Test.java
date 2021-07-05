@@ -1,6 +1,7 @@
 package cn.yingming.grpc1;
 
 import com.google.protobuf.ByteString;
+import io.grpc.jchannelRpc.MessageReqRep;
 import io.grpc.jchannelRpc.SetDiscardOwnMsgReq;
 import io.grpc.jchannelRpc.UpdateNameCacheRep;
 import org.jgroups.*;
@@ -212,5 +213,19 @@ public class Test {
         System.out.println(whole_msg);
         System.out.println(fragmented_msg);
         System.out.println(fragmented_msg2);
+        System.out.println("================");
+        Message longTest = new LongMessage(null, long_num);
+        System.out.println(longTest);
+        Message long_msg_new = null;
+        ByteArrayDataOutputStream out_long = new ByteArrayDataOutputStream();
+        try {
+            longTest.writeTo(out_long);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        MessageReqRep msg_long_test = MessageReqRep.newBuilder().setMessageObj(ByteString.copyFrom(out_long.buffer())).setType(4).build();
+        System.out.println("Convert");
+        Message new_long_test = UtilsRJ.convertMessage(msg_long_test);
+        System.out.println(new_long_test);
     }
 }
