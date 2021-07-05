@@ -3,14 +3,13 @@ package cn.yingming.grpc1;
 import java.io.*;
 
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-
-import io.grpc.jchannelRpc.ChannelMsg;
 import org.jgroups.*;
-import org.jgroups.stack.ProtocolStack;
 import org.jgroups.util.*;
 
 
@@ -32,6 +31,7 @@ public class SimpleChat implements Receiver{
 	}
 	@Override
 	public void receive(Message msg) {
+		System.out.println("-------------");
 		String line = null;
 		if (msg instanceof EmptyMessage){
 			line = msg.getSrc() + ": " + "EmptyMessage";
@@ -43,20 +43,23 @@ public class SimpleChat implements Receiver{
 		} else if (msg instanceof BytesMessage){
 			line = msg.getSrc() + " (BytesMessage): " + msg.getPayload();
 			String result = new String((byte[]) msg.getPayload());
-			System.out.println("try convert bytes: " + result);
+			System.out.println("verify bytes: " + result);
 		} else if (msg instanceof NioMessage){
 			NioMessage nioMsg = (NioMessage) msg;
 			line = msg.getSrc() + "(NioMessage): " + msg.getPayload();
-			ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
-			byte[] b = null;
-			try {
-				nioMsg.writePayload(out);
-				b = out.buffer();
-			} catch (IOException e) {
+			CharBuffer charBuffer = null;
+			ByteBuffer buffer = nioMsg.getPayload();
+			String result_bb = null;
+			try{
+				Charset charSet = StandardCharsets.UTF_8;
+				CharsetDecoder decoder = charSet.newDecoder();
+				charBuffer = decoder.decode(buffer);
+				buffer.flip();
+				result_bb = charBuffer.toString();
+			} catch (Exception e){
 				e.printStackTrace();
 			}
-			String result = new String(b);
-			System.out.println("try convert ByteBuffer: " + result);
+			System.out.println("verify ByteBuffer: " + result_bb);
 		} else {
 			line = msg.getSrc() + "(ObjectMessage): " + msg.getPayload();
 		}
@@ -64,6 +67,7 @@ public class SimpleChat implements Receiver{
 		synchronized (state){
 			state.add(line);
 		}
+		System.out.println("-------------");
 		/*
 		if (msg.getObject() instanceof ChannelMsg){
 			System.out.println("Receive a message for grpc address, drop it.");
@@ -116,46 +120,38 @@ public class SimpleChat implements Receiver{
 					int target_index = Integer.parseInt(strs[1]);
 					Address target = channel.getView().getMembers().get(target_index);
 					Message msg = new ObjectMessage(target, line);
-					System.out.println("Message Test:" + msg);
 					channel.send(msg);
 				} else if (line.startsWith("msg0")){
-					Message msg0 = new BytesMessage(null, "byte".getBytes());
-					System.out.println("Message Test:" + msg0);
+					Message msg0 = new BytesMessage(null, "byteMsg from JChannel".getBytes());
 					channel.send(msg0);
 				} else if (line.startsWith("msg1")){
-					ByteBuffer bb = ByteBuffer.wrap("byte".getBytes());
+					ByteBuffer bb = ByteBuffer.wrap("byteBufferMsg from JChannel".getBytes());
 					Message msg1 = new NioMessage(null, bb);
-					System.out.println("Message Test:" + msg1);
 					channel.send(msg1);
 				} else if (line.startsWith("msg2")){
 					Message msg2 = new EmptyMessage(null);
-					System.out.println("Message Test:" + msg2);
 					channel.send(msg2);
 				} else if (line.startsWith("msg3")){
-					String obj = "msg3 Object";
+					String obj = "objectMsg from JChannel";
 					Message msg3 = new ObjectMessage(null, obj);
-					System.out.println("Message Test:" + msg3);
 					channel.send(msg3);
 				} else if (line.startsWith("msg4")){
 					long long_num = 100000L;
 					Message msg4 = new LongMessage(null, long_num);
-					System.out.println("Message Test:" + msg4);
 					channel.send(msg4);
 				} else if (line.startsWith("msg5")){
-					Message subMsg1 = new ObjectMessage(null, "subMessage");
-					Message subMsg2 = new ObjectMessage(null, "subMessage");
-					Message subMsg3 = new ObjectMessage(null, "subMessage");
+					Message subMsg1 = new ObjectMessage(null, "subObjMsg1 from JChannel");
+					Message subMsg2 = new ObjectMessage(null, "subObjMsg2 from JChannel");
+					Message subMsg3 = new ObjectMessage(null, "subObjMsg3 from JChannel");
 					Message msg5 = new CompositeMessage(null, subMsg1, subMsg2, subMsg3);
-					System.out.println("Message Test:" + msg5);
 					channel.send(msg5);
+					// not supported FragmentedMessage
 				} else if (line.startsWith("msg6")){
 					Message original_msg = new ObjectMessage(null, "originalMessageStringObj");
 					Message msg6 = new FragmentedMessage(original_msg, 0, 200);
-					System.out.println("Message Test:" + msg6);
 					channel.send(msg6);
 				} else {
 					Message msg = new ObjectMessage(null, line);
-					System.out.println("Send a Message all members." + msg);
 					channel.send(msg);
 				}
 

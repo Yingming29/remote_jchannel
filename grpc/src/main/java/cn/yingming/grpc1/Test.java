@@ -10,6 +10,11 @@ import org.jgroups.util.*;
 import org.jgroups.util.UUID;
 
 import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class Test {
@@ -234,5 +239,29 @@ public class Test {
         CompositeMessage msg_whole = new CompositeMessage(null, sub_msg, sub_msg, sub_msg);
         LinkedList<String> compMsgList = new LinkedList<>();
         msg_whole.forEach(eachOne -> compMsgList.add(eachOne.getObject()));
+        System.out.println("--------------");
+        ByteBuffer bb = ByteBuffer.wrap("byteBufferMsg from JChannel-Client".getBytes());
+        Message msg_nio = new NioMessage(null, bb);
+        ByteArrayDataOutputStream out_nio = new ByteArrayDataOutputStream();
+        byte[] b = null;
+        try {
+            msg_nio.writePayload(out_nio);
+            b = out_nio.buffer();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CharBuffer charBuffer = null;
+        ByteBuffer buffer = msg_nio.getPayload();
+        String result_bb = null;
+        try{
+            Charset charSet = StandardCharsets.UTF_8;
+            CharsetDecoder decoder = charSet.newDecoder();
+            charBuffer = decoder.decode(buffer);
+            buffer.flip();
+            result_bb = charBuffer.toString();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println(result_bb);
     }
 }

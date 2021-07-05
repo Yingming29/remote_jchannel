@@ -7,6 +7,11 @@ import org.jgroups.*;
 import org.jgroups.util.*;
 
 import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -106,10 +111,44 @@ public class NodeJChannel implements Receiver{
             MessageReqRep msgRep = MessageReqRep.newBuilder().setType(msg.getType()).setMessageObj(ByteString.copyFrom(b)).build();
             Response rep = Response.newBuilder().setMessageReqRep(msgRep).build();
             service.broadcastResponse(rep);
-            String line = msg.toString();
+            // copy from Receiver of JChannelClient and SimpleChat
+            System.out.println("-------------");
+            String line = null;
+            if (msg instanceof EmptyMessage){
+                line = msg.getSrc() + ": " + "EmptyMessage";
+            } else if (msg instanceof CompositeMessage){
+                CompositeMessage compMsg = (CompositeMessage) msg;
+                LinkedList<String> compMsgList = new LinkedList<>();
+                compMsg.forEach(eachOne -> compMsgList.add(eachOne.getObject()));
+                line = msg.getSrc() + " (CompositeMessage): " + compMsgList;
+            } else if (msg instanceof BytesMessage){
+                line = msg.getSrc() + " (BytesMessage): " + msg.getPayload();
+                String result = new String((byte[]) msg.getPayload());
+                System.out.println("verify bytes: " + result);
+            } else if (msg instanceof NioMessage){
+                NioMessage nioMsg = (NioMessage) msg;
+                line = msg.getSrc() + "(NioMessage): " + msg.getPayload();
+                CharBuffer charBuffer = null;
+                ByteBuffer buffer = nioMsg.getPayload();
+                String result_bb = null;
+                try{
+                    Charset charSet = StandardCharsets.UTF_8;
+                    CharsetDecoder decoder = charSet.newDecoder();
+                    charBuffer = decoder.decode(buffer);
+                    buffer.flip();
+                    result_bb = charBuffer.toString();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+                System.out.println("verify ByteBuffer: " + result_bb);
+            } else {
+                line = msg.getSrc() + "(ObjectMessage): " + msg.getPayload();
+            }
+            System.out.println(line);
             synchronized (state){
                 state.add(line);
             }
+            System.out.println("-------------");
         } else {
             System.out.println("[JChannel-Server] Receive an invalid Message type.");
         }

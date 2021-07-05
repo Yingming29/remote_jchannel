@@ -9,62 +9,6 @@ import java.io.*;
 import java.util.concurrent.ExecutionException;
 
 public class UtilsRJ {
-    /*
-    public static String getMsgType(Message msg){
-        if (msg instanceof BytesMessage){
-            return "BytesMessage";
-        } else if (msg instanceof ObjectMessage){
-            return "ObjectMessage";
-        } else if (msg instanceof CompositeMessage){
-            return "CompositeMessage";
-        } else if (msg instanceof EmptyMessage){
-            return "EmptyMessage";
-        } else if (msg instanceof FragmentedMessage){
-            return "FragmentedMessage";
-        } else if (msg instanceof LongMessage){
-            return "LongMessage";
-        } else if (msg instanceof NioMessage){
-            return "NioMessage";
-        } else{
-            return null;
-        }
-    }
-    */
-
-    //
-    /*
-    public static Message cloneMessage(Message msg, Address src, Address dest){
-        if (msg instanceof BytesMessage){
-            Message new_msg = new BytesMessage();
-            new_msg.setSrc(src).setDest(dest).setPayload(msg.getPayload());
-            return new_msg;
-        } else if (msg instanceof ObjectMessage){
-            Message new_msg = new ObjectMessage();
-            new_msg.setSrc(src).setDest(dest).setPayload(msg.getPayload());
-            return new_msg;
-        } else if (msg instanceof CompositeMessage){
-            Message new_msg = new CompositeMessage();
-            new_msg.setSrc(src).setDest(dest);
-            return new_msg;
-        } else if (msg instanceof EmptyMessage){
-            Message new_msg = new EmptyMessage();
-            new_msg.setSrc(src).setDest(dest).setPayload(msg.getPayload());
-            return new_msg;
-        }  else if (msg instanceof LongMessage){
-            Message new_msg = new LongMessage();
-            new_msg.setSrc(src).setDest(dest).setPayload(msg.getPayload());
-            return new_msg;
-        } else if (msg instanceof NioMessage){
-            Message new_msg = new NioMessage();
-            new_msg.setSrc(src).setDest(dest).setPayload(msg.getPayload());
-            return new_msg;
-        } else{
-            return null;
-        }
-    }
-
-     */
-
 
     public static Message convertMessage(MessageReqRep req){
         int type = req.getType();

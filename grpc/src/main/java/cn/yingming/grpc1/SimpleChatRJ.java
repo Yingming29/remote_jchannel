@@ -156,17 +156,17 @@ public class SimpleChatRJ {
                         e.printStackTrace();
                     }
                 } else if (line.startsWith("msg0")){
-                    Message msg0 = new BytesMessage(null, "byte".getBytes());
+                    Message msg0 = new BytesMessage(null, "byteMsg from JChannel-Client".getBytes());
                     remoteJChannel.send(msg0);
                 } else if (line.startsWith("msg1")){
-                    ByteBuffer bb = ByteBuffer.wrap("byte".getBytes());
+                    ByteBuffer bb = ByteBuffer.wrap("byteBufferMsg from JChannel-Client".getBytes());
                     Message msg1 = new NioMessage(null, bb);
                     remoteJChannel.send(msg1);
                 } else if (line.startsWith("msg2")){
                     Message msg2 = new EmptyMessage(null);
                     remoteJChannel.send(msg2);
                 } else if (line.startsWith("msg3")){
-                    String obj = "ClientMsg3 Object";
+                    String obj = "objectMsg from JChannel-Client";
                     Message msg3 = new ObjectMessage(null, obj);
                     remoteJChannel.send(msg3);
                 } else if (line.startsWith("msg4")){
@@ -174,9 +174,9 @@ public class SimpleChatRJ {
                     Message msg4 = new LongMessage(null, long_num);
                     remoteJChannel.send(msg4);
                 } else if (line.startsWith("msg5")){
-                    Message subMsg1 = new ObjectMessage(null, "subMessageClient1");
-                    Message subMsg2 = new ObjectMessage(null, "subMessageClient2");
-                    Message subMsg3 = new ObjectMessage(null, "subMessageClient3");
+                    Message subMsg1 = new ObjectMessage(null, "subObjMsg1 from JChannel-Client");
+                    Message subMsg2 = new ObjectMessage(null, "subObjMsg2 from JChannel-Client");
+                    Message subMsg3 = new ObjectMessage(null, "subObjMsg3 from JChannel-Client");
                     Message msg5 = new CompositeMessage(null, subMsg1, subMsg2, subMsg3);
                     remoteJChannel.send(msg5);
                 } else{

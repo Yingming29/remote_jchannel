@@ -10,6 +10,11 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
@@ -23,6 +28,7 @@ public class ReceiverRJ implements Receiver {
 
     @Override
     public void receive(Message msg) {
+        System.out.println("-------------");
         String line = null;
         if (msg instanceof EmptyMessage){
             line = msg.getSrc() + ": " + "EmptyMessage";
@@ -34,20 +40,23 @@ public class ReceiverRJ implements Receiver {
         } else if (msg instanceof BytesMessage){
             line = msg.getSrc() + " (BytesMessage): " + msg.getPayload();
             String result = new String((byte[]) msg.getPayload());
-            System.out.println("try convert bytes: " + result);
+            System.out.println("verify convert bytes: " + result);
         } else if (msg instanceof NioMessage){
             NioMessage nioMsg = (NioMessage) msg;
             line = msg.getSrc() + "(NioMessage): " + msg.getPayload();
-            ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
-            byte[] b = null;
-            try {
-                nioMsg.writePayload(out);
-                b = out.buffer();
-            } catch (IOException e) {
+            CharBuffer charBuffer = null;
+            ByteBuffer buffer = nioMsg.getPayload();
+            String result_bb = null;
+            try{
+                Charset charSet = StandardCharsets.UTF_8;
+                CharsetDecoder decoder = charSet.newDecoder();
+                charBuffer = decoder.decode(buffer);
+                buffer.flip();
+                result_bb = charBuffer.toString();
+            } catch (Exception e){
                 e.printStackTrace();
             }
-            String result = new String(b);
-            System.out.println("try convert ByteBuffer: " + result);
+            System.out.println("verify ByteBuffer: " + result_bb);
         } else {
             line = msg.getSrc() + "(ObjectMessage): " + msg.getPayload();
         }
@@ -55,6 +64,7 @@ public class ReceiverRJ implements Receiver {
         synchronized (state){
             state.add(line);
         }
+        System.out.println("-------------");
         /*
         String line = msg.getSrc() + ": " + msg.getPayload();
         System.out.println(line);
