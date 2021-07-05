@@ -1,9 +1,5 @@
 package cn.yingming.grpc1;
 
-import io.grpc.jchannelRpc.MessageReqRep;
-import io.grpc.jchannelRpc.Response;
-import io.grpc.jchannelRpc.StateRep;
-import io.grpc.jchannelRpc.ViewRep;
 import org.jgroups.*;
 import org.jgroups.util.MessageBatch;
 import org.jgroups.util.Util;
@@ -32,17 +28,16 @@ public class ReceiverRJ implements Receiver {
             System.out.println("CompositeMessage");
             compMsg.forEach(System.out::println);
         } else if (msg instanceof BytesMessage){
-            System.out.println("BYtesMessage");
+            System.out.println("BytesMessage");
             System.out.println(msg.getPayload().toString());
+        }
+        synchronized (state){
+            state.add(msg.toString());
         }
         /*
         String line = msg.getSrc() + ": " + msg.getPayload();
         System.out.println(line);
-
          */
-        synchronized (state){
-            state.add(msg.toString());
-        }
     }
 
     @Override
@@ -64,7 +59,7 @@ public class ReceiverRJ implements Receiver {
     public void setState(InputStream input) throws Exception {
         ReentrantLock lock = new ReentrantLock();
         List<String> list;
-        list = (List<String>) Util.objectFromStream(new DataInputStream(input));
+        list = Util.objectFromStream(new DataInputStream(input));
         lock.lock();
         try {
             state.clear();

@@ -33,10 +33,18 @@ public class SimpleChat implements Receiver{
 	@Override
 	public void receive(Message msg) {
 		System.out.println(msg);
-		String line = msg.getSrc() + ": " + msg.getPayload();
-		System.out.println(line);
+		if (msg instanceof EmptyMessage){
+			System.out.println("EmptyMessage");
+		} else if (msg instanceof CompositeMessage){
+			CompositeMessage compMsg = (CompositeMessage) msg;
+			System.out.println("CompositeMessage");
+			compMsg.forEach(System.out::println);
+		} else if (msg instanceof BytesMessage){
+			System.out.println("BytesMessage");
+			System.out.println(msg.getPayload().toString());
+		}
 		synchronized (state){
-			state.add(line);
+			state.add(msg.toString());
 		}
 		/*
 		if (msg.getObject() instanceof ChannelMsg){
