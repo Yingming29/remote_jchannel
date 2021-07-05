@@ -214,6 +214,7 @@ public class Test {
         System.out.println(fragmented_msg);
         System.out.println(fragmented_msg2);
         System.out.println("================");
+        /*
         Message longTest = new LongMessage(null, long_num);
         System.out.println(longTest);
         ByteArrayDataOutputStream out_long = new ByteArrayDataOutputStream();
@@ -226,5 +227,12 @@ public class Test {
         System.out.println("--convert----");
         Message new_long_test = UtilsRJ.convertMessage(msg_long_test);
         System.out.println(new_long_test);
+
+         */
+        System.out.println("================");
+        Message sub_msg = new ObjectMessage(null, "1");
+        CompositeMessage msg_whole = new CompositeMessage(null, sub_msg, sub_msg, sub_msg);
+        LinkedList<String> compMsgList = new LinkedList<>();
+        msg_whole.forEach(eachOne -> compMsgList.add(eachOne.getObject()));
     }
 }

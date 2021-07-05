@@ -1,10 +1,13 @@
 package cn.yingming.grpc1;
 
 import org.jgroups.*;
+import org.jgroups.util.ByteArrayDataInputStream;
+import org.jgroups.util.ByteArrayDataOutputStream;
 import org.jgroups.util.MessageBatch;
 import org.jgroups.util.Util;
 
 import java.io.DataInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.LinkedList;
@@ -20,19 +23,37 @@ public class ReceiverRJ implements Receiver {
 
     @Override
     public void receive(Message msg) {
-        System.out.println(msg);
+        String line = null;
         if (msg instanceof EmptyMessage){
-            System.out.println("EmptyMessage");
+            line = msg.getSrc() + ": " + "EmptyMessage";
         } else if (msg instanceof CompositeMessage){
             CompositeMessage compMsg = (CompositeMessage) msg;
-            System.out.println("CompositeMessage");
-            compMsg.forEach(System.out::println);
+            LinkedList<String> compMsgList = new LinkedList<>();
+            compMsg.forEach(eachOne -> compMsgList.add(eachOne.getObject()));
+            line = msg.getSrc() + " (CompositeMessage): " + compMsgList;
         } else if (msg instanceof BytesMessage){
-            System.out.println("BytesMessage");
-            System.out.println(msg.getPayload().toString());
+            line = msg.getSrc() + " (BytesMessage): " + msg.getPayload();
+            String result = new String((byte[]) msg.getPayload());
+            System.out.println("try convert bytes: " + result);
+        } else if (msg instanceof NioMessage){
+            NioMessage nioMsg = (NioMessage) msg;
+            line = msg.getSrc() + "(NioMessage): " + msg.getPayload();
+            ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
+            byte[] b = null;
+            try {
+                nioMsg.writePayload(out);
+                b = out.buffer();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String result = new String(b);
+            System.out.println("try convert ByteBuffer: " + result);
+        } else {
+            line = msg.getSrc() + "(ObjectMessage): " + msg.getPayload();
         }
+        System.out.println(line);
         synchronized (state){
-            state.add(msg.toString());
+            state.add(line);
         }
         /*
         String line = msg.getSrc() + ": " + msg.getPayload();
