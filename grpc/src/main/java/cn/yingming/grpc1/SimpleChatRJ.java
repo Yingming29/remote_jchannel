@@ -40,9 +40,15 @@ public class SimpleChatRJ {
                     System.out.println("getAddressAsString() for JChannel-Server Address:" + remoteJChannel.getAddressAsString());
                     System.out.println("getAddressAsUUID() for JChannel-Server Address:" + remoteJChannel.getAddressAsUUID());
                     System.out.println("getName() for JChannel-Server Name:" + remoteJChannel.getName());
+                    System.out.println("name() for JChannel-Server Name:" + remoteJChannel.name());
+                    System.out.println("getClusterName() for JChannel-Server Cluster:" + remoteJChannel.getClusterName());
+                    System.out.println("getStats() for JChannel-Server boolean stats:" + remoteJChannel.getStats());
+                    System.out.println("getDiscardOwnMessage() for JChannel-Server boolean discardOwnMessage:" + remoteJChannel.getDiscardOwnMessages());
+                    System.out.println("getState() for the JChannel-Server (state of channel): " + remoteJChannel.getState());
+                    System.out.println("isConnected() for the JChannel-Server: " + remoteJChannel.isConnected());
                 } else if (line.startsWith("getLocalAddress()")){
                     System.out.println("Client Address:" + remoteJChannel.getLocalAddress());
-                } else if(line.startsWith("getRemoteAddress()")){
+                } else if(line.startsWith("getAddress()")){
                     System.out.println("Real JChannel Address (JChannel Server):" + remoteJChannel.getAddress());
                 } else if(line.startsWith("getAddressAsString()")){
                     System.out.println("getAddressAsString() for Real JChannel Address:" + remoteJChannel.getAddressAsString());
@@ -106,8 +112,7 @@ public class SimpleChatRJ {
                         }
                     } else if (strs[2].equals("client")){
                         try{
-                            // change
-                            System.out.println(this.remoteJChannel.view);
+                            // System.out.println(this.remoteJChannel.view);
                             remoteJChannel.send(this.remoteJChannel.view.getMembers().get(index), strs[1]);
                         } catch (Exception e){
                             e.printStackTrace();

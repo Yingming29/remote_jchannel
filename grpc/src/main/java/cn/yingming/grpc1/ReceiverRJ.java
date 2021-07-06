@@ -37,10 +37,11 @@ public class ReceiverRJ implements Receiver {
             LinkedList<String> compMsgList = new LinkedList<>();
             compMsg.forEach(eachOne -> compMsgList.add(eachOne.getObject()));
             line = msg.getSrc() + " (CompositeMessage): " + compMsgList;
+            System.out.println(msg);
         } else if (msg instanceof BytesMessage){
             line = msg.getSrc() + " (BytesMessage): " + msg.getPayload();
             String result = new String((byte[]) msg.getPayload());
-            System.out.println("verify convert bytes: " + result);
+            System.out.println("verify bytes: " + result);
         } else if (msg instanceof NioMessage){
             NioMessage nioMsg = (NioMessage) msg;
             line = msg.getSrc() + "(NioMessage): " + msg.getPayload();
@@ -57,6 +58,8 @@ public class ReceiverRJ implements Receiver {
                 e.printStackTrace();
             }
             System.out.println("verify ByteBuffer: " + result_bb);
+        } else if (msg instanceof LongMessage){
+            line = msg.getSrc() + "(LongMessage): " + msg.getObject();
         } else {
             line = msg.getSrc() + "(ObjectMessage): " + msg.getPayload();
         }

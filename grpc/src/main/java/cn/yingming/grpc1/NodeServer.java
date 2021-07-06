@@ -95,16 +95,16 @@ public class NodeServer {
             return new StreamObserver<Request>() {
                 @Override
                 public void onNext(Request req) {
-                    for (Object obj:jchannel.nodesMap.keySet()){
-                        if (jchannel.nodesMap.get(obj).equals("unknown")){
-                            jchannel.nodesMap.remove(obj);
-                            System.out.println("Remove a node in the NodeMap, which does not contain gRPC address.");
+                    for (Address add:jchannel.nodesMap.keySet()){
+                        String each = jchannel.nodesMap.get(add);
+                        if (each.equals("unknown") || each.equals("")){
+                            jchannel.nodesMap.remove(add);
+                            System.out.println("[gRPC-Server] Remove a node in the NodeMap, which does not contain gRPC address.");
                         }
                     }
                     /* Condition1
                        Receive the connect() request.
                      */
-                    System.out.println(req);
                     if (req.hasConnectRequest()){
                         System.out.println("[gRPC-Server] Receive the connect() request from a client.");
                         System.out.println("[gRPC-Server] A JChannel-client connects to this JChannel-node (JChannel-server), " +
@@ -193,7 +193,7 @@ public class NodeServer {
                             source = Util.objectFromByteBuffer(stateReq.getJchannelAddress().toByteArray());
                             if (stateReq.getTarget().isEmpty()){
                                 target = null;
-                                System.out.println("target is null");
+                                System.out.println("[gRPC] target is null");
                             } else {
                                 target = Util.objectFromByteBuffer(stateReq.getTarget().toByteArray());
                             }
@@ -216,6 +216,7 @@ public class NodeServer {
                                 }
                             } else if (target == null && jchannel.channel.getAddress().equals(jchannel.channel.getView().getCoord())){
                                 ByteArrayOutputStream out = new ByteArrayOutputStream();
+                                System.out.println("[JChannel-Server] JChannel invokes getState(null, Timeout)");
                                 jchannel.getState(out);
                                 StateRep stateRep = StateRep.newBuilder().setState(ByteString.copyFrom(out.toByteArray())).build();
                                 Response rep = Response.newBuilder()
@@ -709,11 +710,11 @@ public class NodeServer {
                     try {
                         Message new_msg = null;
                         if (msg.getType() == 4){
-                            System.out.println("ForwardMsgToJChannel old:" + msg + ",  " + msg.getFlags() + ", " + msg.getHeaders());
+                            //System.out.println("ForwardMsgToJChannel old:" + msg + ",  " + msg.getFlags() + ", " + msg.getHeaders());
                             Message longMsg = (LongMessage) msg;
                             new_msg = new LongMessage(address, longMsg.getObject());
                             new_msg.setSrc(src);
-                            System.out.println("ForwardMsgToJChannel new:" + new_msg + ",  " + new_msg.getFlags() + ", " + new_msg.getHeaders());
+                            //System.out.println("ForwardMsgToJChannel new:" + new_msg + ",  " + new_msg.getFlags() + ", " + new_msg.getHeaders());
                         } else {
                             new_msg = msg.copy(true, false);
                             new_msg.setSrc(src).setDest(address);
@@ -748,7 +749,7 @@ public class NodeServer {
         }
 
         protected void forwadMsgToServer(MessageReqRep msgReq){
-            System.out.println("Test: the current NodeMap members:" + jchannel.nodesMap);
+            //System.out.println("Test: the current NodeMap members:" + jchannel.nodesMap);
             jchannel.checkNodes();
             for (Address address: jchannel.nodesMap.keySet()) {
                 try {
@@ -760,7 +761,7 @@ public class NodeServer {
                     e.printStackTrace();
                 }
             }
-            System.out.println("[JChannel-Server] Forward a message for Request(MessageReqRep) to other JChannel-Servers: " + msgReq);
+            //System.out.println("[JChannel-Server] Forward a message for Request(MessageReqRep) to other JChannel-Servers: " + msgReq);
         }
         protected void forwardMsg(Request req){
             jchannel.checkNodes();

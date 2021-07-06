@@ -80,7 +80,7 @@ public class NodeJChannel implements Receiver{
                 MessageReqRep msgRep = MessageReqRep.newBuilder().setType(msg.getType()).setMessageObj(ByteString.copyFrom(b)).build();
                 Response rep = Response.newBuilder().setMessageReqRep(msgRep).build();
                 service.broadcastResponse(rep);
-                String line = msg.toString();
+                String line = generateLine(msg);
                 synchronized (state){
                     state.add(line);
                 }
@@ -112,38 +112,7 @@ public class NodeJChannel implements Receiver{
             Response rep = Response.newBuilder().setMessageReqRep(msgRep).build();
             service.broadcastResponse(rep);
             // copy from Receiver of JChannelClient and SimpleChat
-            System.out.println("-------------");
-            String line = null;
-            if (msg instanceof EmptyMessage){
-                line = msg.getSrc() + ": " + "EmptyMessage";
-            } else if (msg instanceof CompositeMessage){
-                CompositeMessage compMsg = (CompositeMessage) msg;
-                LinkedList<String> compMsgList = new LinkedList<>();
-                compMsg.forEach(eachOne -> compMsgList.add(eachOne.getObject()));
-                line = msg.getSrc() + " (CompositeMessage): " + compMsgList;
-            } else if (msg instanceof BytesMessage){
-                line = msg.getSrc() + " (BytesMessage): " + msg.getPayload();
-                String result = new String((byte[]) msg.getPayload());
-                System.out.println("verify bytes: " + result);
-            } else if (msg instanceof NioMessage){
-                NioMessage nioMsg = (NioMessage) msg;
-                line = msg.getSrc() + "(NioMessage): " + msg.getPayload();
-                CharBuffer charBuffer = null;
-                ByteBuffer buffer = nioMsg.getPayload();
-                String result_bb = null;
-                try{
-                    Charset charSet = StandardCharsets.UTF_8;
-                    CharsetDecoder decoder = charSet.newDecoder();
-                    charBuffer = decoder.decode(buffer);
-                    buffer.flip();
-                    result_bb = charBuffer.toString();
-                } catch (Exception e){
-                    e.printStackTrace();
-                }
-                System.out.println("verify ByteBuffer: " + result_bb);
-            } else {
-                line = msg.getSrc() + "(ObjectMessage): " + msg.getPayload();
-            }
+            String line = generateLine(msg);
             System.out.println(line);
             synchronized (state){
                 state.add(line);
@@ -153,6 +122,45 @@ public class NodeJChannel implements Receiver{
             System.out.println("[JChannel-Server] Receive an invalid Message type.");
         }
 
+    }
+    private String generateLine(Message msg){
+
+        System.out.println("-------------");
+        String line = null;
+        if (msg instanceof EmptyMessage){
+            line = msg.getSrc() + ": " + "EmptyMessage";
+        } else if (msg instanceof CompositeMessage){
+            CompositeMessage compMsg = (CompositeMessage) msg;
+            LinkedList<String> compMsgList = new LinkedList<>();
+            compMsg.forEach(eachOne -> compMsgList.add(eachOne.getObject()));
+            line = msg.getSrc() + " (CompositeMessage): " + compMsgList;
+            System.out.println(msg);
+        } else if (msg instanceof BytesMessage){
+            line = msg.getSrc() + " (BytesMessage): " + msg.getPayload();
+            String result = new String((byte[]) msg.getPayload());
+            System.out.println("verify bytes: " + result);
+        } else if (msg instanceof NioMessage){
+            NioMessage nioMsg = (NioMessage) msg;
+            line = msg.getSrc() + "(NioMessage): " + msg.getPayload();
+            CharBuffer charBuffer = null;
+            ByteBuffer buffer = nioMsg.getPayload();
+            String result_bb = null;
+            try{
+                Charset charSet = StandardCharsets.UTF_8;
+                CharsetDecoder decoder = charSet.newDecoder();
+                charBuffer = decoder.decode(buffer);
+                buffer.flip();
+                result_bb = charBuffer.toString();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            System.out.println("verify ByteBuffer: " + result_bb);
+        } else if (msg instanceof LongMessage){
+            line = msg.getSrc() + "(LongMessage): " + msg.getObject();
+        } else {
+            line = msg.getSrc() + "(ObjectMessage): " + msg.getPayload();
+        }
+        return line;
     }
 
     private void receiveMessageReqRep(MessageReqRep msg){
@@ -165,7 +173,7 @@ public class NodeJChannel implements Receiver{
             service.broadcastResponse(rep);
             synchronized (state){
                 //String line = msg_test.getSrc() + ": " + msg_test.getPayload();
-                String line = dese_msg.toString();
+                String line = generateLine(dese_msg);
                 state.add(line);
             }
         } else if (dese_msg.getDest().equals(this.channel.getAddress())){
@@ -174,7 +182,8 @@ public class NodeJChannel implements Receiver{
             service.broadcastResponse(rep);
             synchronized (state){
                 //String line = msg_test.getSrc() + ": " + msg_test.getPayload();
-                String line = dese_msg.toString();
+                //String line = dese_msg.toString();
+                String line = generateLine(dese_msg);
                 state.add(line);
             }
         } else{
@@ -182,13 +191,13 @@ public class NodeJChannel implements Receiver{
             this.service.unicast(msg);
         }
 
-        System.out.println("Test3, the current NodeMap:" + nodesMap);
+        //System.out.println("Test3, the current NodeMap:" + nodesMap);
     }
 
     public void checkNodes(){
         synchronized (nodesMap){
             for (Address each: nodesMap.keySet()){
-                if (nodesMap.get(each) == null){
+                if (nodesMap.get(each) == null || nodesMap.get(each).equals("")){
                    System.out.println("[JChannel-Server] Found null in the node map and delete it.");
                    nodesMap.remove(each);
                 } else if (!nodesMap.get(each).startsWith("127.0.0.1")){
@@ -197,7 +206,7 @@ public class NodeJChannel implements Receiver{
                 }
                 if (!this.channel.getView().containsMember(each)){
                     System.out.println("[JChannel-Server] Found invalid JChannel.");
-                    System.out.println("Test4: " + nodesMap);
+                    //System.out.println("Test4: " + nodesMap);
                 }
             }
         }
@@ -304,7 +313,7 @@ public class NodeJChannel implements Receiver{
                         // condition 1.2 changed server list, update list and broadcast update servers
                         this.nodesMap.put(msg.getSrc(), new_add);
                         if (nodesMap.size() >=2 ){
-                            System.out.println("notify");
+                            //System.out.println("notify");
                             nodesMap.notify();
                         }
                         System.out.println("[JChannel-Server] Receive a grpc address from other JChannel-Server, update server-address Map.");
@@ -332,14 +341,17 @@ public class NodeJChannel implements Receiver{
             try{
                 u.readFrom(in);
                 Address address = (Address) u;
+                /*
                 for (Address each:nodesMap.keySet()) {
-                    System.out.println(each);
-                    System.out.println(u);
-                    System.out.println("-----");
+                    //System.out.println(each);
+                    //System.out.println(u);
+                    //System.out.println("-----");
                     if (each.equals(u)){
                         System.out.println("true");
                     }
-                }
+
+
+                }*/
                 if (nodesMap.keySet().contains(u)){
                     System.out.println("[JChannel-Server] Confirm the requester is a JChannel-Server");
                     // generate message for the requester, NameCacheRep, ViewRep of clients,
@@ -353,16 +365,16 @@ public class NodeJChannel implements Receiver{
                     if (clusterInf.getCreator() != null) {
                         rep = UpdateRepBetweenNodes.newBuilder().setClientView(viewRep)
                                 .setNameCache(nameCacheRep).build();
-                        System.out.println("Client Cluster != null");
+                        //System.out.println("Client Cluster != null");
                     } else{
-                        System.out.println("Client Cluster == null");
+                        //System.out.println("Client Cluster == null");
                         rep = UpdateRepBetweenNodes.newBuilder().setNameCache(nameCacheRep).build();
                     }
                     ChannelMsg cmsgRep = ChannelMsg.newBuilder().setUpdateRepBetweenNodes(rep).build();
                     Message msgRep = new ObjectMessage(msg.getSrc(), cmsgRep);
                     this.channel.send(msgRep);
                     System.out.println("UpdateRepBetweenNodes: " + rep);
-                    System.out.println("The JChannel-server provides updating date for the new JChannel-server.");
+                    System.out.println("[JChannel-Server] The JChannel-server provides updating date for the new JChannel-server.");
                 } else{
                     System.out.println("The requester does not exist in the NodeMap or is not a JChannel-Server.");
                 }
@@ -374,11 +386,7 @@ public class NodeJChannel implements Receiver{
         } else if (cmsg.hasUpdateRepBetweenNodes()) {
             System.out.println("[JChannel-Server] Receive update response from other JChannel-Server, " + msg.getSrc());
             UpdateRepBetweenNodes rep = cmsg.getUpdateRepBetweenNodes();
-            if (rep.hasClientView()){
-                System.out.println(true);
-            } else {
-                System.out.println(false);
-            }
+            //System.out.println(rep.hasClientView());
             ViewRep view_rep = rep.getClientView();
             UpdateNameCacheRep nameCacheRep = rep.getNameCache();
             // 1. update NameCache
@@ -407,10 +415,8 @@ public class NodeJChannel implements Receiver{
             if (this.serviceMap.size() == 0){
                 clusterInf = new ClusterMap();
                 this.serviceMap.put("ClientCluster", clusterInf);
-                // System.out.println(1);
             } else{
                 clusterInf = this.serviceMap.get("ClientCluster");
-                // System.out.println(2);
             }
             View v = new View();
             ByteArrayDataInputStream in = new ByteArrayDataInputStream(view_rep.getView().toByteArray());
@@ -420,7 +426,7 @@ public class NodeJChannel implements Receiver{
             } catch (Exception e){
                 e.printStackTrace();
             }
-            System.out.println(v);
+            //System.out.println(v);
         }
     }
 
@@ -446,7 +452,7 @@ public class NodeJChannel implements Receiver{
         if (nodesMap.size() <= 1){
             synchronized (nodesMap){
                 try{
-                    System.out.println("wait");
+                    //System.out.println("wait");
                     nodesMap.wait(3000);
                 } catch (Exception e){
                     e.printStackTrace();
@@ -516,19 +522,6 @@ public class NodeJChannel implements Receiver{
             service.broadcastResponse(rep);
         }
     }
-    /*
-    public void checkClusterMap(View view){
-        // this first startup
-        // whether is the coordinator
-        if (view.getMembers().get(0).equals(this.channel.getAddress())){
-            System.out.println("[JChannel-Server] This is the coordinator of the node cluster.");
-        } else {
-            // send a UpdateRequest to
-            System.out.println("[JChannel-Server] Not coordinator of cluster.");
-        }
-    }
-
-     */
 
     public void compareNodes(List<Address> currentView, List<Address> currentNodesList){
         // add node
@@ -614,7 +607,7 @@ public class NodeJChannel implements Receiver{
     }
 
     public void disconnectClusterNoGraceful(Address uuid){
-        System.out.println("disconnect 2");
+        //System.out.println("disconnect 2");
         this.lock.lock();
         try{
             String clusterName = "ClientCluster";

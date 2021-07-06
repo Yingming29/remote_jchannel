@@ -77,7 +77,7 @@ public class JChannelClient{
 
     public JChannelClient setReceiver(Receiver r) {
         if (this.isWork.get()){
-            System.out.println("The RemoteJChannel is working.");
+            throw new IllegalStateException("The JChannel-Client is connected to server");
         } else{
             this.receiver = r;
         }
@@ -86,7 +86,7 @@ public class JChannelClient{
 
     public JChannelClient receiver(Receiver r) {
         if (this.isWork.get()){
-            System.out.println("The RemoteJChannel is working.");
+            throw new IllegalStateException("The JChannel-Client is connected to server");
         } else{
             this.receiver = r;
         }
@@ -105,8 +105,7 @@ public class JChannelClient{
      */
     public Address address() {
         if (!isWork.get()){
-            System.out.println("The RemoteJChannel client does not start work. Return null");
-            return null;
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         this.clientStub.add_save("getAddress()");
         synchronized (obj){
@@ -125,9 +124,8 @@ public class JChannelClient{
      * @return Address, the Address of the RemoteJChannelClient.
      */
     public Address getLocalAddress(){
-        if (!isWork.get() && !down.get()){
-            System.out.println("The RemoteJChannel client does not start work. Return null");
-            return null;
+        if (!isWork.get()){
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         return this.jchannel_address;
     }
@@ -137,9 +135,8 @@ public class JChannelClient{
      * @return String, the name of remote JChannel.
      */
     public String getName() {
-        if (!isWork.get() && !down.get()){
-            System.out.println("The RemoteJChannel client does not start work. Return null");
-            return null;
+        if (!isWork.get()){
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         return name();
     }
@@ -150,8 +147,7 @@ public class JChannelClient{
      */
     public String name() {
         if (!isWork.get()){
-            System.out.println("The RemoteJChannel client does not start work. Return null");
-            return null;
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         this.clientStub.add_save("getName()");
         synchronized (obj){
@@ -164,10 +160,6 @@ public class JChannelClient{
         return this.remoteName;
     }
 
-    // setName
-    public JChannel name(String name) {
-        throw new UnsupportedOperationException("RemoteJChannel client cannot setName() and name(String name).");
-    }
     /**
      * getClusterName() is a remote grpc call. get the remote JChannel's cluster, e.g. NodeCluster
      * @return String, the cluster name of remote JChannel.
@@ -178,27 +170,29 @@ public class JChannelClient{
 
 
     public View getView() {
-        throw new UnsupportedOperationException("RemoteJChannel does not have View object. " +
-                "Please use new method getRemoteJChannelView().");
+        if (!isWork.get()){
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
+        }
+        return this.remoteView;
     }
 
     public View view() {
-        throw new UnsupportedOperationException("RemoteJChannel does not have View object. " +
-                "Please use new method remoteJChannelView().");
+        if (!isWork.get()){
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
+        }
+        return this.remoteView;
     }
 
-    public View getRemoteJChannelView(){
-        return this.remoteJChannelView();
-    }
-
-    public View remoteJChannelView(){
-        return this.isWork.get() ? this.view : null;
+    public View getLocalView(){
+        if (!isWork.get()){
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
+        }
+        return this.view;
     }
 
     public boolean getStats() {
         if (!isWork.get()){
-            System.out.println("The RemoteJChannel client does not start work. Return false");
-            return false;
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         this.clientStub.add_save("getStats()");
         synchronized (obj){
@@ -213,8 +207,7 @@ public class JChannelClient{
 
     public boolean stats() {
         if (!isWork.get()){
-            System.out.println("The RemoteJChannel client does not start work. Return false");
-            return false;
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         this.clientStub.add_save("getStats()");
         synchronized (obj){
@@ -229,8 +222,7 @@ public class JChannelClient{
 
     public JChannelClient setStats(boolean stats) {
         if (!isWork.get()){
-            System.out.println("The RemoteJChannel client does not start work.");
-            return this;
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         if (stats){
             this.clientStub.add_save("setStats() true");
@@ -249,8 +241,7 @@ public class JChannelClient{
 
     public JChannelClient stats(boolean stats) {
         if (!isWork.get()){
-            System.out.println("The RemoteJChannel client does not start work.");
-            return this;
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         if (stats){
             this.clientStub.add_save("setStats() true");
@@ -269,8 +260,7 @@ public class JChannelClient{
 
     public boolean getDiscardOwnMessages() {
         if (!isWork.get()){
-            System.out.println("The RemoteJChannel client does not start work.");
-            return false;
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         this.clientStub.add_save("getDiscardOwnMessage()");
         synchronized (obj){
@@ -286,8 +276,7 @@ public class JChannelClient{
 
     public JChannelClient setDiscardOwnMessages(boolean flag) {
         if (!isWork.get()){
-            System.out.println("The RemoteJChannel client does not start work.");
-            return this;
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         this.clientStub.add_save("setDiscardOwnMessage() " + flag);
         synchronized (obj){
@@ -305,6 +294,9 @@ public class JChannelClient{
     The methods returns the Address String of remote real JChannel.
      */
     public String getAddressAsString() {
+        if (!isWork.get()){
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
+        }
         this.clientStub.add_save("getAddress()");
         synchronized (obj){
             try{
@@ -321,6 +313,9 @@ public class JChannelClient{
     The methods returns the Address String of remote real JChannel.
      */
     public String getAddressAsUUID() {
+        if (!isWork.get()){
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
+        }
         this.clientStub.add_save("getAddress()");
         synchronized (obj){
             try{
@@ -334,6 +329,9 @@ public class JChannelClient{
 
 
     public String getClusterName() {
+        if (!isWork.get()){
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
+        }
         if (!isWork.get() && !down.get()){
             System.out.println("The RemoteJChannel client does not start work. Return null");
             return null;
@@ -351,13 +349,19 @@ public class JChannelClient{
 
     // get the ClientCluster name
     public String getLocalClusterName(){
+        if (!isWork.get()){
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
+        }
         return this.isWork.get() ? this.cluster : null;
     }
 
 
     public String getViewAsString() {
-        if (isWork.get() && this.view != null){
-            return this.view.toString();
+        if (!isWork.get()){
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
+        }
+        if (isWork.get() && this.remoteView != null){
+            return this.remoteView.toString();
         } else{
             throw new IllegalStateException("View cannot be get if channel is not connected or does not have View");
         }
@@ -365,9 +369,8 @@ public class JChannelClient{
 
 
     public String getState() {
-        if (!isWork.get() && !down.get()){
-            System.out.println("The RemoteJChannel client does not start work. Return null");
-            return null;
+        if (!isWork.get()){
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         this.clientStub.add_save("getState()");
         synchronized (obj){
@@ -381,9 +384,8 @@ public class JChannelClient{
     }
 
     public boolean isOpen() {
-        if (!isWork.get() && !down.get()){
-            System.out.println("The RemoteJChannel client does not start work. Return null");
-            return false;
+        if (!isWork.get()){
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         this.clientStub.add_save("isOpen()");
         synchronized (obj){
@@ -399,9 +401,8 @@ public class JChannelClient{
 
     // change
     public boolean isConnected() {
-        if (!isWork.get() && !down.get()){
-            System.out.println("The RemoteJChannel client does not start work. Return null");
-            return false;
+        if (!isWork.get()){
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         this.clientStub.add_save("isConnected()");
         synchronized (obj){
@@ -416,9 +417,8 @@ public class JChannelClient{
 
 
     public boolean isConnecting() {
-        if (!isWork.get() && !down.get()){
-            System.out.println("The RemoteJChannel client does not start work. Return null");
-            return false;
+        if (!isWork.get()){
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         this.clientStub.add_save("isConnecting()");
         synchronized (obj){
@@ -433,9 +433,8 @@ public class JChannelClient{
 
 
     public boolean isClosed() {
-        if (!isWork.get() && !down.get()){
-            System.out.println("The RemoteJChannel client does not start work. Return null");
-            return false;
+        if (!isWork.get()){
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         this.clientStub.add_save("isClosed()");
         synchronized (obj){
@@ -454,9 +453,8 @@ public class JChannelClient{
 
 
     public String getProperties() {
-        if (!isWork.get() && !down.get()){
-            System.out.println("The RemoteJChannel client does not start work. Return null");
-            return null;
+        if (!isWork.get()){
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         this.clientStub.add_save("getProperties()");
         synchronized (obj){
@@ -471,6 +469,9 @@ public class JChannelClient{
 
 
     public String printProtocolSpec(boolean include_props) {
+        if (!isWork.get()){
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
+        }
         this.clientStub.add_save("printProtocolSpec() " + include_props);
         synchronized (obj){
             try{
@@ -486,8 +487,7 @@ public class JChannelClient{
 
     public Map<String, Map<String, Object>> dumpStats() {
         if (!isWork.get()){
-            System.out.println("The RemoteJChannel client does not work. Return null");
-            return null;
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         DumpStatsReq dumpStatsReq = DumpStatsReq.newBuilder().setJchannelAddress(this.jchannel_address.toString()).build();
         this.clientStub.add_save(dumpStatsReq);
@@ -504,8 +504,7 @@ public class JChannelClient{
 
     public Map<String, Map<String, Object>> dumpStats(String protocol_name, List<String> attrs) {
         if (!isWork.get()){
-            System.out.println("The RemoteJChannel client does not work. Return null");
-            return null;
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         DumpStatsReq dumpStatsReq = DumpStatsReq.newBuilder().setProtocolName(protocol_name).addAllAttrs(attrs).setJchannelAddress(this.jchannel_address.toString()).build();
         this.clientStub.add_save(dumpStatsReq);
@@ -522,8 +521,7 @@ public class JChannelClient{
 
     public Map<String, Map<String, Object>> dumpStats(String protocol_name) {
         if (!isWork.get()){
-            System.out.println("The RemoteJChannel client does not work. Return null");
-            return null;
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         DumpStatsReq dumpStatsReq = DumpStatsReq.newBuilder().setProtocolName(protocol_name).setJchannelAddress(this.jchannel_address.toString()).build();
         this.clientStub.add_save(dumpStatsReq);
@@ -614,7 +612,7 @@ public class JChannelClient{
      */
     public synchronized JChannelClient disconnect(){
         if (!isWork.get()){
-            throw new NullPointerException("The RemoteJChannel does not work, cannot disconnect the connection.");
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         ReentrantLock lock = new ReentrantLock();
         lock.lock();
@@ -633,7 +631,7 @@ public class JChannelClient{
      */
     public synchronized void close(){
         if (!isWork.get()){
-            throw new NullPointerException("The RemoteJChannel does not work, cannot close the connection.");
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         ReentrantLock lock = new ReentrantLock();
         lock.lock();
@@ -651,7 +649,7 @@ public class JChannelClient{
      */
     public JChannelClient send(Message msg) throws Exception {
         if (!isWork.get()){
-            throw new NullPointerException("The RemoteJChannel does not work, cannot close the connection.");
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         if(msg == null)
             throw new NullPointerException("msg is null");
@@ -692,7 +690,7 @@ public class JChannelClient{
     // change
     public JChannelClient getState(Address target, long timeout) throws Exception {
         if (!isWork.get()){
-            throw new NullPointerException("The RemoteJChannel does not work, cannot invoke getState().");
+            throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         ReentrantLock lock = new ReentrantLock();
         lock.lock();
@@ -711,11 +709,15 @@ public class JChannelClient{
 
     public String toString(boolean details) {
         StringBuilder sb = new StringBuilder();
-        sb.append("JChannel-Client address=").append(this.jchannel_address).append('\n').append("cluster_name=").append(this.cluster).append('\n').append("my_view=").append(this.view.toString()).append('\n').append("state=").append(this.getState()).append('\n');
+        sb.append("JChannel-Client address=").append(this.jchannel_address).append('\n')
+                .append("JChannel-Server address=").append(this.remoteName).append('\n')
+                .append("cluster_name=").append(this.cluster).append('\n')
+                .append("JChannel-Server_view=").append(this.remoteView.toString()).append('\n')
+                .append("JChannel-Client_view=").append(this.view.toString()).append('\n')
+                .append("state=").append(this.getState()).append('\n');
         if (details) {
             sb.append("discard_own_messages=").append(this.discard_own_messages).append('\n');
             sb.append("state_transfer_supported=").append("Not support").append('\n');
-            sb.append("props=").append("Not support").append('\n');
             sb.append("grpc server address=").append(this.grpc_address).append('\n');
             sb.append("available grpc server addresses=").append(this.clientStub.serverList.toString()).append('\n');
         }
