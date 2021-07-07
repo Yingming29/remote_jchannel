@@ -33,6 +33,7 @@ public class SimpleChat implements Receiver{
 	}
 	@Override
 	public void receive(Message msg) {
+		// filter a Msg
 		if (msg instanceof ObjectMessage && msg.getObject() instanceof ChannelMsg){
 			return ;
 		}
@@ -76,18 +77,6 @@ public class SimpleChat implements Receiver{
 			state.add(line);
 		}
 		System.out.println("-------------");
-		/*
-		if (msg.getObject() instanceof ChannelMsg){
-			System.out.println("Receive a message for grpc address, drop it.");
-		} else {
-			String line = msg.getSrc() + ": " + msg.getPayload();
-			System.out.println(line);
-			synchronized (state){
-				state.add(line);
-			}
-		}
-
-		 */
 	}
 	@Override
 	public void getState(OutputStream output) throws Exception{

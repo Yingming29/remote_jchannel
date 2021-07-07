@@ -398,6 +398,7 @@ public class JChannelClientStub {
         } else if (response.hasDisconnectResponse()) {
             stubLock.lock();
             try {
+                this.channel.shutdownNow();
                 client.down.set(false);
             } finally {
                 stubLock.unlock();
@@ -618,7 +619,6 @@ public class JChannelClientStub {
                 // wait for result
                 synchronized (down){
                     try {
-                        // System.out.println("generate address request"+ Thread.currentThread());
                         down.wait();
                     } catch (Exception e){
                         e.printStackTrace();
@@ -626,12 +626,10 @@ public class JChannelClientStub {
                 }
                 // check loop for connection problem and input content, and send request.
                 this.checkLoop(this.stub.observer);
-                // System.out.println("222" + client.down.get());
                 // wait... notify
                 // reconnect part.
                 if (!client.down.get()){
                     try{
-                        System.out.println("exit 0 on control thread.");
                         System.exit(0);
                     } catch (Exception e){
                         e.printStackTrace();
@@ -649,11 +647,10 @@ public class JChannelClientStub {
         // check input and state of streaming, and send messsage
         private void checkLoop(StreamObserver requestSender) {
             while (true) {
-                // System.out.println(12312);
                 if (!client.down.get()){
                     try{
                         //System.out.println("exit 0 on control thread.");
-                        System.exit(0);
+                        break;
                     } catch (Exception e){
                         e.printStackTrace();
                     }

@@ -591,8 +591,10 @@ public class NodeJChannel implements Receiver{
             clusterObj.getMap().remove(address);
             clusterObj.addViewNum();
             System.out.println(address + " quits " + cluster);
-            ViewRep viewRep= clusterObj.generateView();
-            this.service.broadcastView(viewRep);
+            if (clusterObj.getList().size()>0){
+                ViewRep viewRep= clusterObj.generateView();
+                this.service.broadcastView(viewRep);
+            }
         } finally {
             lock.unlock();
         }

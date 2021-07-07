@@ -29,6 +29,7 @@ public class SimpleChatRJ {
 
         while (true){
             try{
+
                 System.out.println(">");System.out.flush();
                 String line = in.readLine();
                 if (line.startsWith("quit") || line.startsWith("exit")){
@@ -46,21 +47,21 @@ public class SimpleChatRJ {
                     System.out.println("getDiscardOwnMessage() for JChannel-Server boolean discardOwnMessage:" + remoteJChannel.getDiscardOwnMessages());
                     System.out.println("getState() for the JChannel-Server (state of channel): " + remoteJChannel.getState());
                     System.out.println("isConnected() for the JChannel-Server: " + remoteJChannel.isConnected());
-                } else if (line.startsWith("getLocalAddress()")){
+                } else if (line.equals("getLocalAddress()")){
                     System.out.println("Client Address:" + remoteJChannel.getLocalAddress());
-                } else if(line.startsWith("getAddress()")){
+                } else if(line.equals("getAddress()")){
                     System.out.println("Real JChannel Address (JChannel Server):" + remoteJChannel.getAddress());
-                } else if(line.startsWith("getAddressAsString()")){
+                } else if(line.equals("getAddressAsString()")){
                     System.out.println("getAddressAsString() for Real JChannel Address:" + remoteJChannel.getAddressAsString());
-                } else if(line.startsWith("getAddressAsUUID()")){
+                } else if(line.equals("getAddressAsUUID()")){
                     System.out.println("getAddressAsUUID() for Real JChannel Address:" + remoteJChannel.getAddressAsUUID());
-                } else if(line.startsWith("getName()")){
+                } else if(line.equals("getName()")){
                     System.out.println("getName() for Real JChannel Address (JChannel Server):" + remoteJChannel.getName());
-                } else if(line.startsWith("name()")){
+                } else if(line.equals("name()")){
                     System.out.println("getName() for Real JChannel Address (JChannel Server):" + remoteJChannel.getName());
-                } else if(line.startsWith("getClusterName()") || line.startsWith("clusterName()")){
+                } else if(line.equals("getClusterName()") || line.startsWith("clusterName()")){
                     System.out.println("getClusterName() for Real JChannel Address (JChannel Server):" + remoteJChannel.getClusterName());
-                } else if(line.startsWith("getStats()")){
+                } else if(line.equals("getStats()")){
                     System.out.println("getStats() for Real JChannel Address (JChannel Server):" + remoteJChannel.getStats());
                 } else if(line.startsWith("printProtocolSpec()")){
                     String[] strs = line.split(" ", 2);
@@ -90,7 +91,7 @@ public class SimpleChatRJ {
                         }
                         System.out.println("dumpStats(Protocol_name, attrs) for real JChannel (JChannel Server):" + remoteJChannel.dumpStats(strs[1], attr_list));
                     }
-                } else if(line.startsWith("getDiscardOwnMessage()")){
+                } else if(line.equals("getDiscardOwnMessage()")){
                     System.out.println("getDiscardOwnMessage() for real JChannel Address (JChannel Server):" + remoteJChannel.getDiscardOwnMessages());
                 } else if(line.startsWith("setDiscardOwnMessage()")){
                     String[] strs = line.split(" ");
@@ -128,9 +129,9 @@ public class SimpleChatRJ {
                 } else if (line.startsWith("tryNameche")){
                     System.out.println(NameCache.printCache());
                     System.out.println(NameCache.get(this.remoteJChannel.real_jchannel_address));
-                } else if(line.startsWith("getProperties()")){
+                } else if(line.equals("getProperties()")){
                     System.out.println("getProperties() for Real JChannel Address (JChannel Server):" + remoteJChannel.getProperties());
-                } else if (line.startsWith("disconnect")) {
+                } else if (line.equals("disconnect")) {
                     System.out.println("Disconnect" + this.remoteJChannel.disconnect());
                 } else if (line.equals("getState()")){
                     System.out.println("getState() for remote real JChannel: " + remoteJChannel.getState());

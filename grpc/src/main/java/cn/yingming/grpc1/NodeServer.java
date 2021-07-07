@@ -170,6 +170,9 @@ public class NodeServer {
                             // 1. remove the client responseObserver
                             for (Address add : clients.keySet()) {
                                 if (add.equals(u)){
+                                    DisconnectRep disRep = DisconnectRep.newBuilder().setResult(true).build();
+                                    Response rep = Response.newBuilder().setDisconnectResponse(disRep).build();
+                                    responseObserver.onNext(rep);
                                     clients.remove(add);
                                 }
                             }
