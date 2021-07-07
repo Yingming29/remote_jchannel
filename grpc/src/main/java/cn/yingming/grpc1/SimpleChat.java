@@ -9,6 +9,8 @@ import java.nio.charset.CharsetDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
+
+import io.grpc.jchannelRpc.ChannelMsg;
 import org.jgroups.*;
 import org.jgroups.util.*;
 
@@ -31,6 +33,9 @@ public class SimpleChat implements Receiver{
 	}
 	@Override
 	public void receive(Message msg) {
+		if (msg instanceof ObjectMessage && msg.getObject() instanceof ChannelMsg){
+			return ;
+		}
 		System.out.println("-------------");
 		String line = null;
 		if (msg instanceof EmptyMessage){

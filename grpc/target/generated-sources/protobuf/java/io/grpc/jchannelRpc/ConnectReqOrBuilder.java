@@ -9,60 +9,28 @@ public interface ConnectReqOrBuilder extends
 
   /**
    * <pre>
-   * cluster
-   * </pre>
-   *
-   * <code>string cluster = 1;</code>
-   * @return The cluster.
-   */
-  java.lang.String getCluster();
-  /**
-   * <pre>
-   * cluster
-   * </pre>
-   *
-   * <code>string cluster = 1;</code>
-   * @return The bytes for cluster.
-   */
-  com.google.protobuf.ByteString
-      getClusterBytes();
-
-  /**
-   * <code>string timestamp = 2;</code>
-   * @return The timestamp.
-   */
-  java.lang.String getTimestamp();
-  /**
-   * <code>string timestamp = 2;</code>
-   * @return The bytes for timestamp.
-   */
-  com.google.protobuf.ByteString
-      getTimestampBytes();
-
-  /**
-   * <pre>
    * reconnect and jchannel_address will be used in the reconnection part.
    * </pre>
    *
-   * <code>bool reconnect = 3;</code>
+   * <code>bool reconnect = 1;</code>
    * @return The reconnect.
    */
   boolean getReconnect();
 
   /**
-   * <code>string logical_name = 4;</code>
+   * <code>string logical_name = 2;</code>
    * @return The logicalName.
    */
   java.lang.String getLogicalName();
   /**
-   * <code>string logical_name = 4;</code>
+   * <code>string logical_name = 2;</code>
    * @return The bytes for logicalName.
    */
   com.google.protobuf.ByteString
       getLogicalNameBytes();
 
   /**
-   * <code>bytes jchann_address_byte = 5;</code>
+   * <code>bytes jchann_address_byte = 3;</code>
    * @return The jchannAddressByte.
    */
   com.google.protobuf.ByteString getJchannAddressByte();

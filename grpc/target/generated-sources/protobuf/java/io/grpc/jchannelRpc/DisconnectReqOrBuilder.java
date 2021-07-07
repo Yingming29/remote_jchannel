@@ -12,28 +12,4 @@ public interface DisconnectReqOrBuilder extends
    * @return The jchannelAddress.
    */
   com.google.protobuf.ByteString getJchannelAddress();
-
-  /**
-   * <code>string cluster = 2;</code>
-   * @return The cluster.
-   */
-  java.lang.String getCluster();
-  /**
-   * <code>string cluster = 2;</code>
-   * @return The bytes for cluster.
-   */
-  com.google.protobuf.ByteString
-      getClusterBytes();
-
-  /**
-   * <code>string timestamp = 3;</code>
-   * @return The timestamp.
-   */
-  java.lang.String getTimestamp();
-  /**
-   * <code>string timestamp = 3;</code>
-   * @return The bytes for timestamp.
-   */
-  com.google.protobuf.ByteString
-      getTimestampBytes();
 }

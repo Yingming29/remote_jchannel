@@ -536,11 +536,14 @@ public class JChannelClient{
     }
 
 
-    public synchronized JChannelClient connect(String cluster_name) throws Exception {
+    public synchronized JChannelClient connect() throws Exception {
+        /*
         if (cluster_name == null || cluster_name.equals("")){
             throw new IllegalArgumentException("The cluster_name cannot be null.");
         }
         this.cluster = cluster_name;
+
+         */
         boolean checkResult = this.checkProperty();
         if (checkResult){
             this.clientStub = new JChannelClientStub(this);
@@ -578,9 +581,10 @@ public class JChannelClient{
     private boolean checkProperty(){
         if (this.grpc_address == null || this.grpc_address.equals("")){
             throw new IllegalStateException("The address (for grpc server) of RemoteJChannel is null.");
-        } else if (this.cluster == null || this.cluster.equals("")){
+        } /*else if (this.cluster == null || this.cluster.equals("")){
             throw new IllegalStateException("The cluster of RemoteJChannel is null.");
-        } else if (this.isWork.get()){
+        }
+        */else if (this.isWork.get()){
             throw new IllegalStateException("The isWork of RemoteJChannel is true.");
         } else if (this.msgList == null){
             throw new IllegalStateException("The msgList (message list) of RemoteJChannel is null.");

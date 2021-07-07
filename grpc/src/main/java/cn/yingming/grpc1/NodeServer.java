@@ -107,8 +107,7 @@ public class NodeServer {
                      */
                     if (req.hasConnectRequest()){
                         System.out.println("[gRPC-Server] Receive the connect() request from a client.");
-                        System.out.println("[gRPC-Server] A JChannel-client connects to this JChannel-node (JChannel-server), " +
-                                req.getConnectRequest().getCluster());
+                        System.out.println("[gRPC-Server] A JChannel-client connects to this JChannel-node (JChannel-server)");
                         // Description: connect(String cluster) request:
                         Address generated_address = null;
                         String generated_name = null;
@@ -145,8 +144,6 @@ public class NodeServer {
                             e.printStackTrace();
                         }
                         ConnectReq conReqWithAddress = ConnectReq.newBuilder()
-                                .setCluster(req.getConnectRequest().getCluster())
-                                .setTimestamp(req.getConnectRequest().getTimestamp())
                                 .setJchannAddressByte(ByteString.copyFrom(out.buffer()))
                                 .setLogicalName(generated_name)
                                 .build();
@@ -159,8 +156,7 @@ public class NodeServer {
                      */
                     } else if (req.hasDisconnectRequest()){
                         System.out.println("[gRPC-Server] Receive the disconnect() request from a client.");
-                        System.out.println("[gRPC-Server] " + req.getDisconnectRequest().getJchannelAddress() + " quits the cluster, " +
-                                req.getDisconnectRequest().getCluster());
+                        System.out.println("[gRPC-Server] " + req.getDisconnectRequest().getJchannelAddress() + " sends a disconnect request for grpc channel.");
                         ByteArrayDataInputStream in = new ByteArrayDataInputStream(req.getDisconnectRequest().getJchannelAddress().toByteArray());
                         UUID u = new UUID();
                         try{
@@ -178,7 +174,7 @@ public class NodeServer {
                                 }
                             }
                             // 2. remove the client from its cluster information
-                            jchannel.disconnectCluster(req.getDisconnectRequest().getCluster(), u);
+                            jchannel.disconnectCluster("ClientCluster", u);
                         } finally {
                             lock.unlock();
                         }
@@ -599,7 +595,7 @@ public class NodeServer {
                 // return (send) the ConnectResponse to that JChannel-client
                 responseObserver.onNext(rep);
                 System.out.println("[gRPC-Server] Return a connect() response to the new client.");
-                jchannel.connectCluster(req.getCluster(), generated_address, generated_name);
+                jchannel.connectCluster("ClientCluster", generated_address, generated_name);
 
                 // return response for updating the available servers
                 UpdateRep updateRep = UpdateRep.newBuilder()
@@ -682,7 +678,7 @@ public class NodeServer {
 
         }
 
-        public void broadcastView(ViewRep videRep, String cluster){
+        public void broadcastView(ViewRep videRep){
             lock.lock();
             try{
                 Response rep = Response.newBuilder()

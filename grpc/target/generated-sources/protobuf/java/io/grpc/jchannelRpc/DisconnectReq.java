@@ -21,8 +21,6 @@ private static final long serialVersionUID = 0L;
   }
   private DisconnectReq() {
     jchannelAddress_ = com.google.protobuf.ByteString.EMPTY;
-    cluster_ = "";
-    timestamp_ = "";
   }
 
   @java.lang.Override
@@ -58,18 +56,6 @@ private static final long serialVersionUID = 0L;
           case 10: {
 
             jchannelAddress_ = input.readBytes();
-            break;
-          }
-          case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
-
-            cluster_ = s;
-            break;
-          }
-          case 26: {
-            java.lang.String s = input.readStringRequireUtf8();
-
-            timestamp_ = s;
             break;
           }
           default: {
@@ -115,82 +101,6 @@ private static final long serialVersionUID = 0L;
     return jchannelAddress_;
   }
 
-  public static final int CLUSTER_FIELD_NUMBER = 2;
-  private volatile java.lang.Object cluster_;
-  /**
-   * <code>string cluster = 2;</code>
-   * @return The cluster.
-   */
-  @java.lang.Override
-  public java.lang.String getCluster() {
-    java.lang.Object ref = cluster_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      cluster_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string cluster = 2;</code>
-   * @return The bytes for cluster.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getClusterBytes() {
-    java.lang.Object ref = cluster_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      cluster_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int TIMESTAMP_FIELD_NUMBER = 3;
-  private volatile java.lang.Object timestamp_;
-  /**
-   * <code>string timestamp = 3;</code>
-   * @return The timestamp.
-   */
-  @java.lang.Override
-  public java.lang.String getTimestamp() {
-    java.lang.Object ref = timestamp_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      timestamp_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string timestamp = 3;</code>
-   * @return The bytes for timestamp.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getTimestampBytes() {
-    java.lang.Object ref = timestamp_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      timestamp_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -208,12 +118,6 @@ private static final long serialVersionUID = 0L;
     if (!jchannelAddress_.isEmpty()) {
       output.writeBytes(1, jchannelAddress_);
     }
-    if (!getClusterBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, cluster_);
-    }
-    if (!getTimestampBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, timestamp_);
-    }
     unknownFields.writeTo(output);
   }
 
@@ -226,12 +130,6 @@ private static final long serialVersionUID = 0L;
     if (!jchannelAddress_.isEmpty()) {
       size += com.google.protobuf.CodedOutputStream
         .computeBytesSize(1, jchannelAddress_);
-    }
-    if (!getClusterBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, cluster_);
-    }
-    if (!getTimestampBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, timestamp_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -250,10 +148,6 @@ private static final long serialVersionUID = 0L;
 
     if (!getJchannelAddress()
         .equals(other.getJchannelAddress())) return false;
-    if (!getCluster()
-        .equals(other.getCluster())) return false;
-    if (!getTimestamp()
-        .equals(other.getTimestamp())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -267,10 +161,6 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + JCHANNEL_ADDRESS_FIELD_NUMBER;
     hash = (53 * hash) + getJchannelAddress().hashCode();
-    hash = (37 * hash) + CLUSTER_FIELD_NUMBER;
-    hash = (53 * hash) + getCluster().hashCode();
-    hash = (37 * hash) + TIMESTAMP_FIELD_NUMBER;
-    hash = (53 * hash) + getTimestamp().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -410,10 +300,6 @@ private static final long serialVersionUID = 0L;
       super.clear();
       jchannelAddress_ = com.google.protobuf.ByteString.EMPTY;
 
-      cluster_ = "";
-
-      timestamp_ = "";
-
       return this;
     }
 
@@ -441,8 +327,6 @@ private static final long serialVersionUID = 0L;
     public io.grpc.jchannelRpc.DisconnectReq buildPartial() {
       io.grpc.jchannelRpc.DisconnectReq result = new io.grpc.jchannelRpc.DisconnectReq(this);
       result.jchannelAddress_ = jchannelAddress_;
-      result.cluster_ = cluster_;
-      result.timestamp_ = timestamp_;
       onBuilt();
       return result;
     }
@@ -493,14 +377,6 @@ private static final long serialVersionUID = 0L;
       if (other == io.grpc.jchannelRpc.DisconnectReq.getDefaultInstance()) return this;
       if (other.getJchannelAddress() != com.google.protobuf.ByteString.EMPTY) {
         setJchannelAddress(other.getJchannelAddress());
-      }
-      if (!other.getCluster().isEmpty()) {
-        cluster_ = other.cluster_;
-        onChanged();
-      }
-      if (!other.getTimestamp().isEmpty()) {
-        timestamp_ = other.timestamp_;
-        onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -561,158 +437,6 @@ private static final long serialVersionUID = 0L;
     public Builder clearJchannelAddress() {
       
       jchannelAddress_ = getDefaultInstance().getJchannelAddress();
-      onChanged();
-      return this;
-    }
-
-    private java.lang.Object cluster_ = "";
-    /**
-     * <code>string cluster = 2;</code>
-     * @return The cluster.
-     */
-    public java.lang.String getCluster() {
-      java.lang.Object ref = cluster_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        cluster_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string cluster = 2;</code>
-     * @return The bytes for cluster.
-     */
-    public com.google.protobuf.ByteString
-        getClusterBytes() {
-      java.lang.Object ref = cluster_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        cluster_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string cluster = 2;</code>
-     * @param value The cluster to set.
-     * @return This builder for chaining.
-     */
-    public Builder setCluster(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      cluster_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string cluster = 2;</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearCluster() {
-      
-      cluster_ = getDefaultInstance().getCluster();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string cluster = 2;</code>
-     * @param value The bytes for cluster to set.
-     * @return This builder for chaining.
-     */
-    public Builder setClusterBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      cluster_ = value;
-      onChanged();
-      return this;
-    }
-
-    private java.lang.Object timestamp_ = "";
-    /**
-     * <code>string timestamp = 3;</code>
-     * @return The timestamp.
-     */
-    public java.lang.String getTimestamp() {
-      java.lang.Object ref = timestamp_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        timestamp_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string timestamp = 3;</code>
-     * @return The bytes for timestamp.
-     */
-    public com.google.protobuf.ByteString
-        getTimestampBytes() {
-      java.lang.Object ref = timestamp_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        timestamp_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string timestamp = 3;</code>
-     * @param value The timestamp to set.
-     * @return This builder for chaining.
-     */
-    public Builder setTimestamp(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      timestamp_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string timestamp = 3;</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearTimestamp() {
-      
-      timestamp_ = getDefaultInstance().getTimestamp();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string timestamp = 3;</code>
-     * @param value The bytes for timestamp to set.
-     * @return This builder for chaining.
-     */
-    public Builder setTimestampBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      timestamp_ = value;
       onChanged();
       return this;
     }

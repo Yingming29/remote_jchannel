@@ -41,8 +41,6 @@ public class JChannelClientStub {
     }
 
     public Request judgeRequest(Object obj) {
-        Date d = new Date();
-        SimpleDateFormat dft = new SimpleDateFormat("hh:mm:ss");
         if (obj instanceof String) {
             String input = (String) obj;
             // single send request
@@ -57,8 +55,8 @@ public class JChannelClientStub {
                 }
                 DisconnectReq msgReq = DisconnectReq.newBuilder()
                         .setJchannelAddress(ByteString.copyFrom(out.buffer()))
-                        .setCluster(this.client.cluster)
-                        .setTimestamp(dft.format(d))
+                        //.setCluster(this.client.cluster)
+                        //.setTimestamp(dft.format(d))
                         .build();
                 return Request.newBuilder()
                         .setDisconnectRequest(msgReq).build();
@@ -522,8 +520,9 @@ public class JChannelClientStub {
         SimpleDateFormat dft = new SimpleDateFormat("hh:mm:ss");
         // connect() request
         ConnectReq joinReq = ConnectReq.newBuilder()
-                .setCluster(client.cluster)
-                .setTimestamp(dft.format(d))
+                .setReconnect(false)
+                // .setCluster(client.cluster)
+                //.setTimestamp(dft.format(d))
                 .build();
         Request req = Request.newBuilder()
                 .setConnectRequest(joinReq)
@@ -531,9 +530,6 @@ public class JChannelClientStub {
        requestStreamObserver.onNext(req);
     }
     private void reconnectCluster(StreamObserver requestStreamObserver) {
-        // Generated time
-        Date d = new Date();
-        SimpleDateFormat dft = new SimpleDateFormat("hh:mm:ss");
         // connect() request
         ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
         try {
@@ -542,11 +538,9 @@ public class JChannelClientStub {
             e.printStackTrace();
         }
         ConnectReq joinReq = ConnectReq.newBuilder()
-                .setCluster(client.cluster)
                 .setLogicalName(client.jchannel_address.toString())
                 .setJchannAddressByte(ByteString.copyFrom(out.buffer()))
                 .setReconnect(true)
-                .setTimestamp(dft.format(d))
                 .build();
         System.out.println("Reconnect msg:" + joinReq);
         Request req = Request.newBuilder()

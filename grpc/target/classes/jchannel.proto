@@ -175,11 +175,9 @@ message MessageReqRep{
 }
 // connect() of JChannel, create a bidirectional streaming of grpc
 message ConnectReq {
-  string cluster = 1;     // cluster
-  string timestamp = 2;
-  bool reconnect = 3;         // reconnect and jchannel_address will be used in the reconnection part.
-  string logical_name = 4;
-  bytes jchann_address_byte = 5;
+  bool reconnect = 1;         // reconnect and jchannel_address will be used in the reconnection part.
+  string logical_name = 2;
+  bytes jchann_address_byte = 3;
 }
 // the first time the client connects to the JChannel-server, the server will create an Address and a logical name for it.
 //
@@ -192,8 +190,6 @@ message ConnectRep {
 // disconnect()
 message DisconnectReq{
   bytes jchannel_address = 1;
-  string cluster = 2;
-  string timestamp = 3;
 }
 message DisconnectRep{
   bool result = 1;

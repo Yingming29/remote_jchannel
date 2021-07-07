@@ -38,6 +38,8 @@ public class NodeJChannel implements Receiver{
         this.state = new LinkedList<>();
         this.serviceMap = new ConcurrentHashMap<>();
     }
+
+
     public void start() throws Exception {
         System.out.println("---JChannel Starts.---");
         this.serviceMap.put("ClientCluster", new ClusterMap());
@@ -223,7 +225,7 @@ public class NodeJChannel implements Receiver{
                 ByteArrayDataInputStream in = new ByteArrayDataInputStream(conReq.getJchannAddressByte().toByteArray());
                 u.readFrom(in);
                 NameCache.add(u, conReq.getLogicalName());
-                connectCluster(conReq.getCluster(), u, conReq.getLogicalName());
+                connectCluster("ClientCluster", u, conReq.getLogicalName());
             } catch (Exception e){
                 e.printStackTrace();
             } finally {
@@ -239,7 +241,7 @@ public class NodeJChannel implements Receiver{
             } catch (Exception e){
                 e.printStackTrace();
             }
-            disconnectCluster(disReq.getCluster(), u);
+            disconnectCluster("ClientCluster", u);
         }
     }
 
@@ -252,7 +254,7 @@ public class NodeJChannel implements Receiver{
     }
 
     public void setState(InputStream input) throws Exception{
-
+        System.out.println("[JChannel-Server] setState() of Receiver.");
         ReentrantLock lock = new ReentrantLock();
         List<String> list;
         list = (List<String>) Util.objectFromStream(new DataInputStream(input));
@@ -341,17 +343,6 @@ public class NodeJChannel implements Receiver{
             try{
                 u.readFrom(in);
                 Address address = (Address) u;
-                /*
-                for (Address each:nodesMap.keySet()) {
-                    //System.out.println(each);
-                    //System.out.println(u);
-                    //System.out.println("-----");
-                    if (each.equals(u)){
-                        System.out.println("true");
-                    }
-
-
-                }*/
                 if (nodesMap.keySet().contains(u)){
                     System.out.println("[JChannel-Server] Confirm the requester is a JChannel-Server");
                     // generate message for the requester, NameCacheRep, ViewRep of clients,
@@ -449,6 +440,7 @@ public class NodeJChannel implements Receiver{
         if (channel.getAddress().equals(channel.getView().getCoord())){
             return;
         }
+        // change?
         if (nodesMap.size() <= 1){
             synchronized (nodesMap){
                 try{
@@ -464,7 +456,7 @@ public class NodeJChannel implements Receiver{
             lock.lock();
             try {
                 for (Address address: this.channel.getView().getMembers()) {
-                    System.out.println(address);
+                    // System.out.println(address);
                     if (this.nodesMap.containsKey(address) && !address.equals(this.channel.getAddress())){
                         UUID u = (UUID) this.channel.getAddress();
                         ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
@@ -583,7 +575,7 @@ public class NodeJChannel implements Receiver{
             System.out.println("[gRPC-Server] Return a message for updating NameCache.");
             ViewRep viewRep= clusterObj.generateView();
             System.out.println("[gRPC-Server] Return a message for Client view.");
-            this.service.broadcastView(viewRep, cluster);
+            this.service.broadcastView(viewRep);
         } catch (Exception e){
             e.printStackTrace();
         } finally {
@@ -600,7 +592,7 @@ public class NodeJChannel implements Receiver{
             clusterObj.addViewNum();
             System.out.println(address + " quits " + cluster);
             ViewRep viewRep= clusterObj.generateView();
-            this.service.broadcastView(viewRep, cluster);
+            this.service.broadcastView(viewRep);
         } finally {
             lock.unlock();
         }
@@ -621,7 +613,7 @@ public class NodeJChannel implements Receiver{
                     clusterMap.addViewNum();
                     if (clusterMap.getCreator() != null){
                         ViewRep viewRep= clusterMap.generateView();
-                        this.service.broadcastView(viewRep, clusterName);
+                        this.service.broadcastView(viewRep);
                     }
                 }
             }
