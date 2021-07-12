@@ -9,6 +9,7 @@ import org.jgroups.util.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -81,6 +82,7 @@ public class NodeServer {
     class JChannelsServiceImpl extends JChannelsServiceGrpc.JChannelsServiceImplBase {
         // HashMap for storing the clients, includes uuid and StreamObserver.
         private final ConcurrentHashMap<Address, StreamObserver<Response>> clients;
+        private final ConcurrentHashMap<Address, StreamObserver<Response>> py_clients;
         protected final ReentrantLock lock;
         NodeJChannel jchannel;
 
@@ -89,6 +91,7 @@ public class NodeServer {
             this.jchannel = jchannel;
             this.lock = new ReentrantLock();
             this.clients = new ConcurrentHashMap<>();
+            this.py_clients = new ConcurrentHashMap<>();
         }
         // service 1, bi-directional streaming rpc
         public StreamObserver<Request> connect(StreamObserver<Response> responseObserver){
@@ -481,6 +484,62 @@ public class NodeServer {
                         } else {
                             System.out.println("[gRPC-Server] Receive invalid message.");
                         }
+                    }
+                    /**
+                     * The else if is used for the python client
+                     */
+                    else if (req.hasPyReqMsg()){
+                        ReqMsgForPyClient pyReq = req.getPyReqMsg();
+                        if (pyReq.hasConReqPy()){
+                            System.out.println("[gRPC-Server] Receive the connect() request from a Python client.");
+                            System.out.println("[gRPC-Server] A Python JChannel-client connects to this JChannel-node (JChannel-server)");
+                            // Description: connect(String cluster) request:
+                            Address generated_address = null;
+                            String generated_name = null;
+                            if (!req.getPyReqMsg().getConReqPy().getReconnect()){
+                               // the first connection of this py_client
+                                generated_address = UUID.randomUUID();
+                                generated_name = Util.generateLocalName();
+                                System.out.println("[gRPC-Server] New connected Python JChannel-Client, the server generates an Address for it: " +
+                                        generated_address + ", and logical name : " + generated_name);
+
+                            } else{
+                                // 1. if it is not first connect, it will contain a JChannelAddress property.
+                                String logical_name = req.getPyReqMsg().getConReqPy().getLogicalName();
+                                for (Address each : NameCache.getContents().keySet()){
+                                    if (NameCache.getContents().get(each).equals(logical_name)){
+                                        generated_address = each;
+                                        generated_name = logical_name;
+                                        System.out.println("[gRPC-Server] A reconnecting Python JChannel-Client, Address: " +
+                                                generated_address + ", and logical name : " + generated_name);
+                                    }
+                                }
+                            }
+                            // 2. Store the responseObserver of the client. Map<Address, streamObserver>
+                            join(req.getConnectRequest(), responseObserver, generated_address, generated_name);
+                            // 3. forward the connect request with generated Address and generated logical name to other nodes for storing
+                            ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
+                            UUID u = (UUID) generated_address;
+                            try {
+                                u.writeTo(out);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            ConnectReq conReqWithAddress = ConnectReq.newBuilder()
+                                    .setJchannAddressByte(ByteString.copyFrom(out.buffer()))
+                                    .setLogicalName(generated_name)
+                                    .build();
+                            Request reqForward = Request.newBuilder().setConnectRequest(conReqWithAddress).build();
+                            forwardMsg(reqForward);
+                            // 4. store the generated Address and logcial to this node's NameCache
+                            NameCache.add(generated_address, generated_name);
+                        } else if (pyReq.hasDisconReqPy()){
+
+                        } else if (pyReq.hasMsgReqPy()){
+
+                        } else{
+                            System.out.println("Invalid type of message from python client.");
+                        }
                     } else{
                         System.out.println("[gRPC-Server] Invalid message.");
                     }
@@ -513,6 +572,54 @@ public class NodeServer {
                     responseObserver.onCompleted();
                 }
             };
+        }
+        protected void joinPy(StreamObserver<Response> responseObserver, Address generated_address, String generated_name){
+            // 1. get lock
+            lock.lock();
+            // 2. critical section,
+            try{
+                // using the generated Address by this JChannel-server as key, responseObserver as value
+                py_clients.put(generated_address, responseObserver);
+                System.out.println("[gRPC-Server] Store the new Python client.");
+                ConnectRepPy conRep = ConnectRepPy.newBuilder().setLogicalName(generated_name).setResult(true).build();
+                RepMsgForPyClient pyRep = RepMsgForPyClient.newBuilder().setConRepPy(conRep).build();
+                Response rep = Response.newBuilder()
+                        .setPyRepMsg(pyRep)
+                        .build();
+                // return (send) the ConnectResponse to that JChannel-client
+                responseObserver.onNext(rep);
+                System.out.println("[gRPC-Server] Return a connect() response to the Python new client.");
+                jchannel.connectCluster("ClientCluster", generated_address, generated_name);
+                // return response for updating the available servers
+                UpdateRep updateRep = UpdateRep.newBuilder()
+                        .setAddresses(this.jchannel.generateAddMsg())
+                        .build();
+                Response rep2 = Response.newBuilder()
+                        .setUpdateResponse(updateRep)
+                        .build();
+                responseObserver.onNext(rep2);
+                System.out.println("[gRPC-Server] Return a message for the current available gRPC addresses of servers.");
+                // make a server view
+                View v = this.jchannel.channel.getView();
+                int num = (int) v.getViewId().getId();
+                Address[] members = v.getMembersRaw();
+                LinkedList<String> membersList = new LinkedList<String>();
+                for (Address each: members){
+                    membersList.add(each.toString());
+                }
+                ServerViewPy serverViewPy = ServerViewPy.newBuilder().setCoordinator(v.getCoord().toString())
+                        .setNum(num).addAllMembers(membersList).setSize(membersList.size()).build();
+                RepMsgForPyClient pyRep2 = RepMsgForPyClient.newBuilder().setServerViewPy(serverViewPy).build();
+                Response rep_pyServerView = Response.newBuilder().setPyRepMsg(pyRep2).build();
+                unicastRep(rep_pyServerView, generated_address);
+                System.out.println("[gRPC-Server] Return a message for the JChannel-Server view.");
+                System.out.println(rep_broView);
+            }
+            // 3. run finally, confirm the lock will be unlock.
+            finally {
+                // remember unlock
+                lock.unlock();
+            }
         }
 
         protected UpdateNameCacheRep generateNameCacheMsg(){
@@ -649,6 +756,12 @@ public class NodeServer {
                     if (add.equals(dest)){
                         clients.get(add).onNext(response);
                         System.out.println("[gRPC-Server] Send message to a JChannel-Client, " + dest);
+                    }
+                }
+                for (Address pyAdd : py_clients.keySet()){
+                    if (pyAdd.equals(dest)){
+                        py_clients.get(pyAdd).onNext(response);
+                        System.out.println("[gRPC-Server] Send message to a Python JChannel-Client, " + dest);
                     }
                 }
                 System.out.println("[gRPC-Server] One unicast for message successfully.");

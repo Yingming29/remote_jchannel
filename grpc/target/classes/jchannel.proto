@@ -214,57 +214,70 @@ message StateRep{
   bytes state = 2;
   bytes target = 3;
 }
-
+// define some message for python-client
+// some message types for python client
 message ReqMsgForPyClient{
-  message connectReqPy{
-    bool reconnect = 1;
-    string logical_name = 2;
-  }
-  message disconnectReqPy{
-    string logical_name = 1;
-  }
-  message messageReqPy{
-    int32 type = 1;
-    string contentStr = 2;
-    bytes contentByte = 3;
-    string source = 4;
-    string dest = 5;
-  }
-  message StateReqPy{
-    string logical_name = 1;
+  oneof oneType{
+    ConnectReqPy conReqPy = 1;
+    DisconnectReqPy disconReqPy = 2;
+    MessageReqPy msgReqPy = 3;
   }
 }
 
 message RepMsgForPyClient{
-  message connectRepPy{
-    bool result = 1;
-    string logical_name = 2;
+  oneof oneType{
+    ConnectRepPy conRepPy = 1;
+    DisconnectRepPy disconRepPy = 2;
+    MessageRepPy msgRepPy = 3;
+    StateRepPy stateRepPy = 4;
+    ClientViewPy clientViewPy = 5;
+    ServerViewPy serverViewPy = 6;
+    UpdateAddPy updateAddPy = 7;
   }
-  message disconnectRepPy{
-    bool result = 1;
-  }
-  message messageRepPy{
-    int32 type = 1;
-    string source = 2;
-    string contentStr = 3;
-    bytes contentByte = 4;
-  }
-  message clientViewPy{
-    int32 num = 1;
-    string members = 2;
-    string coordinator = 3;
-  }
-  message serverViewPy{
-    int32 num = 1;
-    string members = 2;
-    string coordinator = 3;
-  }
-  message UpdateAddPy{
-    string addresses = 1;
-  }
-  message StateRepPy{
-    repeated string line = 1;
-  }
+}
+
+
+message ConnectReqPy{
+  bool reconnect = 1;
+  string logical_name = 2;
+}
+message DisconnectReqPy{
+  string logical_name = 1;
+}
+message MessageReqPy{
+  string source = 1;
+  string dest = 2;
+  string contentStr = 3;
+}
+message ConnectRepPy{
+  bool result = 1;
+  string logical_name = 2;
+}
+message DisconnectRepPy{
+  bool result = 1;
+}
+message MessageRepPy{
+  string source = 1;
+  string contentStr = 3;
+}
+message ClientViewPy{
+  int32 num = 1;
+  repeated string members = 2;
+  string coordinator = 3;
+  int32 size = 4;
+}
+message ServerViewPy{
+  int32 num = 1;
+  repeated string members = 2;
+  string coordinator = 3;
+  int32 size = 4;
+}
+message UpdateAddPy{
+  string addresses = 1;
+}
+message StateRepPy{
+  int32 size = 1;
+  repeated string line = 2;
 }
 
 

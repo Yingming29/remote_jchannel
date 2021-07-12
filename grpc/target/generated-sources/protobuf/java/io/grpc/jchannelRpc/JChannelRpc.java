@@ -235,65 +235,60 @@ public final class JChannelRpc {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_cn_yingming_grpc1_ReqMsgForPyClient_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_cn_yingming_grpc1_ReqMsgForPyClient_connectReqPy_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_cn_yingming_grpc1_ReqMsgForPyClient_connectReqPy_fieldAccessorTable;
-  static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_cn_yingming_grpc1_ReqMsgForPyClient_disconnectReqPy_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_cn_yingming_grpc1_ReqMsgForPyClient_disconnectReqPy_fieldAccessorTable;
-  static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_cn_yingming_grpc1_ReqMsgForPyClient_messageReqPy_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_cn_yingming_grpc1_ReqMsgForPyClient_messageReqPy_fieldAccessorTable;
-  static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_cn_yingming_grpc1_ReqMsgForPyClient_StateReqPy_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_cn_yingming_grpc1_ReqMsgForPyClient_StateReqPy_fieldAccessorTable;
-  static final com.google.protobuf.Descriptors.Descriptor
     internal_static_cn_yingming_grpc1_RepMsgForPyClient_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_cn_yingming_grpc1_RepMsgForPyClient_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_cn_yingming_grpc1_RepMsgForPyClient_connectRepPy_descriptor;
+    internal_static_cn_yingming_grpc1_ConnectReqPy_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_cn_yingming_grpc1_RepMsgForPyClient_connectRepPy_fieldAccessorTable;
+      internal_static_cn_yingming_grpc1_ConnectReqPy_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_cn_yingming_grpc1_RepMsgForPyClient_disconnectRepPy_descriptor;
+    internal_static_cn_yingming_grpc1_DisconnectReqPy_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_cn_yingming_grpc1_RepMsgForPyClient_disconnectRepPy_fieldAccessorTable;
+      internal_static_cn_yingming_grpc1_DisconnectReqPy_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_cn_yingming_grpc1_RepMsgForPyClient_messageRepPy_descriptor;
+    internal_static_cn_yingming_grpc1_MessageReqPy_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_cn_yingming_grpc1_RepMsgForPyClient_messageRepPy_fieldAccessorTable;
+      internal_static_cn_yingming_grpc1_MessageReqPy_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_cn_yingming_grpc1_RepMsgForPyClient_clientViewPy_descriptor;
+    internal_static_cn_yingming_grpc1_ConnectRepPy_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_cn_yingming_grpc1_RepMsgForPyClient_clientViewPy_fieldAccessorTable;
+      internal_static_cn_yingming_grpc1_ConnectRepPy_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_cn_yingming_grpc1_RepMsgForPyClient_serverViewPy_descriptor;
+    internal_static_cn_yingming_grpc1_DisconnectRepPy_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_cn_yingming_grpc1_RepMsgForPyClient_serverViewPy_fieldAccessorTable;
+      internal_static_cn_yingming_grpc1_DisconnectRepPy_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_cn_yingming_grpc1_RepMsgForPyClient_UpdateAddPy_descriptor;
+    internal_static_cn_yingming_grpc1_MessageRepPy_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_cn_yingming_grpc1_RepMsgForPyClient_UpdateAddPy_fieldAccessorTable;
+      internal_static_cn_yingming_grpc1_MessageRepPy_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_cn_yingming_grpc1_RepMsgForPyClient_StateRepPy_descriptor;
+    internal_static_cn_yingming_grpc1_ClientViewPy_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_cn_yingming_grpc1_RepMsgForPyClient_StateRepPy_fieldAccessorTable;
+      internal_static_cn_yingming_grpc1_ClientViewPy_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_cn_yingming_grpc1_ServerViewPy_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_cn_yingming_grpc1_ServerViewPy_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_cn_yingming_grpc1_UpdateAddPy_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_cn_yingming_grpc1_UpdateAddPy_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_cn_yingming_grpc1_StateRepPy_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_cn_yingming_grpc1_StateRepPy_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -416,29 +411,42 @@ public final class JChannelRpc {
       "al\030\001 \001(\010\"E\n\010StateReq\022\030\n\020jchannel_address" +
       "\030\001 \001(\014\022\016\n\006target\030\002 \001(\014\022\017\n\007timeout\030\003 \001(\004\"" +
       "C\n\010StateRep\022\030\n\020jchannel_address\030\001 \001(\014\022\r\n" +
-      "\005state\030\002 \001(\014\022\016\n\006target\030\003 \001(\014\"\376\001\n\021ReqMsgF" +
-      "orPyClient\0327\n\014connectReqPy\022\021\n\treconnect\030" +
-      "\001 \001(\010\022\024\n\014logical_name\030\002 \001(\t\032\'\n\017disconnec" +
-      "tReqPy\022\024\n\014logical_name\030\001 \001(\t\032c\n\014messageR" +
-      "eqPy\022\014\n\004type\030\001 \001(\005\022\022\n\ncontentStr\030\002 \001(\t\022\023" +
-      "\n\013contentByte\030\003 \001(\014\022\016\n\006source\030\004 \001(\t\022\014\n\004d" +
-      "est\030\005 \001(\t\032\"\n\nStateReqPy\022\024\n\014logical_name\030" +
-      "\001 \001(\t\"\207\003\n\021RepMsgForPyClient\0324\n\014connectRe" +
-      "pPy\022\016\n\006result\030\001 \001(\010\022\024\n\014logical_name\030\002 \001(" +
-      "\t\032!\n\017disconnectRepPy\022\016\n\006result\030\001 \001(\010\032U\n\014" +
-      "messageRepPy\022\014\n\004type\030\001 \001(\005\022\016\n\006source\030\002 \001" +
-      "(\t\022\022\n\ncontentStr\030\003 \001(\t\022\023\n\013contentByte\030\004 " +
-      "\001(\014\032A\n\014clientViewPy\022\013\n\003num\030\001 \001(\005\022\017\n\007memb" +
-      "ers\030\002 \001(\t\022\023\n\013coordinator\030\003 \001(\t\032A\n\014server" +
-      "ViewPy\022\013\n\003num\030\001 \001(\005\022\017\n\007members\030\002 \001(\t\022\023\n\013" +
-      "coordinator\030\003 \001(\t\032 \n\013UpdateAddPy\022\021\n\taddr" +
-      "esses\030\001 \001(\t\032\032\n\nStateRepPy\022\014\n\004line\030\001 \003(\t2" +
-      "\233\001\n\020JChannelsService\022H\n\007connect\022\032.cn.yin" +
-      "gming.grpc1.Request\032\033.cn.yingming.grpc1." +
-      "Response\"\000(\0010\001\022=\n\003ask\022\031.cn.yingming.grpc" +
-      "1.ReqAsk\032\031.cn.yingming.grpc1.RepAsk\"\000B/\n" +
-      "\023io.grpc.jchannelRpcB\013JChannelRpcP\001\242\002\010YI" +
-      "NGMINGb\006proto3"
+      "\005state\030\002 \001(\014\022\016\n\006target\030\003 \001(\014\"\303\001\n\021ReqMsgF" +
+      "orPyClient\0223\n\010conReqPy\030\001 \001(\0132\037.cn.yingmi" +
+      "ng.grpc1.ConnectReqPyH\000\0229\n\013disconReqPy\030\002" +
+      " \001(\0132\".cn.yingming.grpc1.DisconnectReqPy" +
+      "H\000\0223\n\010msgReqPy\030\003 \001(\0132\037.cn.yingming.grpc1" +
+      ".MessageReqPyH\000B\t\n\007oneType\"\241\003\n\021RepMsgFor" +
+      "PyClient\0223\n\010conRepPy\030\001 \001(\0132\037.cn.yingming" +
+      ".grpc1.ConnectRepPyH\000\0229\n\013disconRepPy\030\002 \001" +
+      "(\0132\".cn.yingming.grpc1.DisconnectRepPyH\000" +
+      "\0223\n\010msgRepPy\030\003 \001(\0132\037.cn.yingming.grpc1.M" +
+      "essageRepPyH\000\0223\n\nstateRepPy\030\004 \001(\0132\035.cn.y" +
+      "ingming.grpc1.StateRepPyH\000\0227\n\014clientView" +
+      "Py\030\005 \001(\0132\037.cn.yingming.grpc1.ClientViewP" +
+      "yH\000\0227\n\014serverViewPy\030\006 \001(\0132\037.cn.yingming." +
+      "grpc1.ServerViewPyH\000\0225\n\013updateAddPy\030\007 \001(" +
+      "\0132\036.cn.yingming.grpc1.UpdateAddPyH\000B\t\n\007o" +
+      "neType\"7\n\014ConnectReqPy\022\021\n\treconnect\030\001 \001(" +
+      "\010\022\024\n\014logical_name\030\002 \001(\t\"\'\n\017DisconnectReq" +
+      "Py\022\024\n\014logical_name\030\001 \001(\t\"@\n\014MessageReqPy" +
+      "\022\016\n\006source\030\001 \001(\t\022\014\n\004dest\030\002 \001(\t\022\022\n\nconten" +
+      "tStr\030\003 \001(\t\"4\n\014ConnectRepPy\022\016\n\006result\030\001 \001" +
+      "(\010\022\024\n\014logical_name\030\002 \001(\t\"!\n\017DisconnectRe" +
+      "pPy\022\016\n\006result\030\001 \001(\010\"2\n\014MessageRepPy\022\016\n\006s" +
+      "ource\030\001 \001(\t\022\022\n\ncontentStr\030\003 \001(\t\"O\n\014Clien" +
+      "tViewPy\022\013\n\003num\030\001 \001(\005\022\017\n\007members\030\002 \003(\t\022\023\n" +
+      "\013coordinator\030\003 \001(\t\022\014\n\004size\030\004 \001(\005\"O\n\014Serv" +
+      "erViewPy\022\013\n\003num\030\001 \001(\005\022\017\n\007members\030\002 \003(\t\022\023" +
+      "\n\013coordinator\030\003 \001(\t\022\014\n\004size\030\004 \001(\005\" \n\013Upd" +
+      "ateAddPy\022\021\n\taddresses\030\001 \001(\t\"(\n\nStateRepP" +
+      "y\022\014\n\004size\030\001 \001(\005\022\014\n\004line\030\002 \003(\t2\233\001\n\020JChann" +
+      "elsService\022H\n\007connect\022\032.cn.yingming.grpc" +
+      "1.Request\032\033.cn.yingming.grpc1.Response\"\000" +
+      "(\0010\001\022=\n\003ask\022\031.cn.yingming.grpc1.ReqAsk\032\031" +
+      ".cn.yingming.grpc1.RepAsk\"\000B/\n\023io.grpc.j" +
+      "channelRpcB\013JChannelRpcP\001\242\002\010YINGMINGb\006pr" +
+      "oto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -707,79 +715,73 @@ public final class JChannelRpc {
     internal_static_cn_yingming_grpc1_ReqMsgForPyClient_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_cn_yingming_grpc1_ReqMsgForPyClient_descriptor,
-        new java.lang.String[] { });
-    internal_static_cn_yingming_grpc1_ReqMsgForPyClient_connectReqPy_descriptor =
-      internal_static_cn_yingming_grpc1_ReqMsgForPyClient_descriptor.getNestedTypes().get(0);
-    internal_static_cn_yingming_grpc1_ReqMsgForPyClient_connectReqPy_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_cn_yingming_grpc1_ReqMsgForPyClient_connectReqPy_descriptor,
-        new java.lang.String[] { "Reconnect", "LogicalName", });
-    internal_static_cn_yingming_grpc1_ReqMsgForPyClient_disconnectReqPy_descriptor =
-      internal_static_cn_yingming_grpc1_ReqMsgForPyClient_descriptor.getNestedTypes().get(1);
-    internal_static_cn_yingming_grpc1_ReqMsgForPyClient_disconnectReqPy_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_cn_yingming_grpc1_ReqMsgForPyClient_disconnectReqPy_descriptor,
-        new java.lang.String[] { "LogicalName", });
-    internal_static_cn_yingming_grpc1_ReqMsgForPyClient_messageReqPy_descriptor =
-      internal_static_cn_yingming_grpc1_ReqMsgForPyClient_descriptor.getNestedTypes().get(2);
-    internal_static_cn_yingming_grpc1_ReqMsgForPyClient_messageReqPy_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_cn_yingming_grpc1_ReqMsgForPyClient_messageReqPy_descriptor,
-        new java.lang.String[] { "Type", "ContentStr", "ContentByte", "Source", "Dest", });
-    internal_static_cn_yingming_grpc1_ReqMsgForPyClient_StateReqPy_descriptor =
-      internal_static_cn_yingming_grpc1_ReqMsgForPyClient_descriptor.getNestedTypes().get(3);
-    internal_static_cn_yingming_grpc1_ReqMsgForPyClient_StateReqPy_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_cn_yingming_grpc1_ReqMsgForPyClient_StateReqPy_descriptor,
-        new java.lang.String[] { "LogicalName", });
+        new java.lang.String[] { "ConReqPy", "DisconReqPy", "MsgReqPy", "OneType", });
     internal_static_cn_yingming_grpc1_RepMsgForPyClient_descriptor =
       getDescriptor().getMessageTypes().get(44);
     internal_static_cn_yingming_grpc1_RepMsgForPyClient_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_cn_yingming_grpc1_RepMsgForPyClient_descriptor,
-        new java.lang.String[] { });
-    internal_static_cn_yingming_grpc1_RepMsgForPyClient_connectRepPy_descriptor =
-      internal_static_cn_yingming_grpc1_RepMsgForPyClient_descriptor.getNestedTypes().get(0);
-    internal_static_cn_yingming_grpc1_RepMsgForPyClient_connectRepPy_fieldAccessorTable = new
+        new java.lang.String[] { "ConRepPy", "DisconRepPy", "MsgRepPy", "StateRepPy", "ClientViewPy", "ServerViewPy", "UpdateAddPy", "OneType", });
+    internal_static_cn_yingming_grpc1_ConnectReqPy_descriptor =
+      getDescriptor().getMessageTypes().get(45);
+    internal_static_cn_yingming_grpc1_ConnectReqPy_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_cn_yingming_grpc1_RepMsgForPyClient_connectRepPy_descriptor,
+        internal_static_cn_yingming_grpc1_ConnectReqPy_descriptor,
+        new java.lang.String[] { "Reconnect", "LogicalName", });
+    internal_static_cn_yingming_grpc1_DisconnectReqPy_descriptor =
+      getDescriptor().getMessageTypes().get(46);
+    internal_static_cn_yingming_grpc1_DisconnectReqPy_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_cn_yingming_grpc1_DisconnectReqPy_descriptor,
+        new java.lang.String[] { "LogicalName", });
+    internal_static_cn_yingming_grpc1_MessageReqPy_descriptor =
+      getDescriptor().getMessageTypes().get(47);
+    internal_static_cn_yingming_grpc1_MessageReqPy_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_cn_yingming_grpc1_MessageReqPy_descriptor,
+        new java.lang.String[] { "Source", "Dest", "ContentStr", });
+    internal_static_cn_yingming_grpc1_ConnectRepPy_descriptor =
+      getDescriptor().getMessageTypes().get(48);
+    internal_static_cn_yingming_grpc1_ConnectRepPy_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_cn_yingming_grpc1_ConnectRepPy_descriptor,
         new java.lang.String[] { "Result", "LogicalName", });
-    internal_static_cn_yingming_grpc1_RepMsgForPyClient_disconnectRepPy_descriptor =
-      internal_static_cn_yingming_grpc1_RepMsgForPyClient_descriptor.getNestedTypes().get(1);
-    internal_static_cn_yingming_grpc1_RepMsgForPyClient_disconnectRepPy_fieldAccessorTable = new
+    internal_static_cn_yingming_grpc1_DisconnectRepPy_descriptor =
+      getDescriptor().getMessageTypes().get(49);
+    internal_static_cn_yingming_grpc1_DisconnectRepPy_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_cn_yingming_grpc1_RepMsgForPyClient_disconnectRepPy_descriptor,
+        internal_static_cn_yingming_grpc1_DisconnectRepPy_descriptor,
         new java.lang.String[] { "Result", });
-    internal_static_cn_yingming_grpc1_RepMsgForPyClient_messageRepPy_descriptor =
-      internal_static_cn_yingming_grpc1_RepMsgForPyClient_descriptor.getNestedTypes().get(2);
-    internal_static_cn_yingming_grpc1_RepMsgForPyClient_messageRepPy_fieldAccessorTable = new
+    internal_static_cn_yingming_grpc1_MessageRepPy_descriptor =
+      getDescriptor().getMessageTypes().get(50);
+    internal_static_cn_yingming_grpc1_MessageRepPy_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_cn_yingming_grpc1_RepMsgForPyClient_messageRepPy_descriptor,
-        new java.lang.String[] { "Type", "Source", "ContentStr", "ContentByte", });
-    internal_static_cn_yingming_grpc1_RepMsgForPyClient_clientViewPy_descriptor =
-      internal_static_cn_yingming_grpc1_RepMsgForPyClient_descriptor.getNestedTypes().get(3);
-    internal_static_cn_yingming_grpc1_RepMsgForPyClient_clientViewPy_fieldAccessorTable = new
+        internal_static_cn_yingming_grpc1_MessageRepPy_descriptor,
+        new java.lang.String[] { "Source", "ContentStr", });
+    internal_static_cn_yingming_grpc1_ClientViewPy_descriptor =
+      getDescriptor().getMessageTypes().get(51);
+    internal_static_cn_yingming_grpc1_ClientViewPy_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_cn_yingming_grpc1_RepMsgForPyClient_clientViewPy_descriptor,
-        new java.lang.String[] { "Num", "Members", "Coordinator", });
-    internal_static_cn_yingming_grpc1_RepMsgForPyClient_serverViewPy_descriptor =
-      internal_static_cn_yingming_grpc1_RepMsgForPyClient_descriptor.getNestedTypes().get(4);
-    internal_static_cn_yingming_grpc1_RepMsgForPyClient_serverViewPy_fieldAccessorTable = new
+        internal_static_cn_yingming_grpc1_ClientViewPy_descriptor,
+        new java.lang.String[] { "Num", "Members", "Coordinator", "Size", });
+    internal_static_cn_yingming_grpc1_ServerViewPy_descriptor =
+      getDescriptor().getMessageTypes().get(52);
+    internal_static_cn_yingming_grpc1_ServerViewPy_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_cn_yingming_grpc1_RepMsgForPyClient_serverViewPy_descriptor,
-        new java.lang.String[] { "Num", "Members", "Coordinator", });
-    internal_static_cn_yingming_grpc1_RepMsgForPyClient_UpdateAddPy_descriptor =
-      internal_static_cn_yingming_grpc1_RepMsgForPyClient_descriptor.getNestedTypes().get(5);
-    internal_static_cn_yingming_grpc1_RepMsgForPyClient_UpdateAddPy_fieldAccessorTable = new
+        internal_static_cn_yingming_grpc1_ServerViewPy_descriptor,
+        new java.lang.String[] { "Num", "Members", "Coordinator", "Size", });
+    internal_static_cn_yingming_grpc1_UpdateAddPy_descriptor =
+      getDescriptor().getMessageTypes().get(53);
+    internal_static_cn_yingming_grpc1_UpdateAddPy_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_cn_yingming_grpc1_RepMsgForPyClient_UpdateAddPy_descriptor,
+        internal_static_cn_yingming_grpc1_UpdateAddPy_descriptor,
         new java.lang.String[] { "Addresses", });
-    internal_static_cn_yingming_grpc1_RepMsgForPyClient_StateRepPy_descriptor =
-      internal_static_cn_yingming_grpc1_RepMsgForPyClient_descriptor.getNestedTypes().get(6);
-    internal_static_cn_yingming_grpc1_RepMsgForPyClient_StateRepPy_fieldAccessorTable = new
+    internal_static_cn_yingming_grpc1_StateRepPy_descriptor =
+      getDescriptor().getMessageTypes().get(54);
+    internal_static_cn_yingming_grpc1_StateRepPy_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_cn_yingming_grpc1_RepMsgForPyClient_StateRepPy_descriptor,
-        new java.lang.String[] { "Line", });
+        internal_static_cn_yingming_grpc1_StateRepPy_descriptor,
+        new java.lang.String[] { "Size", "Line", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

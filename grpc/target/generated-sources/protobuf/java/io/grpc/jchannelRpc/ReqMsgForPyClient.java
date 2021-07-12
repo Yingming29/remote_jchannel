@@ -4,6 +4,11 @@
 package io.grpc.jchannelRpc;
 
 /**
+ * <pre>
+ * define some message for python-client
+ * some message types for python client
+ * </pre>
+ *
  * Protobuf type {@code cn.yingming.grpc1.ReqMsgForPyClient}
  */
 public final class ReqMsgForPyClient extends
@@ -48,6 +53,48 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
+          case 10: {
+            io.grpc.jchannelRpc.ConnectReqPy.Builder subBuilder = null;
+            if (oneTypeCase_ == 1) {
+              subBuilder = ((io.grpc.jchannelRpc.ConnectReqPy) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.ConnectReqPy.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.ConnectReqPy) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 1;
+            break;
+          }
+          case 18: {
+            io.grpc.jchannelRpc.DisconnectReqPy.Builder subBuilder = null;
+            if (oneTypeCase_ == 2) {
+              subBuilder = ((io.grpc.jchannelRpc.DisconnectReqPy) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.DisconnectReqPy.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.DisconnectReqPy) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 2;
+            break;
+          }
+          case 26: {
+            io.grpc.jchannelRpc.MessageReqPy.Builder subBuilder = null;
+            if (oneTypeCase_ == 3) {
+              subBuilder = ((io.grpc.jchannelRpc.MessageReqPy) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.MessageReqPy.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.MessageReqPy) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 3;
+            break;
+          }
           default: {
             if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -80,2791 +127,140 @@ private static final long serialVersionUID = 0L;
             io.grpc.jchannelRpc.ReqMsgForPyClient.class, io.grpc.jchannelRpc.ReqMsgForPyClient.Builder.class);
   }
 
-  public interface connectReqPyOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:cn.yingming.grpc1.ReqMsgForPyClient.connectReqPy)
-      com.google.protobuf.MessageOrBuilder {
+  private int oneTypeCase_ = 0;
+  private java.lang.Object oneType_;
+  public enum OneTypeCase
+      implements com.google.protobuf.Internal.EnumLite,
+          com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+    CONREQPY(1),
+    DISCONREQPY(2),
+    MSGREQPY(3),
+    ONETYPE_NOT_SET(0);
+    private final int value;
+    private OneTypeCase(int value) {
+      this.value = value;
+    }
+    /**
+     * @param value The number of the enum to look for.
+     * @return The enum associated with the given number.
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static OneTypeCase valueOf(int value) {
+      return forNumber(value);
+    }
 
-    /**
-     * <code>bool reconnect = 1;</code>
-     * @return The reconnect.
-     */
-    boolean getReconnect();
+    public static OneTypeCase forNumber(int value) {
+      switch (value) {
+        case 1: return CONREQPY;
+        case 2: return DISCONREQPY;
+        case 3: return MSGREQPY;
+        case 0: return ONETYPE_NOT_SET;
+        default: return null;
+      }
+    }
+    public int getNumber() {
+      return this.value;
+    }
+  };
 
-    /**
-     * <code>string logical_name = 2;</code>
-     * @return The logicalName.
-     */
-    java.lang.String getLogicalName();
-    /**
-     * <code>string logical_name = 2;</code>
-     * @return The bytes for logicalName.
-     */
-    com.google.protobuf.ByteString
-        getLogicalNameBytes();
+  public OneTypeCase
+  getOneTypeCase() {
+    return OneTypeCase.forNumber(
+        oneTypeCase_);
+  }
+
+  public static final int CONREQPY_FIELD_NUMBER = 1;
+  /**
+   * <code>.cn.yingming.grpc1.ConnectReqPy conReqPy = 1;</code>
+   * @return Whether the conReqPy field is set.
+   */
+  @java.lang.Override
+  public boolean hasConReqPy() {
+    return oneTypeCase_ == 1;
   }
   /**
-   * Protobuf type {@code cn.yingming.grpc1.ReqMsgForPyClient.connectReqPy}
+   * <code>.cn.yingming.grpc1.ConnectReqPy conReqPy = 1;</code>
+   * @return The conReqPy.
    */
-  public static final class connectReqPy extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:cn.yingming.grpc1.ReqMsgForPyClient.connectReqPy)
-      connectReqPyOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use connectReqPy.newBuilder() to construct.
-    private connectReqPy(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
+  @java.lang.Override
+  public io.grpc.jchannelRpc.ConnectReqPy getConReqPy() {
+    if (oneTypeCase_ == 1) {
+       return (io.grpc.jchannelRpc.ConnectReqPy) oneType_;
     }
-    private connectReqPy() {
-      logicalName_ = "";
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new connectReqPy();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private connectReqPy(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 8: {
-
-              reconnect_ = input.readBool();
-              break;
-            }
-            case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              logicalName_ = s;
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_ReqMsgForPyClient_connectReqPy_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_ReqMsgForPyClient_connectReqPy_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy.class, io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy.Builder.class);
-    }
-
-    public static final int RECONNECT_FIELD_NUMBER = 1;
-    private boolean reconnect_;
-    /**
-     * <code>bool reconnect = 1;</code>
-     * @return The reconnect.
-     */
-    @java.lang.Override
-    public boolean getReconnect() {
-      return reconnect_;
-    }
-
-    public static final int LOGICAL_NAME_FIELD_NUMBER = 2;
-    private volatile java.lang.Object logicalName_;
-    /**
-     * <code>string logical_name = 2;</code>
-     * @return The logicalName.
-     */
-    @java.lang.Override
-    public java.lang.String getLogicalName() {
-      java.lang.Object ref = logicalName_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        logicalName_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string logical_name = 2;</code>
-     * @return The bytes for logicalName.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getLogicalNameBytes() {
-      java.lang.Object ref = logicalName_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        logicalName_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (reconnect_ != false) {
-        output.writeBool(1, reconnect_);
-      }
-      if (!getLogicalNameBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, logicalName_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (reconnect_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(1, reconnect_);
-      }
-      if (!getLogicalNameBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, logicalName_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy)) {
-        return super.equals(obj);
-      }
-      io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy other = (io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy) obj;
-
-      if (getReconnect()
-          != other.getReconnect()) return false;
-      if (!getLogicalName()
-          .equals(other.getLogicalName())) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + RECONNECT_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getReconnect());
-      hash = (37 * hash) + LOGICAL_NAME_FIELD_NUMBER;
-      hash = (53 * hash) + getLogicalName().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code cn.yingming.grpc1.ReqMsgForPyClient.connectReqPy}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:cn.yingming.grpc1.ReqMsgForPyClient.connectReqPy)
-        io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPyOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_ReqMsgForPyClient_connectReqPy_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_ReqMsgForPyClient_connectReqPy_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy.class, io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy.Builder.class);
-      }
-
-      // Construct using io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        reconnect_ = false;
-
-        logicalName_ = "";
-
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_ReqMsgForPyClient_connectReqPy_descriptor;
-      }
-
-      @java.lang.Override
-      public io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy getDefaultInstanceForType() {
-        return io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy build() {
-        io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy buildPartial() {
-        io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy result = new io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy(this);
-        result.reconnect_ = reconnect_;
-        result.logicalName_ = logicalName_;
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy) {
-          return mergeFrom((io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy other) {
-        if (other == io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy.getDefaultInstance()) return this;
-        if (other.getReconnect() != false) {
-          setReconnect(other.getReconnect());
-        }
-        if (!other.getLogicalName().isEmpty()) {
-          logicalName_ = other.logicalName_;
-          onChanged();
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private boolean reconnect_ ;
-      /**
-       * <code>bool reconnect = 1;</code>
-       * @return The reconnect.
-       */
-      @java.lang.Override
-      public boolean getReconnect() {
-        return reconnect_;
-      }
-      /**
-       * <code>bool reconnect = 1;</code>
-       * @param value The reconnect to set.
-       * @return This builder for chaining.
-       */
-      public Builder setReconnect(boolean value) {
-        
-        reconnect_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool reconnect = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearReconnect() {
-        
-        reconnect_ = false;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object logicalName_ = "";
-      /**
-       * <code>string logical_name = 2;</code>
-       * @return The logicalName.
-       */
-      public java.lang.String getLogicalName() {
-        java.lang.Object ref = logicalName_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          logicalName_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string logical_name = 2;</code>
-       * @return The bytes for logicalName.
-       */
-      public com.google.protobuf.ByteString
-          getLogicalNameBytes() {
-        java.lang.Object ref = logicalName_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          logicalName_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string logical_name = 2;</code>
-       * @param value The logicalName to set.
-       * @return This builder for chaining.
-       */
-      public Builder setLogicalName(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        logicalName_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string logical_name = 2;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearLogicalName() {
-        
-        logicalName_ = getDefaultInstance().getLogicalName();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string logical_name = 2;</code>
-       * @param value The bytes for logicalName to set.
-       * @return This builder for chaining.
-       */
-      public Builder setLogicalNameBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        logicalName_ = value;
-        onChanged();
-        return this;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:cn.yingming.grpc1.ReqMsgForPyClient.connectReqPy)
-    }
-
-    // @@protoc_insertion_point(class_scope:cn.yingming.grpc1.ReqMsgForPyClient.connectReqPy)
-    private static final io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy();
-    }
-
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<connectReqPy>
-        PARSER = new com.google.protobuf.AbstractParser<connectReqPy>() {
-      @java.lang.Override
-      public connectReqPy parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new connectReqPy(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<connectReqPy> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<connectReqPy> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public io.grpc.jchannelRpc.ReqMsgForPyClient.connectReqPy getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface disconnectReqPyOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:cn.yingming.grpc1.ReqMsgForPyClient.disconnectReqPy)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>string logical_name = 1;</code>
-     * @return The logicalName.
-     */
-    java.lang.String getLogicalName();
-    /**
-     * <code>string logical_name = 1;</code>
-     * @return The bytes for logicalName.
-     */
-    com.google.protobuf.ByteString
-        getLogicalNameBytes();
+    return io.grpc.jchannelRpc.ConnectReqPy.getDefaultInstance();
   }
   /**
-   * Protobuf type {@code cn.yingming.grpc1.ReqMsgForPyClient.disconnectReqPy}
+   * <code>.cn.yingming.grpc1.ConnectReqPy conReqPy = 1;</code>
    */
-  public static final class disconnectReqPy extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:cn.yingming.grpc1.ReqMsgForPyClient.disconnectReqPy)
-      disconnectReqPyOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use disconnectReqPy.newBuilder() to construct.
-    private disconnectReqPy(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
+  @java.lang.Override
+  public io.grpc.jchannelRpc.ConnectReqPyOrBuilder getConReqPyOrBuilder() {
+    if (oneTypeCase_ == 1) {
+       return (io.grpc.jchannelRpc.ConnectReqPy) oneType_;
     }
-    private disconnectReqPy() {
-      logicalName_ = "";
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new disconnectReqPy();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private disconnectReqPy(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              logicalName_ = s;
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_ReqMsgForPyClient_disconnectReqPy_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_ReqMsgForPyClient_disconnectReqPy_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy.class, io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy.Builder.class);
-    }
-
-    public static final int LOGICAL_NAME_FIELD_NUMBER = 1;
-    private volatile java.lang.Object logicalName_;
-    /**
-     * <code>string logical_name = 1;</code>
-     * @return The logicalName.
-     */
-    @java.lang.Override
-    public java.lang.String getLogicalName() {
-      java.lang.Object ref = logicalName_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        logicalName_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string logical_name = 1;</code>
-     * @return The bytes for logicalName.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getLogicalNameBytes() {
-      java.lang.Object ref = logicalName_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        logicalName_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (!getLogicalNameBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, logicalName_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!getLogicalNameBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, logicalName_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy)) {
-        return super.equals(obj);
-      }
-      io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy other = (io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy) obj;
-
-      if (!getLogicalName()
-          .equals(other.getLogicalName())) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + LOGICAL_NAME_FIELD_NUMBER;
-      hash = (53 * hash) + getLogicalName().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code cn.yingming.grpc1.ReqMsgForPyClient.disconnectReqPy}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:cn.yingming.grpc1.ReqMsgForPyClient.disconnectReqPy)
-        io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPyOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_ReqMsgForPyClient_disconnectReqPy_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_ReqMsgForPyClient_disconnectReqPy_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy.class, io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy.Builder.class);
-      }
-
-      // Construct using io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        logicalName_ = "";
-
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_ReqMsgForPyClient_disconnectReqPy_descriptor;
-      }
-
-      @java.lang.Override
-      public io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy getDefaultInstanceForType() {
-        return io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy build() {
-        io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy buildPartial() {
-        io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy result = new io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy(this);
-        result.logicalName_ = logicalName_;
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy) {
-          return mergeFrom((io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy other) {
-        if (other == io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy.getDefaultInstance()) return this;
-        if (!other.getLogicalName().isEmpty()) {
-          logicalName_ = other.logicalName_;
-          onChanged();
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private java.lang.Object logicalName_ = "";
-      /**
-       * <code>string logical_name = 1;</code>
-       * @return The logicalName.
-       */
-      public java.lang.String getLogicalName() {
-        java.lang.Object ref = logicalName_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          logicalName_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string logical_name = 1;</code>
-       * @return The bytes for logicalName.
-       */
-      public com.google.protobuf.ByteString
-          getLogicalNameBytes() {
-        java.lang.Object ref = logicalName_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          logicalName_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string logical_name = 1;</code>
-       * @param value The logicalName to set.
-       * @return This builder for chaining.
-       */
-      public Builder setLogicalName(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        logicalName_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string logical_name = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearLogicalName() {
-        
-        logicalName_ = getDefaultInstance().getLogicalName();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string logical_name = 1;</code>
-       * @param value The bytes for logicalName to set.
-       * @return This builder for chaining.
-       */
-      public Builder setLogicalNameBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        logicalName_ = value;
-        onChanged();
-        return this;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:cn.yingming.grpc1.ReqMsgForPyClient.disconnectReqPy)
-    }
-
-    // @@protoc_insertion_point(class_scope:cn.yingming.grpc1.ReqMsgForPyClient.disconnectReqPy)
-    private static final io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy();
-    }
-
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<disconnectReqPy>
-        PARSER = new com.google.protobuf.AbstractParser<disconnectReqPy>() {
-      @java.lang.Override
-      public disconnectReqPy parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new disconnectReqPy(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<disconnectReqPy> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<disconnectReqPy> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public io.grpc.jchannelRpc.ReqMsgForPyClient.disconnectReqPy getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    return io.grpc.jchannelRpc.ConnectReqPy.getDefaultInstance();
   }
 
-  public interface messageReqPyOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:cn.yingming.grpc1.ReqMsgForPyClient.messageReqPy)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>int32 type = 1;</code>
-     * @return The type.
-     */
-    int getType();
-
-    /**
-     * <code>string contentStr = 2;</code>
-     * @return The contentStr.
-     */
-    java.lang.String getContentStr();
-    /**
-     * <code>string contentStr = 2;</code>
-     * @return The bytes for contentStr.
-     */
-    com.google.protobuf.ByteString
-        getContentStrBytes();
-
-    /**
-     * <code>bytes contentByte = 3;</code>
-     * @return The contentByte.
-     */
-    com.google.protobuf.ByteString getContentByte();
-
-    /**
-     * <code>string source = 4;</code>
-     * @return The source.
-     */
-    java.lang.String getSource();
-    /**
-     * <code>string source = 4;</code>
-     * @return The bytes for source.
-     */
-    com.google.protobuf.ByteString
-        getSourceBytes();
-
-    /**
-     * <code>string dest = 5;</code>
-     * @return The dest.
-     */
-    java.lang.String getDest();
-    /**
-     * <code>string dest = 5;</code>
-     * @return The bytes for dest.
-     */
-    com.google.protobuf.ByteString
-        getDestBytes();
+  public static final int DISCONREQPY_FIELD_NUMBER = 2;
+  /**
+   * <code>.cn.yingming.grpc1.DisconnectReqPy disconReqPy = 2;</code>
+   * @return Whether the disconReqPy field is set.
+   */
+  @java.lang.Override
+  public boolean hasDisconReqPy() {
+    return oneTypeCase_ == 2;
   }
   /**
-   * Protobuf type {@code cn.yingming.grpc1.ReqMsgForPyClient.messageReqPy}
+   * <code>.cn.yingming.grpc1.DisconnectReqPy disconReqPy = 2;</code>
+   * @return The disconReqPy.
    */
-  public static final class messageReqPy extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:cn.yingming.grpc1.ReqMsgForPyClient.messageReqPy)
-      messageReqPyOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use messageReqPy.newBuilder() to construct.
-    private messageReqPy(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
+  @java.lang.Override
+  public io.grpc.jchannelRpc.DisconnectReqPy getDisconReqPy() {
+    if (oneTypeCase_ == 2) {
+       return (io.grpc.jchannelRpc.DisconnectReqPy) oneType_;
     }
-    private messageReqPy() {
-      contentStr_ = "";
-      contentByte_ = com.google.protobuf.ByteString.EMPTY;
-      source_ = "";
-      dest_ = "";
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new messageReqPy();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private messageReqPy(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 8: {
-
-              type_ = input.readInt32();
-              break;
-            }
-            case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              contentStr_ = s;
-              break;
-            }
-            case 26: {
-
-              contentByte_ = input.readBytes();
-              break;
-            }
-            case 34: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              source_ = s;
-              break;
-            }
-            case 42: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              dest_ = s;
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_ReqMsgForPyClient_messageReqPy_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_ReqMsgForPyClient_messageReqPy_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy.class, io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy.Builder.class);
-    }
-
-    public static final int TYPE_FIELD_NUMBER = 1;
-    private int type_;
-    /**
-     * <code>int32 type = 1;</code>
-     * @return The type.
-     */
-    @java.lang.Override
-    public int getType() {
-      return type_;
-    }
-
-    public static final int CONTENTSTR_FIELD_NUMBER = 2;
-    private volatile java.lang.Object contentStr_;
-    /**
-     * <code>string contentStr = 2;</code>
-     * @return The contentStr.
-     */
-    @java.lang.Override
-    public java.lang.String getContentStr() {
-      java.lang.Object ref = contentStr_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        contentStr_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string contentStr = 2;</code>
-     * @return The bytes for contentStr.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getContentStrBytes() {
-      java.lang.Object ref = contentStr_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        contentStr_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int CONTENTBYTE_FIELD_NUMBER = 3;
-    private com.google.protobuf.ByteString contentByte_;
-    /**
-     * <code>bytes contentByte = 3;</code>
-     * @return The contentByte.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString getContentByte() {
-      return contentByte_;
-    }
-
-    public static final int SOURCE_FIELD_NUMBER = 4;
-    private volatile java.lang.Object source_;
-    /**
-     * <code>string source = 4;</code>
-     * @return The source.
-     */
-    @java.lang.Override
-    public java.lang.String getSource() {
-      java.lang.Object ref = source_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        source_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string source = 4;</code>
-     * @return The bytes for source.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getSourceBytes() {
-      java.lang.Object ref = source_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        source_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int DEST_FIELD_NUMBER = 5;
-    private volatile java.lang.Object dest_;
-    /**
-     * <code>string dest = 5;</code>
-     * @return The dest.
-     */
-    @java.lang.Override
-    public java.lang.String getDest() {
-      java.lang.Object ref = dest_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        dest_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string dest = 5;</code>
-     * @return The bytes for dest.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getDestBytes() {
-      java.lang.Object ref = dest_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        dest_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (type_ != 0) {
-        output.writeInt32(1, type_);
-      }
-      if (!getContentStrBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, contentStr_);
-      }
-      if (!contentByte_.isEmpty()) {
-        output.writeBytes(3, contentByte_);
-      }
-      if (!getSourceBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, source_);
-      }
-      if (!getDestBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, dest_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (type_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, type_);
-      }
-      if (!getContentStrBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, contentStr_);
-      }
-      if (!contentByte_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(3, contentByte_);
-      }
-      if (!getSourceBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, source_);
-      }
-      if (!getDestBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, dest_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy)) {
-        return super.equals(obj);
-      }
-      io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy other = (io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy) obj;
-
-      if (getType()
-          != other.getType()) return false;
-      if (!getContentStr()
-          .equals(other.getContentStr())) return false;
-      if (!getContentByte()
-          .equals(other.getContentByte())) return false;
-      if (!getSource()
-          .equals(other.getSource())) return false;
-      if (!getDest()
-          .equals(other.getDest())) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + TYPE_FIELD_NUMBER;
-      hash = (53 * hash) + getType();
-      hash = (37 * hash) + CONTENTSTR_FIELD_NUMBER;
-      hash = (53 * hash) + getContentStr().hashCode();
-      hash = (37 * hash) + CONTENTBYTE_FIELD_NUMBER;
-      hash = (53 * hash) + getContentByte().hashCode();
-      hash = (37 * hash) + SOURCE_FIELD_NUMBER;
-      hash = (53 * hash) + getSource().hashCode();
-      hash = (37 * hash) + DEST_FIELD_NUMBER;
-      hash = (53 * hash) + getDest().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code cn.yingming.grpc1.ReqMsgForPyClient.messageReqPy}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:cn.yingming.grpc1.ReqMsgForPyClient.messageReqPy)
-        io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPyOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_ReqMsgForPyClient_messageReqPy_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_ReqMsgForPyClient_messageReqPy_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy.class, io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy.Builder.class);
-      }
-
-      // Construct using io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        type_ = 0;
-
-        contentStr_ = "";
-
-        contentByte_ = com.google.protobuf.ByteString.EMPTY;
-
-        source_ = "";
-
-        dest_ = "";
-
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_ReqMsgForPyClient_messageReqPy_descriptor;
-      }
-
-      @java.lang.Override
-      public io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy getDefaultInstanceForType() {
-        return io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy build() {
-        io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy buildPartial() {
-        io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy result = new io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy(this);
-        result.type_ = type_;
-        result.contentStr_ = contentStr_;
-        result.contentByte_ = contentByte_;
-        result.source_ = source_;
-        result.dest_ = dest_;
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy) {
-          return mergeFrom((io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy other) {
-        if (other == io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy.getDefaultInstance()) return this;
-        if (other.getType() != 0) {
-          setType(other.getType());
-        }
-        if (!other.getContentStr().isEmpty()) {
-          contentStr_ = other.contentStr_;
-          onChanged();
-        }
-        if (other.getContentByte() != com.google.protobuf.ByteString.EMPTY) {
-          setContentByte(other.getContentByte());
-        }
-        if (!other.getSource().isEmpty()) {
-          source_ = other.source_;
-          onChanged();
-        }
-        if (!other.getDest().isEmpty()) {
-          dest_ = other.dest_;
-          onChanged();
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private int type_ ;
-      /**
-       * <code>int32 type = 1;</code>
-       * @return The type.
-       */
-      @java.lang.Override
-      public int getType() {
-        return type_;
-      }
-      /**
-       * <code>int32 type = 1;</code>
-       * @param value The type to set.
-       * @return This builder for chaining.
-       */
-      public Builder setType(int value) {
-        
-        type_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 type = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearType() {
-        
-        type_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object contentStr_ = "";
-      /**
-       * <code>string contentStr = 2;</code>
-       * @return The contentStr.
-       */
-      public java.lang.String getContentStr() {
-        java.lang.Object ref = contentStr_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          contentStr_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string contentStr = 2;</code>
-       * @return The bytes for contentStr.
-       */
-      public com.google.protobuf.ByteString
-          getContentStrBytes() {
-        java.lang.Object ref = contentStr_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          contentStr_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string contentStr = 2;</code>
-       * @param value The contentStr to set.
-       * @return This builder for chaining.
-       */
-      public Builder setContentStr(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        contentStr_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string contentStr = 2;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearContentStr() {
-        
-        contentStr_ = getDefaultInstance().getContentStr();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string contentStr = 2;</code>
-       * @param value The bytes for contentStr to set.
-       * @return This builder for chaining.
-       */
-      public Builder setContentStrBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        contentStr_ = value;
-        onChanged();
-        return this;
-      }
-
-      private com.google.protobuf.ByteString contentByte_ = com.google.protobuf.ByteString.EMPTY;
-      /**
-       * <code>bytes contentByte = 3;</code>
-       * @return The contentByte.
-       */
-      @java.lang.Override
-      public com.google.protobuf.ByteString getContentByte() {
-        return contentByte_;
-      }
-      /**
-       * <code>bytes contentByte = 3;</code>
-       * @param value The contentByte to set.
-       * @return This builder for chaining.
-       */
-      public Builder setContentByte(com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        contentByte_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bytes contentByte = 3;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearContentByte() {
-        
-        contentByte_ = getDefaultInstance().getContentByte();
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object source_ = "";
-      /**
-       * <code>string source = 4;</code>
-       * @return The source.
-       */
-      public java.lang.String getSource() {
-        java.lang.Object ref = source_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          source_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string source = 4;</code>
-       * @return The bytes for source.
-       */
-      public com.google.protobuf.ByteString
-          getSourceBytes() {
-        java.lang.Object ref = source_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          source_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string source = 4;</code>
-       * @param value The source to set.
-       * @return This builder for chaining.
-       */
-      public Builder setSource(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        source_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string source = 4;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearSource() {
-        
-        source_ = getDefaultInstance().getSource();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string source = 4;</code>
-       * @param value The bytes for source to set.
-       * @return This builder for chaining.
-       */
-      public Builder setSourceBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        source_ = value;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object dest_ = "";
-      /**
-       * <code>string dest = 5;</code>
-       * @return The dest.
-       */
-      public java.lang.String getDest() {
-        java.lang.Object ref = dest_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          dest_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string dest = 5;</code>
-       * @return The bytes for dest.
-       */
-      public com.google.protobuf.ByteString
-          getDestBytes() {
-        java.lang.Object ref = dest_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          dest_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string dest = 5;</code>
-       * @param value The dest to set.
-       * @return This builder for chaining.
-       */
-      public Builder setDest(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        dest_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string dest = 5;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearDest() {
-        
-        dest_ = getDefaultInstance().getDest();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string dest = 5;</code>
-       * @param value The bytes for dest to set.
-       * @return This builder for chaining.
-       */
-      public Builder setDestBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        dest_ = value;
-        onChanged();
-        return this;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:cn.yingming.grpc1.ReqMsgForPyClient.messageReqPy)
-    }
-
-    // @@protoc_insertion_point(class_scope:cn.yingming.grpc1.ReqMsgForPyClient.messageReqPy)
-    private static final io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy();
-    }
-
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<messageReqPy>
-        PARSER = new com.google.protobuf.AbstractParser<messageReqPy>() {
-      @java.lang.Override
-      public messageReqPy parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new messageReqPy(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<messageReqPy> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<messageReqPy> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public io.grpc.jchannelRpc.ReqMsgForPyClient.messageReqPy getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface StateReqPyOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:cn.yingming.grpc1.ReqMsgForPyClient.StateReqPy)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>string logical_name = 1;</code>
-     * @return The logicalName.
-     */
-    java.lang.String getLogicalName();
-    /**
-     * <code>string logical_name = 1;</code>
-     * @return The bytes for logicalName.
-     */
-    com.google.protobuf.ByteString
-        getLogicalNameBytes();
+    return io.grpc.jchannelRpc.DisconnectReqPy.getDefaultInstance();
   }
   /**
-   * Protobuf type {@code cn.yingming.grpc1.ReqMsgForPyClient.StateReqPy}
+   * <code>.cn.yingming.grpc1.DisconnectReqPy disconReqPy = 2;</code>
    */
-  public static final class StateReqPy extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:cn.yingming.grpc1.ReqMsgForPyClient.StateReqPy)
-      StateReqPyOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use StateReqPy.newBuilder() to construct.
-    private StateReqPy(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
+  @java.lang.Override
+  public io.grpc.jchannelRpc.DisconnectReqPyOrBuilder getDisconReqPyOrBuilder() {
+    if (oneTypeCase_ == 2) {
+       return (io.grpc.jchannelRpc.DisconnectReqPy) oneType_;
     }
-    private StateReqPy() {
-      logicalName_ = "";
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new StateReqPy();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private StateReqPy(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              logicalName_ = s;
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_ReqMsgForPyClient_StateReqPy_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_ReqMsgForPyClient_StateReqPy_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy.class, io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy.Builder.class);
-    }
-
-    public static final int LOGICAL_NAME_FIELD_NUMBER = 1;
-    private volatile java.lang.Object logicalName_;
-    /**
-     * <code>string logical_name = 1;</code>
-     * @return The logicalName.
-     */
-    @java.lang.Override
-    public java.lang.String getLogicalName() {
-      java.lang.Object ref = logicalName_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        logicalName_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string logical_name = 1;</code>
-     * @return The bytes for logicalName.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getLogicalNameBytes() {
-      java.lang.Object ref = logicalName_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        logicalName_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (!getLogicalNameBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, logicalName_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!getLogicalNameBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, logicalName_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy)) {
-        return super.equals(obj);
-      }
-      io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy other = (io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy) obj;
-
-      if (!getLogicalName()
-          .equals(other.getLogicalName())) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + LOGICAL_NAME_FIELD_NUMBER;
-      hash = (53 * hash) + getLogicalName().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code cn.yingming.grpc1.ReqMsgForPyClient.StateReqPy}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:cn.yingming.grpc1.ReqMsgForPyClient.StateReqPy)
-        io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPyOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_ReqMsgForPyClient_StateReqPy_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_ReqMsgForPyClient_StateReqPy_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy.class, io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy.Builder.class);
-      }
-
-      // Construct using io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        logicalName_ = "";
-
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return io.grpc.jchannelRpc.JChannelRpc.internal_static_cn_yingming_grpc1_ReqMsgForPyClient_StateReqPy_descriptor;
-      }
-
-      @java.lang.Override
-      public io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy getDefaultInstanceForType() {
-        return io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy build() {
-        io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy buildPartial() {
-        io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy result = new io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy(this);
-        result.logicalName_ = logicalName_;
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy) {
-          return mergeFrom((io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy other) {
-        if (other == io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy.getDefaultInstance()) return this;
-        if (!other.getLogicalName().isEmpty()) {
-          logicalName_ = other.logicalName_;
-          onChanged();
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private java.lang.Object logicalName_ = "";
-      /**
-       * <code>string logical_name = 1;</code>
-       * @return The logicalName.
-       */
-      public java.lang.String getLogicalName() {
-        java.lang.Object ref = logicalName_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          logicalName_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string logical_name = 1;</code>
-       * @return The bytes for logicalName.
-       */
-      public com.google.protobuf.ByteString
-          getLogicalNameBytes() {
-        java.lang.Object ref = logicalName_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          logicalName_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string logical_name = 1;</code>
-       * @param value The logicalName to set.
-       * @return This builder for chaining.
-       */
-      public Builder setLogicalName(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
+    return io.grpc.jchannelRpc.DisconnectReqPy.getDefaultInstance();
   }
-  
-        logicalName_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string logical_name = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearLogicalName() {
-        
-        logicalName_ = getDefaultInstance().getLogicalName();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string logical_name = 1;</code>
-       * @param value The bytes for logicalName to set.
-       * @return This builder for chaining.
-       */
-      public Builder setLogicalNameBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
+
+  public static final int MSGREQPY_FIELD_NUMBER = 3;
+  /**
+   * <code>.cn.yingming.grpc1.MessageReqPy msgReqPy = 3;</code>
+   * @return Whether the msgReqPy field is set.
+   */
+  @java.lang.Override
+  public boolean hasMsgReqPy() {
+    return oneTypeCase_ == 3;
   }
-  checkByteStringIsUtf8(value);
-        
-        logicalName_ = value;
-        onChanged();
-        return this;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:cn.yingming.grpc1.ReqMsgForPyClient.StateReqPy)
+  /**
+   * <code>.cn.yingming.grpc1.MessageReqPy msgReqPy = 3;</code>
+   * @return The msgReqPy.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.MessageReqPy getMsgReqPy() {
+    if (oneTypeCase_ == 3) {
+       return (io.grpc.jchannelRpc.MessageReqPy) oneType_;
     }
-
-    // @@protoc_insertion_point(class_scope:cn.yingming.grpc1.ReqMsgForPyClient.StateReqPy)
-    private static final io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy();
+    return io.grpc.jchannelRpc.MessageReqPy.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.MessageReqPy msgReqPy = 3;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.MessageReqPyOrBuilder getMsgReqPyOrBuilder() {
+    if (oneTypeCase_ == 3) {
+       return (io.grpc.jchannelRpc.MessageReqPy) oneType_;
     }
-
-    public static io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<StateReqPy>
-        PARSER = new com.google.protobuf.AbstractParser<StateReqPy>() {
-      @java.lang.Override
-      public StateReqPy parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new StateReqPy(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<StateReqPy> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<StateReqPy> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public io.grpc.jchannelRpc.ReqMsgForPyClient.StateReqPy getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    return io.grpc.jchannelRpc.MessageReqPy.getDefaultInstance();
   }
 
   private byte memoizedIsInitialized = -1;
@@ -2881,6 +277,15 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
+    if (oneTypeCase_ == 1) {
+      output.writeMessage(1, (io.grpc.jchannelRpc.ConnectReqPy) oneType_);
+    }
+    if (oneTypeCase_ == 2) {
+      output.writeMessage(2, (io.grpc.jchannelRpc.DisconnectReqPy) oneType_);
+    }
+    if (oneTypeCase_ == 3) {
+      output.writeMessage(3, (io.grpc.jchannelRpc.MessageReqPy) oneType_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -2890,6 +295,18 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
+    if (oneTypeCase_ == 1) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(1, (io.grpc.jchannelRpc.ConnectReqPy) oneType_);
+    }
+    if (oneTypeCase_ == 2) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(2, (io.grpc.jchannelRpc.DisconnectReqPy) oneType_);
+    }
+    if (oneTypeCase_ == 3) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(3, (io.grpc.jchannelRpc.MessageReqPy) oneType_);
+    }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
@@ -2905,6 +322,23 @@ private static final long serialVersionUID = 0L;
     }
     io.grpc.jchannelRpc.ReqMsgForPyClient other = (io.grpc.jchannelRpc.ReqMsgForPyClient) obj;
 
+    if (!getOneTypeCase().equals(other.getOneTypeCase())) return false;
+    switch (oneTypeCase_) {
+      case 1:
+        if (!getConReqPy()
+            .equals(other.getConReqPy())) return false;
+        break;
+      case 2:
+        if (!getDisconReqPy()
+            .equals(other.getDisconReqPy())) return false;
+        break;
+      case 3:
+        if (!getMsgReqPy()
+            .equals(other.getMsgReqPy())) return false;
+        break;
+      case 0:
+      default:
+    }
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -2916,6 +350,22 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
+    switch (oneTypeCase_) {
+      case 1:
+        hash = (37 * hash) + CONREQPY_FIELD_NUMBER;
+        hash = (53 * hash) + getConReqPy().hashCode();
+        break;
+      case 2:
+        hash = (37 * hash) + DISCONREQPY_FIELD_NUMBER;
+        hash = (53 * hash) + getDisconReqPy().hashCode();
+        break;
+      case 3:
+        hash = (37 * hash) + MSGREQPY_FIELD_NUMBER;
+        hash = (53 * hash) + getMsgReqPy().hashCode();
+        break;
+      case 0:
+      default:
+    }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -3012,6 +462,11 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
+   * <pre>
+   * define some message for python-client
+   * some message types for python client
+   * </pre>
+   *
    * Protobuf type {@code cn.yingming.grpc1.ReqMsgForPyClient}
    */
   public static final class Builder extends
@@ -3049,6 +504,8 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      oneTypeCase_ = 0;
+      oneType_ = null;
       return this;
     }
 
@@ -3075,6 +532,28 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public io.grpc.jchannelRpc.ReqMsgForPyClient buildPartial() {
       io.grpc.jchannelRpc.ReqMsgForPyClient result = new io.grpc.jchannelRpc.ReqMsgForPyClient(this);
+      if (oneTypeCase_ == 1) {
+        if (conReqPyBuilder_ == null) {
+          result.oneType_ = oneType_;
+        } else {
+          result.oneType_ = conReqPyBuilder_.build();
+        }
+      }
+      if (oneTypeCase_ == 2) {
+        if (disconReqPyBuilder_ == null) {
+          result.oneType_ = oneType_;
+        } else {
+          result.oneType_ = disconReqPyBuilder_.build();
+        }
+      }
+      if (oneTypeCase_ == 3) {
+        if (msgReqPyBuilder_ == null) {
+          result.oneType_ = oneType_;
+        } else {
+          result.oneType_ = msgReqPyBuilder_.build();
+        }
+      }
+      result.oneTypeCase_ = oneTypeCase_;
       onBuilt();
       return result;
     }
@@ -3123,6 +602,23 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(io.grpc.jchannelRpc.ReqMsgForPyClient other) {
       if (other == io.grpc.jchannelRpc.ReqMsgForPyClient.getDefaultInstance()) return this;
+      switch (other.getOneTypeCase()) {
+        case CONREQPY: {
+          mergeConReqPy(other.getConReqPy());
+          break;
+        }
+        case DISCONREQPY: {
+          mergeDisconReqPy(other.getDisconReqPy());
+          break;
+        }
+        case MSGREQPY: {
+          mergeMsgReqPy(other.getMsgReqPy());
+          break;
+        }
+        case ONETYPE_NOT_SET: {
+          break;
+        }
+      }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
@@ -3150,6 +646,444 @@ private static final long serialVersionUID = 0L;
         }
       }
       return this;
+    }
+    private int oneTypeCase_ = 0;
+    private java.lang.Object oneType_;
+    public OneTypeCase
+        getOneTypeCase() {
+      return OneTypeCase.forNumber(
+          oneTypeCase_);
+    }
+
+    public Builder clearOneType() {
+      oneTypeCase_ = 0;
+      oneType_ = null;
+      onChanged();
+      return this;
+    }
+
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.ConnectReqPy, io.grpc.jchannelRpc.ConnectReqPy.Builder, io.grpc.jchannelRpc.ConnectReqPyOrBuilder> conReqPyBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.ConnectReqPy conReqPy = 1;</code>
+     * @return Whether the conReqPy field is set.
+     */
+    @java.lang.Override
+    public boolean hasConReqPy() {
+      return oneTypeCase_ == 1;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.ConnectReqPy conReqPy = 1;</code>
+     * @return The conReqPy.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.ConnectReqPy getConReqPy() {
+      if (conReqPyBuilder_ == null) {
+        if (oneTypeCase_ == 1) {
+          return (io.grpc.jchannelRpc.ConnectReqPy) oneType_;
+        }
+        return io.grpc.jchannelRpc.ConnectReqPy.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 1) {
+          return conReqPyBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.ConnectReqPy.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.ConnectReqPy conReqPy = 1;</code>
+     */
+    public Builder setConReqPy(io.grpc.jchannelRpc.ConnectReqPy value) {
+      if (conReqPyBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        conReqPyBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 1;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.ConnectReqPy conReqPy = 1;</code>
+     */
+    public Builder setConReqPy(
+        io.grpc.jchannelRpc.ConnectReqPy.Builder builderForValue) {
+      if (conReqPyBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        conReqPyBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 1;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.ConnectReqPy conReqPy = 1;</code>
+     */
+    public Builder mergeConReqPy(io.grpc.jchannelRpc.ConnectReqPy value) {
+      if (conReqPyBuilder_ == null) {
+        if (oneTypeCase_ == 1 &&
+            oneType_ != io.grpc.jchannelRpc.ConnectReqPy.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.ConnectReqPy.newBuilder((io.grpc.jchannelRpc.ConnectReqPy) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 1) {
+          conReqPyBuilder_.mergeFrom(value);
+        }
+        conReqPyBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 1;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.ConnectReqPy conReqPy = 1;</code>
+     */
+    public Builder clearConReqPy() {
+      if (conReqPyBuilder_ == null) {
+        if (oneTypeCase_ == 1) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 1) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        conReqPyBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.ConnectReqPy conReqPy = 1;</code>
+     */
+    public io.grpc.jchannelRpc.ConnectReqPy.Builder getConReqPyBuilder() {
+      return getConReqPyFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.ConnectReqPy conReqPy = 1;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.ConnectReqPyOrBuilder getConReqPyOrBuilder() {
+      if ((oneTypeCase_ == 1) && (conReqPyBuilder_ != null)) {
+        return conReqPyBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 1) {
+          return (io.grpc.jchannelRpc.ConnectReqPy) oneType_;
+        }
+        return io.grpc.jchannelRpc.ConnectReqPy.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.ConnectReqPy conReqPy = 1;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.ConnectReqPy, io.grpc.jchannelRpc.ConnectReqPy.Builder, io.grpc.jchannelRpc.ConnectReqPyOrBuilder> 
+        getConReqPyFieldBuilder() {
+      if (conReqPyBuilder_ == null) {
+        if (!(oneTypeCase_ == 1)) {
+          oneType_ = io.grpc.jchannelRpc.ConnectReqPy.getDefaultInstance();
+        }
+        conReqPyBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.ConnectReqPy, io.grpc.jchannelRpc.ConnectReqPy.Builder, io.grpc.jchannelRpc.ConnectReqPyOrBuilder>(
+                (io.grpc.jchannelRpc.ConnectReqPy) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 1;
+      onChanged();;
+      return conReqPyBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.DisconnectReqPy, io.grpc.jchannelRpc.DisconnectReqPy.Builder, io.grpc.jchannelRpc.DisconnectReqPyOrBuilder> disconReqPyBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.DisconnectReqPy disconReqPy = 2;</code>
+     * @return Whether the disconReqPy field is set.
+     */
+    @java.lang.Override
+    public boolean hasDisconReqPy() {
+      return oneTypeCase_ == 2;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.DisconnectReqPy disconReqPy = 2;</code>
+     * @return The disconReqPy.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.DisconnectReqPy getDisconReqPy() {
+      if (disconReqPyBuilder_ == null) {
+        if (oneTypeCase_ == 2) {
+          return (io.grpc.jchannelRpc.DisconnectReqPy) oneType_;
+        }
+        return io.grpc.jchannelRpc.DisconnectReqPy.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 2) {
+          return disconReqPyBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.DisconnectReqPy.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.DisconnectReqPy disconReqPy = 2;</code>
+     */
+    public Builder setDisconReqPy(io.grpc.jchannelRpc.DisconnectReqPy value) {
+      if (disconReqPyBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        disconReqPyBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 2;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.DisconnectReqPy disconReqPy = 2;</code>
+     */
+    public Builder setDisconReqPy(
+        io.grpc.jchannelRpc.DisconnectReqPy.Builder builderForValue) {
+      if (disconReqPyBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        disconReqPyBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 2;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.DisconnectReqPy disconReqPy = 2;</code>
+     */
+    public Builder mergeDisconReqPy(io.grpc.jchannelRpc.DisconnectReqPy value) {
+      if (disconReqPyBuilder_ == null) {
+        if (oneTypeCase_ == 2 &&
+            oneType_ != io.grpc.jchannelRpc.DisconnectReqPy.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.DisconnectReqPy.newBuilder((io.grpc.jchannelRpc.DisconnectReqPy) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 2) {
+          disconReqPyBuilder_.mergeFrom(value);
+        }
+        disconReqPyBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 2;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.DisconnectReqPy disconReqPy = 2;</code>
+     */
+    public Builder clearDisconReqPy() {
+      if (disconReqPyBuilder_ == null) {
+        if (oneTypeCase_ == 2) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 2) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        disconReqPyBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.DisconnectReqPy disconReqPy = 2;</code>
+     */
+    public io.grpc.jchannelRpc.DisconnectReqPy.Builder getDisconReqPyBuilder() {
+      return getDisconReqPyFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.DisconnectReqPy disconReqPy = 2;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.DisconnectReqPyOrBuilder getDisconReqPyOrBuilder() {
+      if ((oneTypeCase_ == 2) && (disconReqPyBuilder_ != null)) {
+        return disconReqPyBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 2) {
+          return (io.grpc.jchannelRpc.DisconnectReqPy) oneType_;
+        }
+        return io.grpc.jchannelRpc.DisconnectReqPy.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.DisconnectReqPy disconReqPy = 2;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.DisconnectReqPy, io.grpc.jchannelRpc.DisconnectReqPy.Builder, io.grpc.jchannelRpc.DisconnectReqPyOrBuilder> 
+        getDisconReqPyFieldBuilder() {
+      if (disconReqPyBuilder_ == null) {
+        if (!(oneTypeCase_ == 2)) {
+          oneType_ = io.grpc.jchannelRpc.DisconnectReqPy.getDefaultInstance();
+        }
+        disconReqPyBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.DisconnectReqPy, io.grpc.jchannelRpc.DisconnectReqPy.Builder, io.grpc.jchannelRpc.DisconnectReqPyOrBuilder>(
+                (io.grpc.jchannelRpc.DisconnectReqPy) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 2;
+      onChanged();;
+      return disconReqPyBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.MessageReqPy, io.grpc.jchannelRpc.MessageReqPy.Builder, io.grpc.jchannelRpc.MessageReqPyOrBuilder> msgReqPyBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.MessageReqPy msgReqPy = 3;</code>
+     * @return Whether the msgReqPy field is set.
+     */
+    @java.lang.Override
+    public boolean hasMsgReqPy() {
+      return oneTypeCase_ == 3;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.MessageReqPy msgReqPy = 3;</code>
+     * @return The msgReqPy.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.MessageReqPy getMsgReqPy() {
+      if (msgReqPyBuilder_ == null) {
+        if (oneTypeCase_ == 3) {
+          return (io.grpc.jchannelRpc.MessageReqPy) oneType_;
+        }
+        return io.grpc.jchannelRpc.MessageReqPy.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 3) {
+          return msgReqPyBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.MessageReqPy.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.MessageReqPy msgReqPy = 3;</code>
+     */
+    public Builder setMsgReqPy(io.grpc.jchannelRpc.MessageReqPy value) {
+      if (msgReqPyBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        msgReqPyBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 3;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.MessageReqPy msgReqPy = 3;</code>
+     */
+    public Builder setMsgReqPy(
+        io.grpc.jchannelRpc.MessageReqPy.Builder builderForValue) {
+      if (msgReqPyBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        msgReqPyBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 3;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.MessageReqPy msgReqPy = 3;</code>
+     */
+    public Builder mergeMsgReqPy(io.grpc.jchannelRpc.MessageReqPy value) {
+      if (msgReqPyBuilder_ == null) {
+        if (oneTypeCase_ == 3 &&
+            oneType_ != io.grpc.jchannelRpc.MessageReqPy.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.MessageReqPy.newBuilder((io.grpc.jchannelRpc.MessageReqPy) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 3) {
+          msgReqPyBuilder_.mergeFrom(value);
+        }
+        msgReqPyBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 3;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.MessageReqPy msgReqPy = 3;</code>
+     */
+    public Builder clearMsgReqPy() {
+      if (msgReqPyBuilder_ == null) {
+        if (oneTypeCase_ == 3) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 3) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        msgReqPyBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.MessageReqPy msgReqPy = 3;</code>
+     */
+    public io.grpc.jchannelRpc.MessageReqPy.Builder getMsgReqPyBuilder() {
+      return getMsgReqPyFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.MessageReqPy msgReqPy = 3;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.MessageReqPyOrBuilder getMsgReqPyOrBuilder() {
+      if ((oneTypeCase_ == 3) && (msgReqPyBuilder_ != null)) {
+        return msgReqPyBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 3) {
+          return (io.grpc.jchannelRpc.MessageReqPy) oneType_;
+        }
+        return io.grpc.jchannelRpc.MessageReqPy.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.MessageReqPy msgReqPy = 3;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.MessageReqPy, io.grpc.jchannelRpc.MessageReqPy.Builder, io.grpc.jchannelRpc.MessageReqPyOrBuilder> 
+        getMsgReqPyFieldBuilder() {
+      if (msgReqPyBuilder_ == null) {
+        if (!(oneTypeCase_ == 3)) {
+          oneType_ = io.grpc.jchannelRpc.MessageReqPy.getDefaultInstance();
+        }
+        msgReqPyBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.MessageReqPy, io.grpc.jchannelRpc.MessageReqPy.Builder, io.grpc.jchannelRpc.MessageReqPyOrBuilder>(
+                (io.grpc.jchannelRpc.MessageReqPy) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 3;
+      onChanged();;
+      return msgReqPyBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(
