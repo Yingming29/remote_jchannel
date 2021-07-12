@@ -137,7 +137,7 @@ public class NodeServer {
                                     generated_address + ", and logical name : " + generated_name);
                         }
                         // 2. Store the responseObserver of the client. Map<Address, streamObserver>
-                        join(req.getConnectRequest(), responseObserver, generated_address, generated_name);
+                        join(responseObserver, generated_address, generated_name);
                         // 3. forward the connect request with generated Address and generated logical name to other nodes for storing
                         ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
                         UUID u = (UUID) generated_address;
@@ -516,7 +516,7 @@ public class NodeServer {
                                 }
                             }
                             // 2. Store the responseObserver of the client. Map<Address, streamObserver>
-                            join(req.getConnectRequest(), responseObserver, generated_address, generated_name);
+                            joinPy(responseObserver, generated_address, generated_name);
                             // 3. forward the connect request with generated Address and generated logical name to other nodes for storing
                             ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
                             UUID u = (UUID) generated_address;
@@ -525,11 +525,12 @@ public class NodeServer {
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                            ConnectReq conReqWithAddress = ConnectReq.newBuilder()
-                                    .setJchannAddressByte(ByteString.copyFrom(out.buffer()))
+                            ConnectReqPy conReq = ConnectReqPy.newBuilder()
+                                    .setAddress(ByteString.copyFrom(out.buffer()))
                                     .setLogicalName(generated_name)
                                     .build();
-                            Request reqForward = Request.newBuilder().setConnectRequest(conReqWithAddress).build();
+                            ReqMsgForPyClient subMsg = ReqMsgForPyClient.newBuilder().setConReqPy(conReq).build();
+                            Request reqForward = Request.newBuilder().setPyReqMsg(subMsg).build();
                             forwardMsg(reqForward);
                             // 4. store the generated Address and logcial to this node's NameCache
                             NameCache.add(generated_address, generated_name);
@@ -613,7 +614,7 @@ public class NodeServer {
                 Response rep_pyServerView = Response.newBuilder().setPyRepMsg(pyRep2).build();
                 unicastRep(rep_pyServerView, generated_address);
                 System.out.println("[gRPC-Server] Return a message for the JChannel-Server view.");
-                System.out.println(rep_broView);
+                System.out.println(rep_pyServerView);
             }
             // 3. run finally, confirm the lock will be unlock.
             finally {
@@ -673,7 +674,7 @@ public class NodeServer {
             responseObserver.onCompleted();
         }
 
-        protected void join(ConnectReq req, StreamObserver<Response> responseObserver, Address generated_address, String generated_name){
+        protected void join(StreamObserver<Response> responseObserver, Address generated_address, String generated_name){
             // 1. get lock
             lock.lock();
             // 2. critical section,
@@ -734,6 +735,17 @@ public class NodeServer {
             finally {
                 // remember unlock
                 lock.unlock();
+            }
+        }
+        protected void broadcastResponsePy(Response rep){
+            System.out.println("[gRPC-Server] Broadcast this message to all Python clients connecting to this server.");
+            if (py_clients.size() != 0){
+                for (Address u : py_clients.keySet()){
+                    clients.get(u).onNext(rep);
+                }
+                System.out.println(rep);
+            } else {
+                System.out.println("[gRPC-Server] The size of connecting Python clients is 0.");
             }
         }
 

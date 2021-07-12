@@ -427,26 +427,26 @@ public final class JChannelRpc {
       "yH\000\0227\n\014serverViewPy\030\006 \001(\0132\037.cn.yingming." +
       "grpc1.ServerViewPyH\000\0225\n\013updateAddPy\030\007 \001(" +
       "\0132\036.cn.yingming.grpc1.UpdateAddPyH\000B\t\n\007o" +
-      "neType\"7\n\014ConnectReqPy\022\021\n\treconnect\030\001 \001(" +
-      "\010\022\024\n\014logical_name\030\002 \001(\t\"\'\n\017DisconnectReq" +
-      "Py\022\024\n\014logical_name\030\001 \001(\t\"@\n\014MessageReqPy" +
-      "\022\016\n\006source\030\001 \001(\t\022\014\n\004dest\030\002 \001(\t\022\022\n\nconten" +
-      "tStr\030\003 \001(\t\"4\n\014ConnectRepPy\022\016\n\006result\030\001 \001" +
-      "(\010\022\024\n\014logical_name\030\002 \001(\t\"!\n\017DisconnectRe" +
-      "pPy\022\016\n\006result\030\001 \001(\010\"2\n\014MessageRepPy\022\016\n\006s" +
-      "ource\030\001 \001(\t\022\022\n\ncontentStr\030\003 \001(\t\"O\n\014Clien" +
-      "tViewPy\022\013\n\003num\030\001 \001(\005\022\017\n\007members\030\002 \003(\t\022\023\n" +
-      "\013coordinator\030\003 \001(\t\022\014\n\004size\030\004 \001(\005\"O\n\014Serv" +
-      "erViewPy\022\013\n\003num\030\001 \001(\005\022\017\n\007members\030\002 \003(\t\022\023" +
-      "\n\013coordinator\030\003 \001(\t\022\014\n\004size\030\004 \001(\005\" \n\013Upd" +
-      "ateAddPy\022\021\n\taddresses\030\001 \001(\t\"(\n\nStateRepP" +
-      "y\022\014\n\004size\030\001 \001(\005\022\014\n\004line\030\002 \003(\t2\233\001\n\020JChann" +
-      "elsService\022H\n\007connect\022\032.cn.yingming.grpc" +
-      "1.Request\032\033.cn.yingming.grpc1.Response\"\000" +
-      "(\0010\001\022=\n\003ask\022\031.cn.yingming.grpc1.ReqAsk\032\031" +
-      ".cn.yingming.grpc1.RepAsk\"\000B/\n\023io.grpc.j" +
-      "channelRpcB\013JChannelRpcP\001\242\002\010YINGMINGb\006pr" +
-      "oto3"
+      "neType\"H\n\014ConnectReqPy\022\021\n\treconnect\030\001 \001(" +
+      "\010\022\024\n\014logical_name\030\002 \001(\t\022\017\n\007address\030\003 \001(\014" +
+      "\"\'\n\017DisconnectReqPy\022\024\n\014logical_name\030\001 \001(" +
+      "\t\"@\n\014MessageReqPy\022\016\n\006source\030\001 \001(\t\022\014\n\004des" +
+      "t\030\002 \001(\t\022\022\n\ncontentStr\030\003 \001(\t\"4\n\014ConnectRe" +
+      "pPy\022\016\n\006result\030\001 \001(\010\022\024\n\014logical_name\030\002 \001(" +
+      "\t\"!\n\017DisconnectRepPy\022\016\n\006result\030\001 \001(\010\"2\n\014" +
+      "MessageRepPy\022\016\n\006source\030\001 \001(\t\022\022\n\ncontentS" +
+      "tr\030\003 \001(\t\"O\n\014ClientViewPy\022\013\n\003num\030\001 \001(\005\022\017\n" +
+      "\007members\030\002 \003(\t\022\023\n\013coordinator\030\003 \001(\t\022\014\n\004s" +
+      "ize\030\004 \001(\005\"O\n\014ServerViewPy\022\013\n\003num\030\001 \001(\005\022\017" +
+      "\n\007members\030\002 \003(\t\022\023\n\013coordinator\030\003 \001(\t\022\014\n\004" +
+      "size\030\004 \001(\005\" \n\013UpdateAddPy\022\021\n\taddresses\030\001" +
+      " \001(\t\"(\n\nStateRepPy\022\014\n\004size\030\001 \001(\005\022\014\n\004line" +
+      "\030\002 \003(\t2\233\001\n\020JChannelsService\022H\n\007connect\022\032" +
+      ".cn.yingming.grpc1.Request\032\033.cn.yingming" +
+      ".grpc1.Response\"\000(\0010\001\022=\n\003ask\022\031.cn.yingmi" +
+      "ng.grpc1.ReqAsk\032\031.cn.yingming.grpc1.RepA" +
+      "sk\"\000B/\n\023io.grpc.jchannelRpcB\013JChannelRpc" +
+      "P\001\242\002\010YINGMINGb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -727,7 +727,7 @@ public final class JChannelRpc {
     internal_static_cn_yingming_grpc1_ConnectReqPy_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_cn_yingming_grpc1_ConnectReqPy_descriptor,
-        new java.lang.String[] { "Reconnect", "LogicalName", });
+        new java.lang.String[] { "Reconnect", "LogicalName", "Address", });
     internal_static_cn_yingming_grpc1_DisconnectReqPy_descriptor =
       getDescriptor().getMessageTypes().get(46);
     internal_static_cn_yingming_grpc1_DisconnectReqPy_fieldAccessorTable = new

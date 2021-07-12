@@ -556,6 +556,33 @@ public class NodeJChannel implements Receiver{
         }
         System.out.println("[JChannel-Server] Send the grpc address(" + this.grpcAddress + ") of this JChannel-Server to cluster .");
     }
+    public void connectClusterPy(String cluster, Address address, String name){
+        lock.lock();
+        try{
+            // create the cluster or connect an existing cluster.
+            System.out.println("[gRPC-Server] " + address + "(" +  name + ") connects to client cluster: " + cluster);
+            // create new cluster object and set it as the creator
+            ClusterMap clusterObj = this.serviceMap.get("ClientCluster");
+            clusterObj.getMap().put(address, name);
+            clusterObj.addMember(address);
+            clusterObj.addViewNum();
+            NameCache.add(address, name);
+            UpdateNameCacheRep updateName = this.service.generateNameCacheMsg();
+            Response rep = Response.newBuilder().setUpdateNameCache(updateName).build();
+            // here, the two broadcast()'s target is different, broadcastView() has a specific client-client.
+            this.service.broadcastResponse(rep);
+            System.out.println("[gRPC-Server] Return a message for updating NameCache.");
+            ViewRep viewRep= clusterObj.generateView();
+            System.out.println("[gRPC-Server] Return a message for Client view.");
+            this.service.broadcastView(viewRep);
+            // python client part
+
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+    }
     // add view action and forward
     public void connectCluster(String cluster, Address address, String name){
         lock.lock();

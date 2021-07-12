@@ -17,6 +17,7 @@ private static final long serialVersionUID = 0L;
   }
   private ConnectReqPy() {
     logicalName_ = "";
+    address_ = com.google.protobuf.ByteString.EMPTY;
   }
 
   @java.lang.Override
@@ -58,6 +59,11 @@ private static final long serialVersionUID = 0L;
             java.lang.String s = input.readStringRequireUtf8();
 
             logicalName_ = s;
+            break;
+          }
+          case 26: {
+
+            address_ = input.readBytes();
             break;
           }
           default: {
@@ -141,6 +147,17 @@ private static final long serialVersionUID = 0L;
     }
   }
 
+  public static final int ADDRESS_FIELD_NUMBER = 3;
+  private com.google.protobuf.ByteString address_;
+  /**
+   * <code>bytes address = 3;</code>
+   * @return The address.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString getAddress() {
+    return address_;
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -161,6 +178,9 @@ private static final long serialVersionUID = 0L;
     if (!getLogicalNameBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, logicalName_);
     }
+    if (!address_.isEmpty()) {
+      output.writeBytes(3, address_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -176,6 +196,10 @@ private static final long serialVersionUID = 0L;
     }
     if (!getLogicalNameBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, logicalName_);
+    }
+    if (!address_.isEmpty()) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeBytesSize(3, address_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -196,6 +220,8 @@ private static final long serialVersionUID = 0L;
         != other.getReconnect()) return false;
     if (!getLogicalName()
         .equals(other.getLogicalName())) return false;
+    if (!getAddress()
+        .equals(other.getAddress())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -212,6 +238,8 @@ private static final long serialVersionUID = 0L;
         getReconnect());
     hash = (37 * hash) + LOGICAL_NAME_FIELD_NUMBER;
     hash = (53 * hash) + getLogicalName().hashCode();
+    hash = (37 * hash) + ADDRESS_FIELD_NUMBER;
+    hash = (53 * hash) + getAddress().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -349,6 +377,8 @@ private static final long serialVersionUID = 0L;
 
       logicalName_ = "";
 
+      address_ = com.google.protobuf.ByteString.EMPTY;
+
       return this;
     }
 
@@ -377,6 +407,7 @@ private static final long serialVersionUID = 0L;
       io.grpc.jchannelRpc.ConnectReqPy result = new io.grpc.jchannelRpc.ConnectReqPy(this);
       result.reconnect_ = reconnect_;
       result.logicalName_ = logicalName_;
+      result.address_ = address_;
       onBuilt();
       return result;
     }
@@ -431,6 +462,9 @@ private static final long serialVersionUID = 0L;
       if (!other.getLogicalName().isEmpty()) {
         logicalName_ = other.logicalName_;
         onChanged();
+      }
+      if (other.getAddress() != com.google.protobuf.ByteString.EMPTY) {
+        setAddress(other.getAddress());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -564,6 +598,40 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       
       logicalName_ = value;
+      onChanged();
+      return this;
+    }
+
+    private com.google.protobuf.ByteString address_ = com.google.protobuf.ByteString.EMPTY;
+    /**
+     * <code>bytes address = 3;</code>
+     * @return The address.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString getAddress() {
+      return address_;
+    }
+    /**
+     * <code>bytes address = 3;</code>
+     * @param value The address to set.
+     * @return This builder for chaining.
+     */
+    public Builder setAddress(com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      address_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>bytes address = 3;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearAddress() {
+      
+      address_ = getDefaultInstance().getAddress();
       onChanged();
       return this;
     }

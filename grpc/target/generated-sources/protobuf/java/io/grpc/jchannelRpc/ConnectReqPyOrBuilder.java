@@ -24,4 +24,10 @@ public interface ConnectReqPyOrBuilder extends
    */
   com.google.protobuf.ByteString
       getLogicalNameBytes();
+
+  /**
+   * <code>bytes address = 3;</code>
+   * @return The address.
+   */
+  com.google.protobuf.ByteString getAddress();
 }
