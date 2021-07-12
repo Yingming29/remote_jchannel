@@ -29,6 +29,7 @@ message Request{
     GetDiscardOwnMsgReq getDiscardOwnMsgReq = 16;
     GetStateReq getStateReq = 17;
     IsStateReq isStateReq = 18;
+    ReqMsgForPyClient pyReqMsg = 19; // The message contains some sub-messages for request, which are used for python client.
   }
 }
 message Response{
@@ -53,6 +54,7 @@ message Response{
     GetDiscardOwnMsgRep getDiscardOwnRep = 20;
     GetStateRep getStateRep = 21;
     IsStateRep isStateRep = 22;
+    RepMsgForPyClient pyRepMsg = 23; // The message contains some sub-messages for response, which are used for python client.
   }
 }
 message IsStateReq{
@@ -211,6 +213,58 @@ message StateRep{
   bytes jchannel_address = 1;
   bytes state = 2;
   bytes target = 3;
+}
+
+message ReqMsgForPyClient{
+  message connectReqPy{
+    bool reconnect = 1;
+    string logical_name = 2;
+  }
+  message disconnectReqPy{
+    string logical_name = 1;
+  }
+  message messageReqPy{
+    int32 type = 1;
+    string contentStr = 2;
+    bytes contentByte = 3;
+    string source = 4;
+    string dest = 5;
+  }
+  message StateReqPy{
+    string logical_name = 1;
+  }
+}
+
+message RepMsgForPyClient{
+  message connectRepPy{
+    bool result = 1;
+    string logical_name = 2;
+  }
+  message disconnectRepPy{
+    bool result = 1;
+  }
+  message messageRepPy{
+    int32 type = 1;
+    string source = 2;
+    string contentStr = 3;
+    bytes contentByte = 4;
+  }
+  message clientViewPy{
+    int32 num = 1;
+    string members = 2;
+    string coordinator = 3;
+  }
+  message serverViewPy{
+    int32 num = 1;
+    string members = 2;
+    string coordinator = 3;
+  }
+  message UpdateAddPy{
+    string addresses = 1;
+  }
+  message StateRepPy{
+    repeated string line = 1;
+  }
 }
 
 

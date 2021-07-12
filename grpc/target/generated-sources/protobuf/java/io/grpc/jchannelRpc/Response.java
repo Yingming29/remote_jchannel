@@ -328,6 +328,20 @@ private static final long serialVersionUID = 0L;
             oneTypeCase_ = 22;
             break;
           }
+          case 186: {
+            io.grpc.jchannelRpc.RepMsgForPyClient.Builder subBuilder = null;
+            if (oneTypeCase_ == 23) {
+              subBuilder = ((io.grpc.jchannelRpc.RepMsgForPyClient) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.RepMsgForPyClient.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.RepMsgForPyClient) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 23;
+            break;
+          }
           default: {
             if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -385,6 +399,7 @@ private static final long serialVersionUID = 0L;
     GETDISCARDOWNREP(20),
     GETSTATEREP(21),
     ISSTATEREP(22),
+    PYREPMSG(23),
     ONETYPE_NOT_SET(0);
     private final int value;
     private OneTypeCase(int value) {
@@ -422,6 +437,7 @@ private static final long serialVersionUID = 0L;
         case 20: return GETDISCARDOWNREP;
         case 21: return GETSTATEREP;
         case 22: return ISSTATEREP;
+        case 23: return PYREPMSG;
         case 0: return ONETYPE_NOT_SET;
         default: return null;
       }
@@ -1105,6 +1121,49 @@ private static final long serialVersionUID = 0L;
     return io.grpc.jchannelRpc.IsStateRep.getDefaultInstance();
   }
 
+  public static final int PYREPMSG_FIELD_NUMBER = 23;
+  /**
+   * <pre>
+   * The message contains some sub-messages for response, which are used for python client.
+   * </pre>
+   *
+   * <code>.cn.yingming.grpc1.RepMsgForPyClient pyRepMsg = 23;</code>
+   * @return Whether the pyRepMsg field is set.
+   */
+  @java.lang.Override
+  public boolean hasPyRepMsg() {
+    return oneTypeCase_ == 23;
+  }
+  /**
+   * <pre>
+   * The message contains some sub-messages for response, which are used for python client.
+   * </pre>
+   *
+   * <code>.cn.yingming.grpc1.RepMsgForPyClient pyRepMsg = 23;</code>
+   * @return The pyRepMsg.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.RepMsgForPyClient getPyRepMsg() {
+    if (oneTypeCase_ == 23) {
+       return (io.grpc.jchannelRpc.RepMsgForPyClient) oneType_;
+    }
+    return io.grpc.jchannelRpc.RepMsgForPyClient.getDefaultInstance();
+  }
+  /**
+   * <pre>
+   * The message contains some sub-messages for response, which are used for python client.
+   * </pre>
+   *
+   * <code>.cn.yingming.grpc1.RepMsgForPyClient pyRepMsg = 23;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.RepMsgForPyClientOrBuilder getPyRepMsgOrBuilder() {
+    if (oneTypeCase_ == 23) {
+       return (io.grpc.jchannelRpc.RepMsgForPyClient) oneType_;
+    }
+    return io.grpc.jchannelRpc.RepMsgForPyClient.getDefaultInstance();
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -1178,6 +1237,9 @@ private static final long serialVersionUID = 0L;
     }
     if (oneTypeCase_ == 22) {
       output.writeMessage(22, (io.grpc.jchannelRpc.IsStateRep) oneType_);
+    }
+    if (oneTypeCase_ == 23) {
+      output.writeMessage(23, (io.grpc.jchannelRpc.RepMsgForPyClient) oneType_);
     }
     unknownFields.writeTo(output);
   }
@@ -1267,6 +1329,10 @@ private static final long serialVersionUID = 0L;
     if (oneTypeCase_ == 22) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(22, (io.grpc.jchannelRpc.IsStateRep) oneType_);
+    }
+    if (oneTypeCase_ == 23) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(23, (io.grpc.jchannelRpc.RepMsgForPyClient) oneType_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -1365,6 +1431,10 @@ private static final long serialVersionUID = 0L;
         if (!getIsStateRep()
             .equals(other.getIsStateRep())) return false;
         break;
+      case 23:
+        if (!getPyRepMsg()
+            .equals(other.getPyRepMsg())) return false;
+        break;
       case 0:
       default:
     }
@@ -1459,6 +1529,10 @@ private static final long serialVersionUID = 0L;
       case 22:
         hash = (37 * hash) + ISSTATEREP_FIELD_NUMBER;
         hash = (53 * hash) + getIsStateRep().hashCode();
+        break;
+      case 23:
+        hash = (37 * hash) + PYREPMSG_FIELD_NUMBER;
+        hash = (53 * hash) + getPyRepMsg().hashCode();
         break;
       case 0:
       default:
@@ -1764,6 +1838,13 @@ private static final long serialVersionUID = 0L;
           result.oneType_ = isStateRepBuilder_.build();
         }
       }
+      if (oneTypeCase_ == 23) {
+        if (pyRepMsgBuilder_ == null) {
+          result.oneType_ = oneType_;
+        } else {
+          result.oneType_ = pyRepMsgBuilder_.build();
+        }
+      }
       result.oneTypeCase_ = oneTypeCase_;
       onBuilt();
       return result;
@@ -1892,6 +1973,10 @@ private static final long serialVersionUID = 0L;
         }
         case ISSTATEREP: {
           mergeIsStateRep(other.getIsStateRep());
+          break;
+        }
+        case PYREPMSG: {
+          mergePyRepMsg(other.getPyRepMsg());
           break;
         }
         case ONETYPE_NOT_SET: {
@@ -4904,6 +4989,183 @@ private static final long serialVersionUID = 0L;
       oneTypeCase_ = 22;
       onChanged();;
       return isStateRepBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.RepMsgForPyClient, io.grpc.jchannelRpc.RepMsgForPyClient.Builder, io.grpc.jchannelRpc.RepMsgForPyClientOrBuilder> pyRepMsgBuilder_;
+    /**
+     * <pre>
+     * The message contains some sub-messages for response, which are used for python client.
+     * </pre>
+     *
+     * <code>.cn.yingming.grpc1.RepMsgForPyClient pyRepMsg = 23;</code>
+     * @return Whether the pyRepMsg field is set.
+     */
+    @java.lang.Override
+    public boolean hasPyRepMsg() {
+      return oneTypeCase_ == 23;
+    }
+    /**
+     * <pre>
+     * The message contains some sub-messages for response, which are used for python client.
+     * </pre>
+     *
+     * <code>.cn.yingming.grpc1.RepMsgForPyClient pyRepMsg = 23;</code>
+     * @return The pyRepMsg.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.RepMsgForPyClient getPyRepMsg() {
+      if (pyRepMsgBuilder_ == null) {
+        if (oneTypeCase_ == 23) {
+          return (io.grpc.jchannelRpc.RepMsgForPyClient) oneType_;
+        }
+        return io.grpc.jchannelRpc.RepMsgForPyClient.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 23) {
+          return pyRepMsgBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.RepMsgForPyClient.getDefaultInstance();
+      }
+    }
+    /**
+     * <pre>
+     * The message contains some sub-messages for response, which are used for python client.
+     * </pre>
+     *
+     * <code>.cn.yingming.grpc1.RepMsgForPyClient pyRepMsg = 23;</code>
+     */
+    public Builder setPyRepMsg(io.grpc.jchannelRpc.RepMsgForPyClient value) {
+      if (pyRepMsgBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        pyRepMsgBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 23;
+      return this;
+    }
+    /**
+     * <pre>
+     * The message contains some sub-messages for response, which are used for python client.
+     * </pre>
+     *
+     * <code>.cn.yingming.grpc1.RepMsgForPyClient pyRepMsg = 23;</code>
+     */
+    public Builder setPyRepMsg(
+        io.grpc.jchannelRpc.RepMsgForPyClient.Builder builderForValue) {
+      if (pyRepMsgBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        pyRepMsgBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 23;
+      return this;
+    }
+    /**
+     * <pre>
+     * The message contains some sub-messages for response, which are used for python client.
+     * </pre>
+     *
+     * <code>.cn.yingming.grpc1.RepMsgForPyClient pyRepMsg = 23;</code>
+     */
+    public Builder mergePyRepMsg(io.grpc.jchannelRpc.RepMsgForPyClient value) {
+      if (pyRepMsgBuilder_ == null) {
+        if (oneTypeCase_ == 23 &&
+            oneType_ != io.grpc.jchannelRpc.RepMsgForPyClient.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.RepMsgForPyClient.newBuilder((io.grpc.jchannelRpc.RepMsgForPyClient) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 23) {
+          pyRepMsgBuilder_.mergeFrom(value);
+        }
+        pyRepMsgBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 23;
+      return this;
+    }
+    /**
+     * <pre>
+     * The message contains some sub-messages for response, which are used for python client.
+     * </pre>
+     *
+     * <code>.cn.yingming.grpc1.RepMsgForPyClient pyRepMsg = 23;</code>
+     */
+    public Builder clearPyRepMsg() {
+      if (pyRepMsgBuilder_ == null) {
+        if (oneTypeCase_ == 23) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 23) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        pyRepMsgBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * The message contains some sub-messages for response, which are used for python client.
+     * </pre>
+     *
+     * <code>.cn.yingming.grpc1.RepMsgForPyClient pyRepMsg = 23;</code>
+     */
+    public io.grpc.jchannelRpc.RepMsgForPyClient.Builder getPyRepMsgBuilder() {
+      return getPyRepMsgFieldBuilder().getBuilder();
+    }
+    /**
+     * <pre>
+     * The message contains some sub-messages for response, which are used for python client.
+     * </pre>
+     *
+     * <code>.cn.yingming.grpc1.RepMsgForPyClient pyRepMsg = 23;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.RepMsgForPyClientOrBuilder getPyRepMsgOrBuilder() {
+      if ((oneTypeCase_ == 23) && (pyRepMsgBuilder_ != null)) {
+        return pyRepMsgBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 23) {
+          return (io.grpc.jchannelRpc.RepMsgForPyClient) oneType_;
+        }
+        return io.grpc.jchannelRpc.RepMsgForPyClient.getDefaultInstance();
+      }
+    }
+    /**
+     * <pre>
+     * The message contains some sub-messages for response, which are used for python client.
+     * </pre>
+     *
+     * <code>.cn.yingming.grpc1.RepMsgForPyClient pyRepMsg = 23;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.RepMsgForPyClient, io.grpc.jchannelRpc.RepMsgForPyClient.Builder, io.grpc.jchannelRpc.RepMsgForPyClientOrBuilder> 
+        getPyRepMsgFieldBuilder() {
+      if (pyRepMsgBuilder_ == null) {
+        if (!(oneTypeCase_ == 23)) {
+          oneType_ = io.grpc.jchannelRpc.RepMsgForPyClient.getDefaultInstance();
+        }
+        pyRepMsgBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.RepMsgForPyClient, io.grpc.jchannelRpc.RepMsgForPyClient.Builder, io.grpc.jchannelRpc.RepMsgForPyClientOrBuilder>(
+                (io.grpc.jchannelRpc.RepMsgForPyClient) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 23;
+      onChanged();;
+      return pyRepMsgBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

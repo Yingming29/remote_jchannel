@@ -355,5 +355,32 @@ public interface ResponseOrBuilder extends
    */
   io.grpc.jchannelRpc.IsStateRepOrBuilder getIsStateRepOrBuilder();
 
+  /**
+   * <pre>
+   * The message contains some sub-messages for response, which are used for python client.
+   * </pre>
+   *
+   * <code>.cn.yingming.grpc1.RepMsgForPyClient pyRepMsg = 23;</code>
+   * @return Whether the pyRepMsg field is set.
+   */
+  boolean hasPyRepMsg();
+  /**
+   * <pre>
+   * The message contains some sub-messages for response, which are used for python client.
+   * </pre>
+   *
+   * <code>.cn.yingming.grpc1.RepMsgForPyClient pyRepMsg = 23;</code>
+   * @return The pyRepMsg.
+   */
+  io.grpc.jchannelRpc.RepMsgForPyClient getPyRepMsg();
+  /**
+   * <pre>
+   * The message contains some sub-messages for response, which are used for python client.
+   * </pre>
+   *
+   * <code>.cn.yingming.grpc1.RepMsgForPyClient pyRepMsg = 23;</code>
+   */
+  io.grpc.jchannelRpc.RepMsgForPyClientOrBuilder getPyRepMsgOrBuilder();
+
   public io.grpc.jchannelRpc.Response.OneTypeCase getOneTypeCase();
 }

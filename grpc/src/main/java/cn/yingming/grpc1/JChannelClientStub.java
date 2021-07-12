@@ -209,8 +209,8 @@ public class JChannelClientStub {
             } finally {
                 this.stubLock.unlock();
             }
-            System.out.println("[Stub]: Receive the connect response with generated Address, logical name = " +
-                    this.client.jchannel_address);
+            System.out.println("[Client Stub]: Receive the connect response with generated Address, logical name = " +
+                    this.client.jchannel_address + " from a server with grpc address: " + this.client.grpc_address);
             synchronized (this.client.down) {
                 this.client.down.notify();
             }
@@ -543,7 +543,7 @@ public class JChannelClientStub {
                 .setJchannAddressByte(ByteString.copyFrom(out.buffer()))
                 .setReconnect(true)
                 .build();
-        System.out.println("Reconnect msg:" + joinReq);
+        // System.out.println("Reconnect msg:" + joinReq);
         Request req = Request.newBuilder()
                 .setConnectRequest(joinReq)
                 .build();
@@ -553,7 +553,7 @@ public class JChannelClientStub {
     private boolean reconnect() {
         int count = 0;
         if (this.serverList.size() == 0){
-            System.out.println("The available server list is null. Cannot select new address of node.");
+            System.out.println("[Client Stub]The available server list is null. Cannot select new address of node.");
             this.stubLock.lock();
             try{
                 this.client.down.set(false);
@@ -609,11 +609,11 @@ public class JChannelClientStub {
                 stub.observer = startGrpc(this.isWork, this.stub.client);
                 // The first connect
                 if (!down.get() && !isWork.get()){
-                    System.out.println("first connection");
+                    System.out.println("[Client Stub]: This is the first connection to a server.");
                     connectCluster(stub.observer);
                 } else{
                     // reconnection to other server with correct Address
-                    System.out.println("not first connection");
+                    System.out.println("[Client Stub]: This is a reconnection to a server.");
                     reconnectCluster(stub.observer);
                 }
                 // wait for result
