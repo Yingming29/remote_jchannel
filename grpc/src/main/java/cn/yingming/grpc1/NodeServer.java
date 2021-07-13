@@ -481,6 +481,18 @@ public class NodeServer {
                         } else if (!(clients.containsKey(dest) && !(jchannel.channel.getView().containsMember(dest)))){
                             System.out.println("[gRPC-Server] The Message will be unicast to a client connecting to other server.");
                             forwadMsgToServer(req.getMessageReqRep());
+                        } else if (py_clients.containsKey(dest)) {
+                            if (msgObj.getType() == 3 && msgObj.getObject() instanceof String){
+                                System.out.println("1");
+                                unicastPy(msgObj.getSrc().toString(), msgObj.getObject().toString(), msgObj.getDest());
+                            } else if (msgObj.getType() == 3 && !(msgObj.getObject() instanceof String)){
+                                System.out.println("2");
+                                unicastPy(msgObj.getSrc().toString(), msgObj.getObject().toString(), msgObj.getDest());
+                            } else {
+                                System.out.println("3");
+                                unicastPy(msgObj.getSrc().toString(), msgObj.getObject().toString(), msgObj.getDest());
+                            }
+                            System.out.println("[gRPC-Server] The Message will be unicast to a Python Client.");
                         } else {
                             System.out.println("[gRPC-Server] Receive invalid message.");
                         }
@@ -535,9 +547,100 @@ public class NodeServer {
                             // 4. store the generated Address and logcial to this node's NameCache
                             NameCache.add(generated_address, generated_name);
                         } else if (pyReq.hasDisconReqPy()){
-
+                            System.out.println("[gRPC-Server] Receive the disconnect() request from a Python client.");
+                            System.out.println("[gRPC-Server] " + pyReq.getDisconReqPy().getLogicalName() + "(Python client) sends a disconnect request for grpc channel.");
+                            // remove responseObserver for the disconnect()
+                            lock.lock();
+                            try {
+                                // 1. remove the client responseObserver
+                                for (Address add : py_clients.keySet()) {
+                                    if (add.toString().equals(pyReq.getDisconReqPy().getLogicalName())){
+                                        DisconnectRep disRep = DisconnectRep.newBuilder().setResult(true).build();
+                                        Response rep = Response.newBuilder().setDisconnectResponse(disRep).build();
+                                        responseObserver.onNext(rep);
+                                        py_clients.remove(add);
+                                        // 2. remove the client from its cluster information
+                                        jchannel.disconnectCluster("ClientCluster", add);
+                                    }
+                                }
+                            } finally {
+                                lock.unlock();
+                            }
+                            // also notify other nodes to delete it
+                            forwardMsg(req);
+                            onCompleted();
                         } else if (pyReq.hasMsgReqPy()){
+                            MessageReqPy msgReq = req.getPyReqMsg().getMsgReqPy();
+                            Message msgObj = new ObjectMessage(null, msgReq.getContentStr());
+                            for (Address each : py_clients.keySet()){
+                                if (each.toString().equals(msgReq.getSource())){
+                                    msgObj.setSrc(each);
+                                }
+                                if (each.toString().equals(msgReq.getDest()) && msgReq.getDest() != ""){
+                                    msgObj.setDest(each);
+                                }
+                            }
+                            System.out.println("[gRPC-Server] Receive a Message from Python JChannel-client(after convert): " + msgObj);
+                            Address dest = msgObj.getDest();
+                            byte[] b = null;
+                            try {
+                                b = Util.objectToByteBuffer(msgObj);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            MessageReqRep msgReqRep = MessageReqRep.newBuilder().setMessageObj(ByteString.copyFrom(b)).setType(3).build();
+                            // dest == all JChannel-Servers and common JChannels
+                            if (dest == null) {
+                                ReentrantLock lock = new ReentrantLock();
+                                lock.lock();
+                                try{
+                                    System.out.println("[gRPC-Server] The Message will be broadcast.");
+                                    forwadMsgToServer(msgReqRep);
+                                    forwardMsgToJChannel(msgObj);
+                                } finally {
+                                    lock.unlock();
+                                }
 
+                                // dest == this JChannel-Server
+                            } else if (dest.equals(jchannel.channel.getAddress())){
+                                System.out.println("[gRPC-Server] The Message will be broadcast to all clients connecting to this server.");
+                                // change
+                                try {
+                                    jchannel.channel.send(jchannel.channel.getAddress(), msgReq);
+                                } catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                                // dest == a JChannel-Client, which is connected to this JChannel-Server
+                            } else if (clients.containsKey(dest)){
+                                System.out.println("[gRPC-Server] The Message will be unicast to a client connecting to this server.");
+                                unicast(msgReqRep);
+                                // dest == a JChannel-Server having a gRPC address
+                            } else if (jchannel.nodesMap.containsKey(dest)){
+                                System.out.println("[gRPC-Server] The Message will be unicast to a JChannel-Server.");
+                                try {
+                                    jchannel.channel.send(dest, msgReq);
+                                } catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                                // dest is a common JChannel, without having a gRPC address
+                            } else if (!(jchannel.nodesMap.containsKey(dest)) && jchannel.channel.getView().containsMember(dest)){
+                                System.out.println("[gRPC-Server] The Message will be unicast to a common JChannel.");
+                                try {
+                                    msgObj.setSrc(jchannel.channel.getAddress());
+                                    jchannel.channel.send(msgObj);
+                                } catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                                // dest == a JChannel-Client, which is connected to other JChannel-Server
+                            } else if (!(clients.containsKey(dest) && !(jchannel.channel.getView().containsMember(dest)))){
+                                System.out.println("[gRPC-Server] The Message will be unicast to a client connecting to other server.");
+                                forwadMsgToServer(req.getMessageReqRep());
+                            } else if (py_clients.containsKey(dest)) {
+                                unicastPy(msgReq.getSource(), msgReq.getContentStr(), dest);
+                                System.out.println("[gRPC-Server] The Message will be unicast to a Python Client.");
+                            } else {
+                                System.out.println("[gRPC-Server] Receive invalid message.");
+                            }
                         } else{
                             System.out.println("Invalid type of message from python client.");
                         }
@@ -575,9 +678,7 @@ public class NodeServer {
             };
         }
         protected void joinPy(StreamObserver<Response> responseObserver, Address generated_address, String generated_name){
-            // 1. get lock
             lock.lock();
-            // 2. critical section,
             try{
                 // using the generated Address by this JChannel-server as key, responseObserver as value
                 py_clients.put(generated_address, responseObserver);
@@ -784,7 +885,26 @@ public class NodeServer {
                 lock.unlock();
             }
         }
+        protected void unicastPy(String source, String content, Address dest){
+            lock.lock();
+            try{
+                MessageRepPy msg = MessageRepPy.newBuilder().setSource(source).setContentStr(content).build();
+                RepMsgForPyClient pyMsg = RepMsgForPyClient.newBuilder().setMsgRepPy(msg).build();
+                Response rep = Response.newBuilder().setPyRepMsg(pyMsg).build();
+                for (Address add : py_clients.keySet()){
+                    if (add.equals(dest)){
+                        py_clients.get(add).onNext(rep);
+                        System.out.println("[gRPC-Server] Send message to a Python JChannel-Client, " + dest);
+                    }
+                }
+                System.out.println("[gRPC-Server] One unicast to Python client for message successfully.");
 
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
+        }
         protected void unicast(MessageReqRep req){
             lock.lock();
             try{
@@ -803,7 +923,6 @@ public class NodeServer {
             } finally {
                 lock.unlock();
             }
-
         }
 
         public void broadcastView(ViewRep videRep){
@@ -887,6 +1006,11 @@ public class NodeServer {
             }
             //System.out.println("[JChannel-Server] Forward a message for Request(MessageReqRep) to other JChannel-Servers: " + msgReq);
         }
+
+        /**
+         * forwardMsg() forwards the Request object to other JChannel-Servers, using the ObjectMessage in send()
+         * @param req
+         */
         protected void forwardMsg(Request req){
             jchannel.checkNodes();
             // forward Request for client information to other JChannel-Servers excluding itself, e.g. connectRequest, disconnectRequest.
