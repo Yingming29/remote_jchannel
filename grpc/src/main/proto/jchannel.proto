@@ -258,7 +258,9 @@ message DisconnectRepPy{
 }
 message MessageRepPy{
   string source = 1;
+  string type = 2; // contain message type, string, byte, and MessageByte
   string contentStr = 3;
+  string byteMsg = 4;
 }
 message ClientViewPy{
   int32 num = 1;

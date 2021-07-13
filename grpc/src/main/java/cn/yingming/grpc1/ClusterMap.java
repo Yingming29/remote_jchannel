@@ -58,6 +58,17 @@ public class ClusterMap implements Serializable {
             return null;
         }
     }
+    public View getView(){
+        View v = null;
+        this.lock.lock();
+        try{
+            ViewId viewId = new ViewId(getCreator(), getViewNum());
+            v = new View(viewId, orderList);
+        } finally {
+            this.lock.unlock();
+        }
+        return v;
+    }
     // generate a client view.
     public ViewRep generateView(){
         ViewRep view_rep = null;

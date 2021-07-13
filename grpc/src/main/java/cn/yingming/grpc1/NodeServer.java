@@ -501,6 +501,7 @@ public class NodeServer {
                      * The else if is used for the python client
                      */
                     else if (req.hasPyReqMsg()){
+                        System.out.println(req);
                         ReqMsgForPyClient pyReq = req.getPyReqMsg();
                         if (pyReq.hasConReqPy()){
                             System.out.println("[gRPC-Server] Receive the connect() request from a Python client.");
@@ -522,10 +523,11 @@ public class NodeServer {
                                     if (NameCache.getContents().get(each).equals(logical_name)){
                                         generated_address = each;
                                         generated_name = logical_name;
-                                        System.out.println("[gRPC-Server] A reconnecting Python JChannel-Client, Address: " +
-                                                generated_address + ", and logical name : " + generated_name);
+
                                     }
                                 }
+                                System.out.println("[gRPC-Server] A reconnecting Python JChannel-Client, Address: " +
+                                        generated_address + ", and logical name : " + generated_name);
                             }
                             // 2. Store the responseObserver of the client. Map<Address, streamObserver>
                             joinPy(responseObserver, generated_address, generated_name);
@@ -537,37 +539,42 @@ public class NodeServer {
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                            ConnectReqPy conReq = ConnectReqPy.newBuilder()
-                                    .setAddress(ByteString.copyFrom(out.buffer()))
-                                    .setLogicalName(generated_name)
-                                    .build();
-                            ReqMsgForPyClient subMsg = ReqMsgForPyClient.newBuilder().setConReqPy(conReq).build();
-                            Request reqForward = Request.newBuilder().setPyReqMsg(subMsg).build();
+                            ConnectReq conReq = ConnectReq.newBuilder().setLogicalName(generated_name)
+                                    .setJchannAddressByte(ByteString.copyFrom(out.buffer())).build();
+                            Request reqForward = Request.newBuilder().setConnectRequest(conReq).build();
                             forwardMsg(reqForward);
                             // 4. store the generated Address and logcial to this node's NameCache
                             NameCache.add(generated_address, generated_name);
+                            System.out.println("done for python client connect");
                         } else if (pyReq.hasDisconReqPy()){
                             System.out.println("[gRPC-Server] Receive the disconnect() request from a Python client.");
                             System.out.println("[gRPC-Server] " + pyReq.getDisconReqPy().getLogicalName() + "(Python client) sends a disconnect request for grpc channel.");
+                            byte[] b = null;
                             // remove responseObserver for the disconnect()
                             lock.lock();
                             try {
                                 // 1. remove the client responseObserver
                                 for (Address add : py_clients.keySet()) {
                                     if (add.toString().equals(pyReq.getDisconReqPy().getLogicalName())){
-                                        DisconnectRep disRep = DisconnectRep.newBuilder().setResult(true).build();
-                                        Response rep = Response.newBuilder().setDisconnectResponse(disRep).build();
+                                        b = Util.objectToByteBuffer(add);
+                                        DisconnectRepPy disRepPy = DisconnectRepPy.newBuilder().setResult(true).build();
+                                        RepMsgForPyClient repMsgPy = RepMsgForPyClient.newBuilder().setDisconRepPy(disRepPy).build();
+                                        Response rep = Response.newBuilder().setPyRepMsg(repMsgPy).build();
                                         responseObserver.onNext(rep);
                                         py_clients.remove(add);
                                         // 2. remove the client from its cluster information
                                         jchannel.disconnectCluster("ClientCluster", add);
                                     }
                                 }
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             } finally {
                                 lock.unlock();
                             }
                             // also notify other nodes to delete it
-                            forwardMsg(req);
+                            DisconnectReq disReq = DisconnectReq.newBuilder().setJchannelAddress(ByteString.copyFrom(b)).build();
+                            Request generated_msg = Request.newBuilder().setDisconnectRequest(disReq).build();
+                            forwardMsg(generated_msg);
                             onCompleted();
                         } else if (pyReq.hasMsgReqPy()){
                             MessageReqPy msgReq = req.getPyReqMsg().getMsgReqPy();
@@ -576,15 +583,18 @@ public class NodeServer {
                                 if (each.toString().equals(msgReq.getSource())){
                                     msgObj.setSrc(each);
                                 }
-                                if (each.toString().equals(msgReq.getDest()) && msgReq.getDest() != ""){
+                                if (each.toString().equals(msgReq.getDest()) && !msgReq.getDest().equals("")){
                                     msgObj.setDest(each);
                                 }
                             }
                             System.out.println("[gRPC-Server] Receive a Message from Python JChannel-client(after convert): " + msgObj);
                             Address dest = msgObj.getDest();
+                            ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
+
                             byte[] b = null;
                             try {
-                                b = Util.objectToByteBuffer(msgObj);
+                                msgObj.writeTo(out);
+                                b = out.buffer();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -654,6 +664,7 @@ public class NodeServer {
                     lock.lock();
                     try {
                         System.out.println("[gRPC] onError:" + throwable.getMessage() + " Remove it from the node.");
+
                         Address add = removeClient(responseObserver);
                         ByteArrayDataOutputStream out = new ByteArrayDataOutputStream();
                         UUID u = (UUID) add;
@@ -693,11 +704,10 @@ public class NodeServer {
                 System.out.println("[gRPC-Server] Return a connect() response to the Python new client.");
                 jchannel.connectCluster("ClientCluster", generated_address, generated_name);
                 // return response for updating the available servers
-                UpdateRep updateRep = UpdateRep.newBuilder()
-                        .setAddresses(this.jchannel.generateAddMsg())
-                        .build();
+                UpdateAddPy updatePy = UpdateAddPy.newBuilder().setAddresses(this.jchannel.generateAddMsg()).build();
+                RepMsgForPyClient pyMsgAdd = RepMsgForPyClient.newBuilder().setUpdateAddPy(updatePy).build();
                 Response rep2 = Response.newBuilder()
-                        .setUpdateResponse(updateRep)
+                        .setPyRepMsg(pyMsgAdd)
                         .build();
                 responseObserver.onNext(rep2);
                 System.out.println("[gRPC-Server] Return a message for the current available gRPC addresses of servers.");
@@ -762,7 +772,14 @@ public class NodeServer {
                     return add;
                 }
             }
-
+            for (Address pyClientAdd: py_clients.keySet()){
+                if (py_clients.get(pyClientAdd) == responseObserver){
+                    py_clients.remove(pyClientAdd);
+                    System.out.println("[gRPC] Found the error client and its observer, remove it from clients Map.");
+                    jchannel.disconnectClusterNoGraceful(pyClientAdd);
+                    return pyClientAdd;
+                }
+            }
             return null;
         }
 
@@ -838,13 +855,17 @@ public class NodeServer {
                 lock.unlock();
             }
         }
-        protected void broadcastResponsePy(Response rep){
+        protected void broadcastResponsePy(String source, String content){
+            MessageRepPy msgRep = MessageRepPy.newBuilder().setSource(source).setContentStr(content).build();
+            RepMsgForPyClient pyMsg = RepMsgForPyClient.newBuilder().setMsgRepPy(msgRep).build();
+            Response rep = Response.newBuilder().setPyRepMsg(pyMsg).build();
             System.out.println("[gRPC-Server] Broadcast this message to all Python clients connecting to this server.");
             if (py_clients.size() != 0){
                 for (Address u : py_clients.keySet()){
-                    clients.get(u).onNext(rep);
+                    py_clients.get(u).onNext(rep);
+                    System.out.println(rep);
                 }
-                System.out.println(rep);
+
             } else {
                 System.out.println("[gRPC-Server] The size of connecting Python clients is 0.");
             }
@@ -886,6 +907,9 @@ public class NodeServer {
             }
         }
         protected void unicastPy(String source, String content, Address dest){
+            if (!py_clients.containsKey(dest)){
+                return;
+            }
             lock.lock();
             try{
                 MessageRepPy msg = MessageRepPy.newBuilder().setSource(source).setContentStr(content).build();
@@ -924,6 +948,26 @@ public class NodeServer {
                 lock.unlock();
             }
         }
+        public void broadcastViewPy(View v){
+            LinkedList<String> list = new LinkedList();
+            for (int i = 0; i < v.getMembersRaw().length; i++) {
+                list.add(v.getMembersRaw()[i].toString());
+            }
+            ClientViewPy viewMsg = ClientViewPy.newBuilder().setCoordinator(v.getCoord().toString())
+                    .setNum((int) v.getViewId().getId()).setSize(v.getMembers().size()).addAllMembers(list).build();
+            RepMsgForPyClient pyMsg = RepMsgForPyClient.newBuilder().setClientViewPy(viewMsg).build();
+            Response rep = Response.newBuilder().setPyRepMsg(pyMsg).build();
+            lock.lock();
+            try{
+                for (Address pyAdd:py_clients.keySet()){
+                    py_clients.get(pyAdd).onNext(rep);
+                    System.out.println("[gRPC-Server] Send view to a Python JChannel-Client, " + pyAdd);
+                    System.out.println(rep);
+                }
+            }finally {
+                lock.unlock();
+            }
+        }
 
         public void broadcastView(ViewRep videRep){
             lock.lock();
@@ -938,7 +982,6 @@ public class NodeServer {
                 }
                 System.out.println("[gRPC-Server] One broadcast for view successfully.");
                 System.out.println(rep);
-
             } finally {
                 lock.unlock();
             }

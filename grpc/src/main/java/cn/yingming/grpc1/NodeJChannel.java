@@ -173,6 +173,16 @@ public class NodeJChannel implements Receiver{
             System.out.println("[JChannel-Server] Receive a message from a JChannel-Server for broadcast: " + dese_msg);
             Response rep = Response.newBuilder().setMessageReqRep(msg).build();
             service.broadcastResponse(rep);
+            // python broadcast
+            String contentPy = null;
+            if (dese_msg.getType() == 3){
+                contentPy =  dese_msg.getObject().toString();
+            } else if (dese_msg.getType() == 2){
+                contentPy = "EmptyMessage";
+            } else {
+                contentPy = dese_msg.getPayload().toString();
+            }
+            service.broadcastResponsePy(dese_msg.getSrc().toString(), contentPy);
             synchronized (state){
                 //String line = msg_test.getSrc() + ": " + msg_test.getPayload();
                 String line = generateLine(dese_msg);
@@ -182,6 +192,8 @@ public class NodeJChannel implements Receiver{
             System.out.println("[JChannel-Server] Receive a message from a JChannel-Server for unicast to this JChannel-Server (contain its all clients): " + dese_msg);
             Response rep = Response.newBuilder().setMessageReqRep(msg).build();
             service.broadcastResponse(rep);
+            // python broadcast
+            service.broadcastResponsePy(dese_msg.getSrc().toString(), dese_msg.getObject().toString());
             synchronized (state){
                 //String line = msg_test.getSrc() + ": " + msg_test.getPayload();
                 //String line = dese_msg.toString();
@@ -191,6 +203,7 @@ public class NodeJChannel implements Receiver{
         } else{
             System.out.println("[JChannel] Receive a message from other JChannel-Server for unicast to a JChannel-Client:" + dese_msg);
             this.service.unicast(msg);
+            this.service.unicastPy(dese_msg.getSrc().toString(), dese_msg.getObject().toString(), dese_msg.getDest());
         }
 
         //System.out.println("Test3, the current NodeMap:" + nodesMap);
@@ -603,6 +616,8 @@ public class NodeJChannel implements Receiver{
             ViewRep viewRep= clusterObj.generateView();
             System.out.println("[gRPC-Server] Return a message for Client view.");
             this.service.broadcastView(viewRep);
+            View v = clusterObj.getView();
+            this.service.broadcastViewPy(v);
         } catch (Exception e){
             e.printStackTrace();
         } finally {
