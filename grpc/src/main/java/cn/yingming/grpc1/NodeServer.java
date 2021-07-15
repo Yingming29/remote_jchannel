@@ -576,6 +576,18 @@ public class NodeServer {
                             Request generated_msg = Request.newBuilder().setDisconnectRequest(disReq).build();
                             forwardMsg(generated_msg);
                             onCompleted();
+                        } else if (pyReq.hasGetStateReqPy()){
+                            StateRepPy statePy;
+                            lock.lock();
+                            try{
+                                statePy = StateRepPy.newBuilder().setSize(jchannel.state.size()).addAllLine(jchannel.state).build();
+                            } finally {
+                                lock.unlock();
+                            }
+                            RepMsgForPyClient msgPy = RepMsgForPyClient.newBuilder().setStateRepPy(statePy).build();
+                            Response rep = Response.newBuilder().setPyRepMsg(msgPy).build();
+                            System.out.println("[gRPC-Server] Receive a getState() request from a python client, return a response:" + rep);
+                            responseObserver.onNext(rep);
                         } else if (pyReq.hasMsgReqPy()){
                             MessageReqPy msgReq = req.getPyReqMsg().getMsgReqPy();
                             Message msgObj = new ObjectMessage(null, msgReq.getContentStr());

@@ -285,6 +285,11 @@ public final class JChannelRpc {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_cn_yingming_grpc1_UpdateAddPy_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_cn_yingming_grpc1_StateReqPy_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_cn_yingming_grpc1_StateReqPy_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
     internal_static_cn_yingming_grpc1_StateRepPy_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -411,42 +416,45 @@ public final class JChannelRpc {
       "al\030\001 \001(\010\"E\n\010StateReq\022\030\n\020jchannel_address" +
       "\030\001 \001(\014\022\016\n\006target\030\002 \001(\014\022\017\n\007timeout\030\003 \001(\004\"" +
       "C\n\010StateRep\022\030\n\020jchannel_address\030\001 \001(\014\022\r\n" +
-      "\005state\030\002 \001(\014\022\016\n\006target\030\003 \001(\014\"\303\001\n\021ReqMsgF" +
+      "\005state\030\002 \001(\014\022\016\n\006target\030\003 \001(\014\"\373\001\n\021ReqMsgF" +
       "orPyClient\0223\n\010conReqPy\030\001 \001(\0132\037.cn.yingmi" +
       "ng.grpc1.ConnectReqPyH\000\0229\n\013disconReqPy\030\002" +
       " \001(\0132\".cn.yingming.grpc1.DisconnectReqPy" +
       "H\000\0223\n\010msgReqPy\030\003 \001(\0132\037.cn.yingming.grpc1" +
-      ".MessageReqPyH\000B\t\n\007oneType\"\241\003\n\021RepMsgFor" +
-      "PyClient\0223\n\010conRepPy\030\001 \001(\0132\037.cn.yingming" +
-      ".grpc1.ConnectRepPyH\000\0229\n\013disconRepPy\030\002 \001" +
-      "(\0132\".cn.yingming.grpc1.DisconnectRepPyH\000" +
-      "\0223\n\010msgRepPy\030\003 \001(\0132\037.cn.yingming.grpc1.M" +
-      "essageRepPyH\000\0223\n\nstateRepPy\030\004 \001(\0132\035.cn.y" +
-      "ingming.grpc1.StateRepPyH\000\0227\n\014clientView" +
-      "Py\030\005 \001(\0132\037.cn.yingming.grpc1.ClientViewP" +
-      "yH\000\0227\n\014serverViewPy\030\006 \001(\0132\037.cn.yingming." +
-      "grpc1.ServerViewPyH\000\0225\n\013updateAddPy\030\007 \001(" +
-      "\0132\036.cn.yingming.grpc1.UpdateAddPyH\000B\t\n\007o" +
-      "neType\"H\n\014ConnectReqPy\022\021\n\treconnect\030\001 \001(" +
-      "\010\022\024\n\014logical_name\030\002 \001(\t\022\017\n\007address\030\003 \001(\014" +
-      "\"\'\n\017DisconnectReqPy\022\024\n\014logical_name\030\001 \001(" +
-      "\t\"@\n\014MessageReqPy\022\016\n\006source\030\001 \001(\t\022\014\n\004des" +
-      "t\030\002 \001(\t\022\022\n\ncontentStr\030\003 \001(\t\"4\n\014ConnectRe" +
-      "pPy\022\016\n\006result\030\001 \001(\010\022\024\n\014logical_name\030\002 \001(" +
-      "\t\"!\n\017DisconnectRepPy\022\016\n\006result\030\001 \001(\010\"2\n\014" +
-      "MessageRepPy\022\016\n\006source\030\001 \001(\t\022\022\n\ncontentS" +
-      "tr\030\003 \001(\t\"O\n\014ClientViewPy\022\013\n\003num\030\001 \001(\005\022\017\n" +
-      "\007members\030\002 \003(\t\022\023\n\013coordinator\030\003 \001(\t\022\014\n\004s" +
-      "ize\030\004 \001(\005\"O\n\014ServerViewPy\022\013\n\003num\030\001 \001(\005\022\017" +
-      "\n\007members\030\002 \003(\t\022\023\n\013coordinator\030\003 \001(\t\022\014\n\004" +
-      "size\030\004 \001(\005\" \n\013UpdateAddPy\022\021\n\taddresses\030\001" +
-      " \001(\t\"(\n\nStateRepPy\022\014\n\004size\030\001 \001(\005\022\014\n\004line" +
-      "\030\002 \003(\t2\233\001\n\020JChannelsService\022H\n\007connect\022\032" +
-      ".cn.yingming.grpc1.Request\032\033.cn.yingming" +
-      ".grpc1.Response\"\000(\0010\001\022=\n\003ask\022\031.cn.yingmi" +
-      "ng.grpc1.ReqAsk\032\031.cn.yingming.grpc1.RepA" +
-      "sk\"\000B/\n\023io.grpc.jchannelRpcB\013JChannelRpc" +
-      "P\001\242\002\010YINGMINGb\006proto3"
+      ".MessageReqPyH\000\0226\n\rgetStateReqPy\030\004 \001(\0132\035" +
+      ".cn.yingming.grpc1.StateReqPyH\000B\t\n\007oneTy" +
+      "pe\"\241\003\n\021RepMsgForPyClient\0223\n\010conRepPy\030\001 \001" +
+      "(\0132\037.cn.yingming.grpc1.ConnectRepPyH\000\0229\n" +
+      "\013disconRepPy\030\002 \001(\0132\".cn.yingming.grpc1.D" +
+      "isconnectRepPyH\000\0223\n\010msgRepPy\030\003 \001(\0132\037.cn." +
+      "yingming.grpc1.MessageRepPyH\000\0223\n\nstateRe" +
+      "pPy\030\004 \001(\0132\035.cn.yingming.grpc1.StateRepPy" +
+      "H\000\0227\n\014clientViewPy\030\005 \001(\0132\037.cn.yingming.g" +
+      "rpc1.ClientViewPyH\000\0227\n\014serverViewPy\030\006 \001(" +
+      "\0132\037.cn.yingming.grpc1.ServerViewPyH\000\0225\n\013" +
+      "updateAddPy\030\007 \001(\0132\036.cn.yingming.grpc1.Up" +
+      "dateAddPyH\000B\t\n\007oneType\"H\n\014ConnectReqPy\022\021" +
+      "\n\treconnect\030\001 \001(\010\022\024\n\014logical_name\030\002 \001(\t\022" +
+      "\017\n\007address\030\003 \001(\014\"\'\n\017DisconnectReqPy\022\024\n\014l" +
+      "ogical_name\030\001 \001(\t\"@\n\014MessageReqPy\022\016\n\006sou" +
+      "rce\030\001 \001(\t\022\014\n\004dest\030\002 \001(\t\022\022\n\ncontentStr\030\003 " +
+      "\001(\t\"4\n\014ConnectRepPy\022\016\n\006result\030\001 \001(\010\022\024\n\014l" +
+      "ogical_name\030\002 \001(\t\"!\n\017DisconnectRepPy\022\016\n\006" +
+      "result\030\001 \001(\010\"Q\n\014MessageRepPy\022\016\n\006source\030\001" +
+      " \001(\t\022\014\n\004type\030\002 \001(\t\022\022\n\ncontentStr\030\003 \001(\t\022\017" +
+      "\n\007byteMsg\030\004 \001(\t\"O\n\014ClientViewPy\022\013\n\003num\030\001" +
+      " \001(\005\022\017\n\007members\030\002 \003(\t\022\023\n\013coordinator\030\003 \001" +
+      "(\t\022\014\n\004size\030\004 \001(\005\"O\n\014ServerViewPy\022\013\n\003num\030" +
+      "\001 \001(\005\022\017\n\007members\030\002 \003(\t\022\023\n\013coordinator\030\003 " +
+      "\001(\t\022\014\n\004size\030\004 \001(\005\" \n\013UpdateAddPy\022\021\n\taddr" +
+      "esses\030\001 \001(\t\"\"\n\nStateReqPy\022\024\n\014logical_nam" +
+      "e\030\001 \001(\t\"(\n\nStateRepPy\022\014\n\004size\030\001 \001(\005\022\014\n\004l" +
+      "ine\030\002 \003(\t2\233\001\n\020JChannelsService\022H\n\007connec" +
+      "t\022\032.cn.yingming.grpc1.Request\032\033.cn.yingm" +
+      "ing.grpc1.Response\"\000(\0010\001\022=\n\003ask\022\031.cn.yin" +
+      "gming.grpc1.ReqAsk\032\031.cn.yingming.grpc1.R" +
+      "epAsk\"\000B/\n\023io.grpc.jchannelRpcB\013JChannel" +
+      "RpcP\001\242\002\010YINGMINGb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -715,7 +723,7 @@ public final class JChannelRpc {
     internal_static_cn_yingming_grpc1_ReqMsgForPyClient_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_cn_yingming_grpc1_ReqMsgForPyClient_descriptor,
-        new java.lang.String[] { "ConReqPy", "DisconReqPy", "MsgReqPy", "OneType", });
+        new java.lang.String[] { "ConReqPy", "DisconReqPy", "MsgReqPy", "GetStateReqPy", "OneType", });
     internal_static_cn_yingming_grpc1_RepMsgForPyClient_descriptor =
       getDescriptor().getMessageTypes().get(44);
     internal_static_cn_yingming_grpc1_RepMsgForPyClient_fieldAccessorTable = new
@@ -757,7 +765,7 @@ public final class JChannelRpc {
     internal_static_cn_yingming_grpc1_MessageRepPy_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_cn_yingming_grpc1_MessageRepPy_descriptor,
-        new java.lang.String[] { "Source", "ContentStr", });
+        new java.lang.String[] { "Source", "Type", "ContentStr", "ByteMsg", });
     internal_static_cn_yingming_grpc1_ClientViewPy_descriptor =
       getDescriptor().getMessageTypes().get(51);
     internal_static_cn_yingming_grpc1_ClientViewPy_fieldAccessorTable = new
@@ -776,8 +784,14 @@ public final class JChannelRpc {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_cn_yingming_grpc1_UpdateAddPy_descriptor,
         new java.lang.String[] { "Addresses", });
-    internal_static_cn_yingming_grpc1_StateRepPy_descriptor =
+    internal_static_cn_yingming_grpc1_StateReqPy_descriptor =
       getDescriptor().getMessageTypes().get(54);
+    internal_static_cn_yingming_grpc1_StateReqPy_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_cn_yingming_grpc1_StateReqPy_descriptor,
+        new java.lang.String[] { "LogicalName", });
+    internal_static_cn_yingming_grpc1_StateRepPy_descriptor =
+      getDescriptor().getMessageTypes().get(55);
     internal_static_cn_yingming_grpc1_StateRepPy_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_cn_yingming_grpc1_StateRepPy_descriptor,

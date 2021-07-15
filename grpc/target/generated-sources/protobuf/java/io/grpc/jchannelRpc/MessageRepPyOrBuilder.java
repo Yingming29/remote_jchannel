@@ -20,6 +20,26 @@ public interface MessageRepPyOrBuilder extends
       getSourceBytes();
 
   /**
+   * <pre>
+   * contain message type, string, byte, and MessageByte
+   * </pre>
+   *
+   * <code>string type = 2;</code>
+   * @return The type.
+   */
+  java.lang.String getType();
+  /**
+   * <pre>
+   * contain message type, string, byte, and MessageByte
+   * </pre>
+   *
+   * <code>string type = 2;</code>
+   * @return The bytes for type.
+   */
+  com.google.protobuf.ByteString
+      getTypeBytes();
+
+  /**
    * <code>string contentStr = 3;</code>
    * @return The contentStr.
    */
@@ -30,4 +50,16 @@ public interface MessageRepPyOrBuilder extends
    */
   com.google.protobuf.ByteString
       getContentStrBytes();
+
+  /**
+   * <code>string byteMsg = 4;</code>
+   * @return The byteMsg.
+   */
+  java.lang.String getByteMsg();
+  /**
+   * <code>string byteMsg = 4;</code>
+   * @return The bytes for byteMsg.
+   */
+  com.google.protobuf.ByteString
+      getByteMsgBytes();
 }

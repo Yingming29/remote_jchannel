@@ -221,6 +221,7 @@ message ReqMsgForPyClient{
     ConnectReqPy conReqPy = 1;
     DisconnectReqPy disconReqPy = 2;
     MessageReqPy msgReqPy = 3;
+    StateReqPy getStateReqPy = 4;
   }
 }
 
@@ -276,6 +277,9 @@ message ServerViewPy{
 }
 message UpdateAddPy{
   string addresses = 1;
+}
+message StateReqPy{
+  string logical_name = 1;
 }
 message StateRepPy{
   int32 size = 1;

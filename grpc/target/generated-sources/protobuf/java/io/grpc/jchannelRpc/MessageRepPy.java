@@ -17,7 +17,9 @@ private static final long serialVersionUID = 0L;
   }
   private MessageRepPy() {
     source_ = "";
+    type_ = "";
     contentStr_ = "";
+    byteMsg_ = "";
   }
 
   @java.lang.Override
@@ -56,10 +58,22 @@ private static final long serialVersionUID = 0L;
             source_ = s;
             break;
           }
+          case 18: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            type_ = s;
+            break;
+          }
           case 26: {
             java.lang.String s = input.readStringRequireUtf8();
 
             contentStr_ = s;
+            break;
+          }
+          case 34: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            byteMsg_ = s;
             break;
           }
           default: {
@@ -132,6 +146,52 @@ private static final long serialVersionUID = 0L;
     }
   }
 
+  public static final int TYPE_FIELD_NUMBER = 2;
+  private volatile java.lang.Object type_;
+  /**
+   * <pre>
+   * contain message type, string, byte, and MessageByte
+   * </pre>
+   *
+   * <code>string type = 2;</code>
+   * @return The type.
+   */
+  @java.lang.Override
+  public java.lang.String getType() {
+    java.lang.Object ref = type_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      type_ = s;
+      return s;
+    }
+  }
+  /**
+   * <pre>
+   * contain message type, string, byte, and MessageByte
+   * </pre>
+   *
+   * <code>string type = 2;</code>
+   * @return The bytes for type.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getTypeBytes() {
+    java.lang.Object ref = type_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      type_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   public static final int CONTENTSTR_FIELD_NUMBER = 3;
   private volatile java.lang.Object contentStr_;
   /**
@@ -170,6 +230,44 @@ private static final long serialVersionUID = 0L;
     }
   }
 
+  public static final int BYTEMSG_FIELD_NUMBER = 4;
+  private volatile java.lang.Object byteMsg_;
+  /**
+   * <code>string byteMsg = 4;</code>
+   * @return The byteMsg.
+   */
+  @java.lang.Override
+  public java.lang.String getByteMsg() {
+    java.lang.Object ref = byteMsg_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      byteMsg_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string byteMsg = 4;</code>
+   * @return The bytes for byteMsg.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getByteMsgBytes() {
+    java.lang.Object ref = byteMsg_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      byteMsg_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -187,8 +285,14 @@ private static final long serialVersionUID = 0L;
     if (!getSourceBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, source_);
     }
+    if (!getTypeBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, type_);
+    }
     if (!getContentStrBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 3, contentStr_);
+    }
+    if (!getByteMsgBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, byteMsg_);
     }
     unknownFields.writeTo(output);
   }
@@ -202,8 +306,14 @@ private static final long serialVersionUID = 0L;
     if (!getSourceBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, source_);
     }
+    if (!getTypeBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, type_);
+    }
     if (!getContentStrBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, contentStr_);
+    }
+    if (!getByteMsgBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, byteMsg_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -222,8 +332,12 @@ private static final long serialVersionUID = 0L;
 
     if (!getSource()
         .equals(other.getSource())) return false;
+    if (!getType()
+        .equals(other.getType())) return false;
     if (!getContentStr()
         .equals(other.getContentStr())) return false;
+    if (!getByteMsg()
+        .equals(other.getByteMsg())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -237,8 +351,12 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + SOURCE_FIELD_NUMBER;
     hash = (53 * hash) + getSource().hashCode();
+    hash = (37 * hash) + TYPE_FIELD_NUMBER;
+    hash = (53 * hash) + getType().hashCode();
     hash = (37 * hash) + CONTENTSTR_FIELD_NUMBER;
     hash = (53 * hash) + getContentStr().hashCode();
+    hash = (37 * hash) + BYTEMSG_FIELD_NUMBER;
+    hash = (53 * hash) + getByteMsg().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -374,7 +492,11 @@ private static final long serialVersionUID = 0L;
       super.clear();
       source_ = "";
 
+      type_ = "";
+
       contentStr_ = "";
+
+      byteMsg_ = "";
 
       return this;
     }
@@ -403,7 +525,9 @@ private static final long serialVersionUID = 0L;
     public io.grpc.jchannelRpc.MessageRepPy buildPartial() {
       io.grpc.jchannelRpc.MessageRepPy result = new io.grpc.jchannelRpc.MessageRepPy(this);
       result.source_ = source_;
+      result.type_ = type_;
       result.contentStr_ = contentStr_;
+      result.byteMsg_ = byteMsg_;
       onBuilt();
       return result;
     }
@@ -456,8 +580,16 @@ private static final long serialVersionUID = 0L;
         source_ = other.source_;
         onChanged();
       }
+      if (!other.getType().isEmpty()) {
+        type_ = other.type_;
+        onChanged();
+      }
       if (!other.getContentStr().isEmpty()) {
         contentStr_ = other.contentStr_;
+        onChanged();
+      }
+      if (!other.getByteMsg().isEmpty()) {
+        byteMsg_ = other.byteMsg_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -565,6 +697,102 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    private java.lang.Object type_ = "";
+    /**
+     * <pre>
+     * contain message type, string, byte, and MessageByte
+     * </pre>
+     *
+     * <code>string type = 2;</code>
+     * @return The type.
+     */
+    public java.lang.String getType() {
+      java.lang.Object ref = type_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        type_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <pre>
+     * contain message type, string, byte, and MessageByte
+     * </pre>
+     *
+     * <code>string type = 2;</code>
+     * @return The bytes for type.
+     */
+    public com.google.protobuf.ByteString
+        getTypeBytes() {
+      java.lang.Object ref = type_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        type_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <pre>
+     * contain message type, string, byte, and MessageByte
+     * </pre>
+     *
+     * <code>string type = 2;</code>
+     * @param value The type to set.
+     * @return This builder for chaining.
+     */
+    public Builder setType(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      type_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * contain message type, string, byte, and MessageByte
+     * </pre>
+     *
+     * <code>string type = 2;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearType() {
+      
+      type_ = getDefaultInstance().getType();
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * contain message type, string, byte, and MessageByte
+     * </pre>
+     *
+     * <code>string type = 2;</code>
+     * @param value The bytes for type to set.
+     * @return This builder for chaining.
+     */
+    public Builder setTypeBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      type_ = value;
+      onChanged();
+      return this;
+    }
+
     private java.lang.Object contentStr_ = "";
     /**
      * <code>string contentStr = 3;</code>
@@ -637,6 +865,82 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       
       contentStr_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object byteMsg_ = "";
+    /**
+     * <code>string byteMsg = 4;</code>
+     * @return The byteMsg.
+     */
+    public java.lang.String getByteMsg() {
+      java.lang.Object ref = byteMsg_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        byteMsg_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string byteMsg = 4;</code>
+     * @return The bytes for byteMsg.
+     */
+    public com.google.protobuf.ByteString
+        getByteMsgBytes() {
+      java.lang.Object ref = byteMsg_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        byteMsg_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string byteMsg = 4;</code>
+     * @param value The byteMsg to set.
+     * @return This builder for chaining.
+     */
+    public Builder setByteMsg(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      byteMsg_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string byteMsg = 4;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearByteMsg() {
+      
+      byteMsg_ = getDefaultInstance().getByteMsg();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string byteMsg = 4;</code>
+     * @param value The bytes for byteMsg to set.
+     * @return This builder for chaining.
+     */
+    public Builder setByteMsgBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      byteMsg_ = value;
       onChanged();
       return this;
     }

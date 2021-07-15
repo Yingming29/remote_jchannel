@@ -82,6 +82,8 @@ public class NodeJChannel implements Receiver{
                 MessageReqRep msgRep = MessageReqRep.newBuilder().setType(msg.getType()).setMessageObj(ByteString.copyFrom(b)).build();
                 Response rep = Response.newBuilder().setMessageReqRep(msgRep).build();
                 service.broadcastResponse(rep);
+                // add a broadcast to python clients
+                service.broadcastResponsePy(msg.getSrc().toString(), msg.getObject().toString());
                 String line = generateLine(msg);
                 synchronized (state){
                     state.add(line);
@@ -116,6 +118,7 @@ public class NodeJChannel implements Receiver{
             // copy from Receiver of JChannelClient and SimpleChat
             String line = generateLine(msg);
             System.out.println(line);
+            service.broadcastResponsePy(msg.getSrc().toString(), msg.toString());
             synchronized (state){
                 state.add(line);
             }
@@ -180,7 +183,7 @@ public class NodeJChannel implements Receiver{
             } else if (dese_msg.getType() == 2){
                 contentPy = "EmptyMessage";
             } else {
-                contentPy = dese_msg.getPayload().toString();
+                contentPy = dese_msg.toString();
             }
             service.broadcastResponsePy(dese_msg.getSrc().toString(), contentPy);
             synchronized (state){
@@ -193,10 +196,8 @@ public class NodeJChannel implements Receiver{
             Response rep = Response.newBuilder().setMessageReqRep(msg).build();
             service.broadcastResponse(rep);
             // python broadcast
-            service.broadcastResponsePy(dese_msg.getSrc().toString(), dese_msg.getObject().toString());
+            service.broadcastResponsePy(dese_msg.getSrc().toString(), dese_msg.toString());
             synchronized (state){
-                //String line = msg_test.getSrc() + ": " + msg_test.getPayload();
-                //String line = dese_msg.toString();
                 String line = generateLine(dese_msg);
                 state.add(line);
             }

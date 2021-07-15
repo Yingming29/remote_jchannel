@@ -95,6 +95,20 @@ private static final long serialVersionUID = 0L;
             oneTypeCase_ = 3;
             break;
           }
+          case 34: {
+            io.grpc.jchannelRpc.StateReqPy.Builder subBuilder = null;
+            if (oneTypeCase_ == 4) {
+              subBuilder = ((io.grpc.jchannelRpc.StateReqPy) oneType_).toBuilder();
+            }
+            oneType_ =
+                input.readMessage(io.grpc.jchannelRpc.StateReqPy.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((io.grpc.jchannelRpc.StateReqPy) oneType_);
+              oneType_ = subBuilder.buildPartial();
+            }
+            oneTypeCase_ = 4;
+            break;
+          }
           default: {
             if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -135,6 +149,7 @@ private static final long serialVersionUID = 0L;
     CONREQPY(1),
     DISCONREQPY(2),
     MSGREQPY(3),
+    GETSTATEREQPY(4),
     ONETYPE_NOT_SET(0);
     private final int value;
     private OneTypeCase(int value) {
@@ -155,6 +170,7 @@ private static final long serialVersionUID = 0L;
         case 1: return CONREQPY;
         case 2: return DISCONREQPY;
         case 3: return MSGREQPY;
+        case 4: return GETSTATEREQPY;
         case 0: return ONETYPE_NOT_SET;
         default: return null;
       }
@@ -263,6 +279,37 @@ private static final long serialVersionUID = 0L;
     return io.grpc.jchannelRpc.MessageReqPy.getDefaultInstance();
   }
 
+  public static final int GETSTATEREQPY_FIELD_NUMBER = 4;
+  /**
+   * <code>.cn.yingming.grpc1.StateReqPy getStateReqPy = 4;</code>
+   * @return Whether the getStateReqPy field is set.
+   */
+  @java.lang.Override
+  public boolean hasGetStateReqPy() {
+    return oneTypeCase_ == 4;
+  }
+  /**
+   * <code>.cn.yingming.grpc1.StateReqPy getStateReqPy = 4;</code>
+   * @return The getStateReqPy.
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.StateReqPy getGetStateReqPy() {
+    if (oneTypeCase_ == 4) {
+       return (io.grpc.jchannelRpc.StateReqPy) oneType_;
+    }
+    return io.grpc.jchannelRpc.StateReqPy.getDefaultInstance();
+  }
+  /**
+   * <code>.cn.yingming.grpc1.StateReqPy getStateReqPy = 4;</code>
+   */
+  @java.lang.Override
+  public io.grpc.jchannelRpc.StateReqPyOrBuilder getGetStateReqPyOrBuilder() {
+    if (oneTypeCase_ == 4) {
+       return (io.grpc.jchannelRpc.StateReqPy) oneType_;
+    }
+    return io.grpc.jchannelRpc.StateReqPy.getDefaultInstance();
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -286,6 +333,9 @@ private static final long serialVersionUID = 0L;
     if (oneTypeCase_ == 3) {
       output.writeMessage(3, (io.grpc.jchannelRpc.MessageReqPy) oneType_);
     }
+    if (oneTypeCase_ == 4) {
+      output.writeMessage(4, (io.grpc.jchannelRpc.StateReqPy) oneType_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -306,6 +356,10 @@ private static final long serialVersionUID = 0L;
     if (oneTypeCase_ == 3) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(3, (io.grpc.jchannelRpc.MessageReqPy) oneType_);
+    }
+    if (oneTypeCase_ == 4) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(4, (io.grpc.jchannelRpc.StateReqPy) oneType_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -336,6 +390,10 @@ private static final long serialVersionUID = 0L;
         if (!getMsgReqPy()
             .equals(other.getMsgReqPy())) return false;
         break;
+      case 4:
+        if (!getGetStateReqPy()
+            .equals(other.getGetStateReqPy())) return false;
+        break;
       case 0:
       default:
     }
@@ -362,6 +420,10 @@ private static final long serialVersionUID = 0L;
       case 3:
         hash = (37 * hash) + MSGREQPY_FIELD_NUMBER;
         hash = (53 * hash) + getMsgReqPy().hashCode();
+        break;
+      case 4:
+        hash = (37 * hash) + GETSTATEREQPY_FIELD_NUMBER;
+        hash = (53 * hash) + getGetStateReqPy().hashCode();
         break;
       case 0:
       default:
@@ -553,6 +615,13 @@ private static final long serialVersionUID = 0L;
           result.oneType_ = msgReqPyBuilder_.build();
         }
       }
+      if (oneTypeCase_ == 4) {
+        if (getStateReqPyBuilder_ == null) {
+          result.oneType_ = oneType_;
+        } else {
+          result.oneType_ = getStateReqPyBuilder_.build();
+        }
+      }
       result.oneTypeCase_ = oneTypeCase_;
       onBuilt();
       return result;
@@ -613,6 +682,10 @@ private static final long serialVersionUID = 0L;
         }
         case MSGREQPY: {
           mergeMsgReqPy(other.getMsgReqPy());
+          break;
+        }
+        case GETSTATEREQPY: {
+          mergeGetStateReqPy(other.getGetStateReqPy());
           break;
         }
         case ONETYPE_NOT_SET: {
@@ -1084,6 +1157,147 @@ private static final long serialVersionUID = 0L;
       oneTypeCase_ = 3;
       onChanged();;
       return msgReqPyBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.StateReqPy, io.grpc.jchannelRpc.StateReqPy.Builder, io.grpc.jchannelRpc.StateReqPyOrBuilder> getStateReqPyBuilder_;
+    /**
+     * <code>.cn.yingming.grpc1.StateReqPy getStateReqPy = 4;</code>
+     * @return Whether the getStateReqPy field is set.
+     */
+    @java.lang.Override
+    public boolean hasGetStateReqPy() {
+      return oneTypeCase_ == 4;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateReqPy getStateReqPy = 4;</code>
+     * @return The getStateReqPy.
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.StateReqPy getGetStateReqPy() {
+      if (getStateReqPyBuilder_ == null) {
+        if (oneTypeCase_ == 4) {
+          return (io.grpc.jchannelRpc.StateReqPy) oneType_;
+        }
+        return io.grpc.jchannelRpc.StateReqPy.getDefaultInstance();
+      } else {
+        if (oneTypeCase_ == 4) {
+          return getStateReqPyBuilder_.getMessage();
+        }
+        return io.grpc.jchannelRpc.StateReqPy.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateReqPy getStateReqPy = 4;</code>
+     */
+    public Builder setGetStateReqPy(io.grpc.jchannelRpc.StateReqPy value) {
+      if (getStateReqPyBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        oneType_ = value;
+        onChanged();
+      } else {
+        getStateReqPyBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 4;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateReqPy getStateReqPy = 4;</code>
+     */
+    public Builder setGetStateReqPy(
+        io.grpc.jchannelRpc.StateReqPy.Builder builderForValue) {
+      if (getStateReqPyBuilder_ == null) {
+        oneType_ = builderForValue.build();
+        onChanged();
+      } else {
+        getStateReqPyBuilder_.setMessage(builderForValue.build());
+      }
+      oneTypeCase_ = 4;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateReqPy getStateReqPy = 4;</code>
+     */
+    public Builder mergeGetStateReqPy(io.grpc.jchannelRpc.StateReqPy value) {
+      if (getStateReqPyBuilder_ == null) {
+        if (oneTypeCase_ == 4 &&
+            oneType_ != io.grpc.jchannelRpc.StateReqPy.getDefaultInstance()) {
+          oneType_ = io.grpc.jchannelRpc.StateReqPy.newBuilder((io.grpc.jchannelRpc.StateReqPy) oneType_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          oneType_ = value;
+        }
+        onChanged();
+      } else {
+        if (oneTypeCase_ == 4) {
+          getStateReqPyBuilder_.mergeFrom(value);
+        }
+        getStateReqPyBuilder_.setMessage(value);
+      }
+      oneTypeCase_ = 4;
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateReqPy getStateReqPy = 4;</code>
+     */
+    public Builder clearGetStateReqPy() {
+      if (getStateReqPyBuilder_ == null) {
+        if (oneTypeCase_ == 4) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+          onChanged();
+        }
+      } else {
+        if (oneTypeCase_ == 4) {
+          oneTypeCase_ = 0;
+          oneType_ = null;
+        }
+        getStateReqPyBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateReqPy getStateReqPy = 4;</code>
+     */
+    public io.grpc.jchannelRpc.StateReqPy.Builder getGetStateReqPyBuilder() {
+      return getGetStateReqPyFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateReqPy getStateReqPy = 4;</code>
+     */
+    @java.lang.Override
+    public io.grpc.jchannelRpc.StateReqPyOrBuilder getGetStateReqPyOrBuilder() {
+      if ((oneTypeCase_ == 4) && (getStateReqPyBuilder_ != null)) {
+        return getStateReqPyBuilder_.getMessageOrBuilder();
+      } else {
+        if (oneTypeCase_ == 4) {
+          return (io.grpc.jchannelRpc.StateReqPy) oneType_;
+        }
+        return io.grpc.jchannelRpc.StateReqPy.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cn.yingming.grpc1.StateReqPy getStateReqPy = 4;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        io.grpc.jchannelRpc.StateReqPy, io.grpc.jchannelRpc.StateReqPy.Builder, io.grpc.jchannelRpc.StateReqPyOrBuilder> 
+        getGetStateReqPyFieldBuilder() {
+      if (getStateReqPyBuilder_ == null) {
+        if (!(oneTypeCase_ == 4)) {
+          oneType_ = io.grpc.jchannelRpc.StateReqPy.getDefaultInstance();
+        }
+        getStateReqPyBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            io.grpc.jchannelRpc.StateReqPy, io.grpc.jchannelRpc.StateReqPy.Builder, io.grpc.jchannelRpc.StateReqPyOrBuilder>(
+                (io.grpc.jchannelRpc.StateReqPy) oneType_,
+                getParentForChildren(),
+                isClean());
+        oneType_ = null;
+      }
+      oneTypeCase_ = 4;
+      onChanged();;
+      return getStateReqPyBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

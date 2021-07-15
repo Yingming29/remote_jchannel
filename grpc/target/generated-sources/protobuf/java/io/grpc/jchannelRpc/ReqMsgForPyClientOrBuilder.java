@@ -52,5 +52,20 @@ public interface ReqMsgForPyClientOrBuilder extends
    */
   io.grpc.jchannelRpc.MessageReqPyOrBuilder getMsgReqPyOrBuilder();
 
+  /**
+   * <code>.cn.yingming.grpc1.StateReqPy getStateReqPy = 4;</code>
+   * @return Whether the getStateReqPy field is set.
+   */
+  boolean hasGetStateReqPy();
+  /**
+   * <code>.cn.yingming.grpc1.StateReqPy getStateReqPy = 4;</code>
+   * @return The getStateReqPy.
+   */
+  io.grpc.jchannelRpc.StateReqPy getGetStateReqPy();
+  /**
+   * <code>.cn.yingming.grpc1.StateReqPy getStateReqPy = 4;</code>
+   */
+  io.grpc.jchannelRpc.StateReqPyOrBuilder getGetStateReqPyOrBuilder();
+
   public io.grpc.jchannelRpc.ReqMsgForPyClient.OneTypeCase getOneTypeCase();
 }
