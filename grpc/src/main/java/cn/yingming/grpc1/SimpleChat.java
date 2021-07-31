@@ -12,6 +12,9 @@ import java.util.List;
 
 import io.grpc.jchannelRpc.ChannelMsg;
 import org.jgroups.*;
+import org.jgroups.protocols.relay.SiteMaster;
+import org.jgroups.protocols.relay.SiteUUID;
+import org.jgroups.stack.IpAddress;
 import org.jgroups.util.*;
 
 
@@ -23,7 +26,7 @@ public class SimpleChat implements Receiver{
 	private void start() throws Exception {
 		channel = new JChannel();
 		channel.setReceiver(this).connect("NodeCluster");
-		channel.getState(null, 1000);
+		// channel.getState(null, 1000);
 		eventLoop();
 		channel.close();
 	}
@@ -87,7 +90,7 @@ public class SimpleChat implements Receiver{
 	}
 	@Override
 	public void setState(InputStream input) throws Exception{
-		System.out.println("Receive a state.");
+		// System.out.println("Receive a state.");
 		List<String> list;
 		list = Util.objectFromStream(new DataInputStream(input));
 		synchronized (state){
@@ -106,10 +109,17 @@ public class SimpleChat implements Receiver{
 				System.out.println(">");
 				// Before readLine(), clear the in stream.
 				System.out.flush();
-				String line = in.readLine().toLowerCase();
+				String line = in.readLine();
 				if (line.startsWith("quit") || line.startsWith("exit")) {
 					break;
 				}
+				/*
+				UUID
+				IpAddress
+				SiteMaster
+				SiteUUID
+
+				 */
 
 				// Different input for demo
 				if (line.startsWith("to")){
@@ -147,6 +157,18 @@ public class SimpleChat implements Receiver{
 					Message original_msg = new ObjectMessage(null, "originalMessageStringObj");
 					Message msg6 = new FragmentedMessage(original_msg, 0, 200);
 					channel.send(msg6);
+				} else if (line.equals("printNameCache")){
+					System.out.println(NameCache.printCache());
+				} else if (line.equals("printMsgDetails")) {
+					Message msgHeaders = new ObjectMessage(null, "StrObj");
+					channel.send(msgHeaders);
+					System.out.println("Headers:" + msgHeaders.getHeaders());
+					System.out.println("Flags:" + msgHeaders.getFlags());
+				} else if (line.equals("printMsgDetails2")) {
+					Message msgHeaders = new EmptyMessage();
+					channel.send(msgHeaders);
+					System.out.println("Headers:" + msgHeaders.getHeaders());
+					System.out.println("Flags:" + msgHeaders.getFlags());
 				} else {
 					Message msg = new ObjectMessage(null, line);
 					channel.send(msg);

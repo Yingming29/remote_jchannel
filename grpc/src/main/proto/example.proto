@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc2.jchannelRpc2";
+option java_outer_classname = "JChannelRpc2";
+option objc_class_prefix = "YINGMING";
+package cn.yingming.grpc2;
+
+service JChannelsService{
+  rpc ask(Request) returns (Response) {
+  }
+}
+
+message Request{
+  string name = 1;
+}
+
+message Response{
+  string name = 1;
+}
