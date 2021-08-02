@@ -13,6 +13,8 @@ service JChannelsService{
 
 message Request{
   string name = 1;
+  optional int32 age = 2;
+  repeated string other = 3;
 }
 
 message Response{

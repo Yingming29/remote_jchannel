@@ -663,7 +663,26 @@ public class NodeServer {
                             } else {
                                 System.out.println("[gRPC-Server] Receive invalid message.");
                             }
-                        } else{
+                        }else if (req.hasGetDiscardOwnMsgReq()){
+                            GetDiscardOwnMsgReq getDiscardOwnMsgReq = req.getGetDiscardOwnMsgReq();
+                            System.out.println("[gRPC-Server] Receive the getDiscardOwnMessage() request for the JChannel-server DiscardOwnMessage from JChannel-Client:"
+                                    + getDiscardOwnMsgReq.getJchannelAddress());
+                            GetDiscardOwnMsgRep discardRep = GetDiscardOwnMsgRep.newBuilder()
+                                    .setDiscard(jchannel.channel.getDiscardOwnMessages()).build();
+                            Response rep = Response.newBuilder().setGetDiscardOwnRep(discardRep).build();
+                            System.out.println(rep);
+                            responseObserver.onNext(rep);
+                        } else if (req.hasSetDiscardOwnMsgReq()){
+                            SetDiscardOwnMsgReq setDiscardOwnMsgReq = req.getSetDiscardOwnMsgReq();
+                            System.out.println("[gRPC-Server] Receive the setDiscardOwnMessage() request for the JChannel-server DiscardOwnMessage from JChannel-Client:"
+                                    + setDiscardOwnMsgReq.getJchannalAddress());
+                            jchannel.channel.setDiscardOwnMessages(setDiscardOwnMsgReq.getDiscard());
+                            SetDiscardOwnMsgRep discardRep = SetDiscardOwnMsgRep.newBuilder()
+                                    .setDiscard(jchannel.channel.getDiscardOwnMessages()).build();
+                            Response rep = Response.newBuilder().setSetDiscardOwnRep(discardRep).build();
+                            System.out.println(rep);
+                            responseObserver.onNext(rep);
+                        }else{
                             System.out.println("Invalid type of message from python client.");
                         }
                     } else{
