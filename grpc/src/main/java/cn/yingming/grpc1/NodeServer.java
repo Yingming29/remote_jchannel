@@ -98,6 +98,7 @@ public class NodeServer {
             return new StreamObserver<Request>() {
                 @Override
                 public void onNext(Request req) {
+                    System.out.println(req);
                     for (Address add:jchannel.nodesMap.keySet()){
                         String each = jchannel.nodesMap.get(add);
                         if (each.equals("unknown") || each.equals("")){
@@ -285,7 +286,7 @@ public class NodeServer {
                     } else if(req.hasGetNameReq()){
                         // getName() request
                         GetNameReq getNameReq = req.getGetNameReq();
-                        System.out.println("[gRPC-Server] Receive the getName() request for the JChannel-server DumpStats from JChannel-Client:"
+                        System.out.println("[gRPC-Server] Receive the getName() request for the JChannel-server name from JChannel-Client:"
                                 + getNameReq.getJchannelAddress());
                         GetNameRep getNameRep;
                         if (jchannel.channel.getName() != null){
@@ -554,8 +555,8 @@ public class NodeServer {
                             lock.lock();
                             try {
                                 // 1. remove the client responseObserver
-                                for (Address add : py_clients.keySet()) {
-                                    if (add.toString().equals(pyReq.getDisconReqPy().getLogicalName())){
+                                for (Address add : NameCache.getContents().keySet()){
+                                    if (NameCache.getContents().get(add).equals(pyReq.getDisconReqPy().getLogicalName())){
                                         b = Util.objectToByteBuffer(add);
                                         DisconnectRepPy disRepPy = DisconnectRepPy.newBuilder().setResult(true).build();
                                         RepMsgForPyClient repMsgPy = RepMsgForPyClient.newBuilder().setDisconRepPy(disRepPy).build();
@@ -563,7 +564,13 @@ public class NodeServer {
                                         responseObserver.onNext(rep);
                                         py_clients.remove(add);
                                         // 2. remove the client from its cluster information
+                                        System.out.println(add);
                                         jchannel.disconnectCluster("ClientCluster", add);
+                                        String clusterName = "ClientCluster";
+                                        ClusterMap clusterMap = jchannel.serviceMap.get(clusterName);
+                                        ViewRep viewRep= clusterMap.generateView();
+                                        //broadcastViewPy(clusterMap.getView());
+                                        broadcastView(viewRep);
                                     }
                                 }
                             } catch (IOException e) {
@@ -572,9 +579,12 @@ public class NodeServer {
                                 lock.unlock();
                             }
                             // also notify other nodes to delete it
-                            DisconnectReq disReq = DisconnectReq.newBuilder().setJchannelAddress(ByteString.copyFrom(b)).build();
-                            Request generated_msg = Request.newBuilder().setDisconnectRequest(disReq).build();
+                            DisconnectReq disReq = DisconnectReq.newBuilder()
+                                    .setStr(pyReq.getDisconReqPy().getLogicalName()).setJchannelAddress(ByteString.copyFrom(b)).build();
+                            Request generated_msg = Request.newBuilder()
+                                    .setDisconnectRequest(disReq).build();
                             forwardMsg(generated_msg);
+
                             onCompleted();
                         } else if (pyReq.hasGetStateReqPy()){
                             StateRepPy statePy;
@@ -591,11 +601,11 @@ public class NodeServer {
                         } else if (pyReq.hasMsgReqPy()){
                             MessageReqPy msgReq = req.getPyReqMsg().getMsgReqPy();
                             Message msgObj = new ObjectMessage(null, msgReq.getContentStr());
-                            for (Address each : py_clients.keySet()){
+                            for (Address each : NameCache.getContents().keySet()){
                                 if (each.toString().equals(msgReq.getSource())){
                                     msgObj.setSrc(each);
                                 }
-                                if (each.toString().equals(msgReq.getDest()) && !msgReq.getDest().equals("")){
+                                if (each.toString().equals(msgReq.getDest())){
                                     msgObj.setDest(each);
                                 }
                             }
@@ -628,7 +638,7 @@ public class NodeServer {
                                 System.out.println("[gRPC-Server] The Message will be broadcast to all clients connecting to this server.");
                                 // change
                                 try {
-                                    jchannel.channel.send(jchannel.channel.getAddress(), msgReq);
+                                    jchannel.channel.send(jchannel.channel.getAddress(), msgReqRep);
                                 } catch (Exception e){
                                     e.printStackTrace();
                                 }
@@ -640,7 +650,7 @@ public class NodeServer {
                             } else if (jchannel.nodesMap.containsKey(dest)){
                                 System.out.println("[gRPC-Server] The Message will be unicast to a JChannel-Server.");
                                 try {
-                                    jchannel.channel.send(dest, msgReq);
+                                    jchannel.channel.send(dest, msgReqRep);
                                 } catch (Exception e){
                                     e.printStackTrace();
                                 }
@@ -656,33 +666,152 @@ public class NodeServer {
                                 // dest == a JChannel-Client, which is connected to other JChannel-Server
                             } else if (!(clients.containsKey(dest) && !(jchannel.channel.getView().containsMember(dest)))){
                                 System.out.println("[gRPC-Server] The Message will be unicast to a client connecting to other server.");
-                                forwadMsgToServer(req.getMessageReqRep());
+                                forwadMsgToServer(msgReqRep);
                             } else if (py_clients.containsKey(dest)) {
                                 unicastPy(msgReq.getSource(), msgReq.getContentStr(), dest);
                                 System.out.println("[gRPC-Server] The Message will be unicast to a Python Client.");
                             } else {
                                 System.out.println("[gRPC-Server] Receive invalid message.");
                             }
-                        }else if (req.hasGetDiscardOwnMsgReq()){
-                            GetDiscardOwnMsgReq getDiscardOwnMsgReq = req.getGetDiscardOwnMsgReq();
-                            System.out.println("[gRPC-Server] Receive the getDiscardOwnMessage() request for the JChannel-server DiscardOwnMessage from JChannel-Client:"
+                        }else if (pyReq.hasGetDisCardOwnMsgReqPy()){
+                            GetDiscardOwnMsgReq getDiscardOwnMsgReq = pyReq.getGetDisCardOwnMsgReqPy();
+                            System.out.println("[gRPC-Server] Receive the getDiscardOwnMessage() request for the JChannel-server DiscardOwnMessage from python JChannel-Client:"
                                     + getDiscardOwnMsgReq.getJchannelAddress());
                             GetDiscardOwnMsgRep discardRep = GetDiscardOwnMsgRep.newBuilder()
                                     .setDiscard(jchannel.channel.getDiscardOwnMessages()).build();
-                            Response rep = Response.newBuilder().setGetDiscardOwnRep(discardRep).build();
+                            RepMsgForPyClient pyMsg = RepMsgForPyClient.newBuilder().setGetDiscardOwnMsgRepPy(discardRep).build();
+                            Response rep = Response.newBuilder().setPyRepMsg(pyMsg).build();
                             System.out.println(rep);
                             responseObserver.onNext(rep);
-                        } else if (req.hasSetDiscardOwnMsgReq()){
-                            SetDiscardOwnMsgReq setDiscardOwnMsgReq = req.getSetDiscardOwnMsgReq();
-                            System.out.println("[gRPC-Server] Receive the setDiscardOwnMessage() request for the JChannel-server DiscardOwnMessage from JChannel-Client:"
+                        } else if (pyReq.hasSetDiscardOwnMsgReqPy()){
+                            SetDiscardOwnMsgReq setDiscardOwnMsgReq = pyReq.getSetDiscardOwnMsgReqPy();
+                            System.out.println("[gRPC-Server] Receive the setDiscardOwnMessage() request for the JChannel-server DiscardOwnMessage from python JChannel-Client:"
                                     + setDiscardOwnMsgReq.getJchannalAddress());
+                            System.out.println(setDiscardOwnMsgReq);
+                            System.out.println(setDiscardOwnMsgReq.getDiscard());
+
                             jchannel.channel.setDiscardOwnMessages(setDiscardOwnMsgReq.getDiscard());
                             SetDiscardOwnMsgRep discardRep = SetDiscardOwnMsgRep.newBuilder()
                                     .setDiscard(jchannel.channel.getDiscardOwnMessages()).build();
-                            Response rep = Response.newBuilder().setSetDiscardOwnRep(discardRep).build();
+                            RepMsgForPyClient pyMsg = RepMsgForPyClient.newBuilder().setSetDiscardOwnMsgRepPy(discardRep).build();
+                            Response rep = Response.newBuilder().setPyRepMsg(pyMsg).build();
                             System.out.println(rep);
                             responseObserver.onNext(rep);
-                        }else{
+                        } else if (pyReq.hasGetStatsReqPy()){
+                            GetStatsReq getStatsReq = pyReq.getGetStatsReqPy();
+                            System.out.println("[gRPC-Server] Receive the getStats() request for the JChannel-server stats from python JChannel-Client:"
+                                    + getStatsReq.getJchannelAddress());
+                            GetStatsRep getStatsRep = GetStatsRep.newBuilder().setStats(jchannel.channel.getStats()).build();
+                            RepMsgForPyClient pyMsg = RepMsgForPyClient.newBuilder().setGetStatsRepPy(getStatsRep).build();
+                            Response rep = Response.newBuilder().setPyRepMsg(pyMsg).build();
+                            System.out.println(rep);
+                            responseObserver.onNext(rep);
+                        } else if (pyReq.hasSetStatsReqPy()){
+                            SetStatsReq setStatsReq = pyReq.getSetStatsReqPy();
+                            System.out.println("[gRPC-Server] Receive the setStats() request for the JChannel-server stats from python JChannel-Client:"
+                                    + setStatsReq.getJchannelAddress());
+                            jchannel.channel.setStats(setStatsReq.getStats());
+                            SetStatsRep setStatsRep = SetStatsRep.newBuilder().setStats(jchannel.channel.stats()).build();
+                            RepMsgForPyClient pyMsg = RepMsgForPyClient.newBuilder().setSetStatsRepPy(setStatsRep).build();
+                            Response rep = Response.newBuilder().setPyRepMsg(pyMsg).build();
+                            System.out.println(rep);
+                            responseObserver.onNext(rep);
+                        } else if (pyReq.hasGetNameReqPy()){
+                            GetNameReq getNameReq = pyReq.getGetNameReqPy();
+                            System.out.println("[gRPC-Server] Receive the getName() request for the JChannel-server stats from python JChannel-Client:"
+                                    + getNameReq.getJchannelAddress());
+                            GetNameRep getNameRep = GetNameRep.newBuilder().setName(jchannel.channel.getName()).build();
+                            RepMsgForPyClient pyMsg = RepMsgForPyClient.newBuilder().setGetNameRepPy(getNameRep).build();
+                            Response rep = Response.newBuilder().setPyRepMsg(pyMsg).build();
+                            System.out.println(rep);
+                            responseObserver.onNext(rep);
+                        } else if (pyReq.hasGetAddressReqPy()){
+                            GetAddressReq getAddressReq = pyReq.getGetAddressReqPy();
+                            System.out.println("[gRPC-Server] Receive the getAddress() request for the JChannel-server stats from python JChannel-Client:"
+                                    + getAddressReq.getJchannelAddress());
+                            GetAddressRep getAddressRep = GetAddressRep.newBuilder().setOther(jchannel.channel.getName()).build();
+                            RepMsgForPyClient pyMsg = RepMsgForPyClient.newBuilder().setGetAddressRepPy(getAddressRep).build();
+                            Response rep = Response.newBuilder().setPyRepMsg(pyMsg).build();
+                            System.out.println(rep);
+                            responseObserver.onNext(rep);
+                        } else if(pyReq.hasPrintProtocolSpecReqPy()){
+                            // getClusterName() request
+                            PrintProtocolSpecReq printProtoReq = pyReq.getPrintProtocolSpecReqPy();
+                            System.out.println("[gRPC-Server] Receive the printProtocolSpec() request for the JChannel-server ProtocolSpec from python JChannel-Client:"
+                                    + printProtoReq.getJchannelAddress());
+                            PrintProtocolSpecRep printProtoRep = PrintProtocolSpecRep.newBuilder()
+                                    .setProtocolStackSpec(jchannel.channel.printProtocolSpec(printProtoReq.getIncludeProps())).build();
+                            RepMsgForPyClient pyMsg = RepMsgForPyClient.newBuilder().setPrintProtocolSpecRepPy(printProtoRep).build();
+                            Response rep = Response.newBuilder().setPyRepMsg(pyMsg).build();
+                            System.out.println(rep);
+                            responseObserver.onNext(rep);
+                        } else if (pyReq.hasStateReqPy()){
+                            GetStateReq getStateReq = pyReq.getStateReqPy();
+                            System.out.println("[gRPC-Server] Receive the getState() request for the JChannel-server state from python JChannel-Client:"
+                                    + getStateReq.getJchannelAddress());
+
+                            GetStateRep getStateRep = GetStateRep.newBuilder().setState(jchannel.channel.getState()).build();
+                            RepMsgForPyClient pyMsg = RepMsgForPyClient.newBuilder().setGetStateRepPy(getStateRep).build();
+                            Response rep = Response.newBuilder().setPyRepMsg(pyMsg).build();
+                            System.out.println(rep);
+                            responseObserver.onNext(rep);
+                        } else if(pyReq.hasGetPropertyReqPy()){
+                            // getName() request
+                            GetPropertyReq getPropertyReq = pyReq.getGetPropertyReqPy();
+                            System.out.println("[gRPC-Server] Receive the getProperties() request for the JChannel-server property from python JChannel-Client:"
+                                    + getPropertyReq.getJchannelAddress());
+                            GetPropertyRep getPropertyRep;
+
+                            String property = jchannel.channel.getProperties();
+                            if (property != null){
+                                getPropertyRep = GetPropertyRep.newBuilder().setProperties(property).build();
+                            } else{
+                                getPropertyRep = GetPropertyRep.newBuilder().build();
+                            }
+                            RepMsgForPyClient pyMsg = RepMsgForPyClient.newBuilder().setGetPropertyRepPy(getPropertyRep).build();
+                            Response rep = Response.newBuilder().setPyRepMsg(pyMsg).build();
+                            System.out.println(rep);
+                            responseObserver.onNext(rep);
+                        } else if(pyReq.hasDumpStatsReqPy()){
+                            // getName() request
+                            DumpStatsReq dumpReq = pyReq.getDumpStatsReqPy();
+                            System.out.println("[gRPC-Server] Receive the dumpStats() request for the JChannel-server DumpStats from python JChannel-Client:"
+                                    + dumpReq.getJchannelAddress());
+                            Map m = null;
+                            if (dumpReq.getAttrsList().size() == 0 && dumpReq.getProtocolName().equals("")){
+                                m = jchannel.channel.dumpStats();
+                            } else if (dumpReq.getAttrsList().size() == 0 && !dumpReq.getProtocolName().equals("")){
+                                m = jchannel.channel.dumpStats(dumpReq.getProtocolName());
+                            } else if (dumpReq.getAttrsList().size() > 0 && !dumpReq.getProtocolName().equals("")){
+                                List protocol_list = dumpReq.getAttrsList();
+                                m = jchannel.channel.dumpStats(dumpReq.getProtocolName(), protocol_list);
+                            } else {
+                                System.out.println("[gRPC-Server] error dumpStats() with not correct data.");
+                                return;
+                            }
+                            DumpStatsRepPy dump = DumpStatsRepPy.newBuilder().setResult(m.toString()).build();
+                            RepMsgForPyClient pyMsg = RepMsgForPyClient.newBuilder().setDumpStatsRepPy(dump).build();
+                            Response rep = Response.newBuilder().setPyRepMsg(pyMsg).build();
+                            System.out.println(rep);
+                            responseObserver.onNext(rep);
+
+                        } else if(pyReq.hasGetClusterNameReqPy()){
+                            // getClusterName() request
+                            GetClusterNameReq clusterReq = pyReq.getGetClusterNameReqPy();
+                            System.out.println("[gRPC-Server] Receive the getClusterName() request for the JChannel-server cluster name from python JChannel-Client:"
+                                    + clusterReq.getJchannelAddress());
+                            GetClusterNameRep getClusterNameRep;
+                            if (jchannel.channel.getClusterName() != null){
+                                getClusterNameRep = GetClusterNameRep.newBuilder().setClusterName(jchannel.channel.getClusterName()).build();
+                            } else{
+                                getClusterNameRep = GetClusterNameRep.newBuilder().build();
+                            }
+                            RepMsgForPyClient pyMsg = RepMsgForPyClient.newBuilder().setGetClusterNameRepPy(getClusterNameRep).build();
+                            Response rep = Response.newBuilder().setPyRepMsg(pyMsg).build();
+                            System.out.println(rep);
+                            responseObserver.onNext(rep);
+
+                        } else{
                             System.out.println("Invalid type of message from python client.");
                         }
                     } else{
@@ -705,6 +834,9 @@ public class NodeServer {
                         ChannelMsg channelMsg = ChannelMsg.newBuilder().setExchangeMsg(exchangeMsg).build();
                         // Message msg = new ObjectMessage(null, channelMsg);
                         // msg.setFlagIfAbsent(Message.TransientFlag.DONT_LOOPBACK);
+                        ClusterMap clusterObj = jchannel.serviceMap.get("ClientCluster");
+                        View v = clusterObj.getView();
+                        //broadcastViewPy(v);
                         forwardMsg(channelMsg);
                     } catch (Exception e) {
                         e.printStackTrace();

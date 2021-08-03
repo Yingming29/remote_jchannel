@@ -196,7 +196,11 @@ public class NodeJChannel implements Receiver{
             Response rep = Response.newBuilder().setMessageReqRep(msg).build();
             service.broadcastResponse(rep);
             // python broadcast
-            service.broadcastResponsePy(dese_msg.getSrc().toString(), dese_msg.toString());
+            if (dese_msg.getType() == 3){
+                service.broadcastResponsePy(dese_msg.getSrc().toString(), dese_msg.getObject().toString());
+            } else{
+                service.broadcastResponsePy(dese_msg.getSrc().toString(), dese_msg.toString());
+            }
             synchronized (state){
                 String line = generateLine(dese_msg);
                 state.add(line);
@@ -247,15 +251,25 @@ public class NodeJChannel implements Receiver{
             }
         } else if (msg.getObject() instanceof Request && ((Request) msg.getObject()).hasDisconnectRequest()){
             DisconnectReq disReq = ((Request) msg.getObject()).getDisconnectRequest();
-            System.out.println("[JChannel] Receive a shared disconnect() request for updating ClientCluster.");
-            ByteArrayDataInputStream in = new ByteArrayDataInputStream(disReq.getJchannelAddress().toByteArray());
-            UUID u = new UUID();
-            try{
-                u.readFrom(in);
-            } catch (Exception e){
-                e.printStackTrace();
+            if (!disReq.getStr().equals("")){
+                System.out.println("[JChannel] Receive a shared disconnect() request for updating ClientCluster.");
+                for (Address add:NameCache.getContents().keySet()){
+                    if (NameCache.getContents().get(add).equals(disReq.getStr())){
+                        disconnectCluster("ClientCluster", add);
+                    }
+                }
+
+            } else{
+                System.out.println("[JChannel] Receive a shared disconnect() request for updating ClientCluster.");
+                ByteArrayDataInputStream in = new ByteArrayDataInputStream(disReq.getJchannelAddress().toByteArray());
+                UUID u = new UUID();
+                try{
+                    u.readFrom(in);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+                disconnectCluster("ClientCluster", u);
             }
-            disconnectCluster("ClientCluster", u);
         }
     }
 
@@ -617,6 +631,7 @@ public class NodeJChannel implements Receiver{
             ViewRep viewRep= clusterObj.generateView();
             System.out.println("[gRPC-Server] Return a message for Client view.");
             this.service.broadcastView(viewRep);
+
             View v = clusterObj.getView();
             this.service.broadcastViewPy(v);
         } catch (Exception e){
@@ -637,6 +652,7 @@ public class NodeJChannel implements Receiver{
             if (clusterObj.getList().size()>0){
                 ViewRep viewRep= clusterObj.generateView();
                 this.service.broadcastView(viewRep);
+                this.service.broadcastViewPy(clusterObj.getView());
             }
         } finally {
             lock.unlock();
@@ -659,6 +675,7 @@ public class NodeJChannel implements Receiver{
                     if (clusterMap.getCreator() != null){
                         ViewRep viewRep= clusterMap.generateView();
                         this.service.broadcastView(viewRep);
+                        this.service.broadcastViewPy(clusterMap.getView());
                     }
                 }
             }

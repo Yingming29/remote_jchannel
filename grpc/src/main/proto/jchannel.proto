@@ -29,7 +29,7 @@ message Request{
     GetDiscardOwnMsgReq getDiscardOwnMsgReq = 16;
     GetStateReq getStateReq = 17;
     IsStateReq isStateReq = 18;
-    ReqMsgForPyClient pyReqMsg = 19; // The message contains some sub-messages for request, which are used for python client.
+    ReqMsgForPyClient pyReqMsg = 19;
   }
 }
 message Response{
@@ -37,10 +37,10 @@ message Response{
     MessageReqRep messageReqRep = 1;
     ConnectRep connectResponse = 2;
     DisconnectRep disconnectResponse = 3;
-    UpdateRep updateResponse = 4;  // update available grpc addresses of nodes
-    ViewRep viewResponse = 5;   //  JChannel-client view
-    ViewRep_server viewRep_server = 6;   // JChannel-server view
-    UpdateNameCacheRep updateNameCache = 7;  // update the NameCache of JChannel-server
+    UpdateRep updateResponse = 4;
+    ViewRep viewResponse = 5;
+    ViewRep_server viewRep_server = 6;
+    UpdateNameCacheRep updateNameCache = 7;
     StateRep stateRep = 8;
     GetAddressRep getAddressRep = 11;
     GetNameRep getNameRep = 12;
@@ -54,7 +54,7 @@ message Response{
     GetDiscardOwnMsgRep getDiscardOwnRep = 20;
     GetStateRep getStateRep = 21;
     IsStateRep isStateRep = 22;
-    RepMsgForPyClient pyRepMsg = 23; // The message contains some sub-messages for response, which are used for python client.
+    RepMsgForPyClient pyRepMsg = 23;
   }
 }
 message IsStateReq{
@@ -126,7 +126,7 @@ message UpdateReqBetweenNodes{
   bytes address = 1;
 }
 message UpdateRepBetweenNodes{
-  UpdateNameCacheRep nameCache = 1;  // update the existing NameChe, contains JChannel-client and JChannel-server?
+  UpdateNameCacheRep nameCache = 1;
   ViewRep clientView = 2;
 }
 message UpdateNameCacheRep{
@@ -167,7 +167,7 @@ message ViewRep_server{
 message ViewRep{
   bytes view = 1;
 }
-// update the available servers list
+
 message UpdateRep{
   string addresses = 1;
 }
@@ -175,28 +175,28 @@ message MessageReqRep{
   bytes messageObj = 1;
   int32 type = 2;
 }
-// connect() of JChannel, create a bidirectional streaming of grpc
+
 message ConnectReq {
   bool reconnect = 1;         // reconnect and jchannel_address will be used in the reconnection part.
   string logical_name = 2;
   bytes jchann_address_byte = 3;
 }
-// the first time the client connects to the JChannel-server, the server will create an Address and a logical name for it.
-//
+
 message ConnectRep {
   bool result = 1;
   bytes address = 2;    // generated Address object's byte
   string logical_name = 3;   // generated Address 'logical name
 }
 
-// disconnect()
+
 message DisconnectReq{
   bytes jchannel_address = 1;
+  string str = 2;
 }
 message DisconnectRep{
   bool result = 1;
 }
-// The messages used for the try connection.
+
 message ReqAsk {
   string source = 1;
 }
@@ -214,7 +214,8 @@ message StateRep{
   bytes state = 2;
   bytes target = 3;
 }
-// define some message for python-client
+
+
 // some message types for python client
 message ReqMsgForPyClient{
   oneof oneType{
@@ -222,6 +223,17 @@ message ReqMsgForPyClient{
     DisconnectReqPy disconReqPy = 2;
     MessageReqPy msgReqPy = 3;
     StateReqPy getStateReqPy = 4;
+    GetDiscardOwnMsgReq getDisCardOwnMsgReqPy = 5;
+    SetDiscardOwnMsgReq setDiscardOwnMsgReqPy = 6;
+    GetStatsReq getStatsReqPy = 7;
+    SetStatsReq setStatsReqPy = 8;
+    GetNameReq getNameReqPy = 9;
+    GetAddressReq getAddressReqPy = 10;
+    PrintProtocolSpecReq printProtocolSpecReqPy = 11;
+    GetStateReq stateReqPy = 12;
+    GetPropertyReq getPropertyReqPy = 13;
+    DumpStatsReq dumpStatsReqPy = 14;
+    GetClusterNameReq getClusterNameReqPy = 15;
   }
 }
 
@@ -234,9 +246,22 @@ message RepMsgForPyClient{
     ClientViewPy clientViewPy = 5;
     ServerViewPy serverViewPy = 6;
     UpdateAddPy updateAddPy = 7;
+    GetDiscardOwnMsgRep getDiscardOwnMsgRepPy = 8;
+    SetDiscardOwnMsgRep setDiscardOwnMsgRepPy = 9;
+    GetStatsRep getStatsRepPy = 10;
+    SetStatsRep setStatsRepPy = 11;
+    GetNameRep getNameRepPy = 12;
+    GetAddressRep getAddressRepPy = 13;
+    PrintProtocolSpecRep printProtocolSpecRepPy = 14;
+    GetStateRep getStateRepPy = 15;
+    GetPropertyRep getPropertyRepPy = 16;
+    DumpStatsRepPy dumpStatsRepPy = 17;
+    GetClusterNameRep getClusterNameRepPy = 18;
   }
 }
-
+message DumpStatsRepPy{
+  string result = 1;
+}
 message ConnectReqPy{
   bool reconnect = 1;
   string logical_name = 2;
@@ -259,9 +284,7 @@ message DisconnectRepPy{
 }
 message MessageRepPy{
   string source = 1;
-  string type = 2; // contain message type, string, byte, and MessageByte
   string contentStr = 3;
-  string byteMsg = 4;
 }
 message ClientViewPy{
   int32 num = 1;
