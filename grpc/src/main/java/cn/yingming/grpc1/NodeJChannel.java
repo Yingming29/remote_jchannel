@@ -25,7 +25,7 @@ public class NodeJChannel implements Receiver{
     private NodeServer.JChannelsServiceImpl service;
     private String grpcAddress;
     public final ConcurrentHashMap<Address, String> nodesMap;
-    public ConcurrentHashMap<String, ClusterMap> serviceMap;
+    public ConcurrentHashMap<String, ClientInfo> serviceMap;
     public final LinkedList<String> state;
 
     NodeJChannel(String cluster_name, String grpcAddress) throws Exception {
@@ -42,7 +42,7 @@ public class NodeJChannel implements Receiver{
 
     public void start() throws Exception {
         System.out.println("---JChannel Starts.---");
-        this.serviceMap.put("ClientCluster", new ClusterMap());
+        this.serviceMap.put("ClientCluster", new ClientInfo());
         this.channel.setReceiver(this).connect(cluster_name);
         this.nodesMap.put(this.channel.getAddress(), this.grpcAddress);
         System.out.println("[JChannel-Server] The current nodes in node cluster: " + this.nodesMap);
@@ -375,7 +375,7 @@ public class NodeJChannel implements Receiver{
                     System.out.println("[JChannel-Server] Confirm the requester is a JChannel-Server");
                     // generate message for the requester, NameCacheRep, ViewRep of clients,
                     UpdateNameCacheRep nameCacheRep = this.service.generateNameCacheMsg();
-                    ClusterMap clusterInf = this.serviceMap.get("ClientCluster");
+                    ClientInfo clusterInf = this.serviceMap.get("ClientCluster");
                     ViewRep viewRep = null;
                     UpdateRepBetweenNodes rep;
                     if (clusterInf.getCreator() != null){
@@ -430,9 +430,9 @@ public class NodeJChannel implements Receiver{
             }
             System.out.println("[JChannel-Server] Update the NameCache of JChannel-Client.");
             // 2.update client view
-            ClusterMap clusterInf;
+            ClientInfo clusterInf;
             if (this.serviceMap.size() == 0){
-                clusterInf = new ClusterMap();
+                clusterInf = new ClientInfo();
                 this.serviceMap.put("ClientCluster", clusterInf);
             } else{
                 clusterInf = this.serviceMap.get("ClientCluster");
@@ -590,7 +590,7 @@ public class NodeJChannel implements Receiver{
             // create the cluster or connect an existing cluster.
             System.out.println("[gRPC-Server] " + address + "(" +  name + ") connects to client cluster: " + cluster);
             // create new cluster object and set it as the creator
-            ClusterMap clusterObj = this.serviceMap.get("ClientCluster");
+            ClientInfo clusterObj = this.serviceMap.get("ClientCluster");
             clusterObj.getMap().put(address, name);
             clusterObj.addMember(address);
             clusterObj.addViewNum();
@@ -618,7 +618,7 @@ public class NodeJChannel implements Receiver{
             // create the cluster or connect an existing cluster.
             System.out.println("[gRPC-Server] " + address + "(" +  name + ") connects to client cluster: " + cluster);
             // create new cluster object and set it as the creator
-            ClusterMap clusterObj = this.serviceMap.get("ClientCluster");
+            ClientInfo clusterObj = this.serviceMap.get("ClientCluster");
             clusterObj.getMap().put(address, name);
             clusterObj.addMember(address);
             clusterObj.addViewNum();
@@ -644,7 +644,7 @@ public class NodeJChannel implements Receiver{
     public void disconnectCluster(String cluster, Address address){
         lock.lock();
         try{
-            ClusterMap clusterObj = serviceMap.get(cluster);
+            ClientInfo clusterObj = serviceMap.get(cluster);
             clusterObj.removeClient(address);
             clusterObj.getMap().remove(address);
             clusterObj.addViewNum();
@@ -664,18 +664,18 @@ public class NodeJChannel implements Receiver{
         this.lock.lock();
         try{
             String clusterName = "ClientCluster";
-            ClusterMap clusterMap = serviceMap.get(clusterName);
-            for (Object eachUuid:clusterMap.getMap().keySet()) {
+            ClientInfo clientInfo = serviceMap.get(clusterName);
+            for (Object eachUuid: clientInfo.getMap().keySet()) {
                 Address add_each = (Address) eachUuid;
                 if (uuid.equals(add_each)){
                     System.out.println("Remove the JChannel-client from the client cluster.");
-                    clusterMap.removeClient(uuid);
-                    clusterMap.getMap().remove(uuid);
-                    clusterMap.addViewNum();
-                    if (clusterMap.getCreator() != null){
-                        ViewRep viewRep= clusterMap.generateView();
+                    clientInfo.removeClient(uuid);
+                    clientInfo.getMap().remove(uuid);
+                    clientInfo.addViewNum();
+                    if (clientInfo.getCreator() != null){
+                        ViewRep viewRep= clientInfo.generateView();
                         this.service.broadcastView(viewRep);
-                        this.service.broadcastViewPy(clusterMap.getView());
+                        this.service.broadcastViewPy(clientInfo.getView());
                     }
                 }
             }

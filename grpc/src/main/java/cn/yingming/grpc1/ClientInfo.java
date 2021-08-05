@@ -15,7 +15,7 @@ import java.util.LinkedList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class ClusterMap implements Serializable {
+public class ClientInfo implements Serializable {
     public ConcurrentHashMap<Address, String> map;
     public int viewNum;
     public ReentrantLock lock;
@@ -23,7 +23,7 @@ public class ClusterMap implements Serializable {
     public LinkedList orderList;
     // message history
     // public LinkedList history;
-    public ClusterMap(){
+    public ClientInfo(){
         this.map = new ConcurrentHashMap<>();
         this.viewNum = -1;
         this.lock = new ReentrantLock();

@@ -567,9 +567,9 @@ public class NodeServer {
                                         System.out.println(add);
                                         jchannel.disconnectCluster("ClientCluster", add);
                                         String clusterName = "ClientCluster";
-                                        ClusterMap clusterMap = jchannel.serviceMap.get(clusterName);
-                                        ViewRep viewRep= clusterMap.generateView();
-                                        //broadcastViewPy(clusterMap.getView());
+                                        ClientInfo clientInfo = jchannel.serviceMap.get(clusterName);
+                                        ViewRep viewRep= clientInfo.generateView();
+                                        //broadcastViewPy(clientInfo.getView());
                                         broadcastView(viewRep);
                                     }
                                 }
@@ -834,7 +834,7 @@ public class NodeServer {
                         ChannelMsg channelMsg = ChannelMsg.newBuilder().setExchangeMsg(exchangeMsg).build();
                         // Message msg = new ObjectMessage(null, channelMsg);
                         // msg.setFlagIfAbsent(Message.TransientFlag.DONT_LOOPBACK);
-                        ClusterMap clusterObj = jchannel.serviceMap.get("ClientCluster");
+                        ClientInfo clusterObj = jchannel.serviceMap.get("ClientCluster");
                         View v = clusterObj.getView();
                         //broadcastViewPy(v);
                         forwardMsg(channelMsg);
@@ -1138,7 +1138,7 @@ public class NodeServer {
                 Response rep = Response.newBuilder()
                         .setViewResponse(videRep)
                         .build();
-                //ClusterMap clusterObj = (ClusterMap) jchannel.serviceMap.get(cluster);
+                //ClientInfo clusterObj = (ClientInfo) jchannel.serviceMap.get(cluster);
                 for (Address add : clients.keySet()){
                     clients.get(add).onNext(rep);
                     System.out.println("[gRPC-Server] Send view to a JChannel-Client, " + add);
