@@ -652,7 +652,7 @@ public class JChannelClient{
      *
      */
     public JChannelClient send(Message msg) throws Exception {
-        if (!isWork.get()){
+        if (!isWork.get() && !this.down.get()){
             throw new IllegalStateException("The JChannel-Client does not connect to server");
         }
         if(msg == null)

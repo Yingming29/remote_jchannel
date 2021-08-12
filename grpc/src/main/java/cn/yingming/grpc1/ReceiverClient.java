@@ -17,10 +17,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class ReceiverRJ implements Receiver {
+public class ReceiverClient implements Receiver {
     final List<String> state;
 
-    public ReceiverRJ() {
+    public ReceiverClient() {
         this.state = new LinkedList<>();
     }
 
@@ -61,6 +61,7 @@ public class ReceiverRJ implements Receiver {
         } else {
             line = msg.getSrc() + "(ObjectMessage): " + msg.getPayload();
         }
+        //System.out.println("Receiver" + Thread.currentThread().toString());
         System.out.println(line);
         synchronized (state){
             state.add(line);
@@ -74,7 +75,7 @@ public class ReceiverRJ implements Receiver {
 
     @Override
     public void viewAccepted(View new_view) {
-        System.out.println("** JChannel-Server View (on the Client-Receiver): " + new_view);
+        System.out.println("** JChannel View (in the Client Receiver): " + new_view);
     }
 
     @Override

@@ -9,14 +9,14 @@ import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
-public class SimpleChatRJ {
+public class ClientStarter {
 
     JChannelClient remoteJChannel;
-    ReceiverRJ receiver;
+    ReceiverClient receiver;
 
     private void start(String server_address) throws Exception{
 
-        receiver = new ReceiverRJ();
+        receiver = new ReceiverClient();
         remoteJChannel = new JChannelClient(server_address);
         remoteJChannel.setReceiver(receiver);
         remoteJChannel.connect();
@@ -32,10 +32,11 @@ public class SimpleChatRJ {
 
                 System.out.println(">");System.out.flush();
                 String line = in.readLine();
+                //System.out.println("event loop:" + Thread.currentThread().toString());
                 if (line.startsWith("quit") || line.startsWith("exit")){
                     break;
                 }
-                if (line.equals("testSome")){
+                if (line.equals("testSomeRemoteMethods")){
                     System.out.println("Test some remote grpc methods:");
                     System.out.println("getAddress() for JChannel-Server Address:" + remoteJChannel.getAddress());
                     System.out.println("getAddressAsString() for JChannel-Server Address:" + remoteJChannel.getAddressAsString());
@@ -202,6 +203,6 @@ public class SimpleChatRJ {
     }
 
     public static void main(String[] args) throws Exception {
-        new SimpleChatRJ().start(args[0]);
+        new ClientStarter().start(args[0]);
     }
 }

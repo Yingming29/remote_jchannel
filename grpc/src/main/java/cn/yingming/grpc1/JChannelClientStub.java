@@ -444,13 +444,14 @@ public class JChannelClientStub {
             @Override
             public void onNext(Response response) {
                 //System.out.println(response);
+                //System.out.println("3" + Thread.currentThread().toString());
                 judgeResponse(response);
             }
 
             @Override
             public void onError(Throwable throwable) {
                 System.out.println(throwable.getMessage());
-                System.out.println("[gRPC]: onError() of gRPC connection, the client needs to reconnect to the next server.");
+                System.out.println("[gRPC]: onError() of gRPC connection, disconnect.");
 
                 lock.lock();
                 try {
@@ -459,7 +460,7 @@ public class JChannelClientStub {
                     lock.unlock();
                 }
                 channel.shutdown();
-                onCompleted();
+
             }
 
             @Override
@@ -609,6 +610,7 @@ public class JChannelClientStub {
                 stub.observer = startGrpc(this.isWork, this.stub.client);
                 // The first connect
                 if (!down.get() && !isWork.get()){
+                    //System.out.println("2" + Thread.currentThread().toString());
                     System.out.println("[Client Stub]: This is the first connection to a server.");
                     connectCluster(stub.observer);
                 } else{
@@ -630,6 +632,7 @@ public class JChannelClientStub {
                 // reconnect part.
                 if (!client.down.get()){
                     try{
+                        stub.observer.onCompleted();
                         System.exit(0);
                     } catch (Exception e){
                         e.printStackTrace();
@@ -661,6 +664,7 @@ public class JChannelClientStub {
                     Object obj = client.msgList.get(0);
                     // System.out.println("2"+ Thread.currentThread());
                     Request msgReq = judgeRequest(obj);
+                    //System.out.println("1" + Thread.currentThread().toString());
                     requestSender.onNext(msgReq);
 
                     stubLock.lock();
@@ -679,6 +683,7 @@ public class JChannelClientStub {
     }
 
     public void startStub(){
+        //System.out.println("startStub" + Thread.currentThread().toString());
         Control control = new Control(client.msgList, client.isWork, client.down,this);
         Thread thread1 = new Thread(control);
         thread1.start();

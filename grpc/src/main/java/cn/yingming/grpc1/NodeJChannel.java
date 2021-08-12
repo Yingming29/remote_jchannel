@@ -115,7 +115,7 @@ public class NodeJChannel implements Receiver{
             MessageReqRep msgRep = MessageReqRep.newBuilder().setType(msg.getType()).setMessageObj(ByteString.copyFrom(b)).build();
             Response rep = Response.newBuilder().setMessageReqRep(msgRep).build();
             service.broadcastResponse(rep);
-            // copy from Receiver of JChannelClient and SimpleChat
+            // copy from Receiver of JChannelClient and JChannelStarter
             String line = generateLine(msg);
             System.out.println(line);
             service.broadcastResponsePy(msg.getSrc().toString(), msg.toString());
@@ -511,7 +511,7 @@ public class NodeJChannel implements Receiver{
     // update the view of nodes
     @Override
     public void viewAccepted(View new_view) {
-        System.out.println("** JChannel-Server view: " + new_view);
+        System.out.println("** JChannel view: " + new_view);
        //  System.out.println(Thread.currentThread() + "viewaccepted");
         /* When the view is changed by any action, it will send its address to other jchannels
         and update its nodesList.

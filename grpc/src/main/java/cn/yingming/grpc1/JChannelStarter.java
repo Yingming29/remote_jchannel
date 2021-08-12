@@ -12,13 +12,10 @@ import java.util.List;
 
 import io.grpc.jchannelRpc.ChannelMsg;
 import org.jgroups.*;
-import org.jgroups.protocols.relay.SiteMaster;
-import org.jgroups.protocols.relay.SiteUUID;
-import org.jgroups.stack.IpAddress;
 import org.jgroups.util.*;
 
 
-public class SimpleChat implements Receiver{
+public class JChannelStarter implements Receiver{
 
 	JChannel channel;
 	final List<String> state = new LinkedList<String>();
@@ -182,6 +179,6 @@ public class SimpleChat implements Receiver{
 	}
 	
 	public static void main(String[] args) throws Exception {
-		new SimpleChat().start();
+		new JChannelStarter().start();
 	}
 }

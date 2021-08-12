@@ -62,8 +62,10 @@ public class ClientInfo implements Serializable {
         View v = null;
         this.lock.lock();
         try{
-            ViewId viewId = new ViewId(getCreator(), getViewNum());
-            v = new View(viewId, orderList);
+            if (getCreator() != null){
+                ViewId viewId = new ViewId(getCreator(), getViewNum());
+                v = new View(viewId, orderList);
+            }
         } finally {
             this.lock.unlock();
         }
