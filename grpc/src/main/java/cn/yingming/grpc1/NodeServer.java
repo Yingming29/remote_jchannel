@@ -32,7 +32,7 @@ public class NodeServer {
         // not useful, store clients address.
         this.ips = new ConcurrentHashMap<>();
         // create JChannel given node name and cluster name
-        this.jchannel = new NodeJChannel(cluster_name, "127.0.0.1:" + port);
+        this.jchannel = new NodeJChannel(cluster_name, "127.0.0.55:" + port);
         // create grpc server, and its service is given the jchannel for calling send() method on jchannel.
         this.gRPCservice = new JChannelsServiceImpl(this.jchannel);
         this.server = ServerBuilder.forPort(port)

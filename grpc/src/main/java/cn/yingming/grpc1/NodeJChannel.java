@@ -550,8 +550,8 @@ public class NodeJChannel implements Receiver{
                 // System.out.println("[JChannel-Server] Store new node inf.");
                 System.out.println("[JChannel-Server] The current nodes in node cluster: " + this.nodesMap);
                 sendMyself();
-            } else if (currentView.size() < currentNodesList.size()) {
-                System.out.println("[JChannel-Server] Remove cancelled node inf.");
+            } else{
+                System.out.println("[JChannel-Server] Found JChannel's leaving. Start comparing.");
                 List<Address> compare = ListUtils.subtract(currentNodesList, currentView);
                 for (Address each:compare) {
                     this.nodesMap.remove(each);
@@ -564,8 +564,6 @@ public class NodeJChannel implements Receiver{
                         .setUpdateResponse(updateMsg)
                         .build();
                 this.service.broadcastResponse(broMsg);
-            } else {
-                System.out.println("[JChannel-Server] The current nodes does not change.");
             }
         }
     }
